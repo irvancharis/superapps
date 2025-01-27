@@ -255,7 +255,7 @@
                                         <select class="form-control" name="id_jabatan_view" id="id_jabatan_view" disabled>
                                             <option value="" class="text-center" selected disabled>-- Pilih Jabatan --</option>
                                             <?php foreach ($get_jabatan as $row) : ?>
-                                                <option value="<?= $row->ID_JABATAN; ?>"><?= $row->NAMA_JABATAN; ?></option>
+                                                <option value="<?= $row->KODE_JABATAN; ?>"><?= $row->NAMA_JABATAN; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -264,7 +264,7 @@
                                         <select class="form-control" name="id_departement_view" id="id_departement_view" disabled>
                                             <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
                                             <?php foreach ($get_departement as $row) : ?>
-                                                <option value="<?= $row->ID_DEPARTEMENT; ?>"><?= $row->NAMA_DEPARTEMENT; ?></option>
+                                                <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -310,7 +310,7 @@
                                         <select class="form-control" name="id_jabatan_edit" id="id_jabatan_edit">
                                             <option value="" class="text-center" selected disabled>-- Pilih Jabatan --</option>
                                             <?php foreach ($get_jabatan as $row) : ?>
-                                                <option value="<?= $row->ID_JABATAN; ?>"><?= $row->NAMA_JABATAN; ?></option>
+                                                <option value="<?= $row->KODE_JABATAN; ?>"><?= $row->NAMA_JABATAN; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -319,7 +319,7 @@
                                         <select class="form-control" name="id_departement_edit" id="id_departement_edit">
                                             <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
                                             <?php foreach ($get_departement as $row) : ?>
-                                                <option value="<?= $row->ID_DEPARTEMENT; ?>"><?= $row->NAMA_DEPARTEMENT; ?></option>
+                                                <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>

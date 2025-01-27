@@ -5,9 +5,9 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Data Teknisi</h4>
+                                    <h4>Data Ticketing</h4>
                                     <div class="card-header-action">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahModal"><i class="fas fa-plus"></i> Tambah Data</button>
+                                        <a href="<?php echo base_url('ticket/tambah_view') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -23,16 +23,18 @@
                                                         </div>
                                                     </th>
                                                     <th>#</th>
-                                                    <th>Nama Teknisi</th>
-                                                    <th>Departemen</th>
-                                                    <th>Status</th>
-                                                    <th>ID Karyawan</th>
-                                                    <th>Deskripsi Teknisi</th>
+                                                    <th>TICKET ID</th>
+                                                    <th>ORDER BY</th>
+                                                    <th>SITE</th>
+                                                    <th>APPROVAL</th>
+                                                    <th>TECHNICIAN</th>
+                                                    <th>STATUS</th>
+                                                    <th>CLEAR AT</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($sfa_technician as $index => $d) : ?>
+                                                <?php foreach ($sfa_ticket as $index => $d) : ?>
                                                     <tr>
                                                         <td class="text-center pt-2">
                                                             <div class="custom-checkbox custom-control">
@@ -42,19 +44,13 @@
                                                             </div>
                                                         </td>
                                                         <td><?php echo $index + 1; ?></td>
-                                                        <td><?php echo $d->NAME_TECHNICIAN; ?></td>
-                                                        <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
-                                                        <td>
-                                                            <?php
-                                                            if ($d->STATUS == 1) {
-                                                                echo '<span class="badge badge-success">Aktif</span>';
-                                                            } else {
-                                                                echo '<span class="badge badge-danger">Tidak Aktif</span>';
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <td><?php echo $d->IDKARYAWAN; ?></td>
-                                                        <td><?php echo $d->DESCRIPTION_TECHNICIAN; ?></td>
+                                                        <td><?php echo $d->IDTICKET; ?></td>
+                                                        <td><?php echo $d->REQUESTBY; ?></td>
+                                                        <td><?php echo $d->SITE_TICKET; ?></td>
+                                                        <td><?php echo $d->APPROVAL_TICKET; ?></td>
+                                                        <td><?php echo $d->TECHNICIAN; ?></td>
+                                                        <td><?php echo $d->STATUS_TICKET; ?></td>
+                                                        <td><?php echo $d->DATE_TICKET_DONE; ?></td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
@@ -385,132 +381,6 @@
 
             <?php $this->load->view('layout/footer'); ?>
 
-            <script>
-                $(document).ready(function() {
-                    $('.view-btn').on('click', function() {
-                        const nama = $(this).data('nama');
-                        const departement = $(this).data('departement');
-                        const karyawan = $(this).data('idkaryawan');
-                        const status = $(this).data('status');
-                        const description = $(this).data('description');
-
-                        // Isi form di modal edit
-                        $('#nama_technician_view').val(nama);
-                        $('#id_departement_view').val(departement).change();
-                        $('#id_karyawan_view').val(karyawan).change();
-                        $('#status_view').val(status).change();
-                        $('#description_technician_view').val(description);
-                    });
-
-                    $('.edit-btn').on('click', function() {
-                        const id = $(this).data('id');
-                        const nama = $(this).data('nama');
-                        const departement = $(this).data('departement');
-                        const karyawan = $(this).data('idkaryawan');
-                        const status = $(this).data('status');
-                        const description = $(this).data('description');
-
-                        // Isi form di modal edit
-                        $('#id_technician_edit').val(id);
-                        $('#nama_technician_edit').val(nama);
-                        $('#id_departement_edit').val(departement).change();
-                        $('#id_karyawan_edit').val(karyawan).change();
-                        $('#status_edit').val(status).change();
-                        $('#description_technician_edit').val(description);
-                    });
-
-                    $('.hapus-btn').on('click', function() {
-                        const id = $(this).data('id');
-
-                        // Isi form di modal edit
-                        $('#id_technician_hapus').val(id);
-                    });
-
-                    $('#formTechnician').on('submit', function(e) {
-                        e.preventDefault();
-
-                        // Ambil data dari form
-                        let formData = $(this).serialize();
-
-                        // Kirim data ke server melalui AJAX
-                        $.ajax({
-                            url: "<?php echo base_url(); ?>" + "technician/insert", // Endpoint untuk proses input
-                            type: 'POST',
-                            data: formData,
-                            success: function(response) {
-                                let res = JSON.parse(response);
-                                if (res.success) {
-                                    swal('Sukses', 'Tambah Data Berhasil!', 'success').then(function() {
-                                        $('#tambahModal').modal('hide');
-                                        location.reload();
-                                    });
-                                } else {
-                                    alert('Gagal menyimpan data: ' + response.error);
-                                }
-                            },
-                            error: function() {
-                                alert('Terjadi kesalahan pada server.');
-                            }
-                        });
-                    });
-
-                    $('#formEditTechnician').on('submit', function(e) {
-                        e.preventDefault();
-
-                        // Ambil data dari form
-                        let formData = $(this).serialize();
-
-                        // Kirim data ke server melalui AJAX
-                        $.ajax({
-                            url: "<?php echo base_url(); ?>" + "technician/update", // Endpoint untuk proses input
-                            type: 'POST',
-                            data: formData,
-                            success: function(response) {
-                                let res = JSON.parse(response);
-                                if (res.success) {
-                                    swal('Sukses', 'Edit Data Berhasil!', 'success').then(function() {
-                                        $('#editModal').modal('hide');
-                                        location.reload();
-                                    });
-                                } else {
-                                    alert('Gagal mengedit data: ' + response.error);
-                                }
-                            },
-                            error: function() {
-                                alert('Terjadi kesalahan pada server.');
-                            }
-                        });
-                    });
-
-                    $('#formHapusTechnician').on('submit', function(e) {
-                        e.preventDefault();
-
-                        // Ambil data dari form
-                        let formData = $(this).serialize();
-
-                        // Kirim data ke server melalui AJAX
-                        $.ajax({
-                            url: "<?php echo base_url(); ?>" + "technician/hapus", // Endpoint untuk proses input
-                            type: 'POST',
-                            data: formData,
-                            success: function(response) {
-                                let res = JSON.parse(response);
-                                if (res.success) {
-                                    swal('Sukses', 'Hapus Data Berhasil!', 'success').then(function() {
-                                        $('#hapusModal').modal('hide');
-                                        location.reload();
-                                    });
-                                } else {
-                                    alert('Gagal menghapus data: ' + response.error);
-                                }
-                            },
-                            error: function() {
-                                alert('Terjadi kesalahan pada server.');
-                            }
-                        });
-                    });
-                });
-            </script>
             </body>
 
 

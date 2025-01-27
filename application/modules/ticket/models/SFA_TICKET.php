@@ -3,7 +3,7 @@ class SFA_TICKET extends CI_Model
 {
 
     // Nama tabel
-    protected $table = 'SFA_TICKET';
+    protected $table = 'TICKET';
 
     public function __construct()
     {
@@ -13,23 +13,29 @@ class SFA_TICKET extends CI_Model
 
     public function get_news()
     {
-        $this->db->select('SFA_TICKET.*, SFA_DEPARTEMENT.*, SFA_TECHNICIAN.*');
-        $this->db->from('SFA_TICKET');
-        $this->db->join('SFA_DEPARTEMENT', 'SFA_TICKET.DEPARTEMENT = SFA_DEPARTEMENT.ID_DEPARTEMENT', 'left');
-        $this->db->join('SFA_TECHNICIAN', 'SFA_TICKET.TECHNICIAN = SFA_TECHNICIAN.IDTECH', 'left');
+        $this->db->select('TICKET.*, DEPARTEMEN.*, TECHNICIAN.*');
+        $this->db->from('TICKET');
+        $this->db->join('DEPARTEMEN', 'TICKET.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
+        $this->db->join('TECHNICIAN', 'TICKET.TECHNICIAN = TECHNICIAN.IDTECH', 'left');
         $query = $this->db->get();
         return $query->result_object();
     }
 
     public function get_departement()
     {
-        $query = $this->db->get('SFA_DEPARTEMENT');
+        $query = $this->db->get('DEPARTEMEN');
         return $query->result_object();
     }
 
     public function get_technician()
     {
-        $query = $this->db->get('SFA_TECHNICIAN');
+        $query = $this->db->get('TECHNICIAN');
+        return $query->result_object();
+    }
+
+    public function get_area()
+    {
+        $query = $this->db->get('MAPING_AREA');
         return $query->result_object();
     }
 

@@ -20,7 +20,9 @@ class Technician extends CI_Controller
         $data['get_departement'] = $this->SFA_TECHNICIAN->get_departement();
         $data['get_karyawan'] = $this->SFA_TECHNICIAN->get_karyawan();
 
-        $this->load->view('pages/technician/technician', $data);
+        $this->load->view('layout/navbar');
+        $this->load->view('layout/sidebar', $data);
+        $this->load->view('technician', $data);
     }
 
     public function insert()

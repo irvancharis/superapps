@@ -3,7 +3,7 @@ class SFA_TECHNICIAN extends CI_Model
 {
 
     // Nama tabel
-    protected $table = 'SFA_TECHNICIAN';
+    protected $table = 'TECHNICIAN';
 
     public function __construct()
     {
@@ -13,22 +13,23 @@ class SFA_TECHNICIAN extends CI_Model
 
     public function get_news()
     {
-        $this->db->select('SFA_TECHNICIAN.*, SFA_DEPARTEMENT.NAMA_DEPARTEMENT');
-        $this->db->from('SFA_TECHNICIAN');
-        $this->db->join('SFA_DEPARTEMENT', 'SFA_TECHNICIAN.DEPARTEMENT = SFA_DEPARTEMENT.ID_DEPARTEMENT', 'left');
+        $this->db->select('TECHNICIAN.*, DEPARTEMEN.*, KARYAWAN.ID_KARYAWAN, KARYAWAN.NAMA_KARYAWAN');
+        $this->db->from('TECHNICIAN');
+        $this->db->join('DEPARTEMEN', 'TECHNICIAN.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
+        $this->db->join('KARYAWAN', 'TECHNICIAN.IDKARYAWAN = KARYAWAN.ID_KARYAWAN', 'left');
         $query = $this->db->get();
         return $query->result_object();
     }
 
     public function get_departement()
     {
-        $query = $this->db->get('SFA_DEPARTEMENT');
+        $query = $this->db->get('DEPARTEMEN');
         return $query->result_object();
     }
 
     public function get_karyawan()
     {
-        $query = $this->db->get('SFA_KARYAWAN');
+        $query = $this->db->get('KARYAWAN');
         return $query->result_object();
     }
 
@@ -45,15 +46,15 @@ class SFA_TECHNICIAN extends CI_Model
         return $this->db->insert($this->table, $data);
     }
 
-    public function update($id_departement, $data)
+    public function update($id_tech, $data)
     {
-        $this->db->where('IDTECH', $id_departement);
+        $this->db->where('IDTECH', $id_tech);
         return $this->db->update($this->table, $data);
     }
 
-    public function hapus($id_departement)
+    public function hapus($id_tech)
     {
-        $this->db->where('IDTECH', $id_departement);
+        $this->db->where('IDTECH', $id_tech);
         return $this->db->delete($this->table);
     }
 }

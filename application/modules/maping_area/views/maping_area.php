@@ -5,7 +5,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Data Teknisi</h4>
+                                    <h4>Data Area</h4>
                                     <div class="card-header-action">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahModal"><i class="fas fa-plus"></i> Tambah Data</button>
                                     </div>
@@ -23,16 +23,13 @@
                                                         </div>
                                                     </th>
                                                     <th>#</th>
-                                                    <th>Nama Teknisi</th>
-                                                    <th>Departemen</th>
-                                                    <th>Status</th>
-                                                    <th>ID Karyawan</th>
-                                                    <th>Deskripsi Teknisi</th>
+                                                    <th>Nama Area</th>
+                                                    <th>Keterangan</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($sfa_technician as $index => $d) : ?>
+                                                <?php foreach ($sfa_maping_area as $index => $d) : ?>
                                                     <tr>
                                                         <td class="text-center pt-2">
                                                             <div class="custom-checkbox custom-control">
@@ -42,27 +39,16 @@
                                                             </div>
                                                         </td>
                                                         <td><?php echo $index + 1; ?></td>
-                                                        <td><?php echo $d->NAME_TECHNICIAN; ?></td>
-                                                        <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
-                                                        <td>
-                                                            <?php
-                                                            if ($d->STATUS == 1) {
-                                                                echo '<span class="badge badge-success">Aktif</span>';
-                                                            } else {
-                                                                echo '<span class="badge badge-danger">Tidak Aktif</span>';
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <td><?php echo $d->IDKARYAWAN; ?></td>
-                                                        <td><?php echo $d->DESCRIPTION_TECHNICIAN; ?></td>
+                                                        <td><?php echo $d->NAMA_AREA; ?></td>
+                                                        <td><?php echo $d->KETERANGAN_AREA; ?></td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">
-                                                                    <a href="#" class="dropdown-item has-icon view-btn" data-nama="<?php echo $d->NAME_TECHNICIAN; ?>" data-departement="<?php echo $d->DEPARTEMENT; ?>" data-status="<?php echo $d->STATUS; ?>" data-idkaryawan="<?php echo $d->IDKARYAWAN; ?>" data-description="<?php echo $d->DESCRIPTION_TECHNICIAN; ?>" data-toggle="modal" data-target="#viewModal"><i class="fas fa-eye"></i> View</a>
-                                                                    <a href="#" class="dropdown-item has-icon edit-btn" data-id="<?php echo $d->IDTECH; ?>" data-nama="<?php echo $d->NAME_TECHNICIAN; ?>" data-departement="<?php echo $d->DEPARTEMENT; ?>" data-status="<?php echo $d->STATUS; ?>" data-idkaryawan="<?php echo $d->IDKARYAWAN; ?>" data-description="<?php echo $d->DESCRIPTION_TECHNICIAN; ?>" data-toggle="modal" data-target="#editModal"><i class="far fa-edit"></i> Edit</a>
+                                                                    <a href="#" class="dropdown-item has-icon view-btn" data-nama="<?php echo $d->NAMA_AREA; ?>" data-ket="<?php echo $d->KETERANGAN_AREA; ?>" data-toggle="modal" data-target="#viewModal"><i class="fas fa-eye"></i> View</a>
+                                                                    <a href="#" class="dropdown-item has-icon edit-btn" data-id="<?php echo $d->KODE_AREA; ?>" data-nama="<?php echo $d->NAMA_AREA; ?>" data-ket="<?php echo $d->KETERANGAN_AREA; ?>" data-toggle="modal" data-target="#editModal"><i class="far fa-edit"></i> Edit</a>
                                                                     <div class="dropdown-divider"></div>
-                                                                    <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTECH; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
+                                                                    <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->KODE_AREA; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
                                                                         Delete</a>
                                                                 </div>
                                                             </div>
@@ -185,48 +171,20 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="formModal">Input Data Teknisi</h5>
+                            <h5 class="modal-title" id="formModal">Input Data Departemen</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="formTechnician">
+                        <form id="formArea">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label>Nama Teknisi</label>
-                                    <input type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician">
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-md-6 col-12">
-                                        <label>Departemen</label>
-                                        <select class="form-control" name="id_departement">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
-                                            <?php foreach ($get_departement as $row) : ?>
-                                                <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-6 col-12">
-                                        <label>Status</label>
-                                        <select class="form-control" name="status">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Status --</option>
-                                            <option value="0">PASIF</option>
-                                            <option value="1">AKTIF</option>
-                                        </select>
-                                    </div>
+                                    <label>Nama Area</label>
+                                    <input type="text" class="form-control" placeholder="PT. XXXXXXX" name="nama_area">
                                 </div>
                                 <div class="form-group">
-                                    <label>ID Karyawan</label>
-                                    <select class="form-control" name="id_karyawan">
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --</option>
-                                        <?php foreach ($get_karyawan as $row) : ?>
-                                            <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> - <?= $row->NAMA_KARYAWAN; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Deskripsi Teknisi</label>
-                                    <textarea class="form-control" placeholder="Deskripsi" name="description_technician"></textarea>
+                                    <label>Keterangan Area</label>
+                                    <input type="text" class="form-control" placeholder="Keterangan" name="keterangan_area">
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
@@ -244,48 +202,20 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="formModal">View Data Teknisi</h5>
+                            <h5 class="modal-title" id="formModal">View Data Departemen</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="formViewTechnician">
+                        <form id="formViewArea">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label>Nama Teknisi</label>
-                                    <input type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician" id="nama_technician_view" disabled>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-md-6 col-12">
-                                        <label>Departemen</label>
-                                        <select class="form-control" name="id_departement" id="id_departement_view" disabled>
-                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
-                                            <?php foreach ($get_departement as $row) : ?>
-                                                <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-6 col-12">
-                                        <label>Status</label>
-                                        <select class="form-control" name="status" id="status_view" disabled>
-                                            <option value="" class="text-center" selected disabled>-- Pilih Status --</option>
-                                            <option value="0">PASIF</option>
-                                            <option value="1">AKTIF</option>
-                                        </select>
-                                    </div>
+                                    <label>Nama Area</label>
+                                    <input type="text" id="nama_area_view" class="form-control" placeholder="PT. XXXXXX" name="nama_area_view" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>ID Karyawan</label>
-                                    <select class="form-control" name="id_karyawan" id="id_karyawan_view" disabled>
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --</option>
-                                        <?php foreach ($get_karyawan as $row) : ?>
-                                            <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> - <?= $row->NAMA_KARYAWAN; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Deskripsi Teknisi</label>
-                                    <textarea class="form-control" placeholder="Deskripsi" name="description_technician" id="description_technician_view" disabled></textarea>
+                                    <label>Keterangan Area</label>
+                                    <input type="text" id="keterangan_area_view" class="form-control" placeholder="Keterangan" name="keterangan_area_view" disabled>
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
@@ -302,53 +232,25 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="formModal">Edit Data Teknisi</h5>
+                            <h5 class="modal-title" id="formModal">Edit Data Departemen</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="formEditTechnician">
+                        <form id="formEditArea">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label>Nama Teknisi</label>
-                                    <input type="hidden" id="id_technician_edit" class="form-control" placeholder="ID" name="id_technician_edit">
-                                    <input type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician_edit" id="nama_technician_edit">
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-md-6 col-12">
-                                        <label>Departemen</label>
-                                        <select class="form-control" name="id_departement_edit" id="id_departement_edit">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
-                                            <?php foreach ($get_departement as $row) : ?>
-                                                <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-6 col-12">
-                                        <label>Status</label>
-                                        <select class="form-control" name="status_edit" id="status_edit">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Status --</option>
-                                            <option value="0">PASIF</option>
-                                            <option value="1">AKTIF</option>
-                                        </select>
-                                    </div>
+                                    <label>Nama Area</label>
+                                    <input type="hidden" id="id_area_edit" class="form-control" placeholder="ID" name="id_area_edit">
+                                    <input type="text" id="nama_area_edit" class="form-control" placeholder="PT. XXXXXX" name="nama_area_edit">
                                 </div>
                                 <div class="form-group">
-                                    <label>ID Karyawan</label>
-                                    <select class="form-control" name="id_karyawan_edit" id="id_karyawan_edit">
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --</option>
-                                        <?php foreach ($get_karyawan as $row) : ?>
-                                            <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> - <?= $row->NAMA_KARYAWAN; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Deskripsi Teknisi</label>
-                                    <textarea class="form-control" placeholder="Deskripsi" name="description_technician_edit" id="description_technician_edit"></textarea>
+                                    <label>Keterangan Area</label>
+                                    <input type="text" id="keterangan_area_edit" class="form-control" placeholder="Keterangan" name="keterangan_area_edit">
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
-                                <button type="submit" class="btn btn-primary" id="btnSimpan">Simpan</button>
+                                <button type="submit" class="btn btn-primary" id="btnEdit">Simpan</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                             </div>
                         </form>
@@ -362,15 +264,15 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="formModal">Hapus Data Teknisi</h5>
+                            <h5 class="modal-title" id="formModal">Hapus Data Area</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="formHapusTechnician">
+                        <form id="formHapusDepartemen">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <input type="hidden" id="id_technician_hapus" class="form-control" placeholder="ID" name="id_technician_hapus">
+                                    <input type="hidden" id="id_area_hapus" class="form-control" placeholder="ID" name="id_area_hapus">
                                     <p class="text-center">Apakah anda yakin ingin menghapus data ini?</p>
                                 </div>
                             </div>
@@ -389,44 +291,32 @@
                 $(document).ready(function() {
                     $('.view-btn').on('click', function() {
                         const nama = $(this).data('nama');
-                        const departement = $(this).data('departement');
-                        const karyawan = $(this).data('idkaryawan');
-                        const status = $(this).data('status');
-                        const description = $(this).data('description');
+                        const ket = $(this).data('ket');
 
                         // Isi form di modal edit
-                        $('#nama_technician_view').val(nama);
-                        $('#id_departement_view').val(departement).change();
-                        $('#id_karyawan_view').val(karyawan).change();
-                        $('#status_view').val(status).change();
-                        $('#description_technician_view').val(description);
+                        $('#nama_area_view').val(nama);
+                        $('#keterangan_area_view').val(ket);
                     });
 
                     $('.edit-btn').on('click', function() {
                         const id = $(this).data('id');
                         const nama = $(this).data('nama');
-                        const departement = $(this).data('departement');
-                        const karyawan = $(this).data('idkaryawan');
-                        const status = $(this).data('status');
-                        const description = $(this).data('description');
+                        const ket = $(this).data('ket');
 
                         // Isi form di modal edit
-                        $('#id_technician_edit').val(id);
-                        $('#nama_technician_edit').val(nama);
-                        $('#id_departement_edit').val(departement).change();
-                        $('#id_karyawan_edit').val(karyawan).change();
-                        $('#status_edit').val(status).change();
-                        $('#description_technician_edit').val(description);
+                        $('#id_area_edit').val(id);
+                        $('#nama_area_edit').val(nama);
+                        $('#keterangan_area_edit').val(ket);
                     });
 
                     $('.hapus-btn').on('click', function() {
                         const id = $(this).data('id');
 
                         // Isi form di modal edit
-                        $('#id_technician_hapus').val(id);
+                        $('#id_area_hapus').val(id);
                     });
 
-                    $('#formTechnician').on('submit', function(e) {
+                    $('#formArea').on('submit', function(e) {
                         e.preventDefault();
 
                         // Ambil data dari form
@@ -434,7 +324,7 @@
 
                         // Kirim data ke server melalui AJAX
                         $.ajax({
-                            url: "<?php echo base_url(); ?>" + "technician/insert", // Endpoint untuk proses input
+                            url: "<?php echo base_url(); ?>" + "maping_area/insert", // Endpoint untuk proses input
                             type: 'POST',
                             data: formData,
                             success: function(response) {
@@ -454,26 +344,25 @@
                         });
                     });
 
-                    $('#formEditTechnician').on('submit', function(e) {
+                    $('#formEditArea').on('submit', function(e) {
                         e.preventDefault();
-
                         // Ambil data dari form
                         let formData = $(this).serialize();
 
                         // Kirim data ke server melalui AJAX
                         $.ajax({
-                            url: "<?php echo base_url(); ?>" + "technician/update", // Endpoint untuk proses input
+                            url: "<?php echo base_url(); ?>" + "maping_area/update", // Endpoint untuk proses input
                             type: 'POST',
                             data: formData,
                             success: function(response) {
                                 let res = JSON.parse(response);
                                 if (res.success) {
-                                    swal('Sukses', 'Edit Data Berhasil!', 'success').then(function() {
+                                    swal('Sukses', 'Tambah Data Berhasil!', 'success').then(function() {
                                         $('#editModal').modal('hide');
                                         location.reload();
                                     });
                                 } else {
-                                    alert('Gagal mengedit data: ' + response.error);
+                                    alert('Gagal menyimpan data: ' + response.error);
                                 }
                             },
                             error: function() {
@@ -482,7 +371,7 @@
                         });
                     });
 
-                    $('#formHapusTechnician').on('submit', function(e) {
+                    $('#formHapusDepartemen').on('submit', function(e) {
                         e.preventDefault();
 
                         // Ambil data dari form
@@ -490,7 +379,7 @@
 
                         // Kirim data ke server melalui AJAX
                         $.ajax({
-                            url: "<?php echo base_url(); ?>" + "technician/hapus", // Endpoint untuk proses input
+                            url: "<?php echo base_url(); ?>" + "maping_area/hapus", // Endpoint untuk proses input
                             type: 'POST',
                             data: formData,
                             success: function(response) {

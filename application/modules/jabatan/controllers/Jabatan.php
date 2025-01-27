@@ -18,9 +18,9 @@ class Jabatan extends CI_Controller
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
 
-        $this->load->view('layout/navbar');
-        $this->load->view('layout/sidebar');
-        $this->load->view('jabatan', $data);
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('jabatan', $data);
     }
 
     public function insert()

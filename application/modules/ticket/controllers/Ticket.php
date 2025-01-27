@@ -18,9 +18,30 @@ class Ticket extends CI_Controller
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $data['get_departement'] = $this->SFA_TICKET->get_departement();
-        $data['get_technician'] = $this->SFA_TECHNICIAN->get_technician();
+        $data['get_technician'] = $this->SFA_TICKET->get_technician();
 
-        $this->load->view('pages/ticket/ticket', $data);
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('ticket', $data);
+    }
+
+    public function get_departement()
+    {
+        $result = $this->SFA_TICKET->get_departement();
+        echo json_encode($result);
+    }
+
+    public function tambah_view($page = 'ticket')
+    {
+        $this->load->library('session');
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $data['get_departement'] = $this->SFA_TICKET->get_departement();
+        $data['get_technician'] = $this->SFA_TICKET->get_technician();
+        $data['get_area'] = $this->SFA_TICKET->get_area();
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('ticket_tambah', $data);
     }
 
     public function insert()
