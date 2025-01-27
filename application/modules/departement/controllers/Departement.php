@@ -7,7 +7,7 @@ class Departement extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('SFA_DEPARTEMENT');
+        $this->load->model('M_DEPARTEMENT');
         $this->load->helper('url_helper');
     }
 
@@ -15,7 +15,7 @@ class Departement extends CI_Controller
     {
         $this->load->library('session');
 
-        $data['sfa_departement'] = $this->SFA_DEPARTEMENT->get_news();
+        $data['M_DEPARTEMENT'] = $this->M_DEPARTEMENT->get_news();
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
 
@@ -28,7 +28,7 @@ class Departement extends CI_Controller
     {
 
         // Ambil data dari POST
-        $get_last_departement = $this->SFA_DEPARTEMENT->get_latest_data();
+        $get_last_departement = $this->M_DEPARTEMENT->get_latest_data();
         $id_departement = $get_last_departement[0]->KODE_DEPARTEMEN + 1;
         $nama_departement = $this->input->post('nama_departement');
         $keterangan = $this->input->post('keterangan');
@@ -46,7 +46,7 @@ class Departement extends CI_Controller
             'KETERANGAN' => $keterangan,
         ];
 
-        $result = $this->SFA_DEPARTEMENT->insert($data);
+        $result = $this->M_DEPARTEMENT->insert($data);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -74,7 +74,7 @@ class Departement extends CI_Controller
             'KETERANGAN' => $keterangan,
         ];
 
-        $result = $this->SFA_DEPARTEMENT->update($id_departement, $data);
+        $result = $this->M_DEPARTEMENT->update($id_departement, $data);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -89,7 +89,7 @@ class Departement extends CI_Controller
         $id_departement = $this->input->post('id_departement_hapus');
 
         // Proses hapus data
-        $result = $this->SFA_DEPARTEMENT->hapus($id_departement);
+        $result = $this->M_DEPARTEMENT->hapus($id_departement);
 
         if ($result) {
             echo json_encode(['success' => true]);

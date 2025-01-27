@@ -29,7 +29,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($sfa_departement as $index => $d) : ?>
+                                                <?php foreach ($M_DEPARTEMENT as $index => $d) : ?>
                                                     <tr>
                                                         <td class="text-center pt-2">
                                                             <div class="custom-checkbox custom-control">

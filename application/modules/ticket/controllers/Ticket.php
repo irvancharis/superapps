@@ -6,7 +6,7 @@ class Ticket extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('SFA_TICKET');
+        $this->load->model('M_TICKET');
         $this->load->helper('url_helper');
     }
 
@@ -14,11 +14,11 @@ class Ticket extends CI_Controller
     {
         $this->load->library('session');
 
-        $data['sfa_ticket'] = $this->SFA_TICKET->get_news();
+        $data['M_TICKET'] = $this->M_TICKET->get_news();
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
-        $data['get_departement'] = $this->SFA_TICKET->get_departement();
-        $data['get_technician'] = $this->SFA_TICKET->get_technician();
+        $data['get_departement'] = $this->M_TICKET->get_departement();
+        $data['get_technician'] = $this->M_TICKET->get_technician();
 
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
@@ -27,7 +27,7 @@ class Ticket extends CI_Controller
 
     public function get_departement()
     {
-        $result = $this->SFA_TICKET->get_departement();
+        $result = $this->M_TICKET->get_departement();
         echo json_encode($result);
     }
 
@@ -36,9 +36,9 @@ class Ticket extends CI_Controller
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
-        $data['get_departement'] = $this->SFA_TICKET->get_departement();
-        $data['get_technician'] = $this->SFA_TICKET->get_technician();
-        $data['get_area'] = $this->SFA_TICKET->get_area();
+        $data['get_departement'] = $this->M_TICKET->get_departement();
+        $data['get_technician'] = $this->M_TICKET->get_technician();
+        $data['get_area'] = $this->M_TICKET->get_area();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('ticket_tambah', $data);
@@ -48,7 +48,7 @@ class Ticket extends CI_Controller
     {
 
         // Ambil data dari POST
-        $get_last_ticket = $this->SFA_TICKET->get_latest_data();
+        $get_last_ticket = $this->M_TICKET->get_latest_data();
         $id_ticket = isset($get_last_ticket[0]->IDTICKET) ? $get_last_ticket[0]->IDTICKET + 1 : 1; // Default ke 1 jika data kosong
         $requestby = $this->input->post('requestby');
         $id_departement = $this->input->post('id_departement');
@@ -173,7 +173,7 @@ class Ticket extends CI_Controller
             'PROSENTASE' => $prosentase,
         ];
 
-        $result = $this->SFA_TICKET->insert($data);
+        $result = $this->M_TICKET->insert($data);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -308,7 +308,7 @@ class Ticket extends CI_Controller
             'PROSENTASE' => $prosentase,
         ];
 
-        $result = $this->SFA_TICKET->update($id_ticket, $data);
+        $result = $this->M_TICKET->update($id_ticket, $data);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -323,7 +323,7 @@ class Ticket extends CI_Controller
         $id_ticket = $this->input->post('id_ticket_hapus');
 
         // Proses hapus data
-        $result = $this->SFA_TICKET->hapus($id_ticket);
+        $result = $this->M_TICKET->hapus($id_ticket);
 
         if ($result) {
             echo json_encode(['success' => true]);

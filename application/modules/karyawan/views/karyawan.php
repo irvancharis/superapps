@@ -31,7 +31,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($sfa_karyawan as $index => $d) : ?>
+                                                <?php foreach ($M_KARYAWAN as $index => $d) : ?>
                                                     <tr>
                                                         <td class="text-center pt-2">
                                                             <div class="custom-checkbox custom-control">

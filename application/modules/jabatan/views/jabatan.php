@@ -29,7 +29,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($sfa_jabatan as $index => $d) : ?>
+                                                <?php foreach ($M_JABATAN as $index => $d) : ?>
                                                     <tr>
                                                         <td class="text-center pt-2">
                                                             <div class="custom-checkbox custom-control">
@@ -246,7 +246,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Keterangan</label>
-                                    <input type="text" id="keterangan_edit" class="form-control" placeholder="Keterangan" name="nama_jabatan_edit">
+                                    <input type="text" id="keterangan_edit" class="form-control" placeholder="Keterangan" name="keterangan_edit">
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">

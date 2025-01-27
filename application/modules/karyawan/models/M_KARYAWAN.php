@@ -1,9 +1,9 @@
 <?php
-class SFA_TECHNICIAN extends CI_Model
+class M_KARYAWAN extends CI_Model
 {
 
     // Nama tabel
-    protected $table = 'TECHNICIAN';
+    protected $table = 'KARYAWAN';
 
     public function __construct()
     {
@@ -13,10 +13,10 @@ class SFA_TECHNICIAN extends CI_Model
 
     public function get_news()
     {
-        $this->db->select('TECHNICIAN.*, DEPARTEMEN.*, KARYAWAN.ID_KARYAWAN, KARYAWAN.NAMA_KARYAWAN');
-        $this->db->from('TECHNICIAN');
-        $this->db->join('DEPARTEMEN', 'TECHNICIAN.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
-        $this->db->join('KARYAWAN', 'TECHNICIAN.IDKARYAWAN = KARYAWAN.ID_KARYAWAN', 'left');
+        $this->db->select('KARYAWAN.*, DEPARTEMEN.*, JABATAN.*');
+        $this->db->from('KARYAWAN');
+        $this->db->join('DEPARTEMEN', 'KARYAWAN.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
+        $this->db->join('JABATAN', 'KARYAWAN.JABATAN = JABATAN.KODE_JABATAN', 'left');
         $query = $this->db->get();
         return $query->result_object();
     }
@@ -27,15 +27,15 @@ class SFA_TECHNICIAN extends CI_Model
         return $query->result_object();
     }
 
-    public function get_karyawan()
+    public function get_jabatan()
     {
-        $query = $this->db->get('KARYAWAN');
+        $query = $this->db->get('JABATAN');
         return $query->result_object();
     }
 
     public function get_latest_data()
     {
-        $this->db->order_by('IDTECH', 'DESC');
+        $this->db->order_by('ID_KARYAWAN', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get($this->table);
         return $query->result_object();
@@ -46,15 +46,15 @@ class SFA_TECHNICIAN extends CI_Model
         return $this->db->insert($this->table, $data);
     }
 
-    public function update($id_tech, $data)
+    public function update($id_karyawan, $data)
     {
-        $this->db->where('IDTECH', $id_tech);
+        $this->db->where('ID_KARYAWAN', $id_karyawan);
         return $this->db->update($this->table, $data);
     }
 
-    public function hapus($id_tech)
+    public function hapus($id_karyawan)
     {
-        $this->db->where('IDTECH', $id_tech);
+        $this->db->where('ID_KARYAWAN', $id_karyawan);
         return $this->db->delete($this->table);
     }
 }

@@ -1,9 +1,9 @@
 <?php
-class SFA_TICKET extends CI_Model
+class M_TECHNICIAN extends CI_Model
 {
 
     // Nama tabel
-    protected $table = 'TICKET';
+    protected $table = 'TECHNICIAN';
 
     public function __construct()
     {
@@ -13,10 +13,10 @@ class SFA_TICKET extends CI_Model
 
     public function get_news()
     {
-        $this->db->select('TICKET.*, DEPARTEMEN.*, TECHNICIAN.*');
-        $this->db->from('TICKET');
-        $this->db->join('DEPARTEMEN', 'TICKET.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
-        $this->db->join('TECHNICIAN', 'TICKET.TECHNICIAN = TECHNICIAN.IDTECH', 'left');
+        $this->db->select('TECHNICIAN.*, DEPARTEMEN.*, KARYAWAN.ID_KARYAWAN, KARYAWAN.NAMA_KARYAWAN');
+        $this->db->from('TECHNICIAN');
+        $this->db->join('DEPARTEMEN', 'TECHNICIAN.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
+        $this->db->join('KARYAWAN', 'TECHNICIAN.IDKARYAWAN = KARYAWAN.ID_KARYAWAN', 'left');
         $query = $this->db->get();
         return $query->result_object();
     }
@@ -27,21 +27,15 @@ class SFA_TICKET extends CI_Model
         return $query->result_object();
     }
 
-    public function get_technician()
+    public function get_karyawan()
     {
-        $query = $this->db->get('TECHNICIAN');
-        return $query->result_object();
-    }
-
-    public function get_area()
-    {
-        $query = $this->db->get('MAPING_AREA');
+        $query = $this->db->get('KARYAWAN');
         return $query->result_object();
     }
 
     public function get_latest_data()
     {
-        $this->db->order_by('IDTICKET', 'DESC');
+        $this->db->order_by('IDTECH', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get($this->table);
         return $query->result_object();
@@ -52,15 +46,15 @@ class SFA_TICKET extends CI_Model
         return $this->db->insert($this->table, $data);
     }
 
-    public function update($id_ticket, $data)
+    public function update($id_tech, $data)
     {
-        $this->db->where('IDTICKET', $id_ticket);
+        $this->db->where('IDTECH', $id_tech);
         return $this->db->update($this->table, $data);
     }
 
-    public function hapus($id_ticket)
+    public function hapus($id_tech)
     {
-        $this->db->where('IDTICKET', $id_ticket);
+        $this->db->where('IDTECH', $id_tech);
         return $this->db->delete($this->table);
     }
 }

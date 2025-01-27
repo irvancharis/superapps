@@ -7,7 +7,7 @@ class Maping_area extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('MAPING_AREA_model');
+        $this->load->model('M_MAPING_AREA');
         $this->load->helper('url_helper');
     }
 
@@ -15,7 +15,7 @@ class Maping_area extends CI_Controller
     {
         $this->load->library('session');
 
-        $data['sfa_maping_area'] = $this->MAPING_AREA_model->get_news();
+        $data['sfa_maping_area'] = $this->M_MAPING_AREA->get_news();
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
 
@@ -28,7 +28,7 @@ class Maping_area extends CI_Controller
     {
 
         // Ambil data dari POST
-        $get_last_area = $this->MAPING_AREA_model->get_latest_data();
+        $get_last_area = $this->M_MAPING_AREA->get_latest_data();
         $id_area = $get_last_area[0]->KODE_AREA + 1;
         $nama_area = $this->input->post('nama_area');
         $keterangan = $this->input->post('keterangan');
@@ -46,7 +46,7 @@ class Maping_area extends CI_Controller
             'KETERANGAN_AREA' => $keterangan,
         ];
 
-        $result = $this->MAPING_AREA_model->insert($data);
+        $result = $this->M_MAPING_AREA->insert($data);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -74,7 +74,7 @@ class Maping_area extends CI_Controller
             'KETERANGAN_AREA' => $keterangan,
         ];
 
-        $result = $this->MAPING_AREA_model->update($id_area, $data);
+        $result = $this->M_MAPING_AREA->update($id_area, $data);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -89,7 +89,7 @@ class Maping_area extends CI_Controller
         $id_area = $this->input->post('id_area_hapus');
 
         // Proses hapus data
-        $result = $this->MAPING_AREA_model->hapus($id_area);
+        $result = $this->M_MAPING_AREA->hapus($id_area);
 
         if ($result) {
             echo json_encode(['success' => true]);

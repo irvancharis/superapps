@@ -1,5 +1,5 @@
 <?php
-class MAPING_AREA_model extends CI_Model
+class M_MAPING_AREA extends CI_Model
 {
 
     // Nama tabel

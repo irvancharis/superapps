@@ -6,7 +6,7 @@ class Technician extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('SFA_TECHNICIAN');
+        $this->load->model('M_TECHNICIAN');
         $this->load->helper('url_helper');
     }
 
@@ -14,11 +14,11 @@ class Technician extends CI_Controller
     {
         $this->load->library('session');
 
-        $data['sfa_technician'] = $this->SFA_TECHNICIAN->get_news();
+        $data['M_TECHNICIAN'] = $this->M_TECHNICIAN->get_news();
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
-        $data['get_departement'] = $this->SFA_TECHNICIAN->get_departement();
-        $data['get_karyawan'] = $this->SFA_TECHNICIAN->get_karyawan();
+        $data['get_departement'] = $this->M_TECHNICIAN->get_departement();
+        $data['get_karyawan'] = $this->M_TECHNICIAN->get_karyawan();
 
         $this->load->view('layout/navbar');
         $this->load->view('layout/sidebar', $data);
@@ -29,7 +29,7 @@ class Technician extends CI_Controller
     {
 
         // Ambil data dari POST
-        $get_last_technician = $this->SFA_TECHNICIAN->get_latest_data();
+        $get_last_technician = $this->M_TECHNICIAN->get_latest_data();
         $id_technician = isset($get_last_technician[0]->IDTECH) ? $get_last_technician[0]->IDTECH + 1 : 1; // Default ke 1 jika data kosong
         $nama_technician = $this->input->post('nama_technician');
         $id_departement = $this->input->post('id_departement');
@@ -85,7 +85,7 @@ class Technician extends CI_Controller
         ];
 
 
-        $result = $this->SFA_TECHNICIAN->insert($data);
+        $result = $this->M_TECHNICIAN->insert($data);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -148,7 +148,7 @@ class Technician extends CI_Controller
             'DESCRIPTION_TECHNICIAN' => $description,
         ];
 
-        $result = $this->SFA_TECHNICIAN->update($id_technician, $data);
+        $result = $this->M_TECHNICIAN->update($id_technician, $data);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -163,7 +163,7 @@ class Technician extends CI_Controller
         $id_technician = $this->input->post('id_technician_hapus');
 
         // Proses hapus data
-        $result = $this->SFA_TECHNICIAN->hapus($id_technician);
+        $result = $this->M_TECHNICIAN->hapus($id_technician);
 
         if ($result) {
             echo json_encode(['success' => true]);

@@ -6,7 +6,7 @@ class Karyawan extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('SFA_KARYAWAN');
+        $this->load->model('M_KARYAWAN');
         $this->load->helper('url_helper');
     }
 
@@ -14,11 +14,11 @@ class Karyawan extends CI_Controller
     {
         $this->load->library('session');
 
-        $data['sfa_karyawan'] = $this->SFA_KARYAWAN->get_news();
+        $data['M_KARYAWAN'] = $this->M_KARYAWAN->get_news();
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
-        $data['get_departement'] = $this->SFA_KARYAWAN->get_departement();
-        $data['get_jabatan'] = $this->SFA_KARYAWAN->get_jabatan();
+        $data['get_departement'] = $this->M_KARYAWAN->get_departement();
+        $data['get_jabatan'] = $this->M_KARYAWAN->get_jabatan();
 
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
@@ -29,7 +29,7 @@ class Karyawan extends CI_Controller
     {
 
         // Ambil data dari POST
-        $get_last_karyawan = $this->SFA_KARYAWAN->get_latest_data();
+        $get_last_karyawan = $this->M_KARYAWAN->get_latest_data();
         $id_karyawan = isset($get_last_karyawan[0]->ID_KARYAWAN) ? $get_last_karyawan[0]->ID_KARYAWAN + 1 : 1; // Default ke 1 jika data kosong
         $nama_karyawan = $this->input->post('nama_karyawan');
         $id_departement = $this->input->post('id_departement');
@@ -83,7 +83,7 @@ class Karyawan extends CI_Controller
         ];
 
 
-        $result = $this->SFA_KARYAWAN->insert($data);
+        $result = $this->M_KARYAWAN->insert($data);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -144,7 +144,7 @@ class Karyawan extends CI_Controller
             'JABATAN' => $id_jabatan,
         ];
 
-        $result = $this->SFA_KARYAWAN->update($id_karyawan, $data);
+        $result = $this->M_KARYAWAN->update($id_karyawan, $data);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -159,7 +159,7 @@ class Karyawan extends CI_Controller
         $id_karyawan = $this->input->post('id_karyawan_hapus');
 
         // Proses hapus data
-        $result = $this->SFA_KARYAWAN->hapus($id_karyawan);
+        $result = $this->M_KARYAWAN->hapus($id_karyawan);
 
         if ($result) {
             echo json_encode(['success' => true]);

@@ -6,7 +6,7 @@ class Jabatan extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('SFA_JABATAN');
+        $this->load->model('M_JABATAN');
         $this->load->helper('url_helper');
     }
 
@@ -14,7 +14,7 @@ class Jabatan extends CI_Controller
     {
         $this->load->library('session');
 
-        $data['sfa_jabatan'] = $this->SFA_JABATAN->get_news();
+        $data['M_JABATAN'] = $this->M_JABATAN->get_news();
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
 
@@ -27,7 +27,7 @@ class Jabatan extends CI_Controller
     {
 
         // Ambil data dari POST
-        $get_last_jabatan = $this->SFA_JABATAN->get_latest_data();
+        $get_last_jabatan = $this->M_JABATAN->get_latest_data();
         $id_jabatan = isset($get_last_jabatan[0]->KODE_JABATAN) ? $get_last_jabatan[0]->KODE_JABATAN + 1 : 1;
         $nama_jabatan = $this->input->post('nama_jabatan');
         $keterangan = $this->input->post('keterangan');
@@ -45,7 +45,7 @@ class Jabatan extends CI_Controller
             'KETERANGAN' => $keterangan
         ];
 
-        $result = $this->SFA_JABATAN->insert($data);
+        $result = $this->M_JABATAN->insert($data);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -73,7 +73,7 @@ class Jabatan extends CI_Controller
             'KETERANGAN' => $keterangan
         ];
 
-        $result = $this->SFA_JABATAN->update($id_jabatan, $data);
+        $result = $this->M_JABATAN->update($id_jabatan, $data);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -88,7 +88,7 @@ class Jabatan extends CI_Controller
         $id_jabatan = $this->input->post('id_jabatan_hapus');
 
         // Proses hapus data
-        $result = $this->SFA_JABATAN->hapus($id_jabatan);
+        $result = $this->M_JABATAN->hapus($id_jabatan);
 
         if ($result) {
             echo json_encode(['success' => true]);
