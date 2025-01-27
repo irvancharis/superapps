@@ -15,8 +15,8 @@ class M_KARYAWAN extends CI_Model
     {
         $this->db->select('KARYAWAN.*, DEPARTEMEN.*, JABATAN.*');
         $this->db->from('KARYAWAN');
-        $this->db->join('DEPARTEMEN', 'KARYAWAN.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
-        $this->db->join('JABATAN', 'KARYAWAN.JABATAN = JABATAN.KODE_JABATAN', 'left');
+        $this->db->join('DEPARTEMEN', 'KARYAWAN.ID_DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
+        $this->db->join('JABATAN', 'KARYAWAN.ID_JABATAN = JABATAN.KODE_JABATAN', 'left');
         $query = $this->db->get();
         return $query->result_object();
     }

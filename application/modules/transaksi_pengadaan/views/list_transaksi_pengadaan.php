@@ -5,7 +5,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Data Karyawan</h4>
+                                    <h4>List Pengajuan</h4>
                                     <div class="card-header-action">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahModal"><i class="fas fa-plus"></i> Tambah Data</button>
                                     </div>
@@ -23,15 +23,13 @@
                                                         </div>
                                                     </th>
                                                     <th>#</th>
-                                                    <th>Nama Karyawan</th>
-                                                    <th>Jabatan</th>
-                                                    <th>Departemen</th>
-                                                    <th>Status</th>
+                                                    <th>Nama Departemen</th>
+                                                    <th>Keterangan</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($M_KARYAWAN as $index => $d) : ?>
+                                                <?php foreach ($M_DEPARTEMENT as $index => $d) : ?>
                                                     <tr>
                                                         <td class="text-center pt-2">
                                                             <div class="custom-checkbox custom-control">
@@ -41,26 +39,16 @@
                                                             </div>
                                                         </td>
                                                         <td><?php echo $index + 1; ?></td>
-                                                        <td><?php echo $d->NAMA_KARYAWAN; ?></td>
-                                                        <td><?php echo $d->NAMA_JABATAN; ?></td>
                                                         <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
-                                                        <td>
-                                                            <?php
-                                                            if ($d->STATUS_KARYAWAN == 1) {
-                                                                echo '<span class="badge badge-success">Aktif</span>';
-                                                            } else {
-                                                                echo '<span class="badge badge-danger">Tidak Aktif</span>';
-                                                            }
-                                                            ?>
-                                                        </td>
+                                                        <td><?php echo $d->KETERANGAN; ?></td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">
-                                                                    <a href="#" class="dropdown-item has-icon view-btn" data-nama="<?php echo $d->NAMA_KARYAWAN; ?>" data-jabatan="<?php echo $d->ID_JABATAN; ?>" data-departemen="<?php echo $d->ID_DEPARTEMENT; ?>" data-status="<?php echo $d->STATUS_KARYAWAN; ?>" data-toggle="modal" data-target="#viewModal"><i class="fas fa-eye"></i> View</a>
-                                                                    <a href="#" class="dropdown-item has-icon edit-btn" data-id="<?php echo $d->ID_KARYAWAN; ?>" data-nama="<?php echo $d->NAMA_KARYAWAN; ?>" data-jabatan="<?php echo $d->ID_JABATAN; ?>" data-departemen="<?php echo $d->ID_DEPARTEMENT; ?>" data-status="<?php echo $d->STATUS_KARYAWAN; ?>" data-toggle="modal" data-target="#editModal"><i class="far fa-edit"></i> Edit</a>
+                                                                    <a href="#" class="dropdown-item has-icon view-btn" data-nama="<?php echo $d->NAMA_DEPARTEMEN; ?>" data-ket="<?php echo $d->KETERANGAN; ?>" data-toggle="modal" data-target="#viewModal"><i class="fas fa-eye"></i> View</a>
+                                                                    <a href="#" class="dropdown-item has-icon edit-btn" data-id="<?php echo $d->KODE_DEPARTEMEN; ?>" data-nama="<?php echo $d->NAMA_DEPARTEMEN; ?>" data-ket="<?php echo $d->KETERANGAN; ?>" data-toggle="modal" data-target="#editModal"><i class="far fa-edit"></i> Edit</a>
                                                                     <div class="dropdown-divider"></div>
-                                                                    <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->ID_KARYAWAN; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
+                                                                    <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->KODE_DEPARTEMEN; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
                                                                         Delete</a>
                                                                 </div>
                                                             </div>
@@ -183,44 +171,20 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="formModal">Input Data Karyawan</h5>
+                            <h5 class="modal-title" id="formModal">Input Data Departemen</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="formKaryawan">
+                        <form id="formDepartemen">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label>Nama Karyawan</label>
-                                    <input type="text" class="form-control" placeholder="Nama Karyawan" name="nama_karyawan">
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-md-6 col-12">
-                                        <label>Jabatan</label>
-                                        <select class="form-control" name="id_jabatan">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Jabatan --</option>
-                                            <?php foreach ($get_jabatan as $row) : ?>
-                                                <option value="<?= $row->KODE_JABATAN; ?>"><?= $row->NAMA_JABATAN; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-6 col-12">
-                                        <label>Departemen</label>
-                                        <select class="form-control" name="id_departement">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
-                                            <?php foreach ($get_departement as $row) : ?>
-                                                <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
+                                    <label>Nama Departemen</label>
+                                    <input type="text" class="form-control" placeholder="Purchasing" name="nama_departement">
                                 </div>
                                 <div class="form-group">
-                                    <label>Status</label>
-                                    <select class="form-control" name="status">
-                                        <option value="" class="text-center" selected disabled>-- Pilih Status --</option>
-                                        <option value="0">PASIF</option>
-                                        <option value="1">AKTIF</option>
-                                    </select>
+                                    <label>Keterangan</label>
+                                    <input type="text" class="form-control" placeholder="Keterangan" name="keterangan">
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
@@ -238,44 +202,20 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="formModal">View Data Karyawan</h5>
+                            <h5 class="modal-title" id="formModal">View Data Departemen</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="formViewKaryawan">
+                        <form id="formEditDepartemen">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label>Nama Karyawan</label>
-                                    <input type="text" class="form-control" placeholder="Nama Karyawan" name="nama_karyawan_view" id="nama_karyawan_view" disabled>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-md-6 col-12">
-                                        <label>Jabatan</label>
-                                        <select class="form-control" name="id_jabatan_view" id="id_jabatan_view" disabled>
-                                            <option value="" class="text-center" selected disabled>-- Pilih Jabatan --</option>
-                                            <?php foreach ($get_jabatan as $row) : ?>
-                                                <option value="<?= $row->KODE_JABATAN; ?>"><?= $row->NAMA_JABATAN; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-6 col-12">
-                                        <label>Departemen</label>
-                                        <select class="form-control" name="id_departement_view" id="id_departement_view" disabled>
-                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
-                                            <?php foreach ($get_departement as $row) : ?>
-                                                <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
+                                    <label>Nama Departemen</label>
+                                    <input type="text" id="nama_departement_view" class="form-control" placeholder="Purchasing" name="nama_departement_view" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Status</label>
-                                    <select class="form-control" name="status_view" id="status_view" disabled>
-                                        <option value="" class="text-center" selected disabled>-- Pilih Status --</option>
-                                        <option value="0">PASIF</option>
-                                        <option value="1">AKTIF</option>
-                                    </select>
+                                    <label>Keterangan</label>
+                                    <input type="text" id="keterangan" class="form-control" placeholder="Keterangan" name="keterangan_view" disabled>
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
@@ -292,49 +232,25 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="formModal">Edit Data Karyawan</h5>
+                            <h5 class="modal-title" id="formModal">Edit Data Departemen</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="formEditKaryawan">
+                        <form id="formEdit">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label>Nama Karyawan</label>
-                                    <input type="hidden" id="id_karyawan_edit" class="form-control" placeholder="ID" name="id_karyawan_edit">
-                                    <input type="text" class="form-control" placeholder="Nama Karyawan" name="nama_karyawan_edit" id="nama_karyawan_edit">
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-md-6 col-12">
-                                        <label>Jabatan</label>
-                                        <select class="form-control" name="id_jabatan_edit" id="id_jabatan_edit">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Jabatan --</option>
-                                            <?php foreach ($get_jabatan as $row) : ?>
-                                                <option value="<?= $row->KODE_JABATAN; ?>"><?= $row->NAMA_JABATAN; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-6 col-12">
-                                        <label>Departemen</label>
-                                        <select class="form-control" name="id_departement_edit" id="id_departement_edit">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
-                                            <?php foreach ($get_departement as $row) : ?>
-                                                <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
+                                    <label>Nama Departemen</label>
+                                    <input type="hidden" id="id_departement_edit" class="form-control" placeholder="ID" name="id_departement_edit">
+                                    <input type="text" id="nama_departement_edit" class="form-control" placeholder="Purchasing" name="nama_departement_edit">
                                 </div>
                                 <div class="form-group">
-                                    <label>Status</label>
-                                    <select class="form-control" name="status_edit" id="status_edit">
-                                        <option value="" class="text-center" selected disabled>-- Pilih Status --</option>
-                                        <option value="0">PASIF</option>
-                                        <option value="1">AKTIF</option>
-                                    </select>
+                                    <label>Keterangan</label>
+                                    <input type="text" id="keterangan_edit" class="form-control" placeholder="Keterangan" name="keterangan_edit">
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
-                                <button type="submit" class="btn btn-primary" id="btnSimpan">Simpan</button>
+                                <button type="submit" class="btn btn-primary" id="btnEdit">Simpan</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                             </div>
                         </form>
@@ -348,15 +264,15 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="formModal">Hapus Data Karyawan</h5>
+                            <h5 class="modal-title" id="formModal">Hapus Data Departemen</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="formHapusKaryawan">
+                        <form id="formHapusDepartemen">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <input type="hidden" id="id_karyawan_hapus" class="form-control" placeholder="ID" name="id_karyawan_hapus">
+                                    <input type="hidden" id="id_departement_hapus" class="form-control" placeholder="ID" name="id_departement_hapus">
                                     <p class="text-center">Apakah anda yakin ingin menghapus data ini?</p>
                                 </div>
                             </div>
@@ -375,40 +291,32 @@
                 $(document).ready(function() {
                     $('.view-btn').on('click', function() {
                         const nama = $(this).data('nama');
-                        const jabatan = $(this).data('jabatan');
-                        const departemen = $(this).data('departemen');
-                        const status = $(this).data('status');
+                        const ket = $(this).data('ket');
 
                         // Isi form di modal edit
-                        $('#nama_karyawan_view').val(nama);
-                        $('#id_jabatan_view').val(jabatan).change();
-                        $('#id_departement_view').val(departemen).change();
-                        $('#status_view').val(status).change();
+                        $('#nama_departement_view').val(nama);
+                        $('#keterangan_view').val(ket);
                     });
 
                     $('.edit-btn').on('click', function() {
                         const id = $(this).data('id');
                         const nama = $(this).data('nama');
-                        const jabatan = $(this).data('jabatan');
-                        const departemen = $(this).data('departemen');
-                        const status = $(this).data('status');
+                        const ket = $(this).data('ket');
 
                         // Isi form di modal edit
-                        $('#id_karyawan_edit').val(id);
-                        $('#nama_karyawan_edit').val(nama);
-                        $('#id_jabatan_edit').val(jabatan).change();
-                        $('#id_departement_edit').val(departemen).change();
-                        $('#status_edit').val(status).change();
+                        $('#id_departement_edit').val(id);
+                        $('#nama_departement_edit').val(nama);
+                        $('#keterangan_edit').val(ket);
                     });
 
                     $('.hapus-btn').on('click', function() {
                         const id = $(this).data('id');
 
                         // Isi form di modal edit
-                        $('#id_karyawan_hapus').val(id);
+                        $('#id_departement_hapus').val(id);
                     });
 
-                    $('#formKaryawan').on('submit', function(e) {
+                    $('#formDepartemen').on('submit', function(e) {
                         e.preventDefault();
 
                         // Ambil data dari form
@@ -416,7 +324,7 @@
 
                         // Kirim data ke server melalui AJAX
                         $.ajax({
-                            url: "<?php echo base_url(); ?>" + "karyawan/insert", // Endpoint untuk proses input
+                            url: "<?php echo base_url(); ?>" + "departement/insert", // Endpoint untuk proses input
                             type: 'POST',
                             data: formData,
                             success: function(response) {
@@ -436,26 +344,25 @@
                         });
                     });
 
-                    $('#formEditKaryawan').on('submit', function(e) {
+                    $('#formEdit').on('submit', function(e) {
                         e.preventDefault();
-
                         // Ambil data dari form
                         let formData = $(this).serialize();
 
                         // Kirim data ke server melalui AJAX
                         $.ajax({
-                            url: "<?php echo base_url(); ?>" + "karyawan/update", // Endpoint untuk proses input
+                            url: "<?php echo base_url(); ?>" + "departement/update", // Endpoint untuk proses input
                             type: 'POST',
                             data: formData,
                             success: function(response) {
                                 let res = JSON.parse(response);
                                 if (res.success) {
-                                    swal('Sukses', 'Edit Data Berhasil!', 'success').then(function() {
+                                    swal('Sukses', 'Tambah Data Berhasil!', 'success').then(function() {
                                         $('#editModal').modal('hide');
                                         location.reload();
                                     });
                                 } else {
-                                    alert('Gagal mengedit data: ' + response.error);
+                                    alert('Gagal menyimpan data: ' + response.error);
                                 }
                             },
                             error: function() {
@@ -464,7 +371,7 @@
                         });
                     });
 
-                    $('#formHapusKaryawan').on('submit', function(e) {
+                    $('#formHapusDepartemen').on('submit', function(e) {
                         e.preventDefault();
 
                         // Ambil data dari form
@@ -472,7 +379,7 @@
 
                         // Kirim data ke server melalui AJAX
                         $.ajax({
-                            url: "<?php echo base_url(); ?>" + "karyawan/hapus", // Endpoint untuk proses input
+                            url: "<?php echo base_url(); ?>" + "departement/hapus", // Endpoint untuk proses input
                             type: 'POST',
                             data: formData,
                             success: function(response) {

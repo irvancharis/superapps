@@ -77,9 +77,10 @@ class Karyawan extends CI_Controller
         $data = [
             'ID_KARYAWAN' => $id_karyawan,
             'NAMA_KARYAWAN' => $nama_karyawan,
-            'DEPARTEMENT' => $id_departement,
-            'STATUS' => $status,
-            'JABATAN' => $id_jabatan,
+            'ID_DEPARTEMENT' => $id_departement,
+            'STATUS_KARYAWAN' => $status,
+            'NIK' => $id_karyawan,
+            'ID_JABATAN' => $id_jabatan,
         ];
 
 
@@ -139,9 +140,9 @@ class Karyawan extends CI_Controller
         // Jika validasi lolos, lanjutkan proses penyimpanan
         $data = [
             'NAMA_KARYAWAN' => $nama_karyawan,
-            'DEPARTEMENT' => $id_departement,
-            'STATUS' => $status,
-            'JABATAN' => $id_jabatan,
+            'ID_DEPARTEMENT' => $id_departement,
+            'STATUS_KARYAWAN' => $status,
+            'ID_JABATAN' => $id_jabatan,
         ];
 
         $result = $this->M_KARYAWAN->update($id_karyawan, $data);
