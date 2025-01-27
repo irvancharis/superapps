@@ -46,10 +46,22 @@
                                                         <td><?php echo $index + 1; ?></td>
                                                         <td><?php echo $d->IDTICKET; ?></td>
                                                         <td><?php echo $d->REQUESTBY; ?></td>
-                                                        <td><?php echo $d->SITE_TICKET; ?></td>
+                                                        <td><?php echo $d->NAMA_AREA; ?></td>
                                                         <td><?php echo $d->APPROVAL_TICKET; ?></td>
                                                         <td><?php echo $d->TECHNICIAN; ?></td>
-                                                        <td><?php echo $d->STATUS_TICKET; ?></td>
+                                                        <td>
+                                                            <?php
+                                                            if ($d->STATUS_TICKET == 0) {
+                                                                echo '<span class="badge badge-warning">Dalam Antrian</span>';
+                                                            } elseif ($d->STATUS_TICKET == 1) {
+                                                                echo '<span class="badge badge-primary">Dalam Proses</span>';
+                                                            } elseif ($d->STATUS_TICKET == 2) {
+                                                                echo '<span class="badge badge-success">Selesai</span>';
+                                                            } else {
+                                                                echo '<span class="badge badge-danger">Ditolak</span>';
+                                                            }
+                                                            ?>
+                                                        </td>
                                                         <td><?php echo $d->DATE_TICKET_DONE; ?></td>
                                                         <td>
                                                             <div class="dropdown">

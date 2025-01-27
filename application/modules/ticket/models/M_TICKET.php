@@ -13,10 +13,11 @@ class M_TICKET extends CI_Model
 
     public function get_news()
     {
-        $this->db->select('TICKET.*, DEPARTEMEN.*, TECHNICIAN.*');
+        $this->db->select('TICKET.*, DEPARTEMEN.*, TECHNICIAN.*, MAPING_AREA.*');
         $this->db->from('TICKET');
         $this->db->join('DEPARTEMEN', 'TICKET.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
         $this->db->join('TECHNICIAN', 'TICKET.TECHNICIAN = TECHNICIAN.IDTECH', 'left');
+        $this->db->join('MAPING_AREA', 'TICKET.SITE_TICKET = MAPING_AREA.KODE_AREA', 'left');
         $query = $this->db->get();
         return $query->result_object();
     }

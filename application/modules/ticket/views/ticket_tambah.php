@@ -4,7 +4,7 @@
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <form class="needs-validation" novalidate="">
+                                <form class="needs-validation" novalidate="" id="formTicketTambah">
                                     <div class="card-header">
                                         <h4>INPUT DATA TICKETING</h4>
                                     </div>
@@ -33,7 +33,7 @@
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>E-MAIL</label>
                                                 <input type="email" class="form-control" id="email_ticket" name="email_ticket">
-                                                <div class="valid-feedback">
+                                                <div class="invalid-feedback">
                                                     Masukkan Email dengan benar!
                                                 </div>
                                             </div>
@@ -114,11 +114,11 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Departemen</label>
-                                    <input type="text" class="form-control" placeholder="Purchasing" name="nama_departement">
+                                    <input type="text" class="form-control" placeholder="Purchasing" name="nama_departement" id="nama_departement">
                                 </div>
                                 <div class="form-group">
                                     <label>Keterangan</label>
-                                    <input type="text" class="form-control" placeholder="Keterangan" name="keterangan">
+                                    <input type="text" class="form-control" placeholder="Keterangan" name="keterangan" id="keterangan">
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
@@ -145,11 +145,11 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Area</label>
-                                    <input type="text" class="form-control" placeholder="PT. XXXXXXX" name="nama_area">
+                                    <input type="text" class="form-control" placeholder="PT. XXXXXXX" name="nama_area" id="nama_area">
                                 </div>
                                 <div class="form-group">
                                     <label>Keterangan Area</label>
-                                    <input type="text" class="form-control" placeholder="Keterangan" name="keterangan_area">
+                                    <input type="text" class="form-control" placeholder="Keterangan" name="keterangan_area" id="keterangan_area">
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
@@ -211,7 +211,35 @@
                                 if (res.success) {
                                     swal('Sukses', 'Tambah Data Berhasil!', 'success').then(function() {
                                         $('#tambahModalArea').modal('hide');
-                                        location.reload();
+                                        reloadSelectArea();
+                                    });
+                                } else {
+                                    alert('Gagal menyimpan data: ' + response.error);
+                                }
+                            },
+                            error: function() {
+                                alert('Terjadi kesalahan pada server.');
+                            }
+                        });
+                    });
+
+                    // Input Area
+                    $('#formTicketTambah').on('submit', function(e) {
+                        e.preventDefault();
+
+                        // Ambil data dari form
+                        let formData = $(this).serialize();
+
+                        // Kirim data ke server melalui AJAX
+                        $.ajax({
+                            url: "<?php echo base_url(); ?>" + "ticket/insert", // Endpoint untuk proses input
+                            type: 'POST',
+                            data: formData,
+                            success: function(response) {
+                                let res = JSON.parse(response);
+                                if (res.success) {
+                                    swal('Sukses', 'Tambah Data Berhasil!', 'success').then(function() {
+                                        location.href = "<?php echo base_url(); ?>ticket";
                                     });
                                 } else {
                                     alert('Gagal menyimpan data: ' + response.error);
@@ -232,7 +260,7 @@
                             success: function(response) {
                                 // Kosongkan dan tambahkan ulang data ke dropdown
                                 $('#id_departemen').empty(); // Hapus semua opsi
-                                $('#id_departemen').append('<option value="" selected disabled>-- Pilih Departemen --</option>'); // Tambahkan opsi default
+                                $('#id_departemen').append('<option class="text-center" value="" selected disabled>-- Pilih Departemen --</option>'); // Tambahkan opsi default
 
                                 // Looping data dari server dan tambahkan opsi baru
                                 $.each(response, function(key, departemen) {
@@ -240,9 +268,35 @@
                                         '<option value="' + departemen.KODE_DEPARTEMEN + '">' + departemen.NAMA_DEPARTEMEN + '</option>'
                                     );
                                 });
+                                $('#nama_departement').val('');
                             },
                             error: function() {
                                 alert('Gagal memuat data departemen.');
+                            },
+                        });
+                    }
+
+                    // Fungsi untuk memuat ulang data select option
+                    function reloadSelectArea() {
+                        $.ajax({
+                            url: "<?php echo base_url(); ?>" + "ticket/get_area", // Endpoint untuk mendapatkan data select
+                            type: 'GET',
+                            dataType: 'json', // Mengharapkan data dalam format JSON
+                            success: function(response) {
+                                // Kosongkan dan tambahkan ulang data ke dropdown
+                                $('#id_area').empty(); // Hapus semua opsi
+                                $('#id_area').append('<option class="text-center" value="" selected disabled>-- Pilih Area --</option>'); // Tambahkan opsi default
+
+                                // Looping data dari server dan tambahkan opsi baru
+                                $.each(response, function(key, area) {
+                                    $('#id_area').append(
+                                        '<option value="' + area.KODE_AREA + '">' + area.NAMA_AREA + '</option>'
+                                    );
+                                });
+                                $('#nama_area').val('');
+                            },
+                            error: function() {
+                                alert('Gagal memuat data Area.');
                             },
                         });
                     }
