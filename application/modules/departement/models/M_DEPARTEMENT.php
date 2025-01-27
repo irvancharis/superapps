@@ -1,5 +1,5 @@
 <?php
-class SFA_DEPARTEMENT extends CI_Model
+class M_DEPARTEMENT extends CI_Model
 {
 
     // Nama tabel
