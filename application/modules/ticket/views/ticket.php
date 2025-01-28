@@ -58,7 +58,7 @@
                                                             }
                                                             ?>
                                                         </td>
-                                                        <td><?php echo $d->TECHNICIAN; ?></td>
+                                                        <td><?php echo $d->NAME_TECHNICIAN; ?></td>
                                                         <td>
                                                             <div class="progress">
                                                                 <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0"
