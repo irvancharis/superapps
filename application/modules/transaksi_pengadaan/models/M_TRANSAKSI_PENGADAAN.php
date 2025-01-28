@@ -11,15 +11,38 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
         $this->load->database();
     }
 
-    public function get_news()
+    public function get_transaksi()
     {
-        $query = $this->db->get('TRANSAKSI_PENGADAAN');
+        $this->db->select('TICKET.*, DEPARTEMEN.*, TECHNICIAN.*, MAPING_AREA.*');
+        $this->db->from('TICKET');
+        $this->db->join('DEPARTEMEN', 'TICKET.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
+        $this->db->join('TECHNICIAN', 'TICKET.TECHNICIAN = TECHNICIAN.IDTECH', 'left');
+        $this->db->join('MAPING_AREA', 'TICKET.SITE_TICKET = MAPING_AREA.KODE_AREA', 'left');
+        $query = $this->db->get();
+        return $query->result_object();
+    }
+
+    public function get_departement()
+    {
+        $query = $this->db->get('DEPARTEMEN');
+        return $query->result_object();
+    }
+
+    public function get_technician()
+    {
+        $query = $this->db->get('TECHNICIAN');
+        return $query->result_object();
+    }
+
+    public function get_area()
+    {
+        $query = $this->db->get('MAPING_AREA');
         return $query->result_object();
     }
 
     public function get_latest_data()
     {
-        $this->db->order_by('TANGGAL_PENGAJUAN', 'ASCD');
+        $this->db->order_by('IDTICKET', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get($this->table);
         return $query->result_object();
@@ -30,15 +53,15 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
         return $this->db->insert($this->table, $data);
     }
 
-    public function update($UUID_TRANSAKSI_PENGADAAN, $data)
+    public function update($id_ticket, $data)
     {
-        $this->db->where('UUID_TRANSAKSI_PENGADAAN', $UUID_TRANSAKSI_PENGADAAN);
+        $this->db->where('IDTICKET', $id_ticket);
         return $this->db->update($this->table, $data);
     }
 
-    public function hapus($UUID_TRANSAKSI_PENGADAAN)
+    public function hapus($id_ticket)
     {
-        $this->db->where('UUID_TRANSAKSI_PENGADAAN', $UUID_TRANSAKSI_PENGADAAN);
+        $this->db->where('IDTICKET', $id_ticket);
         return $this->db->delete($this->table);
     }
 }
