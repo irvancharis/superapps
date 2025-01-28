@@ -1,10 +1,9 @@
 <?php
-class M_PRODUK_KATEGORI extends CI_Model
+class M_MAPING_LOKASI extends CI_Model
 {
 
     // Nama tabel
-    protected $table = 'PRODUK_KATEGORI';
-    protected $view_produk_kategori = 'VIEW_PRODUK_KATEGORI';
+    protected $table = 'MAPING_LOKASI';
 
     public function __construct()
     {
@@ -12,24 +11,24 @@ class M_PRODUK_KATEGORI extends CI_Model
         $this->load->database();
     }
 
-    public function get_produk_kategori()
+    public function get_maping_lokasi()
     {
-        $query = $this->db->get('PRODUK_KATEGORI');
+        $query = $this->db->get('MAPING_LOKASI');
         return $query->result_object();
     }
 
-    public function get_produk_kategori_single($KODE_PRODUK_KATEGORI)
+    public function get_maping_lokasi_single($KODE_LOKASI)
     {
         $this->db->select('*');
-		$this->db->from('PRODUK_KATEGORI');
-		$this->db->where('KODE_PRODUK_KATEGORI', $KODE_PRODUK_KATEGORI);
+		$this->db->from('MAPING_LOKASI');
+		$this->db->where('KODE_LOKASI', $KODE_LOKASI);
 		$query = $this->db->get();
         return $query;
     }
 
     public function get_kategori_produk()
     {
-        $query = $this->db->get('PRODUK_KATEGORI');
+        $query = $this->db->get('MAPING_LOKASI');
         return $query->result_object();
     }
 
@@ -47,15 +46,15 @@ class M_PRODUK_KATEGORI extends CI_Model
         return $this->db->insert($this->table, $data);
     }
 
-    public function update($KODE_PRODUK_KATEGORI, $data)
+    public function update($KODE_LOKASI, $data)
     {
-        $this->db->where('KODE_PRODUK_KATEGORI', $KODE_PRODUK_KATEGORI);
+        $this->db->where('KODE_LOKASI', $KODE_LOKASI);
         return $this->db->update($this->table, $data);
     }
 
-    public function hapus($KODE_PRODUK_KATEGORI)
+    public function hapus($KODE_LOKASI)
     {
-        $this->db->where('KODE_PRODUK_KATEGORI', $KODE_PRODUK_KATEGORI);
+        $this->db->where('KODE_LOKASI', $KODE_LOKASI);
         return $this->db->delete($this->table);
     }
 }

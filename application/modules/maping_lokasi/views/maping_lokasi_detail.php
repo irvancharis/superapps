@@ -6,26 +6,26 @@
                             <div class="card">
                                 <form class="needs-validation" novalidate="" id="FORM_DATA">
                                     <div class="card-header">
-                                        <h4>INPUT DATA PRODUK KATEGORI</h4>
+                                        <h4>INPUT DATA LOKASI</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>KODE KATEGORI</label>
-                                                <input type="text" name="KODE_PRODUK_KATEGORI" id="KODE_PRODUK_KATEGORI" value="<?= $get_produk_kategori->KODE_PRODUK_KATEGORI; ?>" class="form-control" readonly>
+                                                <label>KODE LOKASI</label>
+                                                <input type="text" name="KODE_LOKASI" id="KODE_LOKASI" value="<?= $get_maping_lokasi->KODE_LOKASI; ?>" class="form-control" readonly>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>NAMA KATEGORI</label>
-                                                <input type="text" class="form-control" id="NAMA_PRODUK_KATEGORI" value="<?= $get_produk_kategori->NAMA_PRODUK_KATEGORI; ?>" name="NAMA_PRODUK_KATEGORI" readonly>
+                                                <label>NAMA LOKASI</label>
+                                                <input type="text" class="form-control" id="NAMA_LOKASI" value="<?= $get_maping_lokasi->NAMA_LOKASI; ?>" name="NAMA_LOKASI" readonly>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KETERANGAN KATEGORI</label>
-                                                <textarea name="KETERANGAN_PRODUK_KATEGORI" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket" readonly><?= $get_produk_kategori->KETERANGAN_PRODUK_KATEGORI; ?></textarea>
+                                                <textarea name="KETERANGAN_RUANGAN" placeholder="Masukkan keterangan ruangan" class="form-control" id="description_ticket" readonly><?= $get_maping_lokasi->KETERANGAN_RUANGAN; ?></textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-footer text-right">
-                                    <a href="<?=site_url('produk_kategori');?>" class="btn btn-primary">Kembali</a>
+                                    <a href="<?=site_url('maping_lokasi');?>" class="btn btn-primary">Kembali</a>
                                     </div>
                                 </form>
                             </div>

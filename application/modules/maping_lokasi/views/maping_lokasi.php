@@ -5,9 +5,9 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>DATA PRODUK KATEGORI</h4>
+                                    <h4>DATA LOKASI</h4>
                                     <div class="card-header-action">
-                                        <a href="<?php echo base_url('produk_kategori/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
+                                        <a href="<?php echo base_url('maping_lokasi/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -22,14 +22,16 @@
                                                             <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                                                         </div>
                                                     </th>
-                                                    <th>#</th>
-                                                    <th>KODE KATEGORI</th>
-                                                    <th>NAMA KATEGORI</th>
+                                                    <th>#</th>                                                    
+                                                    <th>AREA</th>
+                                                    <th>RUANGAN</th>
+                                                    <th>KODE LOKASI</th>
+                                                    <th>NAMA LOKASI</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($M_PRODUK_KATEGORI as $index => $d) : ?>
+                                                <?php foreach ($M_MAPING_LOKASI as $index => $d) : ?>
                                                     <tr>
                                                         <td class="text-center pt-2">
                                                             <div class="custom-checkbox custom-control">
@@ -39,16 +41,18 @@
                                                             </div>
                                                         </td>
                                                         <td><?php echo $index + 1; ?></td>
-                                                        <td><?php echo $d->KODE_PRODUK_KATEGORI; ?></td>
-                                                        <td><?php echo $d->NAMA_PRODUK_KATEGORI; ?></td>
+                                                        <td><?php echo $d->KODE_LOKASI; ?></td>
+                                                        <td><?php echo $d->KODE_LOKASI; ?></td>
+                                                        <td><?php echo $d->KODE_LOKASI; ?></td>
+                                                        <td><?php echo $d->NAMA_LOKASI; ?></td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">
-                                                                    <a href="<?=site_url('produk_kategori/detail/'.$d->KODE_PRODUK_KATEGORI);?>" class="dropdown-kategori has-icon view-btn" ><i class="fas fa-eye"></i> View</a>
-                                                                    <a href="<?=site_url('produk_kategori/edit/'.$d->KODE_PRODUK_KATEGORI);?>" class="dropdown-kategori has-icon edit-btn" ><i class="far fa-edit"></i> Edit</a>
+                                                                    <a href="<?=site_url('maping_lokasi/detail/'.$d->KODE_LOKASI);?>" class="dropdown-kategori has-icon view-btn" ><i class="fas fa-eye"></i> View</a>
+                                                                    <a href="<?=site_url('maping_lokasi/edit/'.$d->KODE_LOKASI);?>" class="dropdown-kategori has-icon edit-btn" ><i class="far fa-edit"></i> Edit</a>
                                                                     <div class="dropdown-divider"></div>
-                                                                    <a href="<?=site_url('produk_kategori/hapus/'.$d->KODE_PRODUK_KATEGORI);?>" class="dropdown-kategori has-icon text-danger hapus-btn"  onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>
+                                                                    <a href="<?=site_url('maping_lokasi/hapus/'.$d->KODE_LOKASI);?>" class="dropdown-kategori has-icon text-danger hapus-btn"  onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>
                                                                         Delete</a>
                                                                 </div>
                                                             </div>
@@ -356,7 +360,7 @@
                         <form id="formHapusproduk">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <input type="hidden" id="id_technician_hapus" class="form-control" placeholder="ID" name="KODE_PRODUK_KATEGORI">
+                                    <input type="hidden" id="id_technician_hapus" class="form-control" placeholder="ID" name="KODE_LOKASI">
                                     <p class="text-center">Apakah anda yakin ingin menghapus data ini?</p>
                                 </div>
                             </div>
@@ -384,7 +388,7 @@
 
                         // Kirim data ke server melalui AJAX
                         $.ajax({
-                            url: "<?php echo base_url(); ?>" + "produk_kategori/hapus", // Endpoint untuk proses input
+                            url: "<?php echo base_url(); ?>" + "maping_lokasi/hapus", // Endpoint untuk proses input
                             type: 'POST',
                             data: formData,
                             success: function(response) {
