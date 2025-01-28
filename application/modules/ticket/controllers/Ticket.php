@@ -64,7 +64,6 @@ class Ticket extends CI_Controller
         $description_ticket = $this->input->post('description_ticket');
 
 
-
         // Jika validasi lolos, lanjutkan proses penyimpanan
         $data = [
             'IDTICKET' => $id_ticket,
@@ -74,6 +73,7 @@ class Ticket extends CI_Controller
             'SITE_TICKET' => $site_ticket,
             'TYPE_TICKET' => $type_ticket,
             'DESCRIPTION_TICKET' => $description_ticket,
+            'DATE_TICKET' => date('Y-m-d H:i:s'),
         ];
 
         $result = $this->M_TICKET->insert($data);
@@ -83,6 +83,27 @@ class Ticket extends CI_Controller
         } else {
             echo json_encode(['success' => false, 'error' => 'Gagal menyimpan data.']);
         }
+    }
+
+    public function ticket_view($id)
+    {
+        $this->load->library('session');
+        $this->session->set_userdata('page', 'ticket');
+        $data['page'] = $this->session->userdata('page');
+        $ticket = $this->M_TICKET->get_ticket($id);
+
+        // Pastikan TYPE_TICKET menjadi array, meskipun hanya 1 value
+        $data['type_ticket'] = isset($ticket->TYPE_TICKET)
+            ? (strpos($ticket->TYPE_TICKET, ',') !== false
+                ? explode(',', $ticket->TYPE_TICKET)
+                : [$ticket->TYPE_TICKET])
+            : [];
+
+        $data['get_ticket'] = $ticket;
+
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('ticket_view', $data);
     }
 
     public function update()
