@@ -7,6 +7,14 @@
                                 <form class="needs-validation" novalidate="" id="formTicketTambah">
                                     <div class="card-header">
                                         <h4>VIEW DATA TICKETING</h4>
+                                        <div class="card-header-action">
+                                            <div class="form-group row">
+                                                <label class="col-sm-5 col-form-label">Tgl Request</label>
+                                                <div class="col-sm-7">
+                                                    <input type="date" name="date_ticket" id="date_ticket" class="form-control" value="<?= isset($get_ticket->DATE_TICKET) ? htmlspecialchars($get_ticket->DATE_TICKET) : ''; ?>" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -43,7 +51,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label class="form-label">PILIH TYPE KELUHAN</label>
+                                                <label class="form-label">TYPE KELUHAN</label>
                                                 <div class="selectgroup selectgroup-pills">
                                                     <label class="selectgroup-item">
                                                         <input type="checkbox" name="type_ticket" value="Computer" class="selectgroup-input" <?= (is_array($type_ticket) && in_array('Computer', $type_ticket)) ? 'checked' : ''; ?> disabled>
@@ -65,9 +73,68 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DESCRIPTION</label>
-                                                <textarea name="description_ticket" placeholder="Masukkan deskripsi keluhan" class="form-control" id="description_ticket" disabled><?= isset($get_ticket->NAMA_AREA) ? $get_ticket->NAMA_AREA : ''; ?></textarea>
+                                                <textarea name="description_ticket" placeholder="Masukkan deskripsi keluhan" class="form-control" id="description_ticket" disabled><?= isset($get_ticket->DESCRIPTION_TICKET) ? $get_ticket->DESCRIPTION_TICKET : ''; ?></textarea>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan deskripsi keluhan anda!
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>DATE TICKET DONE</label>
+                                                <input type="date" class="form-control" id="date_ticket_done" name="date_ticket_done" disabled>
+                                            </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>TECHNICIAN</label>
+                                                <select name="id_technician" id="id_technician" class="form-control" disabled>
+                                                    <option value="<?= isset($get_ticket->IDTECH) ? $get_ticket->IDTECH : ''; ?>"><?= isset($get_ticket->NAME_TECHNICIAN) ? $get_ticket->NAME_TECHNICIAN : ''; ?></option>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Pilih Teknisi!
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label class="form-label">APPROVAL</label>
+                                                <div class="selectgroup selectgroup-pills">
+                                                    <label class="selectgroup-item">
+                                                        <input type="radio" name="approval_ticket" value="0" class="selectgroup-input-radio" id="approval0" <?= ($approval_ticket == 0) ? 'checked' : ''; ?> disabled>
+                                                        <span class="selectgroup-button approval <?= $approval_ticket == 0 ? 'bg-warning text-white' : ''; ?>" id="label-approval0">DALAM ANTRIAN</span>
+                                                    </label>
+                                                    <label class="selectgroup-item">
+                                                        <input type="radio" name="approval_ticket" value="1" class="selectgroup-input-radio" id="approval1" <?= ($approval_ticket == 1) ? 'checked' : ''; ?> disabled>
+                                                        <span class="selectgroup-button approval <?= $approval_ticket == 1 ? ' bg-success text-white' : ''; ?>" id="label-approval1">DISETUJUI</span>
+                                                    </label>
+                                                    <label class="selectgroup-item">
+                                                        <input type="radio" name="approval_ticket" value="2" class="selectgroup-input-radio" id="approval2" <?= ($approval_ticket == 2) ? 'checked' : ''; ?> disabled>
+                                                        <span class="selectgroup-button approval <?= $approval_ticket == 2 ? ' bg-danger text-white' : ''; ?>" id="label-approval2">DITOLAK</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label class="form-label">STATUS</label>
+                                                <div class="selectgroup selectgroup-pills">
+                                                    <label class="selectgroup-item">
+                                                        <input type="radio" name="status_ticket" value="0" class="selectgroup-input-radio" id="status0" <?= ($status_ticket == 0) ? 'checked' : ''; ?> disabled>
+                                                        <span class="selectgroup-button status <?= $approval_ticket == 0 ? 'bg-warning text-white' : ''; ?>" id="label-status0">DALAM ANTRIAN</span>
+                                                    </label>
+                                                    <label class="selectgroup-item">
+                                                        <input type="radio" name="status_ticket" value="25" class="selectgroup-input-radio" id="status1" <?= ($status_ticket == 1) ? 'checked' : ''; ?> disabled>
+                                                        <span class="selectgroup-button status <?= $approval_ticket == 1 ? 'bg-primary text-white' : ''; ?>" id="label-status1">SEDANG DIKERJAKAN</span>
+                                                    </label>
+                                                    <label class="selectgroup-item">
+                                                        <input type="radio" name="status_ticket" value="50" class="selectgroup-input-radio" id="status2" <?= ($status_ticket == 2) ? 'checked' : ''; ?> disabled>
+                                                        <span class="selectgroup-button status <?= $approval_ticket == 2 ? 'bg-danger text-white' : ''; ?>" id="label-status2">MENUNGGU VALIDASI</span>
+                                                    </label>
+                                                    <label class="selectgroup-item">
+                                                        <input type="radio" name="status_ticket" value="100" class="selectgroup-input-radio" id="status3" <?= ($status_ticket == 3) ? 'checked' : ''; ?> disabled>
+                                                        <span class="selectgroup-button status <?= $approval_ticket == 3 ? 'bg-success text-white' : ''; ?>" id="label-status3">SELESAI</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label class="form-label">PROGRESS</label>
+                                                <div class="progress">
+                                                    <input type="hidden" name="prosentase" id="prosentase">
+                                                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                                        aria-valuemax="100" id="progress-bar">0%</div>
                                                 </div>
                                             </div>
                                         </div>

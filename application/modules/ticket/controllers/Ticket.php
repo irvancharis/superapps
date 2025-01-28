@@ -37,6 +37,12 @@ class Ticket extends CI_Controller
         echo json_encode($result);
     }
 
+    public function get_technician()
+    {
+        $result = $this->M_TICKET->get_technician();
+        echo json_encode($result);
+    }
+
     public function tambah_view($page = 'ticket')
     {
         $this->load->library('session');
@@ -45,6 +51,7 @@ class Ticket extends CI_Controller
         $data['get_departement'] = $this->M_TICKET->get_departement();
         $data['get_technician'] = $this->M_TICKET->get_technician();
         $data['get_area'] = $this->M_TICKET->get_area();
+        $data['get_karyawan'] = $this->M_TICKET->get_karyawan();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('ticket_tambah', $data);
@@ -62,7 +69,16 @@ class Ticket extends CI_Controller
         $site_ticket = $this->input->post('id_area');
         $type_ticket = $this->input->post('type_ticket');
         $description_ticket = $this->input->post('description_ticket');
+        $id_technician = $this->input->post('id_technician');
+        $status_ticket = $this->input->post('status_ticket');
+        $approval_ticket = $this->input->post('approval_ticket');
+        $prosentase = $this->input->post('prosentase');
 
+        if (empty($type_ticket)) {
+            $errors[] = 'Pilih setidaknya satu jenis keluhan.';
+        } else {
+            $type_ticket = implode(',', $type_ticket); // Gabungkan array menjadi string
+        }
 
         // Jika validasi lolos, lanjutkan proses penyimpanan
         $data = [
@@ -74,6 +90,11 @@ class Ticket extends CI_Controller
             'TYPE_TICKET' => $type_ticket,
             'DESCRIPTION_TICKET' => $description_ticket,
             'DATE_TICKET' => date('Y-m-d H:i:s'),
+            'DATE_TICKET_DONE' => null,
+            'TECHNICIAN' => $id_technician,
+            'STATUS_TICKET' => $status_ticket,
+            'APPROVAL_TICKET' => $approval_ticket,
+            'PROSENTASE' => $prosentase
         ];
 
         $result = $this->M_TICKET->insert($data);
@@ -99,7 +120,15 @@ class Ticket extends CI_Controller
                 : [$ticket->TYPE_TICKET])
             : [];
 
+        $data['approval_ticket'] = $ticket->APPROVAL_TICKET;
+        $data['status_ticket'] = $ticket->STATUS_TICKET;
+
         $data['get_ticket'] = $ticket;
+
+        // Pastikan DATE_TICKET dalam format YYYY-MM-DD
+        if (isset($data['get_ticket']->DATE_TICKET)) {
+            $data['get_ticket']->DATE_TICKET = date('Y-m-d', strtotime($data['get_ticket']->DATE_TICKET));
+        }
 
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .

@@ -52,6 +52,12 @@ class M_TICKET extends CI_Model
         return $query->result_object();
     }
 
+    public function get_karyawan()
+    {
+        $query = $this->db->get('KARYAWAN');
+        return $query->result_object();
+    }
+
     public function get_latest_data()
     {
         $this->db->order_by('IDTICKET', 'DESC');
