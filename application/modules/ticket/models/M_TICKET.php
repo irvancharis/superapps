@@ -22,6 +22,18 @@ class M_TICKET extends CI_Model
         return $query->result_object();
     }
 
+    public function get_ticket($id_ticket)
+    {
+        $this->db->select('TICKET.*, DEPARTEMEN.*, TECHNICIAN.*, MAPING_AREA.*');
+        $this->db->from('TICKET');
+        $this->db->join('DEPARTEMEN', 'TICKET.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
+        $this->db->join('TECHNICIAN', 'TICKET.TECHNICIAN = TECHNICIAN.IDTECH', 'left');
+        $this->db->join('MAPING_AREA', 'TICKET.SITE_TICKET = MAPING_AREA.KODE_AREA', 'left');
+        $this->db->where('TICKET.IDTICKET', $id_ticket);
+        $query = $this->db->get();
+        return $query->row_object();
+    }
+
     public function get_departement()
     {
         $query = $this->db->get('DEPARTEMEN');
