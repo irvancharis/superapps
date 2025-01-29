@@ -6,10 +6,32 @@
                             <div class="card">
                                 <form class="needs-validation" novalidate="" id="FORM_DATA">
                                     <div class="card-header">
-                                        <h4>INPUT DATA LOKASI</h4>
+                                        <h4>EDIT DATA LOKASI</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>AREA</label>
+                                                <select name="KODE_AREA" id="KODE_AREA" class="form-control">
+                                                    <?php foreach ($get_area as $row) : ?>
+                                                        <option value="<?= $row->KODE_AREA; ?>" <?php if ($row->KODE_AREA == $get_maping_lokasi->KODE_AREA) echo "selected"; ?>><?= $row->NAMA_AREA; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Silahkan masukkan area!
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>RUANGAN</label>
+                                                <select name="KODE_RUANGAN" id="KODE_RUANGAN" class="form-control">
+                                                    <?php foreach ($get_ruangan as $row) : ?>
+                                                    <option value="<?= $row->KODE_RUANGAN; ?>" <?php if ($row->KODE_AREA == $get_maping_lokasi->KODE_RUANGAN) echo "selected"; ?>><?= $row->NAMA_RUANGAN; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Silahkan masukkan ruangan!
+                                                </div>
+                                            </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KODE LOKASI</label>
                                                 <input type="text" name="KODE_LOKASI" id="KODE_LOKASI" value="<?= $get_maping_lokasi->KODE_LOKASI; ?>" class="form-control">
@@ -17,20 +39,11 @@
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>NAMA LOKASI</label>
                                                 <input type="text" class="form-control" id="NAMA_LOKASI" value="<?= $get_maping_lokasi->NAMA_LOKASI; ?>" name="NAMA_LOKASI">
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>KATEGORI PRODUK</label>
-                                                <select name="KODE_LOKASI" id="KODE_LOKASI" class="form-control">
-                                                    <option value="<?= $get_maping_lokasi->KODE_LOKASI; ?>" class="text-center" selected disabled><?= $get_maping_lokasi->NAMA_LOKASI; ?></option>
-                                                    <?php foreach ($get_kategori_produk as $row) : ?>
-                                                        <option value="<?= $row->KODE_LOKASI; ?>"><?= $row->NAMA_LOKASI; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
+                                            </div>                                            
                                             
                                             <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>KETERANGAN PRODUK</label>
-                                                <textarea name="KETERANGAN_RUANGAN" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket"><?= $get_maping_lokasi->KETERANGAN_RUANGAN; ?></textarea>
+                                                <label>KETERANGAN LOKASI</label>
+                                                <textarea name="KETERANGAN_LOKASI" placeholder="Masukkan keterangan lokasi" class="form-control" id="description_ticket"><?= $get_maping_lokasi->KETERANGAN_RUANGAN; ?></textarea>
                                             </div>
                                         </div>
                                     </div>

@@ -49,8 +49,8 @@
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>KETERANGAN KATEGORI</label>
-                                                <textarea name="KETERANGAN_RUANGAN" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket"></textarea>
+                                                <label>KETERANGAN LOKASI</label>
+                                                <textarea name="KETERANGAN_LOKASI" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket"></textarea>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan keterangan kategori anda!
                                                 </div>

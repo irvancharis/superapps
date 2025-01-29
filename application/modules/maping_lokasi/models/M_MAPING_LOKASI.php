@@ -32,12 +32,12 @@ class M_MAPING_LOKASI extends CI_Model
         return $query->result_object();
     }    
 
-    
     public function get_ruangan()
     {
         $query = $this->db->get('MAPING_RUANGAN');
         return $query->result_object();
-    }    
+    }   
+ 
 
     public function insert($data)
     {

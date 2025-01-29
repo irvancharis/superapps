@@ -31,7 +31,7 @@
                                         </div>
                                     </div>
                                     <div class="card-footer text-right">
-                                        <button class="btn btn-primary">Submit</button>
+                                    <a href="<?=site_url('maping_ruangan');?>" class="btn btn-primary">Kembali</a>
                                     </div>
                                 </form>
                             </div>
