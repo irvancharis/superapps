@@ -178,6 +178,14 @@ class Ticket extends CI_Controller
         $status_ticket = $this->input->post('status_ticket');
         $approval_ticket = $this->input->post('approval_ticket');
         $prosentase = $this->input->post('prosentase');
+        $date_ticket_done = $this->input->post('date_ticket_done');
+
+        // Pastikan date_ticket_done valid dan memiliki format yang benar
+        if ($date_ticket_done) {
+            $date_ticket_done = date('Y-m-d H:i:s', strtotime($date_ticket_done));
+        } else {
+            $date_ticket_done = null; // Atau set default jika diperlukan
+        }
 
         // Cek apakah $type_ticket dari form merupakan array atau tidak
         if (is_array($type_ticket)) {
@@ -200,8 +208,7 @@ class Ticket extends CI_Controller
             'SITE_TICKET' => $site_ticket,
             'TYPE_TICKET' => $type_ticket,
             'DESCRIPTION_TICKET' => $description_ticket,
-            'DATE_TICKET' => date('Y-m-d H:i:s'),
-            'DATE_TICKET_DONE' => null,
+            'DATE_TICKET_DONE' => $date_ticket_done,
             'TECHNICIAN' => $id_technician,
             'STATUS_TICKET' => $status_ticket,
             'APPROVAL_TICKET' => $approval_ticket,
@@ -210,6 +217,36 @@ class Ticket extends CI_Controller
 
         $result = $this->M_TICKET->update($id_ticket, $data);
 
+        if ($result) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Gagal menyimpan data.']);
+        }
+    }
+
+    public function updateStatus()
+    {
+        // Ambil data dari POST dengan validasi awal
+        $id_ticket = $this->input->post('id_ticket', true);
+        $status_ticket = $this->input->post('status_ticket', true);
+        $prosentase = $this->input->post('prosentase', true);
+
+        // Validasi input
+        if (empty($id_ticket) || empty($status_ticket)) {
+            echo json_encode(['success' => false, 'error' => 'ID Ticket dan Status Ticket tidak boleh kosong.']);
+            return;
+        }
+
+        // Data yang akan diupdate
+        $data = [
+            'STATUS_TICKET' => $status_ticket,
+            'PROSENTASE' => $prosentase
+        ];
+
+        // Pastikan model memiliki metode update yang benar
+        $result = $this->M_TICKET->update($id_ticket, $data);
+
+        // Cek hasil update
         if ($result) {
             echo json_encode(['success' => true]);
         } else {

@@ -50,9 +50,7 @@
                                                             if ($d->APPROVAL_TICKET == 0) {
                                                                 echo '<span class="badge badge-warning">Dalam Antrian</span>';
                                                             } elseif ($d->APPROVAL_TICKET == 1) {
-                                                                echo '<span class="badge badge-primary">Dalam Proses</span>';
-                                                            } elseif ($d->APPROVAL_TICKET == 2) {
-                                                                echo '<span class="badge badge-success">Selesai</span>';
+                                                                echo '<span class="badge badge-success">Disetujui</span>';
                                                             } else {
                                                                 echo '<span class="badge badge-danger">Ditolak</span>';
                                                             }
@@ -62,16 +60,17 @@
                                                         <td>
                                                             <div class="progress">
                                                                 <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0"
-                                                                    aria-valuemax="100"><?php echo $d->STATUS_TICKET; ?>%</div>
+                                                                    aria-valuemax="100" id="progress-bar" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
                                                             </div>
                                                         </td>
-                                                        <td><?php echo $d->DATE_TICKET_DONE; ?></td>
+                                                        <td><?php echo date('d-m-Y', strtotime($d->DATE_TICKET_DONE)); ?></td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">
                                                                     <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a>
                                                                     <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Edit</a>
+                                                                    <a href="#" class="dropdown-item has-icon" id="update-status" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Status</a>
                                                                     <div class="dropdown-divider"></div>
                                                                     <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTICKET; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
                                                                         Delete</a>
@@ -222,6 +221,14 @@
 
             <script>
                 $(document).ready(function() {
+                    // Fungsi untuk update tampilan progress bar
+                    function updateProgressBar(progressValue) {
+                        $("#progress-bar")
+                            .css("width", progressValue + "%") // Ubah lebar progress bar
+                            .attr("aria-valuenow", progressValue) // Update atribut aksesibilitas
+                            .text(progressValue + "%"); // Ubah teks progress bar
+                    }
+
                     $('.hapus-btn').on('click', function() {
                         const id = $(this).data('id');
 
@@ -255,6 +262,118 @@
                                 alert('Terjadi kesalahan pada server.');
                             }
                         });
+                    });
+
+                    // Ambil nilai status_ticket dari elemen yang sudah ada di halaman
+                    let progressValue = $("#progress-bar").data("status");
+
+                    // Pastikan nilai progress tidak null atau undefined
+                    if (progressValue !== undefined) {
+                        updateProgressBar(progressValue);
+                    }
+
+                    // Update Status Ticket
+                    $("#update-status").click(function() {
+                        let id_ticket = $(this).data("id");
+
+                        // Ambil status tiket dari atribut data
+                        let currentStatus = $(this).data("status");
+
+                        swal({
+                            title: "Update Status Ticket",
+                            content: {
+                                element: "div",
+                                attributes: {
+                                    innerHTML: `
+                    <div class="selectgroup selectgroup-pills">
+                        <label class="selectgroup-item">
+                            <input type="radio" name="status_ticket" value="0" class="selectgroup-input-radio" id="status0">
+                            <span class="selectgroup-button status" id="label-status0">DALAM ANTRIAN</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="radio" name="status_ticket" value="25" class="selectgroup-input-radio" id="status1">
+                            <span class="selectgroup-button status" id="label-status1">SEDANG DIKERJAKAN</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="radio" name="status_ticket" value="50" class="selectgroup-input-radio" id="status2">
+                            <span class="selectgroup-button status" id="label-status2">MENUNGGU VALIDASI</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="radio" name="status_ticket" value="100" class="selectgroup-input-radio" id="status3">
+                            <span class="selectgroup-button status" id="label-status3">SELESAI</span>
+                        </label>
+                    </div>
+                    `
+                                }
+                            },
+                            buttons: {
+                                cancel: "Batal",
+                                confirm: {
+                                    text: "Update",
+                                    closeModal: false
+                                }
+                            },
+                            closeOnClickOutside: false
+                        }).then((confirm) => {
+                            if (confirm) {
+                                let selectedStatus = $("input[name='status_ticket']:checked").val();
+                                if (!selectedStatus) {
+                                    swal("Pilih status terlebih dahulu!", {
+                                        icon: "warning"
+                                    });
+                                    return;
+                                }
+
+                                // Kirim data ke backend via AJAX
+                                $.ajax({
+                                    url: "<?php echo base_url(); ?>" + "ticket/updateStatus",
+                                    method: "POST",
+                                    dataType: "json",
+                                    data: {
+                                        status_ticket: selectedStatus,
+                                        id_ticket: id_ticket,
+                                        prosentase: selectedStatus // Progress sama dengan status
+                                    },
+                                    success: function(response) {
+                                        if (response.success) {
+                                            swal("Berhasil!", "Status tiket berhasil diperbarui.", "success")
+                                                .then(() => {
+                                                    // Reload halaman setelah update sukses
+                                                    location.reload();
+                                                });
+                                        } else {
+                                            swal("Gagal!", response.error, "error");
+                                        }
+                                    },
+                                    error: function() {
+                                        swal("Error!", "Tidak dapat terhubung ke server.", "error");
+                                    }
+                                });
+                            }
+                        });
+
+                        // Tunggu SweetAlert selesai render, lalu set radio button sesuai status dari database
+                        setTimeout(() => {
+                            $(`input[name='status_ticket'][value='${currentStatus}']`).prop("checked", true).trigger("change");
+                        }, 500);
+                    });
+
+                    // Fungsi untuk mengatur kelas warna ketika radio button dipilih
+                    $(document).on("change", "input[name='status_ticket']", function() {
+                        $('.status').removeClass('bg-warning bg-info bg-danger bg-success text-white');
+
+                        if ($('#status0').is(':checked')) {
+                            $('#label-status0').addClass('bg-warning text-white');
+                        } else if ($('#status1').is(':checked')) {
+                            $('#label-status1').addClass('bg-info text-white');
+                        } else if ($('#status2').is(':checked')) {
+                            $('#label-status2').addClass('bg-danger text-white');
+                        } else if ($('#status3').is(':checked')) {
+                            $('#label-status3').addClass('bg-success text-white');
+                        }
+
+                        let progressValue = $(this).val();
+                        updateProgressBar(progressValue);
                     });
                 });
             </script>
