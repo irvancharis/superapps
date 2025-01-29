@@ -10,6 +10,14 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
+                                        <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>AREA</label>
+                                                <select name="KODE_AREA" id="KODE_AREA" class="form-control">
+                                                    <?php foreach ($get_maping_area as $row) : ?>
+                                                        <option value="<?= $row->KODE_AREA; ?>" <?php if ($row->KODE_AREA == $get_maping_ruangan->KODE_AREA) echo "selected"; ?>><?= $row->NAMA_AREA; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KODE RUANGAN</label>
                                                 <input type="text" name="KODE_RUANGAN" id="KODE_RUANGAN" value="<?= $get_maping_ruangan->KODE_RUANGAN; ?>" class="form-control">
@@ -18,14 +26,7 @@
                                                 <label>NAMA RUANGAN</label>
                                                 <input type="text" class="form-control" id="NAMA_RUANGAN" value="<?= $get_maping_ruangan->NAMA_RUANGAN; ?>" name="NAMA_RUANGAN">
                                             </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>AREA</label>
-                                                <select name="KODE_AREA" id="KODE_AREA" class="form-control">
-                                                    <?php foreach ($get_maping_area as $row) : ?>
-                                                        <option value="<?= $row->KODE_AREA; ?>" <?php if ($row->KODE_AREA == $get_maping_ruangan->KODE_AREA) echo "selected"; ?>><?= $row->NAMA_AREA; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
+                                            
                                             
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KETERANGAN RUANGAN</label>

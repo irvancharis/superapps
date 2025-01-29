@@ -13,33 +13,31 @@ class M_MAPING_LOKASI extends CI_Model
 
     public function get_maping_lokasi()
     {
-        $query = $this->db->get('MAPING_LOKASI');
+        $query = $this->db->get('VIEW_LOKASI');
         return $query->result_object();
     }
 
     public function get_maping_lokasi_single($KODE_LOKASI)
     {
         $this->db->select('*');
-		$this->db->from('MAPING_LOKASI');
+		$this->db->from('VIEW_LOKASI');
 		$this->db->where('KODE_LOKASI', $KODE_LOKASI);
 		$query = $this->db->get();
         return $query;
     }
 
-    public function get_kategori_produk()
+    public function get_area()
     {
-        $query = $this->db->get('MAPING_LOKASI');
+        $query = $this->db->get('MAPING_AREA');
         return $query->result_object();
-    }
+    }    
 
     
-    public function get_latest_data()
+    public function get_ruangan()
     {
-        $this->db->order_by('IDTICKET', 'DESC');
-        $this->db->limit(1);
-        $query = $this->db->get($this->table);
+        $query = $this->db->get('MAPING_RUANGAN');
         return $query->result_object();
-    }
+    }    
 
     public function insert($data)
     {

@@ -13,20 +13,20 @@ class M_MAPING_RUANGAN extends CI_Model
 
     public function get_maping_ruangan()
     {
-        $query = $this->db->get('MAPING_RUANGAN');
+        $query = $this->db->get('VIEW_RUANGAN');
         return $query->result_object();
     }
 
     public function get_maping_ruangan_single($KODE_RUANGAN)
     {
         $this->db->select('*');
-		$this->db->from('MAPING_RUANGAN');
+		$this->db->from('VIEW_RUANGAN');
 		$this->db->where('KODE_RUANGAN', $KODE_RUANGAN);
 		$query = $this->db->get();
         return $query;
     }
 
-    public function get_maping_area()
+    public function get_area()
     {
         $query = $this->db->get('MAPING_AREA');
         return $query->result_object();
