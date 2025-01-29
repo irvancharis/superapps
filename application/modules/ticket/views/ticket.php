@@ -49,9 +49,9 @@
                                                             <?php
                                                             if ($d->APPROVAL_TICKET == 0) {
                                                                 echo '<span class="badge badge-warning">Dalam Antrian</span>';
-                                                            } elseif ($d->STATUS_TICKET == 1) {
+                                                            } elseif ($d->APPROVAL_TICKET == 1) {
                                                                 echo '<span class="badge badge-primary">Dalam Proses</span>';
-                                                            } elseif ($d->STATUS_TICKET == 2) {
+                                                            } elseif ($d->APPROVAL_TICKET == 2) {
                                                                 echo '<span class="badge badge-success">Selesai</span>';
                                                             } else {
                                                                 echo '<span class="badge badge-danger">Ditolak</span>';
@@ -71,7 +71,7 @@
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">
                                                                     <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a>
-                                                                    <a href="#" class="dropdown-item has-icon edit-btn" data-id="<?php echo $d->IDTECH; ?>" data-nama="<?php echo $d->NAME_TECHNICIAN; ?>" data-departement="<?php echo $d->DEPARTEMENT; ?>" data-status="<?php echo $d->STATUS; ?>" data-idkaryawan="<?php echo $d->IDKARYAWAN; ?>" data-description="<?php echo $d->DESCRIPTION_TECHNICIAN; ?>" data-toggle="modal" data-target="#editModal"><i class="far fa-edit"></i> Edit</a>
+                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Edit</a>
                                                                     <div class="dropdown-divider"></div>
                                                                     <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTICKET; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
                                                                         Delete</a>

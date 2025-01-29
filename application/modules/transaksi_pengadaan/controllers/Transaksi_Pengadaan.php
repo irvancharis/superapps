@@ -10,7 +10,7 @@ class Transaksi_pengadaan extends CI_Controller
         $this->load->helper('url_helper');
     }
 
-    public function index($page = 'ticket')
+    public function index($page = 'transaksi_pengadaan')
     {
         $this->load->library('session');
 
@@ -233,4 +233,4 @@ class Transaksi_pengadaan extends CI_Controller
             echo json_encode(['success' => false, 'error' => 'Gagal menghapus data.']);
         }
     }
-} 
+}
