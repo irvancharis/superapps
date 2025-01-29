@@ -26,9 +26,9 @@ class M_MAPING_RUANGAN extends CI_Model
         return $query;
     }
 
-    public function get_kategori_produk()
+    public function get_maping_area()
     {
-        $query = $this->db->get('MAPING_RUANGAN');
+        $query = $this->db->get('MAPING_AREA');
         return $query->result_object();
     }
 
