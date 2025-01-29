@@ -135,114 +135,61 @@ class Ticket extends CI_Controller
             $this->load->view('ticket_view', $data);
     }
 
+    public function edit_view($id)
+    {
+        $this->load->library('session');
+        $this->session->set_userdata('page', 'ticket');
+        $data['page'] = $this->session->userdata('page');
+        $ticket = $this->M_TICKET->get_ticket($id);
+
+        // Pastikan TYPE_TICKET menjadi array, meskipun hanya 1 value
+        $data['type_ticket'] = isset($ticket->TYPE_TICKET)
+            ? (strpos($ticket->TYPE_TICKET, ',') !== false
+                ? explode(',', $ticket->TYPE_TICKET)
+                : [$ticket->TYPE_TICKET])
+            : [];
+
+        $data['approval_ticket'] = $ticket->APPROVAL_TICKET;
+        $data['status_ticket'] = $ticket->STATUS_TICKET;
+
+        $data['get_ticket'] = $ticket;
+
+        // Pastikan DATE_TICKET dalam format YYYY-MM-DD
+        if (isset($data['get_ticket']->DATE_TICKET)) {
+            $data['get_ticket']->DATE_TICKET = date('Y-m-d', strtotime($data['get_ticket']->DATE_TICKET));
+        }
+
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('ticket_edit', $data);
+    }
+
     public function update()
     {
         // Ambil data dari POST
-        $id_ticket = $this->input->post('id_ticket_edit');
-        $requestby = $this->input->post('requestby');
-        $id_departement = $this->input->post('id_departement');
+        $id_ticket =  $this->input->post('id_ticket');
+        $requestby = $this->input->post('request_by');
+        $id_departement = $this->input->post('id_departemen');
         $email_ticket = $this->input->post('email_ticket');
-        $site_ticket = $this->input->post('site_ticket');
+        $site_ticket = $this->input->post('id_area');
         $type_ticket = $this->input->post('type_ticket');
         $description_ticket = $this->input->post('description_ticket');
-        $date_ticket = $this->input->post('date_ticket');
-        $date_ticket_done = $this->input->post('date_ticket_done');
         $id_technician = $this->input->post('id_technician');
         $status_ticket = $this->input->post('status_ticket');
         $approval_ticket = $this->input->post('approval_ticket');
         $prosentase = $this->input->post('prosentase');
 
-        // Array untuk menampung error
-        $errors = [];
-
-        // Validasi `requestby`
-        if (empty($requestby)) {
-            $errors[] = 'Request By tidak boleh kosong.';
-        } elseif (strlen($requestby) > 100) {
-            $errors[] = 'Request By tidak boleh lebih dari 100 karakter.';
-        }
-
-        // Validasi `id_departement`
-        if (empty($id_departement)) {
-            $errors[] = 'ID Departemen tidak boleh kosong.';
-        } elseif (!is_numeric($id_departement)) {
-            $errors[] = 'ID Departemen harus berupa angka.';
-        }
-
-        // Validasi `email_ticket`
-        if (empty($email_ticket)) {
-            $errors[] = 'Email Ticket tidak boleh kosong.';
-        } elseif (!filter_var($email_ticket, FILTER_VALIDATE_EMAIL)) {
-            $errors[] = 'Email Ticket harus dalam format email yang valid.';
-        }
-
-        // Validasi `site_ticket`
-        if (empty($site_ticket)) {
-            $errors[] = 'Site Ticket tidak boleh kosong.';
-        } elseif (strlen($site_ticket) > 200) {
-            $errors[] = 'Site Ticket tidak boleh lebih dari 200 karakter.';
-        }
-
-        // Validasi `type_ticket`
-        if (empty($type_ticket)) {
-            $errors[] = 'Type Ticket tidak boleh kosong.';
-        }
-
-        // Validasi `description_ticket`
-        if (empty($description_ticket)) {
-            $errors[] = 'Deskripsi Ticket tidak boleh kosong.';
-        } elseif (strlen($description_ticket) > 500) {
-            $errors[] = 'Deskripsi Ticket tidak boleh lebih dari 500 karakter.';
-        }
-
-        // Validasi `date_ticket`
-        if (empty($date_ticket)) {
-            $errors[] = 'Tanggal Ticket tidak boleh kosong.';
-        } elseif (!strtotime($date_ticket)) {
-            $errors[] = 'Tanggal Ticket harus dalam format tanggal yang valid.';
-        }
-
-        // Validasi `date_ticket_done`
-        if (!empty($date_ticket_done) && !strtotime($date_ticket_done)) {
-            $errors[] = 'Tanggal Ticket Selesai harus dalam format tanggal yang valid.';
-        } elseif (!empty($date_ticket_done) && strtotime($date_ticket_done) < strtotime($date_ticket)) {
-            $errors[] = 'Tanggal Ticket Selesai tidak boleh lebih awal dari Tanggal Ticket.';
-        }
-
-        // Validasi `id_technician`
-        if (empty($id_technician)) {
-            $errors[] = 'ID Teknisi tidak boleh kosong.';
-        } elseif (!is_numeric($id_technician)) {
-            $errors[] = 'ID Teknisi harus berupa angka.';
-        }
-
-        // Validasi `status_ticket`
-        if (empty($status_ticket)) {
-            $errors[] = 'Status Ticket tidak boleh kosong.';
-        } elseif (!in_array($status_ticket, ['open', 'in progress', 'closed'])) { // Sesuaikan nilai yang diizinkan
-            $errors[] = 'Status Ticket harus berupa "open", "in progress", atau "closed".';
-        }
-
-        // Validasi `approval_ticket`
-        if (empty($approval_ticket)) {
-            $errors[] = 'Approval Ticket tidak boleh kosong.';
-        } elseif (!in_array($approval_ticket, ['approved', 'rejected', 'pending'])) { // Sesuaikan nilai yang diizinkan
-            $errors[] = 'Approval Ticket harus berupa "approved", "rejected", atau "pending".';
-        }
-
-        // Validasi `prosentase`
-        if (empty($prosentase)) {
-            $errors[] = 'Prosentase tidak boleh kosong.';
-        } elseif (!is_numeric($prosentase)) {
-            $errors[] = 'Prosentase harus berupa angka.';
-        } elseif ($prosentase < 0 || $prosentase > 100) {
-            $errors[] = 'Prosentase harus antara 0 hingga 100.';
-        }
-
-        // Jika ada error, kembalikan respons JSON dengan daftar error
-        if (!empty($errors)) {
-            echo json_encode(['success' => false, 'errors' => $errors]);
-            return;
+        // Cek apakah $type_ticket dari form merupakan array atau tidak
+        if (is_array($type_ticket)) {
+            // Jika dalam bentuk array (saat Create atau Edit dari form)
+            if (empty($type_ticket)) {
+                $errors[] = 'Pilih setidaknya satu jenis keluhan.';
+            } else {
+                $type_ticket = implode(',', $type_ticket); // Gabungkan array menjadi string
+            }
+        } else {
+            // Jika dalam bentuk string (saat mengambil dari database untuk Edit)
+            $type_ticket = !empty($type_ticket) ? explode(',', $type_ticket) : []; // Ubah ke array
         }
 
         // Jika validasi lolos, lanjutkan proses penyimpanan
@@ -253,12 +200,12 @@ class Ticket extends CI_Controller
             'SITE_TICKET' => $site_ticket,
             'TYPE_TICKET' => $type_ticket,
             'DESCRIPTION_TICKET' => $description_ticket,
-            'DATE_TICKET' => $date_ticket,
-            'DATE_TICKET_DONE' => $date_ticket_done,
+            'DATE_TICKET' => date('Y-m-d H:i:s'),
+            'DATE_TICKET_DONE' => null,
             'TECHNICIAN' => $id_technician,
             'STATUS_TICKET' => $status_ticket,
             'APPROVAL_TICKET' => $approval_ticket,
-            'PROSENTASE' => $prosentase,
+            'PROSENTASE' => $prosentase
         ];
 
         $result = $this->M_TICKET->update($id_ticket, $data);
@@ -266,7 +213,7 @@ class Ticket extends CI_Controller
         if ($result) {
             echo json_encode(['success' => true]);
         } else {
-            echo json_encode(['success' => false, 'error' => 'Gagal memperbarui data.']);
+            echo json_encode(['success' => false, 'error' => 'Gagal menyimpan data.']);
         }
     }
 
