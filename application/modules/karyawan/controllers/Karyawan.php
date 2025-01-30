@@ -93,24 +93,12 @@ class Karyawan extends CI_Controller
 
     public function insert()
     {
-        $KODE_ITEM = $this->input->post('KODE_ITEM');
-        $NAMA_ITEM = $this->input->post('NAMA_ITEM');
-        $KODE_KATEGORI = $this->input->post('KODE_KATEGORI');
-        $KETERANGAN_ITEM = $this->input->post('KETERANGAN_ITEM');
+        $KODE_ITEM = $this->input->post('NIK');
 
         // Validasi 
         if (empty($KODE_ITEM)) {
-            $errors[] = 'KODE ITEM tidak boleh kosong.';
-        }
-        if (empty($NAMA_ITEM)) {
-            $errors[] = 'NAMA ITEM tidak boleh kosong.';
-        }
-        if (empty($KODE_KATEGORI)) {
-            $errors[] = 'KODE KATEGORI tidak boleh kosong.';
-        }
-        if (empty($KETERANGAN_ITEM)) {
-            $errors[] = 'KETERANGAN ITEM tidak boleh kosong.';
-        }
+            $errors[] = 'NIK tidak boleh kosong.';
+        }       
 
 
         $inputan = $this->input->post(null, TRUE);

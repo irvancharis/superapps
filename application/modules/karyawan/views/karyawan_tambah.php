@@ -48,7 +48,7 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>NIP</label>
-                                                <input required type="text" name="NIP" id="NIP" class="form-control">
+                                                <input required type="number" oninput="this.value = this.value.replace(/\D+/g, '')" name="NIP" id="NIP" class="form-control">
                                                 <div class="invalid-feedback">
                                                 Masukkan NIP?
                                                 </div>
@@ -69,7 +69,7 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>TELEPON</label>
-                                                <input required type="text" class="form-control" id="TELEPON" name="TELEPON">
+                                                <input required type="number" oninput="this.value = this.value.replace(/\D+/g, '')" class="form-control" id="TELEPON" name="TELEPON">
                                                 <div class="invalid-feedback">
                                                     Masukkan TELEPON  !
                                                 </div>
@@ -90,7 +90,7 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>NIK</label>
-                                                <input required type="text" class="form-control" id="NIK" name="NIK">
+                                                <input required type="number" oninput="this.value = this.value.replace(/\D+/g, '')" class="form-control" id="NIK" name="NIK">
                                                 <div class="invalid-feedback">
                                                     Masukkan NIK  !
                                                 </div>
