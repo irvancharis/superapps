@@ -14,77 +14,107 @@ class Karyawan extends CI_Controller
     {
         $this->load->library('session');
 
-        $data['M_KARYAWAN'] = $this->M_KARYAWAN->get_news();
+        $data['M_KARYAWAN'] = $this->M_KARYAWAN->get_karyawan();
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
-        $data['get_departement'] = $this->M_KARYAWAN->get_departement();
-        $data['get_jabatan'] = $this->M_KARYAWAN->get_jabatan();
+        //$data['get_kategori'] = $this->M_KARYAWAN->get_kategori();
 
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('karyawan', $data);
     }
 
+    public function get_single($KODE)
+    {
+        $result = $this->M_KARYAWAN->get_single($KODE);
+        echo json_encode($result);
+    }
+    
+    
+    public function get_kategori_produk()
+    {
+        $result = $this->M_KARYAWAN->get_kategori_produk();
+        echo json_encode($result);
+    }
+
+
+    public function tambah($page = 'karyawan')
+    {
+        $this->load->library('session');
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $data['get_karyawan'] = $this->M_KARYAWAN->get_karyawan();
+        $data['get_area'] = $this->M_KARYAWAN->get_area();
+        $data['get_departemen'] = $this->M_KARYAWAN->get_departemen();
+        $data['get_jabatan'] = $this->M_KARYAWAN->get_jabatan();
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('karyawan_tambah', $data);
+    }
+
+    public function edit($KODE, $page = 'karyawan')
+    {
+        $this->load->library('session');
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $query = $this->M_KARYAWAN->get_single($KODE);
+        $data['get_single'] = $query->row();
+        $data['get_area'] = $this->M_KARYAWAN->get_area();
+        $data['get_departemen'] = $this->M_KARYAWAN->get_departemen();
+        $data['get_jabatan'] = $this->M_KARYAWAN->get_jabatan();
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('karyawan_edit', $data);
+    }
+
+/*************  ✨ Codeium Command ⭐  *************/
+    /**
+     * Detail karyawan
+     *
+     * @param string $KODE_ITEM kode item yang akan di detail
+     * @param string $page page yang akan di load
+     */
+/******  65b76a20-bfbd-43d1-a245-14d85356b36b  *******/
+    public function detail($KODE, $page = 'karyawan')
+    {
+        $this->load->library('session');
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $query = $this->M_KARYAWAN->get_single($KODE);
+        $data['get_single'] = $query->row();
+        $data['get_area'] = $this->M_KARYAWAN->get_area();
+        $data['get_departemen'] = $this->M_KARYAWAN->get_departemen();
+        $data['get_jabatan'] = $this->M_KARYAWAN->get_jabatan();
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('karyawan_detail', $data);
+    }
+
+
     public function insert()
     {
+        $KODE_ITEM = $this->input->post('KODE_ITEM');
+        $NAMA_ITEM = $this->input->post('NAMA_ITEM');
+        $KODE_KATEGORI = $this->input->post('KODE_KATEGORI');
+        $KETERANGAN_ITEM = $this->input->post('KETERANGAN_ITEM');
 
-        // Ambil data dari POST
-        $get_last_karyawan = $this->M_KARYAWAN->get_latest_data();
-        $id_karyawan = isset($get_last_karyawan[0]->ID_KARYAWAN) ? $get_last_karyawan[0]->ID_KARYAWAN + 1 : 1; // Default ke 1 jika data kosong
-        $nama_karyawan = $this->input->post('nama_karyawan');
-        $id_departement = $this->input->post('id_departement');
-        $status = $this->input->post('status');
-        $id_jabatan = $this->input->post('id_jabatan');
-
-        // Validasi data
-        $errors = [];
-
-        // Validasi nama karyawan
-        if (empty($nama_karyawan)) {
-            $errors[] = 'Nama Karyawan tidak boleh kosong.';
-        } elseif (strlen($nama_karyawan) > 100) {
-            $errors[] = 'Nama Karyawan tidak boleh lebih dari 100 karakter.';
+        // Validasi 
+        if (empty($KODE_ITEM)) {
+            $errors[] = 'KODE ITEM tidak boleh kosong.';
+        }
+        if (empty($NAMA_ITEM)) {
+            $errors[] = 'NAMA ITEM tidak boleh kosong.';
+        }
+        if (empty($KODE_KATEGORI)) {
+            $errors[] = 'KODE KATEGORI tidak boleh kosong.';
+        }
+        if (empty($KETERANGAN_ITEM)) {
+            $errors[] = 'KETERANGAN ITEM tidak boleh kosong.';
         }
 
-        // Validasi ID Departemen
-        if (empty($id_departement)) {
-            $errors[] = 'ID Departemen tidak boleh kosong.';
-        } elseif (!is_numeric($id_departement)) {
-            $errors[] = 'ID Departemen harus berupa angka.';
-        }
 
-        // Validasi status
-        if (empty($status)) {
-            $errors[] = 'Status tidak boleh kosong.';
-        } elseif (!in_array($status, [0, 1])) { // Contoh validasi nilai yang diizinkan
-            $errors[] = 'Status harus berupa "Aktif" atau "Pasif".';
-        }
-
-        // Validasi ID Jabatan
-        if (empty($id_jabatan)) {
-            $errors[] = 'ID Jabatan tidak boleh kosong.';
-        } elseif (!is_numeric($id_jabatan)) {
-            $errors[] = 'ID Jabatan harus berupa angka.';
-        }
-
-        // Jika ada error, kembalikan respons JSON dengan daftar error
-        if (!empty($errors)) {
-            echo json_encode(['success' => false, 'errors' => $errors]);
-            return;
-        }
-
-        // Jika validasi lolos, lanjutkan proses penyimpanan
-        $data = [
-            'ID_KARYAWAN' => $id_karyawan,
-            'NAMA_KARYAWAN' => $nama_karyawan,
-            'ID_DEPARTEMENT' => $id_departement,
-            'STATUS_KARYAWAN' => $status,
-            'NIK' => $id_karyawan,
-            'ID_JABATAN' => $id_jabatan,
-        ];
-
-
-        $result = $this->M_KARYAWAN->insert($data);
+        $inputan = $this->input->post(null, TRUE);
+		$result = $this->M_KARYAWAN->insert($inputan);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -95,57 +125,15 @@ class Karyawan extends CI_Controller
 
     public function update()
     {
-        // Ambil data dari POST
-        $id_karyawan = $this->input->post('id_karyawan_edit'); // Default ke 1 jika data kosong
-        $nama_karyawan = $this->input->post('nama_karyawan_edit');
-        $id_departement = $this->input->post('id_departement_edit');
-        $status = $this->input->post('status_edit');
-        $id_jabatan = $this->input->post('id_jabatan_edit');
+        $KODE_ITEM = $this->input->post('NIK');
 
-        // Validasi data
-        $errors = [];
+        // Validasi 
+        if (empty($KODE_ITEM)) {
+            $errors[] = 'NIK tidak boleh kosong.';
+        }       
 
-        // Validasi nama karyawan
-        if (empty($nama_karyawan)) {
-            $errors[] = 'Nama Karyawan tidak boleh kosong.';
-        } elseif (strlen($nama_karyawan) > 100) {
-            $errors[] = 'Nama Karyawan tidak boleh lebih dari 100 karakter.';
-        }
-
-        // Validasi ID Departemen
-        if (empty($id_departement)) {
-            $errors[] = 'ID Departemen tidak boleh kosong.';
-        } elseif (!is_numeric($id_departement)) {
-            $errors[] = 'ID Departemen harus berupa angka.';
-        }
-
-        // Validasi status
-        if (!in_array($status, [0, 1])) { // Contoh validasi nilai yang diizinkan
-            $errors[] = 'Status harus berupa "Aktif" atau "Pasif".';
-        }
-
-        // Validasi ID Jabatan
-        if (empty($id_jabatan)) {
-            $errors[] = 'ID Jabatan tidak boleh kosong.';
-        } elseif (!is_numeric($id_jabatan)) {
-            $errors[] = 'ID Jabatan harus berupa angka.';
-        }
-
-        // Jika ada error, kembalikan respons JSON dengan daftar error
-        if (!empty($errors)) {
-            echo json_encode(['success' => false, 'errors' => $errors]);
-            return;
-        }
-
-        // Jika validasi lolos, lanjutkan proses penyimpanan
-        $data = [
-            'NAMA_KARYAWAN' => $nama_karyawan,
-            'ID_DEPARTEMENT' => $id_departement,
-            'STATUS_KARYAWAN' => $status,
-            'ID_JABATAN' => $id_jabatan,
-        ];
-
-        $result = $this->M_KARYAWAN->update($id_karyawan, $data);
+        $inputan = $this->input->post(null, TRUE);
+		$result = $this->M_KARYAWAN->update($KODE_ITEM, $inputan);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -154,18 +142,10 @@ class Karyawan extends CI_Controller
         }
     }
 
-    public function hapus()
+    public function hapus($KODE_ITEM)
     {
-        // Ambil data dari POST
-        $id_karyawan = $this->input->post('id_karyawan_hapus');
-
         // Proses hapus data
-        $result = $this->M_KARYAWAN->hapus($id_karyawan);
-
-        if ($result) {
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false, 'error' => 'Gagal menghapus data.']);
-        }
+        $result = $this->M_KARYAWAN->hapus($KODE_ITEM);
+        redirect('karyawan');
     }
-}
+} 

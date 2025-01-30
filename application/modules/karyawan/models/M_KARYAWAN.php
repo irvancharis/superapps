@@ -4,6 +4,7 @@ class M_KARYAWAN extends CI_Model
 
     // Nama tabel
     protected $table = 'KARYAWAN';
+    protected $VIEW_KARYAWAN = 'VIEW_KARYAWAN';
 
     public function __construct()
     {
@@ -11,17 +12,28 @@ class M_KARYAWAN extends CI_Model
         $this->load->database();
     }
 
-    public function get_news()
+    public function get_karyawan()
     {
-        $this->db->select('KARYAWAN.*, DEPARTEMEN.*, JABATAN.*');
-        $this->db->from('KARYAWAN');
-        $this->db->join('DEPARTEMEN', 'KARYAWAN.ID_DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
-        $this->db->join('JABATAN', 'KARYAWAN.ID_JABATAN = JABATAN.KODE_JABATAN', 'left');
-        $query = $this->db->get();
+        $query = $this->db->get('VIEW_KARYAWAN');
         return $query->result_object();
     }
 
-    public function get_departement()
+    public function get_single($KODE)
+    {
+        $this->db->select('*');
+		$this->db->from('VIEW_KARYAWAN');
+		$this->db->where('NIK', $KODE);
+		$query = $this->db->get();
+        return $query;
+    }
+
+    public function get_area()
+    {
+        $query = $this->db->get('MAPING_AREA');
+        return $query->result_object();
+    }
+
+    public function get_departemen()
     {
         $query = $this->db->get('DEPARTEMEN');
         return $query->result_object();
@@ -33,9 +45,11 @@ class M_KARYAWAN extends CI_Model
         return $query->result_object();
     }
 
+
+    
     public function get_latest_data()
     {
-        $this->db->order_by('ID_KARYAWAN', 'DESC');
+        $this->db->order_by('IDTICKET', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get($this->table);
         return $query->result_object();
@@ -46,15 +60,15 @@ class M_KARYAWAN extends CI_Model
         return $this->db->insert($this->table, $data);
     }
 
-    public function update($id_karyawan, $data)
+    public function update($KODE_ITEM, $data)
     {
-        $this->db->where('ID_KARYAWAN', $id_karyawan);
+        $this->db->where('NIK', $KODE_ITEM);
         return $this->db->update($this->table, $data);
     }
 
-    public function hapus($id_karyawan)
+    public function hapus($KODE_ITEM)
     {
-        $this->db->where('ID_KARYAWAN', $id_karyawan);
+        $this->db->where('KODE_ITEM', $KODE_ITEM);
         return $this->db->delete($this->table);
     }
 }
