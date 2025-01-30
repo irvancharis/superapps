@@ -1,3 +1,6 @@
+    
+    
+    
     <!-- General JS Scripts -->
     <script src="<?php echo base_url('assets/js/app.min.js'); ?>"></script>
     <!-- JS Libraies -->

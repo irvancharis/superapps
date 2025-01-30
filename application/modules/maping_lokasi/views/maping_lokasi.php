@@ -41,8 +41,8 @@
                                                             </div>
                                                         </td>
                                                         <td><?php echo $index + 1; ?></td>
-                                                        <td><?php echo $d->KODE_LOKASI; ?></td>
-                                                        <td><?php echo $d->KODE_LOKASI; ?></td>
+                                                        <td><?php echo $d->NAMA_AREA; ?></td>
+                                                        <td><?php echo $d->NAMA_RUANGAN; ?></td>
                                                         <td><?php echo $d->KODE_LOKASI; ?></td>
                                                         <td><?php echo $d->NAMA_LOKASI; ?></td>
                                                         <td>
@@ -403,7 +403,7 @@
                                 }
                             },
                             error: function() {
-                                alert('Terjadi kesalahan pada server.');
+                                alert('Gagal melakukan proses.');
                             }
                         });
                     });

@@ -23,6 +23,7 @@
                                                         </div>
                                                     </th>
                                                     <th>#</th>
+                                                    <th>AREA</th>
                                                     <th>KODE RUANGAN</th>
                                                     <th>NAMA RUANGAN</th>
                                                     <th>Action</th>
@@ -39,6 +40,7 @@
                                                             </div>
                                                         </td>
                                                         <td><?php echo $index + 1; ?></td>
+                                                        <td><?php echo $d->NAMA_AREA; ?></td>
                                                         <td><?php echo $d->KODE_RUANGAN; ?></td>
                                                         <td><?php echo $d->NAMA_RUANGAN; ?></td>
                                                         <td>
@@ -399,7 +401,7 @@
                                 }
                             },
                             error: function() {
-                                alert('Terjadi kesalahan pada server.');
+                                alert('Gagal melakukan proses.');
                             }
                         });
                     });

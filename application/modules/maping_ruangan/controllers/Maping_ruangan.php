@@ -43,7 +43,7 @@ class MAPING_ruangan extends CI_Controller
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
-        $data['get_kategori_produk'] = $this->M_MAPING_RUANGAN->get_kategori_produk();
+        $data['get_area'] = $this->M_MAPING_RUANGAN->get_area();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('maping_ruangan_tambah', $data);
@@ -55,7 +55,7 @@ class MAPING_ruangan extends CI_Controller
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_MAPING_RUANGAN->get_maping_ruangan_single($KODE_RUANGAN);
-        $data['get_kategori_produk'] = $this->M_MAPING_RUANGAN->get_kategori_produk();
+        $data['get_maping_area'] = $this->M_MAPING_RUANGAN->get_area();
         $data['get_maping_ruangan'] = $query->row();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .

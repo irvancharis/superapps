@@ -43,7 +43,8 @@ class Maping_lokasi extends CI_Controller
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
-        $data['get_kategori_produk'] = $this->M_MAPING_LOKASI->get_kategori_produk();
+        $data['get_area'] = $this->M_MAPING_LOKASI->get_area();
+        $data['get_ruangan'] = $this->M_MAPING_LOKASI->get_ruangan();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('maping_lokasi_tambah', $data);
@@ -55,7 +56,8 @@ class Maping_lokasi extends CI_Controller
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_MAPING_LOKASI->get_maping_lokasi_single($KODE_LOKASI);
-        $data['get_kategori_produk'] = $this->M_MAPING_LOKASI->get_kategori_produk();
+        $data['get_area'] = $this->M_MAPING_LOKASI->get_area();
+        $data['get_ruangan'] = $this->M_MAPING_LOKASI->get_ruangan();
         $data['get_maping_lokasi'] = $query->row();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .

@@ -18,10 +18,10 @@
                         <a href="<?php echo base_url('maping_area'); ?>" class="nav-link"><i data-feather="map"></i><span>Area</span></a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url('maping_lokasi'); ?>" class="nav-link"><i data-feather="map"></i><span>Lokasi</span></a>
+                        <a href="<?php echo base_url('maping_ruangan'); ?>" class="nav-link"><i data-feather="map"></i><span>Ruangan</span></a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url('maping_ruangan'); ?>" class="nav-link"><i data-feather="map"></i><span>Ruangan</span></a>
+                        <a href="<?php echo base_url('maping_lokasi'); ?>" class="nav-link"><i data-feather="map"></i><span>Lokasi</span></a>
                     </li>
                 </ul>
             </li>

@@ -42,15 +42,6 @@
                     </div>
                 </section>
             </div>
-            <footer class="main-footer">
-                <div class="footer-left">
-                    <a href="templateshub.net">SAGROUP.ID</a></a>
-                </div>
-                <div class="footer-right">
-                </div>
-            </footer>
-            </div>
-            </div>
             
 
             <?php $this->load->view('layout/footer'); ?>
@@ -81,7 +72,7 @@
                                 }
                             },
                             error: function() {
-                                alert('Terjadi kesalahan pada server.');
+                                alert('Gagal melakukan proses.');
                             }
                         });
                     });

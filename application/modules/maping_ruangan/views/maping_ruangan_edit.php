@@ -6,10 +6,18 @@
                             <div class="card">
                                 <form class="needs-validation" novalidate="" id="FORM_DATA">
                                     <div class="card-header">
-                                        <h4>INPUT DATA RUANGAN</h4>
+                                        <h4>EDIT DATA RUANGAN</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
+                                        <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>AREA</label>
+                                                <select name="KODE_AREA" id="KODE_AREA" class="form-control">
+                                                    <?php foreach ($get_maping_area as $row) : ?>
+                                                        <option value="<?= $row->KODE_AREA; ?>" <?php if ($row->KODE_AREA == $get_maping_ruangan->KODE_AREA) echo "selected"; ?>><?= $row->NAMA_AREA; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KODE RUANGAN</label>
                                                 <input type="text" name="KODE_RUANGAN" id="KODE_RUANGAN" value="<?= $get_maping_ruangan->KODE_RUANGAN; ?>" class="form-control">
@@ -18,18 +26,10 @@
                                                 <label>NAMA RUANGAN</label>
                                                 <input type="text" class="form-control" id="NAMA_RUANGAN" value="<?= $get_maping_ruangan->NAMA_RUANGAN; ?>" name="NAMA_RUANGAN">
                                             </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>KATEGORI PRODUK</label>
-                                                <select name="KODE_RUANGAN" id="KODE_RUANGAN" class="form-control">
-                                                    <option value="<?= $get_maping_ruangan->KODE_RUANGAN; ?>" class="text-center" selected disabled><?= $get_maping_ruangan->NAMA_RUANGAN; ?></option>
-                                                    <?php foreach ($get_kategori_produk as $row) : ?>
-                                                        <option value="<?= $row->KODE_RUANGAN; ?>"><?= $row->NAMA_RUANGAN; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
+                                            
                                             
                                             <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>KETERANGAN PRODUK</label>
+                                                <label>KETERANGAN RUANGAN</label>
                                                 <textarea name="KETERANGAN_RUANGAN" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket"><?= $get_maping_ruangan->KETERANGAN_RUANGAN; ?></textarea>
                                             </div>
                                         </div>
@@ -42,15 +42,6 @@
                         </div>
                     </div>
                 </section>
-            </div>
-            <footer class="main-footer">
-                <div class="footer-left">
-                    <a href="templateshub.net">SAGROUP.ID</a></a>
-                </div>
-                <div class="footer-right">
-                </div>
-            </footer>
-            </div>
             </div>
             
 
@@ -82,7 +73,7 @@
                                 }
                             },
                             error: function() {
-                                alert('Terjadi kesalahan pada server.');
+                                alert('Gagal melakukan proses.');
                             }
                         });
                     });

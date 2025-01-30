@@ -10,6 +10,18 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
+                                        <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>AREA</label>
+                                                <select name="KODE_AREA" id="KODE_AREA" class="form-control">
+                                                    <option value="" class="text-center" selected disabled>-- Pilih Area --</option>
+                                                    <?php foreach ($get_area as $row) : ?>
+                                                        <option value="<?= $row->KODE_AREA; ?>"><?= $row->NAMA_AREA; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Silahkan masukkan kategori!
+                                                </div>
+                                            </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KODE RUANGAN</label>
                                                 <input type="text" name="KODE_RUANGAN" id="KODE_RUANGAN" class="form-control">
@@ -25,10 +37,10 @@
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>KETERANGAN KATEGORI</label>
-                                                <textarea name="KETERANGAN_RUANGAN" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket"></textarea>
+                                                <label>KETERANGAN RUANGAN</label>
+                                                <textarea name="KETERANGAN_RUANGAN" placeholder="Masukkan keterangan ruangan" class="form-control" id="description_ticket"></textarea>
                                                 <div class="invalid-feedback">
-                                                    Silahkan masukkan keterangan kategori anda!
+                                                    Silahkan masukkan keterangan ruangan anda!
                                                 </div>
                                             </div>
                                         </div>
@@ -41,15 +53,6 @@
                         </div>
                     </div>
                 </section>
-            </div>
-            <footer class="main-footer">
-                <div class="footer-left">
-                    <a href="templateshub.net">SAGROUP.ID</a></a>
-                </div>
-                <div class="footer-right">
-                </div>
-            </footer>
-            </div>
             </div>
             
 
@@ -81,7 +84,7 @@
                                 }
                             },
                             error: function() {
-                                alert('Terjadi kesalahan pada server.');
+                                alert('Gagal melakukan proses.');
                             }
                         });
                     });
