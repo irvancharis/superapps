@@ -1,5 +1,5 @@
 <?php
-class Ticket extends CI_Controller
+class Ticket_client_view extends CI_Controller
 {
     public $data = array();
 
@@ -18,11 +18,9 @@ class Ticket extends CI_Controller
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $data['get_departement'] = $this->M_TICKET->get_departement();
-        $data['get_technician'] = $this->M_TICKET->get_technician();
+        $data['get_area'] = $this->M_TICKET->get_area();
 
-        $this->load->view('layout/navbar') .
-            $this->load->view('layout/sidebar', $data) .
-            $this->load->view('ticket', $data);
+        $this->load->view('ticket_client_view', $data);
     }
 
     public function get_departement()
@@ -69,10 +67,6 @@ class Ticket extends CI_Controller
         $site_ticket = $this->input->post('id_area');
         $type_ticket = $this->input->post('type_ticket');
         $description_ticket = $this->input->post('description_ticket');
-        $id_technician = $this->input->post('id_technician');
-        $status_ticket = $this->input->post('status_ticket');
-        $approval_ticket = $this->input->post('approval_ticket');
-        $prosentase = $this->input->post('prosentase');
 
         if (empty($type_ticket)) {
             $errors[] = 'Pilih setidaknya satu jenis keluhan.';
@@ -91,10 +85,9 @@ class Ticket extends CI_Controller
             'DESCRIPTION_TICKET' => $description_ticket,
             'DATE_TICKET' => date('Y-m-d H:i:s'),
             'DATE_TICKET_DONE' => null,
-            'TECHNICIAN' => $id_technician,
-            'STATUS_TICKET' => $status_ticket,
-            'APPROVAL_TICKET' => $approval_ticket,
-            'PROSENTASE' => $prosentase
+            'STATUS_TICKET' => 0,
+            'APPROVAL_TICKET' => 0,
+            'PROSENTASE' => null
         ];
 
         $result = $this->M_TICKET->insert($data);
@@ -140,7 +133,6 @@ class Ticket extends CI_Controller
         $this->load->library('session');
         $this->session->set_userdata('page', 'ticket');
         $data['page'] = $this->session->userdata('page');
-        $data['get_technician'] = $this->M_TICKET->get_technician();
         $ticket = $this->M_TICKET->get_ticket($id);
 
         // Pastikan TYPE_TICKET menjadi array, meskipun hanya 1 value

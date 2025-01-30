@@ -12,7 +12,6 @@
                                                 <label class="col-sm-5 col-form-label">Tgl Request</label>
                                                 <div class="col-sm-7">
                                                     <input type="date" name="date_ticket" id="date_ticket" class="form-control" value="<?= isset($get_ticket->DATE_TICKET) ? htmlspecialchars($get_ticket->DATE_TICKET) : ''; ?>" disabled>
-                                                    <input type="hidden" name="date_ticket_done" id="date_ticket_done" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -82,12 +81,15 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DATE TICKET DONE</label>
-                                                <input type="date" class="form-control" id="date_ticket_done" name="date_ticket_done">
+                                                <input type="datetime-local" class="form-control" id="date_ticket_done" name="date_ticket_done" readonly>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>TECHNICIAN</label>
                                                 <select name="id_technician" id="id_technician" class="form-control">
-                                                    <option value="<?= isset($get_ticket->IDTECH) ? $get_ticket->IDTECH : ''; ?>"><?= isset($get_ticket->NAME_TECHNICIAN) ? $get_ticket->NAME_TECHNICIAN : ''; ?></option>
+                                                    <option value="" class="text-center" selected disabled>-- Pilih Teknisi --</option>
+                                                    <?php foreach ($get_technician as $row) : ?>
+                                                        <option value="<?= $row->IDTECH; ?>" <?= ($get_ticket->TECHNICIAN == $row->IDTECH) ? 'selected' : ''; ?>><?= $row->NAME_TECHNICIAN; ?></option>
+                                                    <?php endforeach; ?>
                                                 </select>
                                                 <div class="invalid-feedback">
                                                     Pilih Teknisi!
@@ -435,10 +437,16 @@
 
                             var day = ("0" + now.getDate()).slice(-2); // Format day
                             var month = ("0" + (now.getMonth() + 1)).slice(-2); // Format month
-                            var today = now.getFullYear() + "-" + month + "-" + day; // Format YYYY-MM-DD
+                            var year = now.getFullYear(); // Tahun
+                            var hour = ("0" + now.getHours()).slice(-2); // Jam
+                            var minute = ("0" + now.getMinutes()).slice(-2); // Menit
+                            var second = ("0" + now.getSeconds()).slice(-2); // Detik
+
+                            // Format tanggal dan waktu: YYYY-MM-DD H:i:s
+                            var today = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
 
                             // Cek apakah nilai input date_ticket_done ada dan ubah jika perlu
-                            $('input[name="date_ticket_done"]').val(today); // Isi input dengan tanggal dan waktu sekarang
+                            $('input[name="date_ticket_done"]').val("<?php echo date('Y-m-d H:i:s'); ?>"); // Isi input dengan tanggal dan waktu sekarang
                         }
                     }
                 });
