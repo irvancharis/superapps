@@ -68,7 +68,7 @@ class M_KARYAWAN extends CI_Model
 
     public function hapus($KODE_ITEM)
     {
-        $this->db->where('KODE_ITEM', $KODE_ITEM);
+        $this->db->where('NIK', $KODE_ITEM);
         return $this->db->delete($this->table);
     }
 }
