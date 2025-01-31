@@ -12,21 +12,21 @@
                                         <div class="row">
                                         <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
-                                                <input type="text" name="KODE_RUANGAN" id="KODE_RUANGAN" value="<?= $get_maping_ruangan->NAMA_AREA; ?>" class="form-control" readonly>
+                                                <input required type="text" name="KODE_RUANGAN" id="KODE_RUANGAN" value="<?= $get_maping_ruangan->NAMA_AREA; ?>" class="form-control" readonly>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KODE RUANGAN</label>
-                                                <input type="text" name="KODE_RUANGAN" id="KODE_RUANGAN" value="<?= $get_maping_ruangan->KODE_RUANGAN; ?>" class="form-control" readonly>
+                                                <input required type="text" name="KODE_RUANGAN" id="KODE_RUANGAN" value="<?= $get_maping_ruangan->KODE_RUANGAN; ?>" class="form-control" readonly>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>NAMA RUANGAN</label>
-                                                <input type="text" class="form-control" id="NAMA_RUANGAN" value="<?= $get_maping_ruangan->NAMA_RUANGAN; ?>" name="NAMA_RUANGAN" readonly>
+                                                <input required type="text" class="form-control" id="NAMA_RUANGAN" value="<?= $get_maping_ruangan->NAMA_RUANGAN; ?>" name="NAMA_RUANGAN" readonly>
                                             </div>
                                             
                                             
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KETERANGAN RUANGAN</label>
-                                                <textarea name="KETERANGAN_RUANGAN" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket" readonly><?= $get_maping_ruangan->KETERANGAN_RUANGAN; ?></textarea>
+                                                <textarea required name="KETERANGAN_RUANGAN" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket" readonly><?= $get_maping_ruangan->KETERANGAN_RUANGAN; ?></textarea>
                                             </div>
                                         </div>
                                     </div>

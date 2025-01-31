@@ -184,7 +184,7 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
-                                    <input type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician">
+                                    <input required type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician">
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
@@ -243,7 +243,7 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
-                                    <input type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician" id="nama_technician_view" disabled>
+                                    <input required type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician" id="nama_technician_view" disabled>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
@@ -302,7 +302,7 @@
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
                                     <input type="hidden" id="id_technician_edit" class="form-control" placeholder="ID" name="id_technician_edit">
-                                    <input type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician_edit" id="nama_technician_edit">
+                                    <input required type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician_edit" id="nama_technician_edit">
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">

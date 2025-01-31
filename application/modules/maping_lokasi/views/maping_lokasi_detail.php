@@ -12,30 +12,30 @@
                                         <div class="row">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
-                                                <input type="text" name="KODE_LOKASI" id="KODE_LOKASI" value="<?= $get_maping_lokasi->NAMA_AREA; ?>" class="form-control" readonly>
+                                                <input required type="text" name="KODE_LOKASI" id="KODE_LOKASI" value="<?= $get_maping_lokasi->NAMA_AREA; ?>" class="form-control" readonly>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan area!
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>RUANGAN</label>
-                                                <input type="text" name="KODE_LOKASI" id="KODE_LOKASI" value="<?= $get_maping_lokasi->NAMA_RUANGAN; ?>" class="form-control" readonly>
+                                                <input required type="text" name="KODE_LOKASI" id="KODE_LOKASI" value="<?= $get_maping_lokasi->NAMA_RUANGAN; ?>" class="form-control" readonly>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan ruangan!
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KODE LOKASI</label>
-                                                <input type="text" name="KODE_LOKASI" id="KODE_LOKASI" value="<?= $get_maping_lokasi->KODE_LOKASI; ?>" class="form-control" readonly>
+                                                <input required type="text" name="KODE_LOKASI" id="KODE_LOKASI" value="<?= $get_maping_lokasi->KODE_LOKASI; ?>" class="form-control" readonly>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>NAMA LOKASI</label>
-                                                <input type="text" class="form-control" id="NAMA_LOKASI" value="<?= $get_maping_lokasi->NAMA_LOKASI; ?>" name="NAMA_LOKASI" readonly>
+                                                <input required type="text" class="form-control" id="NAMA_LOKASI" value="<?= $get_maping_lokasi->NAMA_LOKASI; ?>" name="NAMA_LOKASI" readonly>
                                             </div>                                            
                                             
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KETERANGAN LOKASI</label>
-                                                <textarea name="KETERANGAN_LOKASI" placeholder="Masukkan keterangan lokasi" class="form-control" id="description_ticket" readonly><?= $get_maping_lokasi->KETERANGAN_RUANGAN; ?></textarea>
+                                                <textarea required name="KETERANGAN_LOKASI" placeholder="Masukkan keterangan lokasi" class="form-control" id="description_ticket" readonly><?= $get_maping_lokasi->KETERANGAN_RUANGAN; ?></textarea>
                                             </div>
                                         </div>
                                     </div>

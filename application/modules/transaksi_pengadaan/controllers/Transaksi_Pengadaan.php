@@ -40,7 +40,7 @@ class Transaksi_pengadaan extends CI_Controller
     }
 
 
-    public function tambah($page = 'karyawan')
+    public function tambah($page = 'transaksi_pengadaan')
     {
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
@@ -54,7 +54,7 @@ class Transaksi_pengadaan extends CI_Controller
             $this->load->view('karyawan_tambah', $data);
     }
 
-    public function edit($KODE, $page = 'karyawan')
+    public function edit($KODE, $page = 'transaksi_pengadaan')
     {
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
@@ -69,15 +69,7 @@ class Transaksi_pengadaan extends CI_Controller
             $this->load->view('karyawan_edit', $data);
     }
 
-/*************  ✨ Codeium Command ⭐  *************/
-    /**
-     * Detail karyawan
-     *
-     * @param string $KODE_ITEM kode item yang akan di detail
-     * @param string $page page yang akan di load
-     */
-/******  65b76a20-bfbd-43d1-a245-14d85356b36b  *******/
-    public function detail($KODE, $page = 'karyawan')
+    public function detail($KODE, $page = 'transaksi_pengadaan')
     {
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
@@ -91,7 +83,6 @@ class Transaksi_pengadaan extends CI_Controller
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('karyawan_detail', $data);
     }
-
 
     public function insert()
     {
