@@ -45,10 +45,10 @@
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">
-                                                                    <a href="<?=site_url('produk_kategori/detail/'.$d->KODE_PRODUK_KATEGORI);?>" class="dropdown-kategori has-icon view-btn" ><i class="fas fa-eye"></i> View</a>
-                                                                    <a href="<?=site_url('produk_kategori/edit/'.$d->KODE_PRODUK_KATEGORI);?>" class="dropdown-kategori has-icon edit-btn" ><i class="far fa-edit"></i> Edit</a>
+                                                                    <a href="#" class="dropdown-kategori has-icon view-btn"><i class="fas fa-eye"></i> View</a>
+                                                                    <a href="#" class="dropdown-kategori has-icon edit-btn"><i class="far fa-edit"></i> Edit</a>
                                                                     <div class="dropdown-divider"></div>
-                                                                    <a href="<?=site_url('produk_kategori/hapus/'.$d->KODE_PRODUK_KATEGORI);?>" class="dropdown-kategori has-icon text-danger hapus-btn"  onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>
+                                                                    <a href="#" class="dropdown-kategori has-icon text-danger hapus-btn" onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>
                                                                         Delete</a>
                                                                 </div>
                                                             </div>
@@ -374,7 +374,7 @@
             </body>
 
             <script>
-                $(document).ready(function() {                   
+                $(document).ready(function() {
 
                     $('#formHapusproduk').on('submit', function(e) {
                         e.preventDefault();

@@ -299,7 +299,6 @@
                                     innerHTML: `
                     <div class="selectgroup selectgroup-pills">
                         <label class="selectgroup-item">
-                            <input style="display: none;" type="datetime-local" class="form-control" id="date_ticket_done" name="date_ticket_done">
                             <input type="radio" name="status_ticket" value="0" class="selectgroup-input-radio" id="status0">
                             <span class="selectgroup-button status" id="label-status0">DALAM ANTRIAN</span>
                         </label>
@@ -330,7 +329,6 @@
                         }).then((confirm) => {
                             if (confirm) {
                                 let selectedStatus = $("input[name='status_ticket']:checked").val();
-                                let date_ticket_done = $("input[name='date_ticket_done']").val("<?php echo date('Y-m-d H:i:s'); ?>");
                                 if (!selectedStatus) {
                                     swal("Pilih status terlebih dahulu!", {
                                         icon: "warning"
@@ -346,7 +344,6 @@
                                     data: {
                                         status_ticket: selectedStatus,
                                         id_ticket: id_ticket,
-                                        date_ticket_done: date_ticket_done,
                                         prosentase: selectedStatus // Progress sama dengan status
                                     },
                                     success: function(response) {

@@ -42,15 +42,15 @@
                                                         <td><?php echo $index + 1; ?></td>
                                                         <td><?php echo $d->KODE_ITEM; ?></td>
                                                         <td><?php echo $d->NAMA_ITEM; ?></td>
-                                                        <td><?php echo $d->NAMA_PRODUK_KATEGORI; ?></td>                                                       
+                                                        <td><?php echo $d->NAMA_PRODUK_KATEGORI; ?></td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">
-                                                                    <a href="<?=site_url('produk_item/detail/'.$d->KODE_ITEM);?>" class="dropdown-item has-icon view-btn" ><i class="fas fa-eye"></i> View</a>
-                                                                    <a href="<?=site_url('produk_item/edit/'.$d->KODE_ITEM);?>" class="dropdown-item has-icon edit-btn" ><i class="far fa-edit"></i> Edit</a>
+                                                                    <a href="<?= site_url('produk_item/detail/' . $d->KODE_ITEM); ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a>
+                                                                    <a href="<?= site_url('produk_item/edit/' . $d->KODE_ITEM); ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Edit</a>
                                                                     <div class="dropdown-divider"></div>
-                                                                    <a href="<?=site_url('produk_item/hapus/'.$d->KODE_ITEM);?>" class="dropdown-item has-icon text-danger hapus-btn"  onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>
+                                                                    <a href="<?= site_url('produk_item/hapus/' . $d->KODE_ITEM); ?>" class="dropdown-item has-icon text-danger hapus-btn" onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>
                                                                         Delete</a>
                                                                 </div>
                                                             </div>
@@ -376,7 +376,7 @@
             </body>
 
             <script>
-                $(document).ready(function() {                   
+                $(document).ready(function() {
 
                     $('#formHapusproduk').on('submit', function(e) {
                         e.preventDefault();

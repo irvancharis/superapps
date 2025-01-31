@@ -231,26 +231,18 @@ class Ticket extends CI_Controller
         $id_ticket = $this->input->post('id_ticket', true);
         $status_ticket = $this->input->post('status_ticket', true);
         $prosentase = $this->input->post('prosentase', true);
-        $date_ticket_done = $this->input->post('date_ticket_done', true);
 
         // Validasi input
-        if (empty($id_ticket) || empty($status_ticket)) {
+        if (empty($id_ticket) || $status_ticket == null) {
             echo json_encode(['success' => false, 'error' => 'ID Ticket dan Status Ticket tidak boleh kosong.']);
             return;
-        }
-
-        // Pastikan date_ticket_done valid dan memiliki format yang benar
-        if ($date_ticket_done) {
-            $date_ticket_done = date('Y-m-d H:i:s', strtotime($date_ticket_done));
-        } else {
-            $date_ticket_done = null; // Atau set default jika diperlukan
         }
 
         // Data yang akan diupdate
         if ($prosentase == 100) {
             $data = [
                 'STATUS_TICKET' => $status_ticket,
-                'DATE_TICKET_DONE' => $date_ticket_done,
+                'DATE_TICKET_DONE' => date('Y-m-d H:i:s'),
                 'PROSENTASE' => $prosentase
             ];
         } else {
