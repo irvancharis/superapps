@@ -4,6 +4,7 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
 
     // Nama tabel
     protected $table = 'TRANSAKSI_PENGADAAN';
+    protected $VIEW_KARYAWAN = 'VIEW_KARYAWAN';
 
     public function __construct()
     {
@@ -11,27 +12,19 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
         $this->load->database();
     }
 
-    public function get_transaksi()
+    public function get_data()
     {
-        $this->db->select('TICKET.*, DEPARTEMEN.*, TECHNICIAN.*, MAPING_AREA.*');
-        $this->db->from('TICKET');
-        $this->db->join('DEPARTEMEN', 'TICKET.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
-        $this->db->join('TECHNICIAN', 'TICKET.TECHNICIAN = TECHNICIAN.IDTECH', 'left');
-        $this->db->join('MAPING_AREA', 'TICKET.SITE_TICKET = MAPING_AREA.KODE_AREA', 'left');
-        $query = $this->db->get();
+        $query = $this->db->get('VIEW_TRANSAKSI_PENGADAAN');
         return $query->result_object();
     }
 
-    public function get_departement()
+    public function get_single($KODE)
     {
-        $query = $this->db->get('DEPARTEMEN');
-        return $query->result_object();
-    }
-
-    public function get_technician()
-    {
-        $query = $this->db->get('TECHNICIAN');
-        return $query->result_object();
+        $this->db->select('*');
+		$this->db->from('VIEW_KARYAWAN');
+		$this->db->where('NIK', $KODE);
+		$query = $this->db->get();
+        return $query;
     }
 
     public function get_area()
@@ -40,6 +33,20 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
         return $query->result_object();
     }
 
+    public function get_departemen()
+    {
+        $query = $this->db->get('DEPARTEMEN');
+        return $query->result_object();
+    }
+
+    public function get_jabatan()
+    {
+        $query = $this->db->get('JABATAN');
+        return $query->result_object();
+    }
+
+
+    
     public function get_latest_data()
     {
         $this->db->order_by('IDTICKET', 'DESC');
@@ -53,15 +60,15 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
         return $this->db->insert($this->table, $data);
     }
 
-    public function update($id_ticket, $data)
+    public function update($KODE_ITEM, $data)
     {
-        $this->db->where('IDTICKET', $id_ticket);
+        $this->db->where('NIK', $KODE_ITEM);
         return $this->db->update($this->table, $data);
     }
 
-    public function hapus($id_ticket)
+    public function hapus($KODE_ITEM)
     {
-        $this->db->where('IDTICKET', $id_ticket);
+        $this->db->where('NIK', $KODE_ITEM);
         return $this->db->delete($this->table);
     }
 }

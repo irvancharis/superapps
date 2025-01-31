@@ -5,9 +5,9 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Data Transaksi Pengadaan</h4>
+                                    <h4>DATA TRANSAKSI PENGADAAN</h4>
                                     <div class="card-header-action">
-                                        <a href="<?php echo base_url('ticket/tambah_view') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
+                                        <a href="<?php echo base_url('transaksi_pengadaan/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -22,14 +22,15 @@
                                                             <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                                                         </div>
                                                     </th>
-                                                    <th>#</th>
-                                                    <th>TICKET ID</th>
-                                                    <th>ORDER BY</th>
-                                                    <th>SITE</th>
-                                                    <th>APPROVAL</th>
-                                                    <th>TECHNICIAN</th>
+                                                    <th>REGISTER</th>
+                                                    <th>DEPARTEMEN</th>                                                    
+                                                    <th>USER PENGAJUAN</th>
+                                                    <th>TGL PENGAJUAN</th>
+                                                    <th>USER APROVAL</th>
+                                                    <th>TGL APROVAL</th>
+                                                    <th>USER REALISASI</th>
+                                                    <th>TGL REALISASI</th>
                                                     <th>STATUS</th>
-                                                    <th>CLEAR AT</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -43,34 +44,23 @@
                                                                 <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                                                             </div>
                                                         </td>
-                                                        <td><?php echo $index + 1; ?></td>
-                                                        <td><?php echo $d->IDTICKET; ?></td>
-                                                        <td><?php echo $d->REQUESTBY; ?></td>
-                                                        <td><?php echo $d->NAMA_AREA; ?></td>
-                                                        <td><?php echo $d->APPROVAL_TICKET; ?></td>
-                                                        <td><?php echo $d->TECHNICIAN; ?></td>
-                                                        <td>
-                                                            <?php
-                                                            if ($d->STATUS_TICKET == 0) {
-                                                                echo '<span class="badge badge-warning">Dalam Antrian</span>';
-                                                            } elseif ($d->STATUS_TICKET == 1) {
-                                                                echo '<span class="badge badge-primary">Dalam Proses</span>';
-                                                            } elseif ($d->STATUS_TICKET == 2) {
-                                                                echo '<span class="badge badge-success">Selesai</span>';
-                                                            } else {
-                                                                echo '<span class="badge badge-danger">Ditolak</span>';
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <td><?php echo $d->DATE_TICKET_DONE; ?></td>
+                                                        <td><?php echo $d->NO_REGISTER; ?></td>
+                                                        <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
+                                                        <td><?php echo $d->USER_PENGAJUAN; ?></td>                                                       
+                                                        <td><?php echo $d->TANGGAL_PENGAJUAN; ?></td>    
+                                                        <td><?php echo $d->USER_APROVAL; ?></td> 
+                                                        <td><?php echo $d->TANGGAL_APROVAL; ?></td> 
+                                                        <td><?php echo $d->USER_REALISASI; ?></td> 
+                                                        <td><?php echo $d->TANGGAL_REALISASI; ?></td> 
+                                                        <td><?php if($d->STATUS == 'MENUNGGU_APROVAL'){echo '<span class="badge badge-success">MENUNGGU APROVAL</span>';}elseif($d->STATUS == 'PROSES_PENGADAAN'){echo '<span class="badge badge-success">PROSES PENGADAAN</span>';}?></td>   
                                                         <td>
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">
-                                                                    <a href="#" class="dropdown-item has-icon view-btn" data-nama="<?php echo $d->NAME_TECHNICIAN; ?>" data-departement="<?php echo $d->DEPARTEMENT; ?>" data-status="<?php echo $d->STATUS; ?>" data-idkaryawan="<?php echo $d->IDKARYAWAN; ?>" data-description="<?php echo $d->DESCRIPTION_TECHNICIAN; ?>" data-toggle="modal" data-target="#viewModal"><i class="fas fa-eye"></i> View</a>
-                                                                    <a href="#" class="dropdown-item has-icon edit-btn" data-id="<?php echo $d->IDTECH; ?>" data-nama="<?php echo $d->NAME_TECHNICIAN; ?>" data-departement="<?php echo $d->DEPARTEMENT; ?>" data-status="<?php echo $d->STATUS; ?>" data-idkaryawan="<?php echo $d->IDKARYAWAN; ?>" data-description="<?php echo $d->DESCRIPTION_TECHNICIAN; ?>" data-toggle="modal" data-target="#editModal"><i class="far fa-edit"></i> Edit</a>
+                                                                    <a href="<?=site_url('transaksi_pengadaan/detail/'.$d->NIK);?>" class="dropdown-item has-icon view-btn" ><i class="fas fa-eye"></i> View</a>
+                                                                    <a href="<?=site_url('transaksi_pengadaan/edit/'.$d->NIK);?>" class="dropdown-item has-icon edit-btn" ><i class="far fa-edit"></i> Edit</a>
                                                                     <div class="dropdown-divider"></div>
-                                                                    <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTECH; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
+                                                                    <a href="<?=site_url('transaksi_pengadaan/hapus/'.$d->NIK);?>" class="dropdown-item has-icon text-danger hapus-btn"  onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>
                                                                         Delete</a>
                                                                 </div>
                                                             </div>
@@ -202,7 +192,7 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
-                                    <input type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician">
+                                    <input required type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician">
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
@@ -224,11 +214,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>ID Karyawan</label>
-                                    <select class="form-control" name="id_karyawan">
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --</option>
-                                        <?php foreach ($get_karyawan as $row) : ?>
-                                            <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> - <?= $row->NAMA_KARYAWAN; ?></option>
+                                    <label>ID Transaksi_pengadaan</label>
+                                    <select class="form-control" name="id_transaksi_pengadaan">
+                                        <option value="" class="text-center" selected disabled>-- Pilih ID Transaksi_pengadaan --</option>
+                                        <?php foreach ($get_transaksi_pengadaan as $row) : ?>
+                                            <option value="<?= $row->ID_TRANSAKSI_PENGADAAN; ?>"><?= $row->ID_TRANSAKSI_PENGADAAN; ?> - <?= $row->NAMA_TRANSAKSI_PENGADAAN; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -261,7 +251,7 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
-                                    <input type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician" id="nama_technician_view" disabled>
+                                    <input required type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician" id="nama_technician_view" disabled>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
@@ -283,11 +273,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>ID Karyawan</label>
-                                    <select class="form-control" name="id_karyawan" id="id_karyawan_view" disabled>
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --</option>
-                                        <?php foreach ($get_karyawan as $row) : ?>
-                                            <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> - <?= $row->NAMA_KARYAWAN; ?></option>
+                                    <label>ID Transaksi_pengadaan</label>
+                                    <select class="form-control" name="id_transaksi_pengadaan" id="id_transaksi_pengadaan_view" disabled>
+                                        <option value="" class="text-center" selected disabled>-- Pilih ID Transaksi_pengadaan --</option>
+                                        <?php foreach ($get_transaksi_pengadaan as $row) : ?>
+                                            <option value="<?= $row->ID_TRANSAKSI_PENGADAAN; ?>"><?= $row->ID_TRANSAKSI_PENGADAAN; ?> - <?= $row->NAMA_TRANSAKSI_PENGADAAN; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -320,7 +310,7 @@
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
                                     <input type="hidden" id="id_technician_edit" class="form-control" placeholder="ID" name="id_technician_edit">
-                                    <input type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician_edit" id="nama_technician_edit">
+                                    <input required type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician_edit" id="nama_technician_edit">
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
@@ -342,11 +332,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>ID Karyawan</label>
-                                    <select class="form-control" name="id_karyawan_edit" id="id_karyawan_edit">
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --</option>
-                                        <?php foreach ($get_karyawan as $row) : ?>
-                                            <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> - <?= $row->NAMA_KARYAWAN; ?></option>
+                                    <label>ID Transaksi_pengadaan</label>
+                                    <select class="form-control" name="id_transaksi_pengadaan_edit" id="id_transaksi_pengadaan_edit">
+                                        <option value="" class="text-center" selected disabled>-- Pilih ID Transaksi_pengadaan --</option>
+                                        <?php foreach ($get_transaksi_pengadaan as $row) : ?>
+                                            <option value="<?= $row->ID_TRANSAKSI_PENGADAAN; ?>"><?= $row->ID_TRANSAKSI_PENGADAAN; ?> - <?= $row->NAMA_TRANSAKSI_PENGADAAN; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -370,15 +360,15 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="formModal">Hapus Data Teknisi</h5>
+                            <h5 class="modal-title" id="formModal">Hapus Data Produk</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="formHapusTechnician">
+                        <form id="formHapusproduk">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <input type="hidden" id="id_technician_hapus" class="form-control" placeholder="ID" name="id_technician_hapus">
+                                    <input type="hidden" id="id_technician_hapus" class="form-control" placeholder="ID" name="KODE_ITEM">
                                     <p class="text-center">Apakah anda yakin ingin menghapus data ini?</p>
                                 </div>
                             </div>
@@ -395,7 +385,37 @@
 
             </body>
 
+            <script>
+                $(document).ready(function() {                   
 
-            <!-- index.html  21 Nov 2019 03:47:04 GMT -->
+                    $('#formHapusproduk').on('submit', function(e) {
+                        e.preventDefault();
+
+                        // Ambil data dari form
+                        let formData = $(this).serialize();
+
+                        // Kirim data ke server melalui AJAX
+                        $.ajax({
+                            url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/hapus", // Endpoint untuk proses input
+                            type: 'POST',
+                            data: formData,
+                            success: function(response) {
+                                let res = JSON.parse(response);
+                                if (res.success) {
+                                    swal('Sukses', 'Hapus Data Berhasil!', 'success').then(function() {
+                                        $('#hapusModal').modal('hide');
+                                        location.reload();
+                                    });
+                                } else {
+                                    alert('Gagal menghapus data: ' + response.error);
+                                }
+                            },
+                            error: function() {
+                                alert('Gagal melakukan proses.');
+                            }
+                        });
+                    });
+                });
+            </script>
 
             </html>
