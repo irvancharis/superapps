@@ -58,6 +58,18 @@ class M_TICKET extends CI_Model
         return $query->result_object();
     }
 
+    public function get_departement_joblist($id_departement)
+    {
+        // $query = $this->db->get_where('DEPARTEMENT_JOBLIST', array('DEPARTEMENT' => $id_departement));
+        // return $query->result_object();
+
+        $this->db->select('*');
+        $this->db->from('DEPARTEMENT_JOBLIST'); // Ganti dengan nama tabel yang sesuai
+        $this->db->where('DEPARTEMENT', $id_departement);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     public function get_latest_data()
     {
         $this->db->order_by('IDTICKET', 'DESC');

@@ -43,6 +43,18 @@ class Ticket extends CI_Controller
         echo json_encode($result);
     }
 
+    public function get_departement_joblist()
+    {
+        $id_departement = $this->input->post('id_departemen');
+        $result = $this->M_TICKET->get_departement_joblist($id_departement);
+
+        if (!empty($result)) {
+            echo json_encode(['success' => true, 'data' => $result], JSON_PRETTY_PRINT);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Data tidak ditemukan']);
+        }
+    }
+
     public function tambah_view($page = 'ticket')
     {
         $this->load->library('session');
@@ -67,6 +79,7 @@ class Ticket extends CI_Controller
         $id_departement = $this->input->post('id_departemen');
         $email_ticket = $this->input->post('email_ticket');
         $site_ticket = $this->input->post('id_area');
+        $id_departement_request = $this->input->post('id_departemen_request');
         $type_ticket = $this->input->post('type_ticket');
         $description_ticket = $this->input->post('description_ticket');
         $id_technician = $this->input->post('id_technician');
@@ -87,6 +100,7 @@ class Ticket extends CI_Controller
             'DEPARTEMENT' => $id_departement,
             'EMAIL_TICKET' => $email_ticket,
             'SITE_TICKET' => $site_ticket,
+            'DEPARTEMENT_DIREQUEST' => $id_departement_request,
             'TYPE_TICKET' => $type_ticket,
             'DESCRIPTION_TICKET' => $description_ticket,
             'DATE_TICKET' => date('Y-m-d H:i:s'),

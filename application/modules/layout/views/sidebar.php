@@ -47,6 +47,9 @@
                     <li>
                         <a href="<?php echo base_url('jabatan'); ?>" class="nav-link"><i data-feather="layers"></i><span>Jabatan</span></a>
                     </li>
+                    <li>
+                        <a href="<?php echo base_url('departement_joblist'); ?>" class="nav-link"><i data-feather="layers"></i><span>Joblist</span></a>
+                    </li>
                 </ul>
             </li>
             <li class="dropdown <?php (isset($page) && $page == 'karyawan') || (isset($page) && $page == 'technician') ? print 'active' : ''; ?>">

@@ -246,9 +246,22 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
+                                                    <label>DEPARTEMEN DIREQUEST</label>
+                                                    <select name="id_departemen_request" id="id_departemen_request" class="form-control">
+                                                        <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
+                                                        <?php foreach ($get_departement as $row) : ?>
+                                                            <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                        Silahkan masukkan departemen!
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label class="form-label">PILIH TYPE KELUHAN</label>
-                                                    <div class="selectgroup selectgroup-pills">
-                                                        <label class="selectgroup-item">
+                                                    <div class="selectgroup selectgroup-pills type-ticket">
+                                                        <p style="color:red;font-style: italic;">*). Muncul setelah memilih Departemen Direquest</p>
+                                                        <!-- <label class="selectgroup-item">
                                                             <input type="checkbox" name="type_ticket[]" value="Computer" class="selectgroup-input">
                                                             <span class="selectgroup-button">Computer</span>
                                                         </label>
@@ -263,10 +276,10 @@
                                                         <label class="selectgroup-item">
                                                             <input type="checkbox" name="type_ticket[]" value="Fina" class="selectgroup-input">
                                                             <span class="selectgroup-button">FINA</span>
-                                                        </label>
+                                                        </label> -->
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <div class="form-group col-12 col-md-12 col-lg-12">
                                                     <label>DESCRIPTION</label>
                                                     <textarea name="description_ticket" placeholder="Masukkan deskripsi keluhan" class="form-control" id="description_ticket"></textarea>
                                                     <div class="invalid-feedback">
@@ -370,6 +383,40 @@
                     },
                     error: function() {
                         alert('Terjadi kesalahan pada server.');
+                    }
+                });
+            });
+
+            $('#id_departemen_request').change(function() {
+                // Ambil nilai dari radio button yang dipilih
+                let id_departemen = $(this).val();
+                $.ajax({
+                    url: "<?php echo base_url(); ?>" + "ticket/get_departement_joblist", // Endpoint untuk proses input
+                    type: 'POST',
+                    data: {
+                        id_departemen: id_departemen
+                    },
+                    success: function(response) {
+                        let res = JSON.parse(response);
+                        if (res.success && res.data) {
+                            // Kosongkan pilihan type keluhan sebelumnya
+                            $(".type-ticket").empty();
+
+                            // Tambahkan opsi baru dari database
+                            res.data.forEach(function(item) {
+                                $(".type-ticket").append(`
+                                            <label class="selectgroup-item">
+                                                <input type="checkbox" name="type_ticket[]" value="${item.NAMA_JOBLIST}" class="selectgroup-input">
+                                                <span class="selectgroup-button">${item.NAMA_JOBLIST}</span>
+                                            </label>
+                                        `);
+                            });
+                        } else {
+                            swal('Failed', res.error, 'error');
+                        }
+                    },
+                    error: function() {
+                        swal('Failed', 'Gagal melakukan proses.', 'error');
                     }
                 });
             });
