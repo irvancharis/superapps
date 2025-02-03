@@ -17,7 +17,7 @@
                                                 <tr>
                                                     <th class="text-center pt-3">
                                                         <div class="custom-checkbox custom-checkbox-table custom-control">
-                                                            <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
+                                                            <input required type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
                                                                 class="custom-control-input" id="checkbox-all">
                                                             <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                                                         </div>
@@ -34,7 +34,7 @@
                                                     <tr>
                                                         <td class="text-center pt-2">
                                                             <div class="custom-checkbox custom-control">
-                                                                <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
+                                                                <input required type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
                                                                     id="checkbox-1">
                                                                 <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                                                             </div>
@@ -76,11 +76,11 @@
                                 <h6 class="font-medium m-b-10">Select Layout</h6>
                                 <div class="selectgroup layout-color w-50">
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="value" value="1" class="selectgroup-input-radio select-layout" checked>
+                                        <input required type="radio" name="value" value="1" class="selectgroup-input-radio select-layout" checked>
                                         <span class="selectgroup-button">Light</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="value" value="2" class="selectgroup-input-radio select-layout">
+                                        <input required type="radio" name="value" value="2" class="selectgroup-input-radio select-layout">
                                         <span class="selectgroup-button">Dark</span>
                                     </label>
                                 </div>
@@ -89,12 +89,12 @@
                                 <h6 class="font-medium m-b-10">Sidebar Color</h6>
                                 <div class="selectgroup selectgroup-pills sidebar-color">
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="icon-input" value="1" class="selectgroup-input select-sidebar">
+                                        <input required type="radio" name="icon-input" value="1" class="selectgroup-input select-sidebar">
                                         <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
                                             data-original-title="Light Sidebar"><i class="fas fa-sun"></i></span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="icon-input" value="2" class="selectgroup-input select-sidebar" checked>
+                                        <input required type="radio" name="icon-input" value="2" class="selectgroup-input select-sidebar" checked>
                                         <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
                                             data-original-title="Dark Sidebar"><i class="fas fa-moon"></i></span>
                                     </label>
@@ -131,7 +131,7 @@
                             <div class="p-15 border-bottom">
                                 <div class="theme-setting-options">
                                     <label class="m-b-0">
-                                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                                        <input required type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
                                             id="mini_sidebar_setting">
                                         <span class="custom-switch-indicator"></span>
                                         <span class="control-label p-l-10">Mini Sidebar</span>
@@ -141,7 +141,7 @@
                             <div class="p-15 border-bottom">
                                 <div class="theme-setting-options">
                                     <label class="m-b-0">
-                                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                                        <input required type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
                                             id="sticky_header_setting">
                                         <span class="custom-switch-indicator"></span>
                                         <span class="control-label p-l-10">Sticky Header</span>
@@ -182,7 +182,7 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
-                                    <input type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician">
+                                    <input required type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician">
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
@@ -241,7 +241,7 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
-                                    <input type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician" id="nama_technician_view" disabled>
+                                    <input required type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician" id="nama_technician_view" disabled>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
@@ -299,8 +299,8 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
-                                    <input type="hidden" id="id_technician_edit" class="form-control" placeholder="ID" name="id_technician_edit">
-                                    <input type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician_edit" id="nama_technician_edit">
+                                    <input required type="hidden" id="id_technician_edit" class="form-control" placeholder="ID" name="id_technician_edit">
+                                    <input required type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician_edit" id="nama_technician_edit">
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
@@ -358,7 +358,7 @@
                         <form id="formHapusproduk">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <input type="hidden" id="id_technician_hapus" class="form-control" placeholder="ID" name="KODE_ITEM">
+                                    <input required type="hidden" id="id_technician_hapus" class="form-control" placeholder="ID" name="KODE_ITEM">
                                     <p class="text-center">Apakah anda yakin ingin menghapus data ini?</p>
                                 </div>
                             </div>

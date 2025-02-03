@@ -6,12 +6,20 @@
                             <div class="card">
                                 <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGADAAN_TAMBAH">
                                     <div class="card-header">
-                                        <h4>INPUT DATA TRANSAKSI_PENGADAAN</h4>
+                                        <h4>INPUT DATA TRANSAKSI PENGADAAN</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>AREA</label>
+                                                <label>NO REGISTER</label>
+                                                <input required type="text" class="form-control" id="NAMA_TRANSAKSI_PENGADAAN" name="NAMA_TRANSAKSI_PENGADAAN">
+                                                <div class="invalid-feedback">
+                                                    Masukkan NO REGISTER  !
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>NO REGISTER</label>
                                                 <select required name="ID_MAPING_AREA" id="ID_MAPING_AREA" class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih Area --</option>
                                                     <?php foreach ($get_area as $row) : ?>
@@ -19,7 +27,7 @@
                                                     <?php endforeach; ?>
                                                 </select>
                                                 <div class="invalid-feedback">
-                                                    Silahkan masukkan AREA!
+                                                    Silahkan masukkan NO REGISTER!
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">

@@ -12,21 +12,21 @@
                                         <div class="row">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KODE PRODUK</label>
-                                                <input type="text" name="KODE_ITEM" id="KODE_ITEM" class="form-control">
+                                                <input required type="text" name="KODE_ITEM" id="KODE_ITEM" class="form-control">
                                                 <div class="invalid-feedback">
                                                 Masukkan kode produk?
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>NAMA PRODUK</label>
-                                                <input type="text" class="form-control" id="NAMA_ITEM" name="NAMA_ITEM">
+                                                <input required type="text" class="form-control" id="NAMA_ITEM" name="NAMA_ITEM">
                                                 <div class="invalid-feedback">
                                                     Masukkan nama produk  !
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KATEGORI PRODUK</label>
-                                                <select name="KODE_KATEGORI" id="KODE_KATEGORI" class="form-control">
+                                                <select required name="KODE_KATEGORI" id="KODE_KATEGORI" class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih Kategori --</option>
                                                     <?php foreach ($get_kategori_produk as $row) : ?>
                                                         <option value="<?= $row->KODE_PRODUK_KATEGORI; ?>"><?= $row->NAMA_PRODUK_KATEGORI; ?></option>
@@ -39,7 +39,7 @@
                                             
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KETERANGAN PRODUK</label>
-                                                <textarea name="KETERANGAN_ITEM" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket"></textarea>
+                                                <textarea required name="KETERANGAN_ITEM" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket"></textarea>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan keterangan produk anda!
                                                 </div>
