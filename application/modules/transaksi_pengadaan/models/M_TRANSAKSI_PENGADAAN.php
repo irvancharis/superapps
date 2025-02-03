@@ -18,6 +18,12 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
         return $query->result_object();
     }
 
+    public function get_karyawan()
+    {
+        $query = $this->db->get('VIEW_KARYAWAN');
+        return $query->result_object();
+    }
+
     public function get_single($KODE)
     {
         $this->db->select('*');

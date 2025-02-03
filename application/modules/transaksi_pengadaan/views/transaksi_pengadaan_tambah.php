@@ -18,16 +18,6 @@
                                                 </div>
                                             </div>
 
-
-
-
-
-
-
-
-
-
-
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>NO REGISTER</label>
                                                 <select required name="ID_MAPING_AREA" id="ID_MAPING_AREA" class="form-control">

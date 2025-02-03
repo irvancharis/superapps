@@ -24,12 +24,9 @@
                                                     </th>
                                                     <th>REGISTER</th>
                                                     <th>DEPARTEMEN</th>                                                    
-                                                    <th>USER PENGAJUAN</th>
-                                                    <th>TGL PENGAJUAN</th>
-                                                    <th>USER APROVAL</th>
-                                                    <th>TGL APROVAL</th>
-                                                    <th>USER REALISASI</th>
-                                                    <th>TGL REALISASI</th>
+                                                    <th>PENGAJUAN</th>
+                                                    <th>APROVAL</th>
+                                                    <th>REALISASI</th>
                                                     <th>STATUS</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -46,12 +43,9 @@
                                                         </td>
                                                         <td><?php echo $d->NO_REGISTER; ?></td>
                                                         <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
-                                                        <td><?php echo $d->USER_PENGAJUAN; ?></td>                                                       
-                                                        <td><?php echo $d->TANGGAL_PENGAJUAN; ?></td>    
-                                                        <td><?php echo $d->USER_APROVAL; ?></td> 
-                                                        <td><?php echo $d->TANGGAL_APROVAL; ?></td> 
-                                                        <td><?php echo $d->USER_REALISASI; ?></td> 
-                                                        <td><?php echo $d->TANGGAL_REALISASI; ?></td> 
+                                                        <td><?php echo $d->USER_PENGAJUAN; ?><br><?php echo $d->TANGGAL_PENGAJUAN; ?></td>                                                       
+                                                        <td><?php echo $d->USER_APROVAL; ?><br><?php echo $d->TANGGAL_APROVAL; ?></td> 
+                                                        <td><?php echo $d->USER_REALISASI; ?><br><?php echo $d->TANGGAL_REALISASI; ?></td> 
                                                         <td><?php if($d->STATUS == 'MENUNGGU_APROVAL'){echo '<span class="badge badge-success">MENUNGGU APROVAL</span>';}elseif($d->STATUS == 'PROSES_PENGADAAN'){echo '<span class="badge badge-success">PROSES PENGADAAN</span>';}?></td>   
                                                         <td>
                                                             <div class="dropdown">

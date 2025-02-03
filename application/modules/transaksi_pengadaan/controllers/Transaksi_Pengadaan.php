@@ -51,7 +51,7 @@ class Transaksi_pengadaan extends CI_Controller
         $data['get_jabatan'] = $this->M_TRANSAKSI_PENGADAAN->get_jabatan();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
-            $this->load->view('karyawan_tambah', $data);
+            $this->load->view('transaksi_pengadaan_tambah', $data);
     }
 
     public function edit($KODE, $page = 'transaksi_pengadaan')
