@@ -4,7 +4,7 @@
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGADAAN_EDIT">
+                                <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_OPNAME_EDIT">
                                     <div class="card-header">
                                         <h4>EDIT DATA TRANSAKSI_PENGADAAN</h4>
                                     </div>
@@ -181,7 +181,7 @@
                 $(document).ready(function() {
                     
                     // Input Area
-                    $('#FORM_TRANSAKSI_PENGADAAN_EDIT').on('submit', function(e) {
+                    $('#FORM_TRANSAKSI_OPNAME_EDIT').on('submit', function(e) {
                         e.preventDefault();
 
                         // Ambil data dari form
