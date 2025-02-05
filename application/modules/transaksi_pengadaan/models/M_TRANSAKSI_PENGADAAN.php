@@ -5,6 +5,8 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
     // Nama tabel
     protected $table = 'TRANSAKSI_PENGADAAN';
     protected $VIEW_KARYAWAN = 'VIEW_KARYAWAN';
+    protected $VIEW_RUANGAN = 'VIEW_RUANGAN';
+    protected $VIEW_LOKASI = 'VIEW_LOKASI';
 
     public function __construct()
     {
@@ -22,7 +24,7 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
     {
         $this->db->select('TRANSAKSI_PENGADAAN.*, DEPARTEMEN.*');
         $this->db->from('TRANSAKSI_PENGADAAN');
-        $this->db->join('DEPARTEMEN', 'TRANSAKSI_PENGADAAN.DEPARTEMEN_PENGAJUAN = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
+        $this->db->join('DEPARTEMEN', 'TRANSAKSI_PENGADAAN.KODE_DEPARTEMEN_PENGAJUAN = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
         $query = $this->db->get();
         return $query->result_object();
     }
@@ -69,6 +71,24 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
     public function get_jabatan()
     {
         $query = $this->db->get('JABATAN');
+        return $query->result_object();
+    }
+
+    public function get_ruangan_by_area($KODE_AREA)
+    {
+        $this->db->select("*");
+        $this->db->from('VIEW_RUANGAN');
+        $this->db->where('KODE_AREA', $KODE_AREA);
+        $query = $this->db->get();
+        return $query->result_object();
+    }
+
+    public function get_lokasi_by_ruangan($KODE_RUANGAN)
+    {
+        $this->db->select("*");
+        $this->db->from('VIEW_LOKASI');
+        $this->db->where('KODE_RUANGAN', $KODE_RUANGAN);
+        $query = $this->db->get();
         return $query->result_object();
     }
 
