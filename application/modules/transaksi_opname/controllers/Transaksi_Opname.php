@@ -11,7 +11,7 @@ class Transaksi_opname extends CI_Controller
         $this->load->helper( 'url_helper' );
         $this->load->library( 'Uuid' );
     }
-
+        
     public function index( $page = 'transaksi_opname' )
  {
         $this->load->library( 'session' );

@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
+defined( 'BASEPATH' ) or exit( 'No direct script access allowed' );
 
 /*
 | -------------------------------------------------------------------------
@@ -27,18 +27,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 | There are three reserved routes:
 |
-|	$route['default_controller'] = 'welcome';
+|	$route[ 'default_controller' ] = 'welcome';
 |
 | This route indicates which controller class should be loaded if the
-| URI contains no data. In the above example, the "welcome" class
+| URI contains no data. In the above example, the 'welcome' class
 | would be loaded.
 |
-|	$route['404_override'] = 'errors/page_missing';
+|	$route[ '404_override' ] = 'errors/page_missing';
 |
 | This route will tell the Router which controller/method to use if those
 | provided in the URL cannot be matched to a valid route.
 |
-|	$route['translate_uri_dashes'] = FALSE;
+|	$route[ 'translate_uri_dashes' ] = FALSE;
 |
 | This is not exactly a route, but allows you to automatically route
 | controller and method names that contain dashes. '-' isn't a valid
@@ -50,4 +50,4 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'departement';
-// $route['(:any)'] = 'pages/view/$1';
+// $route['( :any )'] = 'pages/view/$1';
