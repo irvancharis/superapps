@@ -76,6 +76,15 @@
                     <li>
                         <a href="<?php echo base_url('transaksi_pengadaan'); ?>" class="nav-link"><i data-feather="dollar-sign"></i><span>Pengadaan</span></a>
                     </li>
+                    <li>
+                        <a href="<?php echo base_url('transaksi_pemindahan'); ?>" class="nav-link"><i data-feather="dollar-sign"></i><span>Pemindahan</span></a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('transaksi_penghapusan'); ?>" class="nav-link"><i data-feather="dollar-sign"></i><span>Penghapusan</span></a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('transaksi_opname'); ?>" class="nav-link"><i data-feather="dollar-sign"></i><span>Opname</span></a>
+                    </li>
                 </ul>
             </li>
         </ul>
