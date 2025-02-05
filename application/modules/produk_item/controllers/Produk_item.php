@@ -29,8 +29,8 @@ class Produk_item extends CI_Controller
         $result = $this->M_PRODUK_ITEM->get_produk_item_single($KODE_ITEM);
         echo json_encode($result);
     }
-    
-    
+
+
     public function get_kategori_produk()
     {
         $result = $this->M_PRODUK_ITEM->get_kategori_produk();
@@ -77,28 +77,24 @@ class Produk_item extends CI_Controller
 
     public function insert()
     {
-        $KODE_ITEM = $this->input->post('KODE_ITEM');
+        // Ambil data dari POST
+        $get_last_produk = $this->M_PRODUK_ITEM->get_latest_data();
+        $KODE_ITEM = isset($get_last_produk[0]->KODE_ITEM) ? $get_last_produk[0]->KODE_ITEM + 1 : 1;
         $NAMA_ITEM = $this->input->post('NAMA_ITEM');
         $KODE_KATEGORI = $this->input->post('KODE_KATEGORI');
         $KETERANGAN_ITEM = $this->input->post('KETERANGAN_ITEM');
 
-        // Validasi 
-        if (empty($KODE_ITEM)) {
-            $errors[] = 'KODE ITEM tidak boleh kosong.';
-        }
-        if (empty($NAMA_ITEM)) {
-            $errors[] = 'NAMA ITEM tidak boleh kosong.';
-        }
-        if (empty($KODE_KATEGORI)) {
-            $errors[] = 'KODE KATEGORI tidak boleh kosong.';
-        }
-        if (empty($KETERANGAN_ITEM)) {
-            $errors[] = 'KETERANGAN ITEM tidak boleh kosong.';
-        }
 
+        // Proses simpan data
+        $data = [
+            'KODE_ITEM' => $KODE_ITEM,
+            'NAMA_ITEM' => $NAMA_ITEM,
+            'KODE_KATEGORI' => $KODE_KATEGORI,
+            'KETERANGAN_ITEM' => $KETERANGAN_ITEM,
+            'FOTO_ITEM' => null
+        ];
 
-        $inputan = $this->input->post(null, TRUE);
-		$result = $this->M_PRODUK_ITEM->insert($inputan);
+        $result = $this->M_PRODUK_ITEM->insert($data);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -129,7 +125,7 @@ class Produk_item extends CI_Controller
         }
 
         $inputan = $this->input->post(null, TRUE);
-		$result = $this->M_PRODUK_ITEM->update($KODE_ITEM, $inputan);
+        $result = $this->M_PRODUK_ITEM->update($KODE_ITEM, $inputan);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -144,4 +140,4 @@ class Produk_item extends CI_Controller
         $result = $this->M_PRODUK_ITEM->hapus($KODE_ITEM);
         redirect('produk_item');
     }
-} 
+}

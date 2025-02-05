@@ -23,10 +23,7 @@
                                                         </div>
                                                     </th>
                                                     <th>REGISTER</th>
-                                                    <th>DEPARTEMEN</th>                                                    
-                                                    <th>PENGAJUAN</th>
-                                                    <th>APROVAL</th>
-                                                    <th>REALISASI</th>
+                                                    <th>DEPARTEMEN</th>
                                                     <th>STATUS</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -43,18 +40,20 @@
                                                         </td>
                                                         <td><?php echo $d->NO_REGISTER; ?></td>
                                                         <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
-                                                        <td><?php echo $d->USER_PENGAJUAN; ?><br><?php echo $d->TANGGAL_PENGAJUAN; ?></td>                                                       
-                                                        <td><?php echo $d->USER_APROVAL; ?><br><?php echo $d->TANGGAL_APROVAL; ?></td> 
-                                                        <td><?php echo $d->USER_REALISASI; ?><br><?php echo $d->TANGGAL_REALISASI; ?></td> 
-                                                        <td><?php if($d->STATUS == 'MENUNGGU_APROVAL'){echo '<span class="badge badge-success">MENUNGGU APROVAL</span>';}elseif($d->STATUS == 'PROSES_PENGADAAN'){echo '<span class="badge badge-success">PROSES PENGADAAN</span>';}?></td>   
+                                                        <td><?php if ($d->STATUS_PENGADAAN == 0) {
+                                                                echo '<span class="badge badge-success">MENUNGGU APROVAL</span>';
+                                                            } elseif ($d->STATUS_PENGADAAN == 1) {
+                                                                echo '<span class="badge badge-success">PROSES PENGADAAN</span>';
+                                                            } ?>
+                                                        </td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">
-                                                                    <a href="<?=site_url('transaksi_pengadaan/detail/'.$d->NIK);?>" class="dropdown-item has-icon view-btn" ><i class="fas fa-eye"></i> View</a>
-                                                                    <a href="<?=site_url('transaksi_pengadaan/edit/'.$d->NIK);?>" class="dropdown-item has-icon edit-btn" ><i class="far fa-edit"></i> Edit</a>
+                                                                    <a href="<?= site_url('transaksi_pengadaan/detail/' . $d->UUID_TRANSAKSI_PENGADAAN); ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a>
+                                                                    <a href="<?= site_url('transaksi_pengadaan/edit/' . $d->UUID_TRANSAKSI_PENGADAAN); ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Edit</a>
                                                                     <div class="dropdown-divider"></div>
-                                                                    <a href="<?=site_url('transaksi_pengadaan/hapus/'.$d->NIK);?>" class="dropdown-item has-icon text-danger hapus-btn"  onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>
+                                                                    <a href="<?= site_url('transaksi_pengadaan/hapus/' . $d->UUID_TRANSAKSI_PENGADAAN); ?>" class="dropdown-item has-icon text-danger hapus-btn" onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>
                                                                         Delete</a>
                                                                 </div>
                                                             </div>
@@ -380,7 +379,7 @@
             </body>
 
             <script>
-                $(document).ready(function() {                   
+                $(document).ready(function() {
 
                     $('#formHapusproduk').on('submit', function(e) {
                         e.preventDefault();
