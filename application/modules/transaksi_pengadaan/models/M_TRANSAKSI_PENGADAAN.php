@@ -12,9 +12,18 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
         $this->load->database();
     }
 
-    public function get_data()
+    public function get_data_view()
     {
         $query = $this->db->get('VIEW_TRANSAKSI_PENGADAAN');
+        return $query->result_object();
+    }
+
+    public function get_data()
+    {
+        $this->db->select('TRANSAKSI_PENGADAAN.*, DEPARTEMEN.*');
+        $this->db->from('TRANSAKSI_PENGADAAN');
+        $this->db->join('DEPARTEMEN', 'TRANSAKSI_PENGADAAN.DEPARTEMEN_PENGAJUAN = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
+        $query = $this->db->get();
         return $query->result_object();
     }
 
@@ -27,15 +36,27 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
     public function get_single($KODE)
     {
         $this->db->select('*');
-		$this->db->from('VIEW_KARYAWAN');
-		$this->db->where('NIK', $KODE);
-		$query = $this->db->get();
+        $this->db->from('VIEW_KARYAWAN');
+        $this->db->where('NIK', $KODE);
+        $query = $this->db->get();
         return $query;
     }
 
     public function get_area()
     {
         $query = $this->db->get('MAPING_AREA');
+        return $query->result_object();
+    }
+
+    public function get_ruangan()
+    {
+        $query = $this->db->get('MAPING_RUANGAN');
+        return $query->result_object();
+    }
+
+    public function get_lokasi()
+    {
+        $query = $this->db->get('MAPING_LOKASI');
         return $query->result_object();
     }
 
@@ -52,7 +73,7 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
     }
 
 
-    
+
     public function get_latest_data()
     {
         $this->db->order_by('IDTICKET', 'DESC');

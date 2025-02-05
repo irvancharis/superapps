@@ -18,12 +18,19 @@ class M_PRODUK_ITEM extends CI_Model
         return $query->result_object();
     }
 
+    public function getFilteredProduk($search)
+    {
+        $query = "SELECT * FROM VIEW_PRODUK_ITEM WHERE NAMA_ITEM LIKE '%$search%' OR KODE_ITEM LIKE '%$search%' OR NAMA_PRODUK_KATEGORI LIKE '%$search%'";
+        $result = $this->db->query($query);
+        return $result->result();
+    }
+
     public function get_produk_item_single($KODE_ITEM)
     {
         $this->db->select('*');
-		$this->db->from('VIEW_PRODUK_ITEM');
-		$this->db->where('KODE_ITEM', $KODE_ITEM);
-		$query = $this->db->get();
+        $this->db->from('VIEW_PRODUK_ITEM');
+        $this->db->where('KODE_ITEM', $KODE_ITEM);
+        $query = $this->db->get();
         return $query;
     }
 
@@ -33,10 +40,10 @@ class M_PRODUK_ITEM extends CI_Model
         return $query->result_object();
     }
 
-    
+
     public function get_latest_data()
     {
-        $this->db->order_by('IDTICKET', 'DESC');
+        $this->db->order_by('KODE_ITEM', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get($this->table);
         return $query->result_object();

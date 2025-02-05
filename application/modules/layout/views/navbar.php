@@ -15,10 +15,16 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/components.css'); ?>">
     <!-- Custom style CSS -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/custom.css'); ?>">
-    <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url('assets/img/favicon.ico'); ?>' />
+    <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url('assets/img/Logo SA X7.ico'); ?>' />
     <!-- DataTable -->
     <link rel="stylesheet" href="<?php echo base_url('assets/bundles/datatables/datatables.min.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') ?>">
+    <!-- Fancybox -->
+    <script src="<?php echo base_url('assets/js/fancybox.umd.js'); ?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/fancybox.css'); ?>" />
+    <!-- Toast -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/bundles/izitoast/css/iziToast.min.css'); ?>">
+
 </head>
 
 <body>
