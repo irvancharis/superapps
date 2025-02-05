@@ -7,7 +7,7 @@
                                 <div class="card-header">
                                     <h4>DATA TRANSAKSI OPNAME</h4>
                                     <div class="card-header-action">
-                                        <a href="<?php echo base_url('transaksi_pengadaan/tambah') ?>"
+                                        <a href="<?php echo base_url('transaksi_opname/tambah') ?>"
                                             class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
                                     </div>
                                 </div>
@@ -35,7 +35,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($M_TRANSAKSI_PENGADAAN as $index => $d) : ?>
+                                                <?php foreach ($M_TRANSAKSI_OPNAME as $index => $d) : ?>
                                                 <tr>
                                                     <td class="text-center pt-2">
                                                         <div class="custom-checkbox custom-control">
@@ -45,15 +45,15 @@
                                                                 class="custom-control-label">&nbsp;</label>
                                                         </div>
                                                     </td>
-                                                    <td><?php echo $d->NO_REGISTER; ?></td>
+                                                    <td><?php echo $d->TANGGAL_OPNAME; ?></td>
                                                     <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
-                                                    <td><?php echo $d->USER_PENGAJUAN; ?><br><?php echo $d->TANGGAL_PENGAJUAN; ?>
+                                                    <td><?php echo $d->NAMA_USER_PELAKSANA; ?></td>
+                                                    <td>
+                                                        <?php echo $d->NAMA_APROVAL_KABAG; ?><br>
+                                                        <?php echo $d->NAMA_APROVAL_GM; ?><br>
+                                                        <?php echo $d->NAMA_APROVAL_HEAD; ?>
                                                     </td>
-                                                    <td><?php echo $d->USER_APROVAL; ?><br><?php echo $d->TANGGAL_APROVAL; ?>
-                                                    </td>
-                                                    <td><?php echo $d->USER_REALISASI; ?><br><?php echo $d->TANGGAL_REALISASI; ?>
-                                                    </td>
-                                                    <td><?php if($d->STATUS == 'MENUNGGU_APROVAL'){echo '<span class="badge badge-success">MENUNGGU APROVAL</span>';}elseif($d->STATUS == 'PROSES_PENGADAAN'){echo '<span class="badge badge-success">PROSES PENGADAAN</span>';}?>
+                                                    <td><?php if($d->STATUS_OPNAME == 'MENUNGGU_APROVAL'){echo '<span class="badge badge-success">MENUNGGU APROVAL</span>';}elseif($d->STATUS_OPNAME == 'PROSES_PENGADAAN'){echo '<span class="badge badge-success">PROSES PENGADAAN</span>';}?>
                                                     </td>
                                                     <td>
                                                         <div class="dropdown">
