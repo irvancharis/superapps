@@ -8,6 +8,7 @@ class Produk_stok extends CI_Controller
         parent::__construct();
         $this->load->model('M_PRODUK_STOK');
         $this->load->helper('url_helper');
+        $this->load->library('ciqrcode');
     }
 
     public function index($page = 'produk_stok')
@@ -68,10 +69,29 @@ class Produk_stok extends CI_Controller
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_PRODUK_STOK->get_produk_stok_single($KODE_ITEM);
-        $data['get_produk_stok'] = $query->row();
+        $data['get_produk_stok'] = $query->row();        
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('produk_stok_detail', $data);
+        
+    }
+
+    public function qr($kode = null) {
+        header("Content-Type: image/png");  // Set header agar output langsung sebagai gambar
+
+        $config['cacheable']    = false;    // Tidak perlu cache
+        $config['quality']      = true;
+        $config['size']         = '1024';
+        $config['black']        = [0, 0, 0];    // Warna hitam untuk QR
+        $config['white']        = [255, 255, 255]; // Warna putih untuk background
+        $this->ciqrcode->initialize($config);
+
+        $params['data'] = $kode ? $kode : 'DefaultCode';
+        $params['level'] = 'H';
+        $params['size'] = 10;
+        $params['savename'] = null;  // Jangan simpan file, langsung output
+
+        $this->ciqrcode->generate($params);  // QR Code akan langsung tampil di browser
     }
 
 
