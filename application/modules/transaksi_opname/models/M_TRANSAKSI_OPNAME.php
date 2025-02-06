@@ -23,7 +23,7 @@ class M_TRANSAKSI_OPNAME extends CI_Model
  {
         $this->db->select( '*' );
         $this->db->from( 'VIEW_TRANSAKSI_OPNAME' );
-        $this->db->where( 'NIK', $KODE );
+        $this->db->where( 'UUID_TRANSAKSI_OPNAME', $KODE );
         $query = $this->db->get();
         return $query;
     }

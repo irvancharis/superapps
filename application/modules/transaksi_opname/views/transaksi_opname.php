@@ -49,31 +49,16 @@
                                                     <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
                                                     <td><?php echo $d->NAMA_USER_PELAKSANA; ?></td>
                                                     <td>
-                                                        <?php echo $d->NAMA_APROVAL_KABAG; ?><br>
-                                                        <?php echo $d->NAMA_APROVAL_GM; ?><br>
-                                                        <?php echo $d->NAMA_APROVAL_HEAD; ?>
+                                                        <?php echo 'KABAG - ( '.$d->NAMA_APROVAL_KABAG.' )'; ?><br>
+                                                        <?php echo 'GM - ( '.$d->NAMA_APROVAL_GM.' )'; ?><br>
+                                                        <?php echo 'HEAD - ( '.$d->NAMA_APROVAL_HEAD.' )'; ?>
                                                     </td>
-                                                    <td><?php if($d->STATUS_OPNAME == 'MENUNGGU_APROVAL'){echo '<span class="badge badge-success">MENUNGGU APROVAL</span>';}elseif($d->STATUS_OPNAME == 'PROSES_PENGADAAN'){echo '<span class="badge badge-success">PROSES PENGADAAN</span>';}?>
+                                                    <td><?php if($d->STATUS_OPNAME == 'MENUNGGU APROVAL KABAG'){echo '<span class="badge badge-success">MENUNGGU APROVAL KABAG</span>';}elseif($d->STATUS_OPNAME == 'PROSES_PENGADAAN'){echo '<span class="badge badge-success">PROSES PENGADAAN</span>';}?>
                                                     </td>
                                                     <td>
-                                                        <div class="dropdown">
-                                                            <a href="#" data-toggle="dropdown"
-                                                                class="btn btn-primary dropdown-toggle">Detail</a>
-                                                            <div class="dropdown-menu">
-                                                                <a href="<?=site_url('transaksi_pengadaan/detail/'.$d->NIK);?>"
-                                                                    class="dropdown-item has-icon view-btn"><i
-                                                                        class="fas fa-eye"></i> View</a>
-                                                                <a href="<?=site_url('transaksi_pengadaan/edit/'.$d->NIK);?>"
-                                                                    class="dropdown-item has-icon edit-btn"><i
-                                                                        class="far fa-edit"></i> Edit</a>
-                                                                <div class="dropdown-divider"></div>
-                                                                <a href="<?=site_url('transaksi_pengadaan/hapus/'.$d->NIK);?>"
-                                                                    class="dropdown-item has-icon text-danger hapus-btn"
-                                                                    onclick="return confirm('Yakin akan menghapus data?')"><i
-                                                                        class="far fa-trash-alt"></i>
-                                                                    Delete</a>
-                                                            </div>
-                                                        </div>
+                                                        <a href="<?=site_url('transaksi_opname/detail/'.$d->UUID_TRANSAKSI_OPNAME);?>"
+                                                                    class="btn btn-primary"><i
+                                                                        class="fas fa-eye"></i> DETAIL</a>
                                                     </td>
                                                 </tr>
                                                 <?php endforeach; ?>

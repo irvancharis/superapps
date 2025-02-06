@@ -15,7 +15,7 @@
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
                                                 <input type="text" class="form-control" name="area" id="area" required
-                                                    value="<?php //$get_area->NAMA_AREA; ?>" readonly>
+                                                    value="<?= $get_single->NAMA_AREA; ?>" readonly>
 
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan AREA!
@@ -25,7 +25,7 @@
                                                 <label>DEPARTEMEN</label>
                                                 <input type="text" class="form-control" name="departemen"
                                                     id="departemen" required
-                                                    value="<?php //$get_departemen->NAMA_DEPARTEMEN; ?>" readonly>
+                                                    value="<?= $get_single->NAMA_DEPARTEMEN; ?>" readonly>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan DEPARTEMENT!
                                                 </div>
@@ -35,7 +35,7 @@
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>RUANGAN</label>
                                                 <input type="text" class="form-control" name="ruangan" id="ruangan"
-                                                    required value="<?php //$get_ruangan->NAMA_RUANGAN; ?>" readonly>
+                                                    required value="<?= $get_single->NAMA_RUANGAN; ?>" readonly>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan RUANGAN!
                                                 </div>
@@ -43,14 +43,12 @@
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>LOKASI</label>
                                                 <input type="text" class="form-control" name="lokasi" id="lokasi"
-                                                    required value="<?php //$get_lokasi->NAMA_LOKASI; ?>" readonly>
+                                                    required value="<?= $get_single->NAMA_LOKASI; ?>" readonly>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan LOKASI!
                                                 </div>
                                             </div>
                                         </div>
-
-                                    
 
 
                                     <div class="table-responsive">
@@ -68,11 +66,10 @@
                                         </table>
                                     </div><br><br>
 
-
                                     <div class="form-group col-12 col-md-12 col-lg-12">
                                         <label>KETERANGAN</label>
                                         <textarea name="description_ticket" placeholder="Masukkan keterangan opname"
-                                            class="form-control" id="description_ticket"></textarea>
+                                            class="form-control" id="description_ticket"><?= $get_single->CATATAN_OPNAME; ?></textarea>
                                         <div class="invalid-feedback">
                                             Silahkan masukkan keterangan opname!
                                         </div>

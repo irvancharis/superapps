@@ -17,6 +17,21 @@ class M_DEPARTEMENT extends CI_Model
         return $query->result_object();
     }
 
+    public function get_departemen()
+    {
+        $query = $this->db->get('DEPARTEMEN');
+        return $query->result_object();
+    }
+
+    public function get_departemen_single($KODE)
+    {
+        $this->db->select('*');
+		$this->db->from('DEPARTEMEN');
+		$this->db->where('KODE_DEPARTEMEN', $KODE);
+		$query = $this->db->get();
+        return $query;
+    }
+
     public function get_latest_data()
     {
         $this->db->order_by('KODE_DEPARTEMEN', 'DESC');
