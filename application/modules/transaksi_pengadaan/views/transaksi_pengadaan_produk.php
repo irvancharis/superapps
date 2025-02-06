@@ -141,7 +141,7 @@
         $('#table-produk_filter input').unbind().on('keyup', function() {
             let value = $(this).val();
             let xvalue = value.toUpperCase();
-            if (xvalue.length > 2) {
+            if (xvalue.length > 1) {
                 table.search(xvalue).draw();
             }
         });

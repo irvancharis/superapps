@@ -81,11 +81,13 @@ class Ticket_client_view extends CI_Controller
         $type_ticket = $this->input->post('type_ticket');
         $description_ticket = $this->input->post('description_ticket');
 
-        if (empty($type_ticket)) {
-            $errors[] = 'Pilih setidaknya satu jenis keluhan.';
-        } else {
-            $type_ticket = implode(',', $type_ticket); // Gabungkan array menjadi string
+        if (empty($type_ticket) || !is_array($type_ticket)) {
+            echo json_encode(['success' => false, 'error' => 'Pilih setidaknya satu jenis keluhan.']);
+            return;
         }
+
+        // Gabungkan array type_ticket menjadi string untuk penyimpanan di tabel Ticket
+        $type_ticket_str = implode(',', $type_ticket);
 
         // Jika validasi lolos, lanjutkan proses penyimpanan
         $data = [
@@ -95,7 +97,7 @@ class Ticket_client_view extends CI_Controller
             'EMAIL_TICKET' => $email_ticket,
             'SITE_TICKET' => $site_ticket,
             'DEPARTEMENT_DIREQUEST' => $id_departement_request,
-            'TYPE_TICKET' => $type_ticket,
+            'TYPE_TICKET' => $type_ticket_str,
             'DESCRIPTION_TICKET' => $description_ticket,
             'DATE_TICKET' => date('Y-m-d H:i:s'),
             'DATE_TICKET_DONE' => null,
@@ -104,7 +106,23 @@ class Ticket_client_view extends CI_Controller
             'PROSENTASE' => null
         ];
 
+        $this->db->trans_start();
         $result = $this->M_TICKET->insert($data);
+
+        // ke tabel Ticket_Detail
+        if ($result) {
+            foreach ($type_ticket as $value) {
+                $data_detail = [
+                    'IDTICKET' => $id_ticket,
+                    'TYPE_TICKET' => $value,
+                    'STATUS' => 0
+                ];
+                $this->M_TICKET->insert_detail($data_detail);
+            }
+        }
+
+        // Selesaikan transaksi
+        $this->db->trans_complete();
 
         if ($result) {
             echo json_encode(['success' => true]);

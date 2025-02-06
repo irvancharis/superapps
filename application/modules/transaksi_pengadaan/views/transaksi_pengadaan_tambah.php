@@ -22,20 +22,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="table-responsive">
-                                            <table class="table table-striped" id="table-2">
-                                                <thead>
-                                                    <tr>
-                                                        <th>PRODUK/ITEM</th>
-                                                        <th>JUMLAH</th>
-                                                        <th>KEPERLUAN</th>
-                                                        <th>ACTION</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="selected-items-body">
-                                                </tbody>
-                                            </table>
-                                        </div>
                                         <div class="row mt-2">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
@@ -84,6 +70,21 @@
                                                     Silahkan masukkan LOKASI!
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <h6 class="font-medium mt-5 text-center">DATA PRODUK</h6>
+                                            <table class="table table-striped" id="table-2">
+                                                <thead>
+                                                    <tr>
+                                                        <th>PRODUK/ITEM</th>
+                                                        <th>JUMLAH</th>
+                                                        <th>KEPERLUAN</th>
+                                                        <th>ACTION</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="selected-items-body">
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                     <div class="card-footer text-center">

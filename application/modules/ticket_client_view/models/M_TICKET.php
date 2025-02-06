@@ -71,6 +71,11 @@ class M_TICKET extends CI_Model
         return $this->db->insert($this->table, $data);
     }
 
+    public function insert_detail($data)
+    {
+        return $this->db->insert('TICKETDETAIL', $data);
+    }
+
     public function update($id_ticket, $data)
     {
         $this->db->where('IDTICKET', $id_ticket);

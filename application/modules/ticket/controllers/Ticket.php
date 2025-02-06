@@ -94,6 +94,7 @@ class Ticket extends CI_Controller
         }
 
         // Jika validasi lolos, lanjutkan proses penyimpanan
+        // ke tabel Ticket
         $data = [
             'IDTICKET' => $id_ticket,
             'REQUESTBY' => $requestby,
@@ -112,6 +113,16 @@ class Ticket extends CI_Controller
         ];
 
         $result = $this->M_TICKET->insert($data);
+
+        // ke tabel Ticket_Detail
+        foreach ($type_ticket as $key => $value) {
+            $data_detail = [
+                'IDTICKET' => $id_ticket,
+                'TYPE_TICKET' => $value,
+                'STATUS' => null
+            ];
+            $this->M_TICKET->insert_detail($data_detail);
+        }
 
         if ($result) {
             echo json_encode(['success' => true]);
