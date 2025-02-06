@@ -6,7 +6,7 @@
                             <div class="card">
                                 <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGADAAN_TAMBAH">
                                     <div class="card-header">
-                                        <h4>INPUT TRANSAKSI OPNAME</h4>
+                                        <h4>APROVAL TRANSAKSI OPNAME</h4>
 
                                     </div>
                                     <div class="card-body">
@@ -14,31 +14,18 @@
                                         <div class="row mt-2">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
-                                                <select required name="AREA_PENEMPATAN" id="AREA_PENEMPATAN"
-                                                    class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih
-                                                        Area
-                                                        --</option>
-                                                    <?php foreach ($get_area as $row) : ?>
-                                                    <option value="<?= $row->KODE_AREA; ?>"><?= $row->NAMA_AREA; ?>
-                                                    </option>
-                                                    <?php endforeach; ?>
-                                                </select>
+                                                <input type="text" class="form-control" name="area" id="area" required
+                                                    value="<?= $get_single->NAMA_AREA; ?>" readonly>
+
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan AREA!
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DEPARTEMEN</label>
-                                                <select required name="DEPARTEMEN_PENGAJUAN" id="DEPARTEMEN_PENGAJUAN"
-                                                    class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih
-                                                        Departement --</option>
-                                                    <?php foreach ($get_departemen as $row) : ?>
-                                                    <option value="<?= $row->KODE_DEPARTEMEN; ?>">
-                                                        <?= $row->NAMA_DEPARTEMEN; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
+                                                <input type="text" class="form-control" name="departemen"
+                                                    id="departemen" required
+                                                    value="<?= $get_single->NAMA_DEPARTEMEN; ?>" readonly>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan DEPARTEMENT!
                                                 </div>
@@ -47,74 +34,53 @@
                                         <div class="row">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>RUANGAN</label>
-                                                <select required name="RUANGAN_PENEMPATAN" id="RUANGAN_PENEMPATAN"
-                                                    class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih
-                                                        Ruangan --</option>
-                                                </select>
+                                                <input type="text" class="form-control" name="ruangan" id="ruangan"
+                                                    required value="<?= $get_single->NAMA_RUANGAN; ?>" readonly>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan RUANGAN!
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>LOKASI</label>
-                                                <select required name="LOKASI_PENEMPATAN" id="LOKASI_PENEMPATAN"
-                                                    class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih
-                                                        Lokasi --</option>
-                                                    <?php foreach ($get_lokasi as $row) : ?>
-                                                    <option value="<?= $row->KODE_LOKASI; ?>"><?= $row->NAMA_LOKASI; ?>
-                                                    </option>
-                                                    <?php endforeach; ?>
-                                                </select>
+                                                <input type="text" class="form-control" name="lokasi" id="lokasi"
+                                                    required value="<?= $get_single->NAMA_LOKASI; ?>" readonly>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan LOKASI!
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="card-footer text-center">
-                                            <label class="btn btn-success" id="btn-simpan">
-                                                <i class="fa fa-save"></i> LOCK DATA
-                                            </label>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" id="dataprodukitem">
+                                            <thead>
+                                                <tr>
+                                                    <th>PRODUK/ITEM</th>
+                                                    <th>STOK SISTEM</th>
+                                                    <th>STOK REAL</th>
+                                                    <th>ACTION</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="selected-items-body">
+                                            </tbody>
+                                        </table>
+                                    </div><br><br>
+
+                                    <div class="form-group col-12 col-md-12 col-lg-12">
+                                        <label>KETERANGAN</label>
+                                        <textarea name="description_ticket" placeholder="Masukkan keterangan opname"
+                                            class="form-control" id="description_ticket"><?= $get_single->CATATAN_OPNAME; ?></textarea>
+                                        <div class="invalid-feedback">
+                                            Silahkan masukkan keterangan opname!
                                         </div>
 
-
-
-
-
-                                        <div class="table-responsive">
-                                            <table class="table table-striped" id="dataprodukitem">
-                                                <thead>
-                                                    <tr>
-                                                        <th>PRODUK/ITEM</th>
-                                                        <th>STOK SISTEM</th>
-                                                        <th>STOK REAL</th>
-                                                        <th>ACTION</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="selected-items-body">
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                        <br><br>
-                                        <div class="form-group col-12 col-md-12 col-lg-12">
-                                            <label>KETERANGAN</label>
-                                            <textarea name="description_ticket" placeholder="Masukkan keterangan opname"
-                                                class="form-control" id="description_ticket"></textarea>
-                                            <div class="invalid-feedback">
-                                                Silahkan masukkan keterangan opname!
-                                            </div>
-
-
-                                        </div>
-                                        <div class="card-footer text-center">
-                                            <button type="submit" class="btn btn-primary" id="btn-simpan">
-                                                <i class="fa fa-save"></i> SIMPAN
-                                            </button>
-                                        </div>
-                                </form>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <button type="submit" class="btn btn-danger" id="btn-batal">
+                                            <i class="fa fa-save"></i> BATALKAN</button>
+                                        <button type="submit" class="btn btn-primary" id="btn-aprove">
+                                            <i class="fa fa-save"></i> APROVE</button>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -128,7 +94,8 @@
 $(document).ready(function() {
 
     $('#dataprodukitem').dataTable({
-        paging: false
+        paging: false,
+        searching: false
     });
 
     loadSelectedItems();

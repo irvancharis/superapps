@@ -8,10 +8,15 @@ class Transaksi_opname extends CI_Controller
  {
         parent::__construct();
         $this->load->model( 'M_TRANSAKSI_OPNAME' );
+        $this->load->model( 'departement/M_DEPARTEMENT' );
+        $this->load->model( 'maping_area/M_MAPING_AREA' );
+        $this->load->model( 'maping_ruangan/M_MAPING_RUANGAN' );
+        $this->load->model( 'maping_lokasi/M_MAPING_LOKASI' );
+        $this->load->model( 'karyawan/M_KARYAWAN' );
         $this->load->helper( 'url_helper' );
         $this->load->library( 'Uuid' );
     }
-        
+
     public function index( $page = 'transaksi_opname' )
  {
         $this->load->library( 'session' );
@@ -44,28 +49,24 @@ class Transaksi_opname extends CI_Controller
         $this->load->library( 'session' );
         $this->session->set_userdata( 'page', $page );
         $data[ 'page' ] = $this->session->userdata( 'page' );
-        $data[ 'get_karyawan' ] = $this->M_TRANSAKSI_OPNAME->get_karyawan();
-        $data[ 'get_area' ] = $this->M_TRANSAKSI_OPNAME->get_area();
-        $data[ 'get_departemen' ] = $this->M_TRANSAKSI_OPNAME->get_departemen();
-        $data[ 'get_jabatan' ] = $this->M_TRANSAKSI_OPNAME->get_jabatan();
+        $data[ 'get_karyawan' ] = $this->M_KARYAWAN->get_karyawan();
+        $data[ 'get_area' ] = $this->M_MAPING_AREA->get_area();
+        $data[ 'get_departemen' ] = $this->M_DEPARTEMENT->get_departemen();
         $this->load->view( 'layout/navbar' ) .
         $this->load->view( 'layout/sidebar', $data ) .
         $this->load->view( 'transaksi_opname_tambah', $data );
     }
 
-    public function edit( $KODE, $page = 'transaksi_opname' )
+    public function aproval_kabag($KODE, $page = 'transaksi_opname' )
  {
         $this->load->library( 'session' );
         $this->session->set_userdata( 'page', $page );
         $data[ 'page' ] = $this->session->userdata( 'page' );
         $query = $this->M_TRANSAKSI_OPNAME->get_single( $KODE );
         $data[ 'get_single' ] = $query->row();
-        $data[ 'get_area' ] = $this->M_TRANSAKSI_OPNAME->get_area();
-        $data[ 'get_departemen' ] = $this->M_TRANSAKSI_OPNAME->get_departemen();
-        $data[ 'get_jabatan' ] = $this->M_TRANSAKSI_OPNAME->get_jabatan();
         $this->load->view( 'layout/navbar' ) .
         $this->load->view( 'layout/sidebar', $data ) .
-        $this->load->view( 'karyawan_edit', $data );
+        $this->load->view( 'transaksi_opname_aproval_kabag', $data );
     }
 
     public function detail( $KODE, $page = 'transaksi_opname' )
@@ -75,12 +76,9 @@ class Transaksi_opname extends CI_Controller
         $data[ 'page' ] = $this->session->userdata( 'page' );
         $query = $this->M_TRANSAKSI_OPNAME->get_single( $KODE );
         $data[ 'get_single' ] = $query->row();
-        $data[ 'get_area' ] = $this->M_TRANSAKSI_OPNAME->get_area();
-        $data[ 'get_departemen' ] = $this->M_TRANSAKSI_OPNAME->get_departemen();
-        $data[ 'get_jabatan' ] = $this->M_TRANSAKSI_OPNAME->get_jabatan();
         $this->load->view( 'layout/navbar' ) .
         $this->load->view( 'layout/sidebar', $data ) .
-        $this->load->view( 'karyawan_detail', $data );
+        $this->load->view( 'transaksi_opname_detail', $data );
     }
 
     public function insert()
