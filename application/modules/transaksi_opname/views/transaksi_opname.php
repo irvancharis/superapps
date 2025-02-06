@@ -45,7 +45,7 @@
                                                                 class="custom-control-label">&nbsp;</label>
                                                         </div>
                                                     </td>
-                                                    <td><?php echo $d->TANGGAL_OPNAME; ?></td>
+                                                    <td><?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_OPNAME, 'l, d F Y'); ?></td>
                                                     <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
                                                     <td><?php echo $d->NAMA_USER_PELAKSANA; ?></td>
                                                     <td>

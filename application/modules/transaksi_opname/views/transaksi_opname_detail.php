@@ -9,84 +9,154 @@
                                         <h4>DETAIL TRANSAKSI OPNAME</h4>
 
                                     </div>
+
                                     <div class="card-body">
-
-                                        <div class="row mt-2">
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>AREA</label>
-                                                <input type="text" class="form-control" name="area" id="area" required
-                                                    value="<?= $transaksi->NAMA_AREA; ?>" readonly>
-
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan AREA!
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>DEPARTEMEN</label>
-                                                <input type="text" class="form-control" name="departemen"
-                                                    id="departemen" required
-                                                    value="<?= $transaksi->NAMA_DEPARTEMEN; ?>" readonly>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan DEPARTEMENT!
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="row">
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>RUANGAN</label>
-                                                <input type="text" class="form-control" name="ruangan" id="ruangan"
-                                                    required value="<?= $transaksi->NAMA_RUANGAN; ?>" readonly>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan RUANGAN!
-                                                </div>
+
+                                            <div class="form-group col-12 col-md-12 col-lg-6">
+                                                <table class="table table-striped table-sm">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>UUID TRANSAKSI OPNAME</th>
+                                                            <td><?= $transaksi->UUID_TRANSAKSI_OPNAME; ?></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th>TANGGAL OPNAME</th>
+                                                            <td><?= $this->tanggalindo->formatTanggal($transaksi->TANGGAL_OPNAME);?>
+                                                            </td>
+                                                        </tr>
+
+
+                                                        <tr>
+                                                            <th>USER PALAKSANA</th>
+                                                            <td><?= $transaksi->NAMA_USER_PELAKSANA; ?></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th>DEPARTEMEN</th>
+                                                            <td><?= $transaksi->NAMA_DEPARTEMEN; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>AREA</th>
+                                                            <td><?= $transaksi->NAMA_AREA; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>RUANGAN</th>
+                                                            <td><?= $transaksi->NAMA_RUANGAN; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>LOKASI</th>
+                                                            <td><?= $transaksi->NAMA_LOKASI; ?></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th>CATATAN OPNAME</th>
+                                                            <td><?= $transaksi->CATATAN_OPNAME; ?></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th>STATUS OPNAME</th>
+                                                            <td><?= $transaksi->STATUS_OPNAME; ?></td>
+                                                        </tr>
+
+
+
+
+                                                    </tbody>
+                                                </table>
                                             </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>LOKASI</label>
-                                                <input type="text" class="form-control" name="lokasi" id="lokasi"
-                                                    required value="<?= $transaksi->NAMA_LOKASI; ?>" readonly>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan LOKASI!
-                                                </div>
+
+                                            <div class="form-group col-12 col-md-12 col-lg-6">
+                                                <table class="table table-striped table-sm">
+                                                    <tbody>
+
+
+                                                        <tr>
+                                                            <th>APROVAL KABAG</th>
+                                                            <td><?= $transaksi->NAMA_APROVAL_KABAG; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>TANGGAL APROVAL KABAG</th>
+                                                            <td><?= $this->tanggalindo->formatTanggal($transaksi->TANGGAL_APROVAL_KABAG);?>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>KETERANGAN APROVAL KABAG</th>
+                                                            <td><?= $transaksi->KETERANGAN_CANCEL_KABAG; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>APROVAL GM</th>
+                                                            <td><?= $transaksi->NAMA_APROVAL_GM; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>TANGGAL APROVAL GM</th>
+                                                            <td><?= $this->tanggalindo->formatTanggal($transaksi->TANGGAL_APROVAL_HEAD);?>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>KETERANGAN APROVAL GM</th>
+                                                            <td><?= $transaksi->KETERANGAN_CANCEL_GM; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>APROVAL HEAD</th>
+                                                            <td><?= $transaksi->NAMA_APROVAL_HEAD; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>TANGGAL APROVAL HEAD</th>
+                                                            <td><?= $this->tanggalindo->formatTanggal($transaksi->TANGGAL_APROVAL_HEAD);?>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>KETERANGAN APROVAL HEAD</th>
+                                                            <td><?= $transaksi->KETERANGAN_CANCEL_HEAD; ?></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th>TANGGAL PENYESUAIAN STOK</th>
+                                                            <td><?= $this->tanggalindo->formatTanggal($transaksi->TANGGAL_PENYESUAIAN);?>
+                                                            </td>
+                                                        </tr>
+
+
+
+                                                    </tbody>
+                                                </table>
                                             </div>
+
+
+
                                         </div>
 
-                                    <div class="table-responsive">
-                                        <table class="table table-striped" id="dataprodukitem">
-                                            <thead>
-                                                <tr>
-                                                    <th>PRODUK/ITEM</th>
-                                                    <th>STOK SISTEM</th>
-                                                    <th>STOK REAL</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="selected-items-body">
-                                                <?php foreach ($detail_transaksi as $index => $d) : ?>
-                                                <tr>
-                                                    <td><?php echo $d->NAMA_PRODUK; ?></td>
-                                                    <td><?php echo $d->JUMLAH_STOK; ?></td>
-                                                    <td><?php echo $d->STOK_AKTUAL; ?></td>                                                    
-                                                </tr>
-                                                <?php endforeach; ?>
-                                            </tbody>
-                                        </table>
-                                    </div><br><br>
 
-                                    <div class="form-group col-12 col-md-12 col-lg-12">
-                                        <label>KETERANGAN</label>
-                                        <textarea readonly name="description_ticket" placeholder="Masukkan keterangan opname"
-                                            class="form-control" id="description_ticket"><?= $transaksi->CATATAN_OPNAME; ?></textarea>
-                                        <div class="invalid-feedback">
-                                            Silahkan masukkan keterangan opname!
+                                        <div class="table-responsive">
+                                            <table class="table table-striped" id="dataprodukitem">
+                                                <thead>
+                                                    <tr>
+                                                        <th>PRODUK/ITEM</th>
+                                                        <th>STOK SISTEM</th>
+                                                        <th>STOK REAL</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="selected-items-body">
+                                                    <?php foreach ($detail_transaksi as $index => $d) : ?>
+                                                    <tr>
+                                                        <td><?php echo $d->NAMA_PRODUK; ?></td>
+                                                        <td><?php echo $d->JUMLAH_STOK; ?></td>
+                                                        <td><?php echo $d->STOK_AKTUAL; ?></td>
+                                                    </tr>
+                                                    <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                        </div><br><br>
+                                        
+                                        <div class="card-footer text-center">
+                                            <a href="<?=site_url('transaksi_opname');?>" class="btn btn-primary">
+                                                <i class="fa fa-arrow-left"></i> KEMBALI</a>
                                         </div>
-
-                                    </div>
-                                    <div class="card-footer text-center">
-                                        <a href="<?=site_url('transaksi_opname');?>" class="btn btn-primary">
-                                            <i class="fa fa-arrow-left"></i> KEMBALI</a>
                                     </div>
                             </div>
                         </div>
-                    </div>
                 </section>
             </div>
 

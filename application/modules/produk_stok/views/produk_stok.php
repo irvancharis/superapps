@@ -93,9 +93,11 @@
                                                 <?php foreach ($M_PRODUK_STOK as $index => $d) : ?>
                                                 <tr>
                                                     <td>
-                                                        <center><img width="100px"
+                                                        <center>
+                                                            <img width="100px"
                                                                 src="<?php echo base_url('produk_stok/qr/').$d->UUID_STOK; ?>"
-                                                                alt=""></center>
+                                                                alt="">
+                                                        </center>
                                                     </td>
                                                     <td><?php echo $d->KODE_ITEM; ?></td>
                                                     <td><?php echo $d->NAMA_PRODUK; ?></td>
