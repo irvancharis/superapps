@@ -5,7 +5,7 @@ class M_TRANSAKSI_OPNAME extends CI_Model
 
     // Nama tabel
     protected $table = 'TRANSAKSI_PENGADAAN';
-    protected $VIEW_KARYAWAN = 'VIEW_KARYAWAN';
+    protected $VIEW_TRANSAKSI_OPNAME = 'VIEW_TRANSAKSI_OPNAME';
 
     public function __construct()
  {
@@ -21,14 +21,14 @@ class M_TRANSAKSI_OPNAME extends CI_Model
 
     public function get_karyawan()
  {
-        $query = $this->db->get( 'VIEW_KARYAWAN' );
+        $query = $this->db->get( 'VIEW_TRANSAKSI_OPNAME' );
         return $query->result_object();
     }
 
     public function get_single( $KODE )
  {
         $this->db->select( '*' );
-        $this->db->from( 'VIEW_KARYAWAN' );
+        $this->db->from( 'VIEW_TRANSAKSI_OPNAME' );
         $this->db->where( 'NIK', $KODE );
         $query = $this->db->get();
         return $query;

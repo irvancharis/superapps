@@ -11,7 +11,7 @@ class Transaksi_opname extends CI_Controller
         $this->load->helper( 'url_helper' );
         $this->load->library( 'Uuid' );
     }
-        
+
     public function index( $page = 'transaksi_opname' )
  {
         $this->load->library( 'session' );
@@ -53,19 +53,19 @@ class Transaksi_opname extends CI_Controller
         $this->load->view( 'transaksi_opname_tambah', $data );
     }
 
-    public function edit( $KODE, $page = 'transaksi_opname' )
+    public function aproval_kabag( $page = 'transaksi_opname' )
  {
         $this->load->library( 'session' );
         $this->session->set_userdata( 'page', $page );
         $data[ 'page' ] = $this->session->userdata( 'page' );
-        $query = $this->M_TRANSAKSI_OPNAME->get_single( $KODE );
-        $data[ 'get_single' ] = $query->row();
+        //$query = $this->M_TRANSAKSI_OPNAME->get_single( $KODE );
+        //$data[ 'get_single' ] = $query->row();
         $data[ 'get_area' ] = $this->M_TRANSAKSI_OPNAME->get_area();
         $data[ 'get_departemen' ] = $this->M_TRANSAKSI_OPNAME->get_departemen();
         $data[ 'get_jabatan' ] = $this->M_TRANSAKSI_OPNAME->get_jabatan();
         $this->load->view( 'layout/navbar' ) .
         $this->load->view( 'layout/sidebar', $data ) .
-        $this->load->view( 'karyawan_edit', $data );
+        $this->load->view( 'transaksi_opname_aproval_kabag', $data );
     }
 
     public function detail( $KODE, $page = 'transaksi_opname' )
