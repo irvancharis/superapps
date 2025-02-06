@@ -28,6 +28,15 @@ class M_TRANSAKSI_OPNAME extends CI_Model
         return $query;
     }
 
+    public function get_detail_single( $KODE )
+ {
+        $this->db->select( '*' );
+        $this->db->from( 'VIEW_TRANSAKSI_OPNAME_DETAIL' );
+        $this->db->where( 'UUID_TRANSAKSI_OPNAME', $KODE );
+        $query = $this->db->get();
+        return $query->result_object();
+    }
+
     public function get_latest_data()
  {
         $this->db->order_by( 'IDTICKET', 'DESC' );
