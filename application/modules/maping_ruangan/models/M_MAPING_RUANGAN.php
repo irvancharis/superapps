@@ -17,11 +17,20 @@ class M_MAPING_RUANGAN extends CI_Model
         return $query->result_object();
     }
 
-    public function get_maping_ruangan_single($KODE_RUANGAN)
+    public function get_maping_ruangan_single($KODE)
     {
         $this->db->select('*');
 		$this->db->from('VIEW_RUANGAN');
-		$this->db->where('KODE_RUANGAN', $KODE_RUANGAN);
+		$this->db->where('KODE_RUANGAN', $KODE);
+		$query = $this->db->get();
+        return $query;
+    }
+
+    public function get_maping_ruangan_by_area($KODE)
+    {
+        $this->db->select('*');
+		$this->db->from('VIEW_RUANGAN');
+		$this->db->where('KODE_REA', $KODE);
 		$query = $this->db->get();
         return $query;
     }
