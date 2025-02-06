@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="assets/css/components.css">
     <!-- Custom style CSS -->
     <link rel="stylesheet" href="assets/css/custom.css">
-    <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.ico' />
+    <link rel='shortcut icon' type='image/x-icon' href='assets/img/Logo SA X7.ico' />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -261,22 +261,6 @@
                                                     <label class="form-label">PILIH TYPE KELUHAN</label>
                                                     <div class="selectgroup selectgroup-pills type-ticket">
                                                         <p style="color:red;font-style: italic;">*). Muncul setelah memilih Departemen Direquest</p>
-                                                        <!-- <label class="selectgroup-item">
-                                                            <input type="checkbox" name="type_ticket[]" value="Computer" class="selectgroup-input">
-                                                            <span class="selectgroup-button">Computer</span>
-                                                        </label>
-                                                        <label class="selectgroup-item">
-                                                            <input type="checkbox" name="type_ticket[]" value="Printer" class="selectgroup-input">
-                                                            <span class="selectgroup-button">Printer</span>
-                                                        </label>
-                                                        <label class="selectgroup-item">
-                                                            <input type="checkbox" name="type_ticket[]" value="Network" class="selectgroup-input">
-                                                            <span class="selectgroup-button">Network/Internet</span>
-                                                        </label>
-                                                        <label class="selectgroup-item">
-                                                            <input type="checkbox" name="type_ticket[]" value="Fina" class="selectgroup-input">
-                                                            <span class="selectgroup-button">FINA</span>
-                                                        </label> -->
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-12 col-md-12 col-lg-12">
@@ -294,9 +278,6 @@
                                         </div>
                                     </form>
                                 </div>
-                                <!-- <div class="col-12 col-md-12 col-lg-7 p-0">
-                                    <div id="map" class="contact-map"></div>
-                                </div> -->
                             </div>
                         </div>
                         <div class="simple-footer">
@@ -339,9 +320,6 @@
     </div>
     <!-- General JS Scripts -->
     <script src="assets/js/app.min.js"></script>
-    <!-- JS Libraies -->
-    <script src="http://maps.google.com/maps/api/js?key=AIzaSyB55Np3_WsZwUQ9NS7DP-HnneleZLYZDNw&amp;sensor=true"></script>
-    <script src="assets/bundles/gmaps.js"></script>
     <!-- Page Specific JS File -->
     <script src="assets/js/page/contact.js"></script>
     <!-- Template JS File -->
@@ -375,7 +353,7 @@
                         let res = JSON.parse(response);
                         if (res.success) {
                             swal('Sukses', 'Request Ticket Berhasil Dikirim!', 'success').then(function() {
-                                location.href = "<?php echo base_url(); ?>ticket_client_view";
+                                location.href = "<?php echo base_url(); ?>" + "ticket_client_view";
                             });
                         } else {
                             alert('Gagal menyimpan data: ' + response.error);
