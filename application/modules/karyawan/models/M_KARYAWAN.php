@@ -27,6 +27,33 @@ class M_KARYAWAN extends CI_Model
         return $query;
     }
 
+    public function get_karyawan_by_area($KODE)
+    {
+        $this->db->select('*');
+		$this->db->from('VIEW_KARYAWAN');
+		$this->db->where('ID_MAPING_AREA', $KODE);
+		$query = $this->db->get();
+        return $query;
+    }
+
+    public function get_karyawan_by_departemen($KODE)
+    {
+        $this->db->select('*');
+		$this->db->from('VIEW_KARYAWAN');
+		$this->db->where('ID_DEPARTEMEN', $KODE);
+		$query = $this->db->get();
+        return $query;
+    }
+
+    public function get_karyawan_by_jabatan($KODE)
+    {
+        $this->db->select('*');
+		$this->db->from('VIEW_KARYAWAN');
+		$this->db->where('ID_JABATAN', $KODE);
+		$query = $this->db->get();
+        return $query;
+    }
+
     public function get_area()
     {
         $query = $this->db->get('MAPING_AREA');
@@ -60,15 +87,15 @@ class M_KARYAWAN extends CI_Model
         return $this->db->insert($this->table, $data);
     }
 
-    public function update($KODE_ITEM, $data)
+    public function update($KODE, $data)
     {
-        $this->db->where('NIK', $KODE_ITEM);
+        $this->db->where('NIK', $KODE);
         return $this->db->update($this->table, $data);
     }
 
-    public function hapus($KODE_ITEM)
+    public function hapus($KODE)
     {
-        $this->db->where('NIK', $KODE_ITEM);
+        $this->db->where('NIK', $KODE);
         return $this->db->delete($this->table);
     }
 }

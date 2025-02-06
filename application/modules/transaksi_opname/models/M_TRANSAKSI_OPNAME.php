@@ -19,12 +19,6 @@ class M_TRANSAKSI_OPNAME extends CI_Model
         return $query->result_object();
     }
 
-    public function get_karyawan()
- {
-        $query = $this->db->get( 'VIEW_TRANSAKSI_OPNAME' );
-        return $query->result_object();
-    }
-
     public function get_single( $KODE )
  {
         $this->db->select( '*' );
@@ -32,24 +26,6 @@ class M_TRANSAKSI_OPNAME extends CI_Model
         $this->db->where( 'NIK', $KODE );
         $query = $this->db->get();
         return $query;
-    }
-
-    public function get_area()
- {
-        $query = $this->db->get( 'MAPING_AREA' );
-        return $query->result_object();
-    }
-
-    public function get_departemen()
- {
-        $query = $this->db->get( 'DEPARTEMEN' );
-        return $query->result_object();
-    }
-
-    public function get_jabatan()
- {
-        $query = $this->db->get( 'JABATAN' );
-        return $query->result_object();
     }
 
     public function get_latest_data()
@@ -65,15 +41,15 @@ class M_TRANSAKSI_OPNAME extends CI_Model
         return $this->db->insert( $this->table, $data );
     }
 
-    public function update( $KODE_ITEM, $data )
+    public function update( $KODE, $data )
  {
-        $this->db->where( 'NIK', $KODE_ITEM );
+        $this->db->where( 'NIK', $KODE );
         return $this->db->update( $this->table, $data );
     }
 
-    public function hapus( $KODE_ITEM )
+    public function hapus( $KODE )
  {
-        $this->db->where( 'NIK', $KODE_ITEM );
+        $this->db->where( 'NIK', $KODE );
         return $this->db->delete( $this->table );
     }
 }
