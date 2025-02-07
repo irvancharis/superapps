@@ -14,6 +14,8 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
         $this->load->database();
     }
 
+
+    // Read
     public function get_data_view()
     {
         $query = $this->db->get('VIEW_TRANSAKSI_PENGADAAN');
@@ -27,6 +29,31 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
         $this->db->join('DEPARTEMEN', 'TRANSAKSI_PENGADAAN.KODE_DEPARTEMEN_PENGAJUAN = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
         $query = $this->db->get();
         return $query->result_object();
+    }
+
+    public function get_data_transaksi($id_transaksi_pengadaan)
+    {
+        $this->db->select('
+        TRANSAKSI_PENGADAAN.*, 
+        DEPARTEMEN.*, 
+        ');
+        $this->db->from('TRANSAKSI_PENGADAAN');
+        $this->db->join('DEPARTEMEN', 'TRANSAKSI_PENGADAAN.KODE_DEPARTEMEN_PENGAJUAN = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
+        $this->db->where('TRANSAKSI_PENGADAAN.UUID_TRANSAKSI_PENGADAAN', $id_transaksi_pengadaan);
+
+        $sql = $this->db->get();
+        $query = $sql->row();
+        return $query; // Mengembalikan banyak row
+    }
+
+    public function get_data_transaksi_detail($id_transaksi_pengadaan)
+    {
+        $this->db->select('TRANSAKSI_PENGADAAN_DETAIL.*, PRODUK_ITEM.*');
+        $this->db->from('TRANSAKSI_PENGADAAN_DETAIL');
+        $this->db->join('PRODUK_ITEM', 'TRANSAKSI_PENGADAAN_DETAIL.KODE_PRODUK_ITEM = PRODUK_ITEM.KODE_ITEM', 'left');
+        $this->db->where('UUID_TRANSAKSI_PENGADAAN', $id_transaksi_pengadaan);
+        $query = $this->db->get();
+        return $query->result(); // Mengembalikan banyak row
     }
 
     public function get_karyawan()
@@ -92,8 +119,6 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
         return $query->result_object();
     }
 
-
-
     public function get_latest_data()
     {
         $this->db->order_by('IDTICKET', 'DESC');
@@ -101,6 +126,10 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
         $query = $this->db->get($this->table);
         return $query->result_object();
     }
+
+
+
+    // Create, Update, Delete
 
     public function insert($data)
     {
@@ -117,5 +146,23 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
     {
         $this->db->where('NIK', $KODE_ITEM);
         return $this->db->delete($this->table);
+    }
+
+    // Approval KABAG, GM, HEAD
+    public function update_transaksi($id_transaksi, $data)
+    {
+        $this->db->where('UUID_TRANSAKSI_PENGADAAN', $id_transaksi);
+        return $this->db->update('TRANSAKSI_PENGADAAN', $data);
+    }
+
+    public function delete_detail($id_transaksi)
+    {
+        $this->db->where('UUID_TRANSAKSI_PENGADAAN', $id_transaksi);
+        return $this->db->delete('TRANSAKSI_PENGADAAN_DETAIL');
+    }
+
+    public function insert_detail($data)
+    {
+        return $this->db->insert('TRANSAKSI_PENGADAAN_DETAIL', $data);
     }
 }
