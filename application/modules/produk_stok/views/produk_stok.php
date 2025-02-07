@@ -5,61 +5,107 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>DATA TRANSAKSI OPNAME</h4>
-                                    <div class="card-header-action">
-                                        <a href="<?php echo base_url('transaksi_opname/tambah') ?>"
-                                            class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
-                                    </div>
+                                    <h4>DATA STOK PRODUK</h4>
                                 </div>
+
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <label>AREA</label>
+                                            <select required name="KODE_AREA" id="KODE_AREA" class="form-control">
+                                                <option value="" class="text-center" selected disabled>-- Pilih Area --
+                                                </option>
+                                                <?php foreach ($get_area as $row) : ?>
+                                                <option value="<?= $row->KODE_AREA; ?>"><?= $row->NAMA_AREA; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Silahkan masukkan area!
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <label>RUANGAN</label>
+                                            <select required name="KODE_RUANGAN" id="KODE_RUANGAN" class="form-control">
+                                                <option value="" class="text-center" selected disabled>-- Pilih Ruangan
+                                                    --</option>
+                                                <?php foreach ($get_ruangan as $row) : ?>
+                                                <option value="<?= $row->KODE_RUANGAN; ?>"><?= $row->NAMA_RUANGAN; ?>
+                                                </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Silahkan masukkan ruangan!
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <label>LOKASI</label>
+                                            <select required name="KODE_LOKASI" id="KODE_LOKASI" class="form-control">
+                                                <option value="" class="text-center" selected disabled>-- Pilih Lokasi
+                                                    --</option>
+                                                <?php foreach ($get_lokasi as $row) : ?>
+                                                <option value="<?= $row->KODE_LOKASI; ?>"><?= $row->NAMA_RUANGAN; ?>
+                                                </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Silahkan masukkan ruangan!
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <label>DEPARTEMEN</label>
+                                            <select required name="KODE_DEPARTEMEN" id="KODE_DEPARTEMEN"
+                                                class="form-control">
+                                                <option value="" class="text-center" selected disabled>-- Pilih
+                                                    Departemen --</option>
+                                                <?php foreach ($get_departemen as $row) : ?>
+                                                <option value="<?= $row->KODE_DEPARTEMEN; ?>">
+                                                    <?= $row->NAMA_DEPARTEMEN; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Silahkan masukkan ruangan!
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer text-center">
+                                        <label class="btn btn-primary"> <i class="fa fa-search"></i> SHOW PRODUK</label>
+                                    </div>
+
+                                </div>
+
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-striped" id="table-2">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center pt-3">
-                                                        <div
-                                                            class="custom-checkbox custom-checkbox-table custom-control">
-                                                            <input type="checkbox" data-checkboxes="mygroup"
-                                                                data-checkbox-role="dad" class="custom-control-input"
-                                                                id="checkbox-all">
-                                                            <label for="checkbox-all"
-                                                                class="custom-control-label">&nbsp;</label>
-                                                        </div>
-                                                    </th>
-                                                    <th>TANGGAL OPNAME</th>
+                                                    <th>QR</th>
+                                                    <th>KODE</th>
+                                                    <th>NAMA PRODUK</th>
+                                                    <th>KATEGORI</th>
                                                     <th>DEPARTEMEN</th>
-                                                    <th>PELAKSANA</th>
-                                                    <th>APROVAL</th>
-                                                    <th>STATUS</th>
-                                                    <th>Action</th>
+                                                    <th>MAPING</th>
+                                                    <th>STOK</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($M_TRANSAKSI_OPNAME as $index => $d) : ?>
+                                                <?php foreach ($M_PRODUK_STOK as $index => $d) : ?>
                                                 <tr>
-                                                    <td class="text-center pt-2">
-                                                        <div class="custom-checkbox custom-control">
-                                                            <input type="checkbox" data-checkboxes="mygroup"
-                                                                class="custom-control-input" id="checkbox-1">
-                                                            <label for="checkbox-1"
-                                                                class="custom-control-label">&nbsp;</label>
-                                                        </div>
+                                                    <td>
+                                                        <center>
+                                                            <img width="100px"
+                                                                src="<?php echo base_url('produk_stok/qr/').$d->UUID_STOK; ?>"
+                                                                alt="">
+                                                        </center>
                                                     </td>
-                                                    <td><?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_OPNAME, 'l, d F Y'); ?></td>
+                                                    <td><?php echo $d->KODE_ITEM; ?></td>
+                                                    <td><?php echo $d->NAMA_PRODUK; ?></td>
+                                                    <td><?php echo $d->NAMA_PRODUK_KATEGORI; ?></td>
                                                     <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
-                                                    <td><?php echo $d->NAMA_USER_PELAKSANA; ?></td>
-                                                    <td>
-                                                        <?php echo 'KABAG - ( '.$d->NAMA_APROVAL_KABAG.' )'; ?><br>
-                                                        <?php echo 'GM - ( '.$d->NAMA_APROVAL_GM.' )'; ?><br>
-                                                        <?php echo 'HEAD - ( '.$d->NAMA_APROVAL_HEAD.' )'; ?>
+                                                    <td><?php echo 'AREA - '.$d->NAMA_AREA; ?><br><?php echo 'RUANGAN - '.$d->NAMA_RUANGAN; ?><br><?php echo 'LOKASI - '.$d->NAMA_LOKASI; ?>
                                                     </td>
-                                                    <td><?php if($d->STATUS_OPNAME == 'MENUNGGU APROVAL KABAG'){echo '<span class="badge badge-success">MENUNGGU APROVAL KABAG</span>';}elseif($d->STATUS_OPNAME == 'PROSES_PENGADAAN'){echo '<span class="badge badge-success">PROSES PENGADAAN</span>';}?>
-                                                    </td>
-                                                    <td>
-                                                        <a href="<?=site_url('transaksi_opname/detail/'.$d->UUID_TRANSAKSI_OPNAME);?>"
-                                                                    class="btn btn-primary"><i
-                                                                        class="fas fa-eye"></i> DETAIL</a>
-                                                    </td>
+                                                    <td><?php echo $d->JUMLAH_STOK; ?></td>
                                                 </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -81,12 +127,12 @@
                                 <h6 class="font-medium m-b-10">Select Layout</h6>
                                 <div class="selectgroup layout-color w-50">
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="value" value="1"
+                                        <input required type="radio" name="value" value="1"
                                             class="selectgroup-input-radio select-layout" checked>
                                         <span class="selectgroup-button">Light</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="value" value="2"
+                                        <input required type="radio" name="value" value="2"
                                             class="selectgroup-input-radio select-layout">
                                         <span class="selectgroup-button">Dark</span>
                                     </label>
@@ -96,13 +142,13 @@
                                 <h6 class="font-medium m-b-10">Sidebar Color</h6>
                                 <div class="selectgroup selectgroup-pills sidebar-color">
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="icon-input" value="1"
+                                        <input required type="radio" name="icon-input" value="1"
                                             class="selectgroup-input select-sidebar">
                                         <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
                                             data-original-title="Light Sidebar"><i class="fas fa-sun"></i></span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="icon-input" value="2"
+                                        <input required type="radio" name="icon-input" value="2"
                                             class="selectgroup-input select-sidebar" checked>
                                         <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
                                             data-original-title="Dark Sidebar"><i class="fas fa-moon"></i></span>
@@ -140,8 +186,8 @@
                             <div class="p-15 border-bottom">
                                 <div class="theme-setting-options">
                                     <label class="m-b-0">
-                                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
-                                            id="mini_sidebar_setting">
+                                        <input required type="checkbox" name="custom-switch-checkbox"
+                                            class="custom-switch-input" id="mini_sidebar_setting">
                                         <span class="custom-switch-indicator"></span>
                                         <span class="control-label p-l-10">Mini Sidebar</span>
                                     </label>
@@ -150,8 +196,8 @@
                             <div class="p-15 border-bottom">
                                 <div class="theme-setting-options">
                                     <label class="m-b-0">
-                                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
-                                            id="sticky_header_setting">
+                                        <input required type="checkbox" name="custom-switch-checkbox"
+                                            class="custom-switch-input" id="sticky_header_setting">
                                         <span class="custom-switch-indicator"></span>
                                         <span class="control-label p-l-10">Sticky Header</span>
                                     </label>
@@ -217,14 +263,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>ID Transaksi_pengadaan</label>
-                                    <select class="form-control" name="id_transaksi_pengadaan">
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID
-                                            Transaksi_pengadaan --</option>
-                                        <?php foreach ($get_transaksi_pengadaan as $row) : ?>
-                                        <option value="<?= $row->ID_TRANSAKSI_PENGADAAN; ?>">
-                                            <?= $row->ID_TRANSAKSI_PENGADAAN; ?> -
-                                            <?= $row->NAMA_TRANSAKSI_PENGADAAN; ?></option>
+                                    <label>ID Karyawan</label>
+                                    <select class="form-control" name="id_karyawan">
+                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --
+                                        </option>
+                                        <?php foreach ($get_karyawan as $row) : ?>
+                                        <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> -
+                                            <?= $row->NAMA_KARYAWAN; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -285,15 +330,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>ID Transaksi_pengadaan</label>
-                                    <select class="form-control" name="id_transaksi_pengadaan"
-                                        id="id_transaksi_pengadaan_view" disabled>
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID
-                                            Transaksi_pengadaan --</option>
-                                        <?php foreach ($get_transaksi_pengadaan as $row) : ?>
-                                        <option value="<?= $row->ID_TRANSAKSI_PENGADAAN; ?>">
-                                            <?= $row->ID_TRANSAKSI_PENGADAAN; ?> -
-                                            <?= $row->NAMA_TRANSAKSI_PENGADAAN; ?></option>
+                                    <label>ID Karyawan</label>
+                                    <select class="form-control" name="id_karyawan" id="id_karyawan_view" disabled>
+                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --
+                                        </option>
+                                        <?php foreach ($get_karyawan as $row) : ?>
+                                        <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> -
+                                            <?= $row->NAMA_KARYAWAN; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -326,8 +369,8 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
-                                    <input type="hidden" id="id_technician_edit" class="form-control" placeholder="ID"
-                                        name="id_technician_edit">
+                                    <input required type="hidden" id="id_technician_edit" class="form-control"
+                                        placeholder="ID" name="id_technician_edit">
                                     <input required type="text" class="form-control" placeholder="Nama Teknisi"
                                         name="nama_technician_edit" id="nama_technician_edit">
                                 </div>
@@ -355,15 +398,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>ID Transaksi_pengadaan</label>
-                                    <select class="form-control" name="id_transaksi_pengadaan_edit"
-                                        id="id_transaksi_pengadaan_edit">
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID
-                                            Transaksi_pengadaan --</option>
-                                        <?php foreach ($get_transaksi_pengadaan as $row) : ?>
-                                        <option value="<?= $row->ID_TRANSAKSI_PENGADAAN; ?>">
-                                            <?= $row->ID_TRANSAKSI_PENGADAAN; ?> -
-                                            <?= $row->NAMA_TRANSAKSI_PENGADAAN; ?></option>
+                                    <label>ID Karyawan</label>
+                                    <select class="form-control" name="id_karyawan_edit" id="id_karyawan_edit">
+                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --
+                                        </option>
+                                        <?php foreach ($get_karyawan as $row) : ?>
+                                        <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> -
+                                            <?= $row->NAMA_KARYAWAN; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -396,8 +437,8 @@
                         <form id="formHapusproduk">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <input type="hidden" id="id_technician_hapus" class="form-control" placeholder="ID"
-                                        name="KODE_ITEM">
+                                    <input required type="hidden" id="id_technician_hapus" class="form-control"
+                                        placeholder="ID" name="KODE_ITEM">
                                     <p class="text-center">Apakah anda yakin ingin menghapus data ini?</p>
                                 </div>
                             </div>
@@ -426,7 +467,7 @@ $(document).ready(function() {
         // Kirim data ke server melalui AJAX
         $.ajax({
             url: "<?php echo base_url(); ?>" +
-                "transaksi_pengadaan/hapus", // Endpoint untuk proses input
+                "produk_item/hapus", // Endpoint untuk proses input
             type: 'POST',
             data: formData,
             success: function(response) {

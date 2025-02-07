@@ -15,6 +15,7 @@ class Transaksi_opname extends CI_Controller
         $this->load->model( 'karyawan/M_KARYAWAN' );
         $this->load->helper( 'url_helper' );
         $this->load->library( 'Uuid' );
+        $this->load->library('TanggalIndo');
     }
 
     public function index( $page = 'transaksi_opname' )
@@ -69,13 +70,23 @@ class Transaksi_opname extends CI_Controller
         $this->load->view( 'transaksi_opname_aproval_kabag', $data );
     }
 
+
+    public function list_produk($KODE)
+ {
+        $query = $this->M_TRANSAKSI_OPNAME->get_detail_single( $KODE );
+        echo json_encode($query);
+
+    }
+
     public function detail( $KODE, $page = 'transaksi_opname' )
  {
         $this->load->library( 'session' );
         $this->session->set_userdata( 'page', $page );
         $data[ 'page' ] = $this->session->userdata( 'page' );
-        $query = $this->M_TRANSAKSI_OPNAME->get_single( $KODE );
-        $data[ 'get_single' ] = $query->row();
+        $query_transaksi = $this->M_TRANSAKSI_OPNAME->get_single( $KODE );
+        $query_detail_transaksi = $this->M_TRANSAKSI_OPNAME->get_detail_single( $KODE );
+        $data['transaksi'] = $query_transaksi->row();
+        $data['detail_transaksi'] = $query_detail_transaksi;
         $this->load->view( 'layout/navbar' ) .
         $this->load->view( 'layout/sidebar', $data ) .
         $this->load->view( 'transaksi_opname_detail', $data );
