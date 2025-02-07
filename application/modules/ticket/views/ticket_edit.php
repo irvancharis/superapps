@@ -53,7 +53,7 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label class="form-label">TYPE KELUHAN</label>
-                                                <div class="selectgroup selectgroup-pills">
+                                                <div class="selectgroup selectgroup-pills type-ticket">
                                                     <label class="selectgroup-item">
                                                         <input type="checkbox" name="type_ticket[]" value="Computer" class="selectgroup-input" <?= (is_array($type_ticket) && in_array('Computer', $type_ticket)) ? 'checked' : ''; ?>>
                                                         <span class="selectgroup-button">Computer</span>
@@ -100,15 +100,15 @@
                                                 <div class="selectgroup selectgroup-pills">
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="approval_ticket" value="0" class="selectgroup-input-radio" id="approval0" <?= ($approval_ticket == 0) ? 'checked' : ''; ?>>
-                                                        <span class="selectgroup-button approval <?= $approval_ticket == 0 ? 'bg-warning text-white' : ''; ?>" id="label-approval0">DALAM ANTRIAN</span>
+                                                        <span class="selectgroup-button approval <?= $approval_ticket == 0 ? 'bg-warning text-white' : ''; ?>" id="label-approval0"><i class="fas fa-spinner"></i> DALAM ANTRIAN</span>
                                                     </label>
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="approval_ticket" value="1" class="selectgroup-input-radio" id="approval1" <?= ($approval_ticket == 1) ? 'checked' : ''; ?>>
-                                                        <span class="selectgroup-button approval <?= $approval_ticket == 1 ? ' bg-success text-white' : ''; ?>" id="label-approval1">DISETUJUI</span>
+                                                        <span class="selectgroup-button approval <?= $approval_ticket == 1 ? ' bg-success text-white' : ''; ?>" id="label-approval1"><i class="fas fa-check"></i> DISETUJUI</span>
                                                     </label>
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="approval_ticket" value="2" class="selectgroup-input-radio" id="approval2" <?= ($approval_ticket == 2) ? 'checked' : ''; ?>>
-                                                        <span class="selectgroup-button approval <?= $approval_ticket == 2 ? ' bg-danger text-white' : ''; ?>" id="label-approval2">DITOLAK</span>
+                                                        <span class="selectgroup-button approval <?= $approval_ticket == 2 ? ' bg-danger text-white' : ''; ?>" id="label-approval2"><i class="fas fa-times"></i> DITOLAK</span>
                                                     </label>
                                                 </div>
                                             </div>
@@ -117,19 +117,19 @@
                                                 <div class="selectgroup selectgroup-pills">
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="status_ticket" value="0" class="selectgroup-input-radio" id="status0" <?= ($status_ticket == 0) ? 'checked' : ''; ?>>
-                                                        <span class="selectgroup-button status <?= $status_ticket == 0 ? 'bg-warning text-white' : ''; ?>" id="label-status0">DALAM ANTRIAN</span>
+                                                        <span class="selectgroup-button status <?= $status_ticket == 0 ? 'bg-warning text-white' : ''; ?>" id="label-status0"><i class="fas fa-spinner"></i> DALAM ANTRIAN</span>
                                                     </label>
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="status_ticket" value="25" class="selectgroup-input-radio" id="status1" <?= ($status_ticket == 25) ? 'checked' : ''; ?>>
-                                                        <span class="selectgroup-button status <?= $status_ticket == 1 ? 'bg-primary text-white' : ''; ?>" id="label-status1">SEDANG DIKERJAKAN</span>
+                                                        <span class="selectgroup-button status <?= $status_ticket == 1 ? 'bg-primary text-white' : ''; ?>" id="label-status1"><i class="fas fa-briefcase"></i> SEDANG DIKERJAKAN</span>
                                                     </label>
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="status_ticket" value="50" class="selectgroup-input-radio" id="status2" <?= ($status_ticket == 50) ? 'checked' : ''; ?>>
-                                                        <span class="selectgroup-button status <?= $status_ticket == 2 ? 'bg-danger text-white' : ''; ?>" id="label-status2">MENUNGGU VALIDASI</span>
+                                                        <span class="selectgroup-button status <?= $status_ticket == 2 ? 'bg-danger text-white' : ''; ?>" id="label-status2"><i class="fas fa-user-check"></i> MENUNGGU VALIDASI</span>
                                                     </label>
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="status_ticket" value="100" class="selectgroup-input-radio" id="status3" <?= ($status_ticket == 100) ? 'checked' : ''; ?>>
-                                                        <span class="selectgroup-button status <?= $status_ticket == 3 ? 'bg-success text-white' : ''; ?>" id="label-status3">SELESAI</span>
+                                                        <span class="selectgroup-button status <?= $status_ticket == 3 ? 'bg-success text-white' : ''; ?>" id="label-status3"><i class="fas fa-check"></i> SELESAI</span>
                                                     </label>
                                                 </div>
                                             </div>
@@ -448,6 +448,40 @@
                             // Cek apakah nilai input date_ticket_done ada dan ubah jika perlu
                             $('input[name="date_ticket_done"]').val("<?php echo date('Y-m-d H:i:s'); ?>"); // Isi input dengan tanggal dan waktu sekarang
                         }
+                    }
+
+                    // Update Type Ticket dari Database
+                    function updateTypeTicket() {
+                        let id_departemen = "<?php echo $id_ticket; ?>";
+                        $.ajax({
+                            url: "<?php echo base_url(); ?>" + "ticket/get_departement_joblist", // Endpoint untuk proses input
+                            type: 'POST',
+                            data: {
+                                id_departemen: id_departemen
+                            },
+                            success: function(response) {
+                                let res = JSON.parse(response);
+                                if (res.success && res.data) {
+                                    // Kosongkan pilihan type keluhan sebelumnya
+                                    $(".type-ticket").empty();
+
+                                    // Tambahkan opsi baru dari database
+                                    res.data.forEach(function(item) {
+                                        $(".type-ticket").append(`
+                                                <label class="selectgroup-item">
+                                                    <input type="checkbox" name="type_ticket[]" value="${item.NAMA_JOBLIST}" class="selectgroup-input">
+                                                    <span class="selectgroup-button">${item.NAMA_JOBLIST}</span>
+                                                </label>
+                                            `);
+                                    });
+                                } else {
+                                    swal('Failed', res.error, 'error');
+                                }
+                            },
+                            error: function() {
+                                swal('Failed', 'Gagal melakukan proses.', 'error');
+                            }
+                        });
                     }
                 });
             </script>

@@ -179,6 +179,7 @@ class Ticket extends CI_Controller
         $data['status_ticket'] = $ticket->STATUS_TICKET;
 
         $data['get_ticket'] = $ticket;
+        $data['id_ticket'] = $id;
 
         // Pastikan DATE_TICKET dalam format YYYY-MM-DD
         if (isset($data['get_ticket']->DATE_TICKET)) {
