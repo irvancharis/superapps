@@ -67,6 +67,21 @@
                     </li>
                 </ul>
             </li>
+            <li class="dropdown <?php (isset($page) && $page == 'user') ? print 'active' : ''; ?>">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                        data-feather="settings"></i><span>User</span></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="<?php echo base_url('fitur'); ?>" class="nav-link"><i data-feather="settings"></i><span>Fitur</span></a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('role'); ?>" class="nav-link"><i data-feather="settings"></i><span>Role</span></a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('user'); ?>" class="nav-link"><i data-feather="settings"></i><span>User</span></a>
+                    </li>
+                </ul>
+            </li>
             <li class="menu-header">Ticketing</li>
             <li class="dropdown <?php (isset($page) && $page == 'ticket') ? print 'active' : ''; ?>">
                 <a href="<?php echo base_url('ticket'); ?>" class="nav-link"><i data-feather="mail"></i><span>Ticket</span></a>
