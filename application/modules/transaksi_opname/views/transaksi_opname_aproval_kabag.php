@@ -7,7 +7,7 @@
                 <div class="card">
                     <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGADAAN_TAMBAH">
                         <div class="card-header">
-                            <h4>APROVAL TRANSAKSI OPNAME</h4>
+                            <h4>APROVAL KABAG TRANSAKSI OPNAME</h4>
 
                         </div>
                         <div class="card-body">
@@ -77,7 +77,7 @@
                             </div>
                             <div class="card-footer text-center">
                                 <button type="submit" class="btn btn-danger" id="btn-batal">
-                                    <i class="fa fa-save"></i> BATALKAN</button>
+                                    <i class="fa fa-save"></i> DISAPROVE</button>
                                 <button type="submit" class="btn btn-primary" id="btn-aprove">
                                     <i class="fa fa-save"></i> APROVE</button>
                             </div>
