@@ -186,7 +186,7 @@
             <!-- Modal Tambah Departemen -->
             <div class="modal fade" id="tambahModalDepartemen" tabindex="-1" role="dialog" aria-labelledby="formModal"
                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="formModal">Input Data Departemen</h5>
@@ -217,7 +217,7 @@
             <!-- Modal Tambah Area -->
             <div class="modal fade" id="tambahModalArea" tabindex="-1" role="dialog" aria-labelledby="formModal"
                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="formModal">Input Data Area</h5>
@@ -248,7 +248,7 @@
             <!-- Modal Tambah Teknisi -->
             <div class="modal fade" id="tambahModalTech" tabindex="-1" role="dialog" aria-labelledby="formModal"
                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="formModal">Input Data Teknisi</h5>
