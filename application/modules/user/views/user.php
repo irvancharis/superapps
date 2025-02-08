@@ -15,15 +15,7 @@
                                         <table class="table table-striped" id="table-2">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center pt-3">
-                                                        <div class="custom-checkbox custom-checkbox-table custom-control">
-                                                            <input required type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
-                                                                class="custom-control-input" id="checkbox-all">
-                                                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                                                        </div>
-                                                    </th>
-                                                    <th>#</th>
-                                                    <th>KODE PRODUK</th>
+                                                    <th>UUID_USER</th>
                                                     <th>NAMA PRODUK</th>
                                                     <th>KATEGORI</th>
                                                     <th>Action</th>

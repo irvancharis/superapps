@@ -67,14 +67,12 @@ class Karyawan extends CI_Controller
             $this->load->view('karyawan_edit', $data);
     }
 
-/*************  ✨ Codeium Command ⭐  *************/
     /**
      * Detail karyawan
      *
      * @param string $KODE_ITEM kode item yang akan di detail
      * @param string $page page yang akan di load
      */
-/******  65b76a20-bfbd-43d1-a245-14d85356b36b  *******/
     public function detail($KODE, $page = 'karyawan')
     {
         $this->load->library('session');

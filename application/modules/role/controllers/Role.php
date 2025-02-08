@@ -1,101 +1,104 @@
 <?php
-class Fitur extends CI_Controller
+class Role extends CI_Controller
 {
     public $data = array();
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('M_FITUR');
+        $this->load->model('M_ROLE');
+        $this->load->model('fitur/M_FITUR');        
         $this->load->helper('url_helper');
         $this->load->library( 'Uuid' );
         $this->load->library('TanggalIndo');
     }
 
-    public function index($page = 'fitur')
+    public function index($page = 'user')
     {
         $this->load->library('session');
 
+        $data['M_ROLE'] = $this->M_ROLE->get_role();        
         $data['M_FITUR'] = $this->M_FITUR->get_fitur();
+        
+        
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
-        //$data['get_kategori'] = $this->M_FITUR->get_kategori();
+        //$data['get_kategori'] = $this->M_ROLE->get_kategori();
 
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
-            $this->load->view('fitur', $data);
+            $this->load->view('role', $data);
     }
 
-    public function get_single($KODE_FITUR)
+    public function get_single($KODE_ROLE)
     {
-        $result = $this->M_FITUR->get_fitur_single($KODE_FITUR);
+        $result = $this->M_ROLE->get_role_single($KODE_ROLE);
         echo json_encode($result);
     }
 
 
     public function get_kategori_produk()
     {
-        $result = $this->M_FITUR->get_kategori_produk();
+        $result = $this->M_ROLE->get_kategori_produk();
         echo json_encode($result);
     }
 
 
-    public function tambah_fitur($page = 'user')
+    public function tambah_role($page = 'user')
     {
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
-            $this->load->view('fitur_tambah', $data);
+            $this->load->view('role_tambah', $data);
     }
 
-    public function tambah_detail_fitur($page = 'user')
+    public function tambah_detail_role($page = 'user')
     {
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
-        $data['get_fitur'] = $this->M_FITUR->get_fitur();
+        $data['get_role'] = $this->M_ROLE->get_role();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
-            $this->load->view('fitur_detail_tambah', $data);
+            $this->load->view('role_detail_tambah', $data);
     }
 
-    public function edit($KODE_FITUR, $page = 'fitur')
+    public function edit($KODE, $page = 'user')
     {
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
-        $query = $this->M_FITUR->get_fitur_single($KODE_FITUR);
-        $data['get_kategori_produk'] = $this->M_FITUR->get_kategori_produk();
-        $data['get_fitur'] = $query->row();
+        $data['M_FITUR'] = $this->M_FITUR->get_fitur();
+        $data['get_role'] = $this->M_ROLE->get_role_single($KODE);
+        $data['kode_role'] = $KODE;
+        $data['get_detail_role'] = $this->M_ROLE->get_detail_role_single($KODE);
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
-            $this->load->view('fitur_edit', $data);
+            $this->load->view('role_edit', $data);
     }
 
-    public function detail($KODE_FITUR, $page = 'fitur')
+    public function detail($KODE_ROLE, $page = 'role')
     {
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
-        $query = $this->M_FITUR->get_fitur_single($KODE_FITUR);
-        $data['get_fitur'] = $query->row();
+        $query = $this->M_ROLE->get_role_single($KODE_ROLE);
+        $data['get_role'] = $query->row();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
-            $this->load->view('fitur_detail', $data);
+            $this->load->view('role_detail', $data);
     }
 
 
-    public function insert_fitur()
+    public function insert_role()
     {
         // Ambil data dari POST
         
 
         $data = $this->input->post();
-        $data['KODE_FITUR'] = $this->uuid->v4();
-
-        $result = $this->M_FITUR->insert_fitur($data);
+        $result = $this->M_ROLE->insert_role($data);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -104,15 +107,19 @@ class Fitur extends CI_Controller
         }
     }
 
-    public function insert_detail_fitur()
+    public function insert_detail_role()
     {
         // Ambil data dari POST
+        $datas = $this->input->post('data');
         
-
-        $data = $this->input->post();
-        $data['KODE_DETAIL_FITUR'] = $this->uuid->v4();
-
-        $result = $this->M_FITUR->insert_detail_fitur($data);
+        foreach ($datas as $item) {
+                $data = [
+                    'KODE_ROLE' => $item['KODE_ROLE'],
+                    'KODE_FITUR' => $item['KODE_FITUR'],
+                    'KODE_DETAIL_FITUR' => $item['KODE_DETAIL_FITUR'],
+                ];
+                $result = $this->M_ROLE->insert_detail_role($data);
+            }        
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -123,13 +130,13 @@ class Fitur extends CI_Controller
 
     public function update()
     {
-        $KODE_FITUR = $this->input->post('KODE_FITUR');
+        $KODE_ROLE = $this->input->post('KODE_ROLE');
         $NAMA_ITEM = $this->input->post('NAMA_ITEM');
         $KODE_KATEGORI = $this->input->post('KODE_KATEGORI');
         $KETERANGAN_ITEM = $this->input->post('KETERANGAN_ITEM');
 
         // Validasi 
-        if (empty($KODE_FITUR)) {
+        if (empty($KODE_ROLE)) {
             $errors[] = 'KODE ITEM tidak boleh kosong.';
         }
         if (empty($NAMA_ITEM)) {
@@ -143,7 +150,7 @@ class Fitur extends CI_Controller
         }
 
         $inputan = $this->input->post(null, TRUE);
-        $result = $this->M_FITUR->update($KODE_FITUR, $inputan);
+        $result = $this->M_ROLE->update($KODE_ROLE, $inputan);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -152,10 +159,10 @@ class Fitur extends CI_Controller
         }
     }
 
-    public function hapus($KODE_FITUR)
+    public function hapus($KODE_ROLE)
     {
         // Proses hapus data
-        $result = $this->M_FITUR->hapus($KODE_FITUR);
-        redirect('fitur');
+        $result = $this->M_ROLE->hapus($KODE_ROLE);
+        redirect('role');
     }
 }

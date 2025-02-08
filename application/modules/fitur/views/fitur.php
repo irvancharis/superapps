@@ -7,7 +7,8 @@
                                 <div class="card-header">
                                     <h4>DATA FITUR</h4>
                                     <div class="card-header-action">
-                                        <a href="<?php echo base_url('fitur/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
+                                        <a href="<?php echo base_url('fitur/tambah_fitur') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Fitur</a>
+                                        <a href="<?php echo base_url('fitur/tambah_detail_fitur') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Detail Fitur</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -15,33 +16,20 @@
                                         <table class="table table-striped" id="table-2">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center pt-3">
-                                                        <div class="custom-checkbox custom-checkbox-table custom-control">
-                                                            <input required type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
-                                                                class="custom-control-input" id="checkbox-all">
-                                                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                                                        </div>
-                                                    </th>
-                                                    <th>#</th>
                                                     <th>KODE FITUR</th>
-                                                    <th>NAMA FITUR</th>                                                    
+                                                    <th>NAMA FITUR</th>
+                                                    <th>KETERANGAN</th>
+                                                    <th>DETAIL FITUR</th>                                                    
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php foreach ($M_FITUR as $index => $d) : ?>
                                                     <tr>
-                                                        <td class="text-center pt-2">
-                                                            <div class="custom-checkbox custom-control">
-                                                                <input required type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
-                                                                    id="checkbox-1">
-                                                                <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td><?php echo $index + 1; ?></td>
                                                         <td><?php echo $d->KODE_FITUR; ?></td>
-                                                        <td><?php echo $d->NAMA_ITEM; ?></td>
-                                                        <td><?php echo $d->NAMA_PRODUK_KATEGORI; ?></td>
+                                                        <td><?php echo $d->NAMA_FITUR; ?></td>
+                                                        <td><?php echo $d->KETERANGAN; ?></td>
+                                                        <td><?php echo $d->KETERANGAN; ?></td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
