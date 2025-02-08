@@ -55,6 +55,29 @@ class Ticket extends CI_Controller
         }
     }
 
+    public function get_departement_joblist_edit()
+    {
+        $id_ticket = $this->input->get('id_ticket');
+        $id_departement = $this->input->get('id_departemen');
+
+        if (!$id_ticket) {
+            echo json_encode(['success' => false, 'error' => 'ID Departemen tidak ditemukan']);
+            return;
+        }
+
+        // Ambil daftar joblist dari database
+        $joblist = $this->M_TICKET->get_departement_joblist($id_departement);
+
+        // Ambil daftar yang sudah dipilih sebelumnya
+        $selected_tickets = $this->M_TICKET->get_selected_tickets($id_ticket);
+
+        echo json_encode([
+            'success' => true,
+            'data' => $joblist,
+            'selected_tickets' => $selected_tickets // Kirim daftar yang sudah dipilih
+        ]);
+    }
+
     public function tambah_view($page = 'ticket')
     {
         $this->load->library('session');
@@ -166,6 +189,7 @@ class Ticket extends CI_Controller
         $this->session->set_userdata('page', 'ticket');
         $data['page'] = $this->session->userdata('page');
         $data['get_technician'] = $this->M_TICKET->get_technician();
+        $data['get_departement'] = $this->M_TICKET->get_departement();
         $ticket = $this->M_TICKET->get_ticket($id);
 
         // Pastikan TYPE_TICKET menjadi array, meskipun hanya 1 value

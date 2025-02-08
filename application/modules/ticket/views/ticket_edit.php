@@ -52,9 +52,21 @@
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>DEPARTEMEN DIREQUEST</label>
+                                                <select name="id_departemen_request" id="id_departemen_request" class="form-control">
+                                                    <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
+                                                    <?php foreach ($get_departement as $row) : ?>
+                                                        <option value="<?= $row->KODE_DEPARTEMEN; ?>" <?= ($get_ticket->DEPARTEMENT_DIREQUEST == $row->KODE_DEPARTEMEN) ? 'selected' : ''; ?>><?= $row->NAMA_DEPARTEMEN; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Silahkan masukkan departemen!
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label class="form-label">TYPE KELUHAN</label>
                                                 <div class="selectgroup selectgroup-pills type-ticket">
-                                                    <label class="selectgroup-item">
+                                                    <!-- <label class="selectgroup-item">
                                                         <input type="checkbox" name="type_ticket[]" value="Computer" class="selectgroup-input" <?= (is_array($type_ticket) && in_array('Computer', $type_ticket)) ? 'checked' : ''; ?>>
                                                         <span class="selectgroup-button">Computer</span>
                                                     </label>
@@ -69,7 +81,7 @@
                                                     <label class="selectgroup-item">
                                                         <input type="checkbox" name="type_ticket[]" value="Fina" class="selectgroup-input" <?= (is_array($type_ticket) && in_array('Fina', $type_ticket)) ? 'checked' : ''; ?>>
                                                         <span class="selectgroup-button">FINA</span>
-                                                    </label>
+                                                    </label> -->
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
@@ -451,13 +463,13 @@
                     }
 
                     // Update Type Ticket dari Database
-                    function updateTypeTicket() {
-                        let id_departemen = "<?php echo $id_ticket; ?>";
+                    function updateTypeTicket(id_ticket) {
                         $.ajax({
-                            url: "<?php echo base_url(); ?>" + "ticket/get_departement_joblist", // Endpoint untuk proses input
-                            type: 'POST',
+                            url: "<?php echo base_url(); ?>ticket/get_departement_joblist_edit", // Endpoint untuk mendapatkan daftar joblist
+                            type: 'GET',
                             data: {
-                                id_departemen: id_departemen
+                                id_ticket: id_ticket,
+                                id_departemen: $('#id_departemen_request').val()
                             },
                             success: function(response) {
                                 let res = JSON.parse(response);
@@ -465,24 +477,30 @@
                                     // Kosongkan pilihan type keluhan sebelumnya
                                     $(".type-ticket").empty();
 
+                                    // Ambil data yang sudah dipilih sebelumnya
+                                    let selectedTickets = res.selected_tickets || []; // Pastikan server mengembalikan daftar yang dipilih
+
                                     // Tambahkan opsi baru dari database
                                     res.data.forEach(function(item) {
+                                        let isChecked = selectedTickets.some(ticket => ticket.TYPE_TICKET === item.NAMA_JOBLIST) ? 'checked' : '';
                                         $(".type-ticket").append(`
-                                                <label class="selectgroup-item">
-                                                    <input type="checkbox" name="type_ticket[]" value="${item.NAMA_JOBLIST}" class="selectgroup-input">
-                                                    <span class="selectgroup-button">${item.NAMA_JOBLIST}</span>
-                                                </label>
-                                            `);
+                                            <label class="selectgroup-item">
+                                                <input type="checkbox" name="type_ticket[]" value="${item.NAMA_JOBLIST}" class="selectgroup-input" ${isChecked}>
+                                                <span class="selectgroup-button">${item.NAMA_JOBLIST}</span>
+                                            </label>
+                                        `);
                                     });
                                 } else {
                                     swal('Failed', res.error, 'error');
                                 }
                             },
                             error: function() {
-                                swal('Failed', 'Gagal melakukan proses.', 'error');
+                                swal('Failed', 'Gagal mengambil data.', 'error');
                             }
                         });
                     }
+
+                    updateTypeTicket("<?php echo $id_ticket; ?>");
                 });
             </script>
             </body>
