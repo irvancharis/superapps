@@ -74,7 +74,8 @@ class M_ROLE extends CI_Model
     }
 
     public function insert_detail_role($data)
-    {
+    {        
+        
         return $this->db->insert($this->table_detail_role, $data);
 
     }
@@ -83,6 +84,13 @@ class M_ROLE extends CI_Model
     {
         $this->db->where('KODE_ROLE', $KODE);
         return $this->db->update($this->table_role, $data);
+    }
+
+
+    public function hapus_detail_role($KODE)
+    {
+        $this->db->where('KODE_ROLE', $KODE);
+        return $this->db->delete($this->table_detail_role);
     }
 
     public function hapus($KODE)

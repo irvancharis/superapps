@@ -4,15 +4,16 @@
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <form class="needs-validation" novalidate="" id="FORM_DATA">
-                                    <div class="card-header">
-                                        <h4>SETTING DETAIL ROLE - <?= $get_role->NAMA_ROLE ?></h4>
-                                    </div>
-                                    <div class="card-body">                                        
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-bordered">
 
+                                <div class="card-header">
+                                    <h4>SETTING DETAIL ROLE - <?= $get_role->NAMA_ROLE ?></h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <form id="FORM_DATA">
+                                            <table class="table table-striped table-bordered">
                                                 <tbody>
+
                                                     <?php foreach ($M_FITUR as $index => $FITUR) : ?>
 
                                                     <tr>
@@ -24,8 +25,10 @@
                                                                 $GET_KODE_DETAIL_FITUR = $this->M_ROLE->get_detail_fitur_single($kode_role,$DETAIL_FITUR->KODE_DETAIL_FITUR);
                                                         ?>
 
-                                                        <td><input type="checkbox"
-                                                                name="<?= $DETAIL_FITUR->KODE_DETAIL_FITUR ?>" <?php if ($GET_KODE_DETAIL_FITUR) echo "checked" ?>>
+                                                        <td><input class="detail_fitur" type="checkbox"
+                                                                KODE_FITUR="<?= $FITUR->KODE_FITUR ?>" KODE_ROLE="<?=$kode_role ?>" KODE_DETAIL_FITUR="<?= $DETAIL_FITUR->KODE_DETAIL_FITUR ?>"
+                                                                value="<?= $DETAIL_FITUR->KODE_DETAIL_FITUR ?>"
+                                                                <?php if ($GET_KODE_DETAIL_FITUR) echo "checked" ?>>
                                                             <?= $DETAIL_FITUR->NAMA_DETAIL_FITUR ?>
                                                         </td>
 
@@ -41,14 +44,11 @@
                                             <center>
                                                 <button type="submit" class="btn btn-primary">Simpan</button>
                                             </center>
-                                        </div>
-                                        <div class="card-footer text-right">
-                                            <button class="btn btn-primary">Submit</button>
-                                        </div>
-                                </form>
+                                    </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
                 </section>
             </div>
 
@@ -62,20 +62,27 @@ $(document).ready(function() {
     $('#FORM_DATA').on('submit', function(e) {
         e.preventDefault();
 
-        // Ambil data dari form
-        let formData = $(this).serialize();
+        var selectedItems = [];
+
+        $('.detail_fitur:checked').each(function() {
+            selectedItems.push({
+                KODE_ROLE: $(this).attr('KODE_ROLE'), 
+                KODE_FITUR: $(this).attr('KODE_FITUR'), 
+                KODE_DETAIL_FITUR: $(this).attr('KODE_DETAIL_FITUR')
+            });
+        });
 
         // Kirim data ke server melalui AJAX
         $.ajax({
-            url: "<?php echo base_url(); ?>" + "produk_item/update/" +
-                <?= $get_fitur->KODE_FITUR; ?>, // Endpoint untuk proses input
+            url: "<?php echo base_url(); ?>" +
+                "role/insert_detail_role/", // Endpoint untuk proses input
             type: 'POST',
-            data: formData,
+            data: {data: selectedItems},
             success: function(response) {
                 let res = JSON.parse(response);
                 if (res.success) {
                     swal('Sukses', 'Tambah Data Berhasil!', 'success').then(function() {
-                        location.href = "<?php echo base_url(); ?>produk_item";
+                        location.href = "<?php echo base_url(); ?>role";
                     });
                 } else {
                     alert('Gagal menyimpan data: ' + response.error);

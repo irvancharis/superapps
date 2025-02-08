@@ -13,7 +13,7 @@ class Role extends CI_Controller
         $this->load->library('TanggalIndo');
     }
 
-    public function index($page = 'role')
+    public function index($page = 'user')
     {
         $this->load->library('session');
 
@@ -65,7 +65,7 @@ class Role extends CI_Controller
             $this->load->view('role_detail_tambah', $data);
     }
 
-    public function edit($KODE, $page = 'role')
+    public function edit($KODE, $page = 'user')
     {
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
@@ -98,8 +98,6 @@ class Role extends CI_Controller
         
 
         $data = $this->input->post();
-        $data['KODE_ROLE'] = $this->uuid->v4();
-
         $result = $this->M_ROLE->insert_role($data);
 
         if ($result) {
@@ -112,12 +110,16 @@ class Role extends CI_Controller
     public function insert_detail_role()
     {
         // Ambil data dari POST
+        $datas = $this->input->post('data');
         
-
-        $data = $this->input->post();
-        $data['KODE_DETAIL_ROLE'] = $this->uuid->v4();
-
-        $result = $this->M_ROLE->insert_detail_role($data);
+        foreach ($datas as $item) {
+                $data = [
+                    'KODE_ROLE' => $item['KODE_ROLE'],
+                    'KODE_FITUR' => $item['KODE_FITUR'],
+                    'KODE_DETAIL_FITUR' => $item['KODE_DETAIL_FITUR'],
+                ];
+                $result = $this->M_ROLE->insert_detail_role($data);
+            }        
 
         if ($result) {
             echo json_encode(['success' => true]);

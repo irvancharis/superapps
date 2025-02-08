@@ -20,19 +20,15 @@
                                                             <th>UUID TRANSAKSI OPNAME</th>
                                                             <td><?= $transaksi->UUID_TRANSAKSI_OPNAME; ?></td>
                                                         </tr>
-
                                                         <tr>
                                                             <th>TANGGAL OPNAME</th>
                                                             <td><?= $this->tanggalindo->formatTanggal($transaksi->TANGGAL_OPNAME);?>
                                                             </td>
                                                         </tr>
-
-
                                                         <tr>
                                                             <th>USER PALAKSANA</th>
                                                             <td><?= $transaksi->NAMA_USER_PELAKSANA; ?></td>
                                                         </tr>
-
                                                         <tr>
                                                             <th>DEPARTEMEN</th>
                                                             <td><?= $transaksi->NAMA_DEPARTEMEN; ?></td>
@@ -49,7 +45,6 @@
                                                             <th>LOKASI</th>
                                                             <td><?= $transaksi->NAMA_LOKASI; ?></td>
                                                         </tr>
-
                                                         <tr>
                                                             <th>CATATAN OPNAME</th>
                                                             <td><?= $transaksi->CATATAN_OPNAME; ?></td>
@@ -59,9 +54,6 @@
                                                             <th>STATUS OPNAME</th>
                                                             <td><?= $transaksi->STATUS_OPNAME; ?></td>
                                                         </tr>
-
-
-
 
                                                     </tbody>
                                                 </table>
@@ -149,7 +141,7 @@
                                                 </tbody>
                                             </table>
                                         </div><br><br>
-                                        
+
                                         <div class="card-footer text-center">
                                             <a href="<?=site_url('transaksi_opname');?>" class="btn btn-primary">
                                                 <i class="fa fa-arrow-left"></i> KEMBALI</a>
