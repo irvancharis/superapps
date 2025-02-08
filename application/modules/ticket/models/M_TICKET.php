@@ -60,9 +60,6 @@ class M_TICKET extends CI_Model
 
     public function get_departement_joblist($id_departement)
     {
-        // $query = $this->db->get_where('DEPARTEMENT_JOBLIST', array('DEPARTEMENT' => $id_departement));
-        // return $query->result_object();
-
         $this->db->select('*');
         $this->db->from('DEPARTEMENT_JOBLIST'); // Ganti dengan nama tabel yang sesuai
         $this->db->where('DEPARTEMENT', $id_departement);
@@ -76,6 +73,17 @@ class M_TICKET extends CI_Model
         $this->db->limit(1);
         $query = $this->db->get($this->table);
         return $query->result_object();
+    }
+
+    // Fungsi untuk mendapatkan daftar joblist yang dipilih
+    public function get_selected_tickets($id_ticket)
+    {
+        $this->db->select('*');
+        $this->db->from('TICKETDETAIL');
+        $this->db->where('IDTICKET', $id_ticket);
+        $query = $this->db->get();
+
+        return $query->result_array(); // Mengembalikan daftar nama joblist yang dipilih
     }
 
     public function insert($data)

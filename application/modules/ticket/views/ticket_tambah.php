@@ -73,22 +73,7 @@
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label class="form-label">PILIH TYPE KELUHAN</label>
                                                 <div class="selectgroup selectgroup-pills type-ticket">
-                                                    <label class="selectgroup-item">
-                                                        <input type="checkbox" name="type_ticket[]" value="Computer" class="selectgroup-input">
-                                                        <span class="selectgroup-button">Computer</span>
-                                                    </label>
-                                                    <label class="selectgroup-item">
-                                                        <input type="checkbox" name="type_ticket[]" value="Printer" class="selectgroup-input">
-                                                        <span class="selectgroup-button">Printer</span>
-                                                    </label>
-                                                    <label class="selectgroup-item">
-                                                        <input type="checkbox" name="type_ticket[]" value="Network" class="selectgroup-input">
-                                                        <span class="selectgroup-button">Network/Internet</span>
-                                                    </label>
-                                                    <label class="selectgroup-item">
-                                                        <input type="checkbox" name="type_ticket[]" value="Fina" class="selectgroup-input">
-                                                        <span class="selectgroup-button">FINA</span>
-                                                    </label>
+                                                    <p style="color:red;font-style: italic;">*). Muncul setelah memilih DEPARTEMEN DIREQUEST</p>
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
@@ -120,15 +105,15 @@
                                                 <div class="selectgroup selectgroup-pills">
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="approval_ticket" value="0" class="selectgroup-input-radio" id="approval0">
-                                                        <span class="selectgroup-button approval" id="label-approval0">DALAM ANTRIAN</span>
+                                                        <span class="selectgroup-button approval" id="label-approval0"><i class="fas fa-spinner"></i> DALAM ANTRIAN</span>
                                                     </label>
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="approval_ticket" value="1" class="selectgroup-input-radio" id="approval1">
-                                                        <span class="selectgroup-button approval" id="label-approval1">DISETUJUI</span>
+                                                        <span class="selectgroup-button approval" id="label-approval1"><i class="fas fa-check"></i> DISETUJUI</span>
                                                     </label>
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="approval_ticket" value="2" class="selectgroup-input-radio" id="approval2">
-                                                        <span class="selectgroup-button approval" id="label-approval2">DITOLAK</span>
+                                                        <span class="selectgroup-button approval" id="label-approval2"><i class="fas fa-times"></i> DITOLAK</span>
                                                     </label>
                                                 </div>
                                             </div>
@@ -137,19 +122,19 @@
                                                 <div class="selectgroup selectgroup-pills">
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="status_ticket" value="0" class="selectgroup-input-radio" id="status0">
-                                                        <span class="selectgroup-button status" id="label-status0">DALAM ANTRIAN</span>
+                                                        <span class="selectgroup-button status" id="label-status0"><i class="fas fa-spinner"></i> DALAM ANTRIAN</span>
                                                     </label>
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="status_ticket" value="25" class="selectgroup-input-radio" id="status1">
-                                                        <span class="selectgroup-button status" id="label-status1">SEDANG DIKERJAKAN</span>
+                                                        <span class="selectgroup-button status" id="label-status1"><i class="fas fa-briefcase"></i> SEDANG DIKERJAKAN</span>
                                                     </label>
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="status_ticket" value="50" class="selectgroup-input-radio" id="status2">
-                                                        <span class="selectgroup-button status" id="label-status2">MENUNGGU VALIDASI</span>
+                                                        <span class="selectgroup-button status" id="label-status2"><i class="fas fa-user-check"></i> MENUNGGU VALIDASI</span>
                                                     </label>
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="status_ticket" value="100" class="selectgroup-input-radio" id="status3">
-                                                        <span class="selectgroup-button status" id="label-status3">SELESAI</span>
+                                                        <span class="selectgroup-button status" id="label-status3"><i class="fas fa-check"></i> SELESAI</span>
                                                     </label>
                                                 </div>
                                             </div>

@@ -260,7 +260,7 @@
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label class="form-label">PILIH TYPE KELUHAN</label>
                                                     <div class="selectgroup selectgroup-pills type-ticket">
-                                                        <p style="color:red;font-style: italic;">*). Muncul setelah memilih Departemen Direquest</p>
+                                                        <p style="color:red;font-style: italic;">*). Muncul setelah memilih DEPARTEMEN DIREQUEST</p>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-12 col-md-12 col-lg-12">
