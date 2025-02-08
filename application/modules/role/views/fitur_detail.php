@@ -12,20 +12,20 @@
                                         <div class="row">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KODE PRODUK</label>
-                                                <input required type="text" name="KODE_ITEM" id="KODE_ITEM" value="<?= $get_produk_item->KODE_ITEM; ?>" class="form-control" readonly>
+                                                <input required type="text" name="KODE_FITUR" id="KODE_FITUR" value="<?= $get_fitur->KODE_FITUR; ?>" class="form-control" readonly>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>NAMA PRODUK</label>
-                                                <input required type="text" class="form-control" id="NAMA_ITEM" value="<?= $get_produk_item->NAMA_ITEM; ?>" name="NAMA_ITEM" readonly>
+                                                <input required type="text" class="form-control" id="NAMA_ITEM" value="<?= $get_fitur->NAMA_ITEM; ?>" name="NAMA_ITEM" readonly>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KATEGORI PRODUK</label>
-                                                <input required type="text" class="form-control" id="NAMA_PRODUK_KATEGORI" value="<?= $get_produk_item->NAMA_PRODUK_KATEGORI; ?>" name="NAMA_ITEM" readonly>
+                                                <input required type="text" class="form-control" id="NAMA_PRODUK_KATEGORI" value="<?= $get_fitur->NAMA_PRODUK_KATEGORI; ?>" name="NAMA_ITEM" readonly>
                                             </div>
                                             
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KETERANGAN PRODUK</label>
-                                                <textarea required name="KETERANGAN_ITEM" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket" readonly><?= $get_produk_item->KETERANGAN_ITEM; ?></textarea>
+                                                <textarea required name="KETERANGAN_ITEM" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket" readonly><?= $get_fitur->KETERANGAN_ITEM; ?></textarea>
                                             </div>
                                         </div>
                                     </div>

@@ -3,7 +3,8 @@ class M_FITUR extends CI_Model
 {
 
     // Nama tabel
-    protected $table = 'FITUR';
+    protected $table_fitur = 'FITUR_';
+    protected $table_detail_fitur = 'FITUR_DETAIL_';
     protected $VIEW_FITUR = 'VIEW_FITUR';
 
     public function __construct()
@@ -14,22 +15,31 @@ class M_FITUR extends CI_Model
 
     public function get_fitur()
     {
-        $query = $this->db->get('VIEW_FITUR');
+        $query = $this->db->get('FITUR_');
         return $query->result_object();
+    }
+
+    public function get_detail_fitur($KODE)
+    {
+        $this->db->select('*');
+        $this->db->from('VIEW_FITUR');
+        $this->db->where('KODE_FITUR', $KODE);
+        $query = $this->db->get();
+        return$query->result_object();
     }
 
     public function getFilteredProduk($search)
     {
-        $query = "SELECT * FROM VIEW_FITUR WHERE NAMA_ITEM LIKE '%$search%' OR KODE_FITUR LIKE '%$search%' OR NAMA_PRODUK_KATEGORI LIKE '%$search%'";
+        $query = "SELECT * FROM VIEW_FITUR WHERE KODE_FITUR LIKE '%$search%' OR NAMA_FITUR LIKE '%$search%'";
         $result = $this->db->query($query);
         return $result->result();
     }
 
-    public function get_fitur_single($KODE_FITUR)
+    public function get_fitur_single($KODE)
     {
         $this->db->select('*');
         $this->db->from('VIEW_FITUR');
-        $this->db->where('KODE_FITUR', $KODE_FITUR);
+        $this->db->where('KODE_FITUR', $KODE);
         $query = $this->db->get();
         return $query;
     }
@@ -42,20 +52,25 @@ class M_FITUR extends CI_Model
         return $query->result_object();
     }
 
-    public function insert($data)
+    public function insert_fitur($data)
     {
-        return $this->db->insert($this->table, $data);
+        return $this->db->insert($this->table_fitur, $data);
     }
 
-    public function update($KODE_FITUR, $data)
+    public function insert_detail_fitur($data)
     {
-        $this->db->where('KODE_FITUR', $KODE_FITUR);
-        return $this->db->update($this->table, $data);
+        return $this->db->insert($this->table_detail_fitur, $data);
     }
 
-    public function hapus($KODE_FITUR)
+    public function update($KODE, $data)
     {
-        $this->db->where('KODE_FITUR', $KODE_FITUR);
-        return $this->db->delete($this->table);
+        $this->db->where('KODE_FITUR', $KODE);
+        return $this->db->update($this->table_fitur, $data);
+    }
+
+    public function hapus($KODE)
+    {
+        $this->db->where('KODE_FITUR', $KODE);
+        return $this->db->delete($this->table_fitur);
     }
 }
