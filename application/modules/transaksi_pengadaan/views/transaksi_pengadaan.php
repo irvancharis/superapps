@@ -40,17 +40,53 @@
                                                         </td>
                                                         <td><?php echo $d->NO_REGISTER; ?></td>
                                                         <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
-                                                        <td><?php if ($d->STATUS_PENGADAAN == 0) {
-                                                                echo '<span class="badge badge-success">MENUNGGU APROVAL</span>';
-                                                            } elseif ($d->STATUS_PENGADAAN == 1) {
+                                                        <td><?php if ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL KABAG") {
+                                                                echo '<span class="badge badge-success">MENUNGGU APROVAL KABAG</span>';
+                                                            } elseif ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL GM") {
+                                                                echo '<span class="badge badge-success">MENUNGGU APROVAL GM</span>';
+                                                            } elseif ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL HEAD") {
+                                                                echo '<span class="badge badge-success">MENUNGGU APROVAL HEAD</span>';
+                                                            } elseif ($d->STATUS_PENGADAAN == "PROSES PENGADAAN") {
                                                                 echo '<span class="badge badge-success">PROSES PENGADAAN</span>';
-                                                            } ?>
+                                                            } elseif ($d->STATUS_PENGADAAN == "MENUNGGU KIRIMAN BARANG") {
+                                                                echo '<span class="badge badge-success">MENUNGGU KIRIMAN BARANG</span>';
+                                                            } elseif ($d->STATUS_PENGADAAN == "MENUNGGU PENYERAHAN") {
+                                                                echo '<span class="badge badge-success">MENUNGGU PENYERAHAN</span>';
+                                                            } elseif ($d->STATUS_PENGADAAN == "PROSES PENYERAHAN") {
+                                                                echo '<span class="badge badge-success">PROSES PENYERAHAN</span>';
+                                                            } else {
+                                                                echo '<span class="badge badge-danger">SELESAI</span>';
+                                                            }
+                                                            ?>
                                                         </td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">
-                                                                    <a href="<?= base_url('transaksi_pengadaan/approval_kabag/' . $d->UUID_TRANSAKSI_PENGADAAN); ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-edit"></i> Approval KABAG</a>
+                                                                    <!-- <a href="<?= base_url('transaksi_pengadaan/approval_kabag/' . $d->UUID_TRANSAKSI_PENGADAAN); ?>" class="dropdown-item has-icon view-btn <?php echo $d->STATUS_PENGADAAN != 'MENUNGGU APROVAL KABAG' ? 'd-none' : 'd-block'; ?>"><i class="fas fa-edit"></i> Approval KABAG</a>
+                                                                    <a href="<?= base_url('transaksi_pengadaan/approval_gm/' . $d->UUID_TRANSAKSI_PENGADAAN); ?>" class="dropdown-item has-icon view-btn <?php echo ($d->STATUS_PENGADAAN == 'MENUNGGU APROVAL KABAG' || $d->STATUS_PENGADAAN == 'MENUNGGU APROVAL HEAD') ? 'd-none' : 'd-block'; ?>"><i class="fas fa-edit"></i> Approval GM</a>
+                                                                    <a href="<?= base_url('transaksi_pengadaan/approval_head/' . $d->UUID_TRANSAKSI_PENGADAAN); ?>" class="dropdown-item has-icon view-btn <?php echo ($d->STATUS_PENGADAAN == 'MENUNGGU APROVAL KABAG' || $d->STATUS_PENGADAAN == 'MENUNGGU APROVAL GM') ? 'd-none' : 'd-block'; ?>"><i class="fas fa-edit"></i> Approval HEAD</a> -->
+
+                                                                    <?php
+                                                                    $approval_links = [
+                                                                        'MENUNGGU APROVAL KABAG' => 'approval_kabag',
+                                                                        'MENUNGGU APROVAL GM' => 'approval_gm',
+                                                                        'MENUNGGU APROVAL HEAD' => 'approval_head'
+                                                                    ];
+
+                                                                    foreach ($approval_links as $status => $route) {
+                                                                        if (
+                                                                            ($route == 'approval_kabag' && $d->STATUS_PENGADAAN == 'MENUNGGU APROVAL KABAG') ||
+                                                                            ($route == 'approval_gm' && !in_array($d->STATUS_PENGADAAN, ['MENUNGGU APROVAL KABAG', 'MENUNGGU APROVAL HEAD'])) ||
+                                                                            ($route == 'approval_head' && !in_array($d->STATUS_PENGADAAN, ['MENUNGGU APROVAL KABAG', 'MENUNGGU APROVAL GM']))
+                                                                        ) {
+                                                                            echo '<a href="' . base_url("transaksi_pengadaan/$route/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="dropdown-item has-icon view-btn">
+                                                                                    <i class="fas fa-edit"></i> Approval ' . strtoupper(str_replace('approval_', '', $route)) . '
+                                                                                </a>';
+                                                                        }
+                                                                    }
+                                                                    ?>
+
                                                                     <a href="<?= site_url('transaksi_pengadaan/edit/' . $d->UUID_TRANSAKSI_PENGADAAN); ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Edit</a>
                                                                     <div class="dropdown-divider"></div>
                                                                     <a href="<?= site_url('transaksi_pengadaan/hapus/' . $d->UUID_TRANSAKSI_PENGADAAN); ?>" class="dropdown-item has-icon text-danger hapus-btn" onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>

@@ -84,6 +84,8 @@
         var table = $('#table-produk').DataTable({
             processing: true,
             serverSide: true,
+            paging: false,
+            info: false,
             ajax: {
                 url: "<?php echo base_url() . 'transaksi_pengadaan/get_produk'; ?>",
                 type: "POST",

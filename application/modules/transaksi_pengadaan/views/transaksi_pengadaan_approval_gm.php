@@ -4,19 +4,15 @@
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGADAAN_APPROVAL_KABAG">
+                                <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGADAAN_APPROVAL_GM">
                                     <div class="card-header">
-                                        <h4>APPROVAL KABAG TRANSAKSI PENGADAAN</h4>
-                                        <div class="card-header-action">
-                                            <a href="javascript:void(0)" id="btn-pengadaan-produk" class="btn btn-primary"><i class="fas fa-search"></i></a>
-                                            <a href="javascript:void(0)" id="btn-tambah-produk" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-                                        </div>
+                                        <h4>APPROVAL GENERAL MANAGER TRANSAKSI PENGADAAN</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="form-group col-12 col-md-4 col-lg-4">
                                                 <label>NO.REGISTER</label>
-                                                <input disabled type="text" class="form-control" id="NO_REGISTER" name="NO_REGISTER" value="<?= $approval_kabag->NO_REGISTER; ?>">
+                                                <input disabled type="text" class="form-control" id="NO_REGISTER" name="NO_REGISTER" value="<?= $approval_gm->NO_REGISTER; ?>">
                                                 <div class="invalid-feedback">
                                                     Masukkan NO. REGISTER !
                                                 </div>
@@ -28,7 +24,7 @@
                                                 <select disabled name="AREA_PENEMPATAN" id="AREA_PENEMPATAN" class="form-control">
                                                     <option value="" class="text-center" disabled>-- Pilih Area --</option>
                                                     <?php foreach ($get_area as $row) : ?>
-                                                        <option value="<?= $row->KODE_AREA; ?>" <?= $row->KODE_AREA == $approval_kabag->KODE_AREA_DEFAULT ? "selected" : ""; ?>><?= $row->NAMA_AREA; ?></option>
+                                                        <option value="<?= $row->KODE_AREA; ?>" <?= $row->KODE_AREA == $approval_gm->KODE_AREA_DEFAULT ? "selected" : ""; ?>><?= $row->NAMA_AREA; ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                                 <div class="invalid-feedback">
@@ -40,7 +36,7 @@
                                                 <select disabled name="DEPARTEMEN_PENGAJUAN" id="DEPARTEMEN_PENGAJUAN" class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih Departement --</option>
                                                     <?php foreach ($get_departemen as $row) : ?>
-                                                        <option value="<?= $row->KODE_DEPARTEMEN; ?>" <?= $row->KODE_DEPARTEMEN == $approval_kabag->KODE_DEPARTEMEN_PENGAJUAN ? "selected" : ""; ?>><?= $row->NAMA_DEPARTEMEN; ?></option>
+                                                        <option value="<?= $row->KODE_DEPARTEMEN; ?>" <?= $row->KODE_DEPARTEMEN == $approval_gm->KODE_DEPARTEMEN_PENGAJUAN ? "selected" : ""; ?>><?= $row->NAMA_DEPARTEMEN; ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                                 <div class="invalid-feedback">
@@ -54,7 +50,7 @@
                                                 <select disabled name="RUANGAN_PENEMPATAN" id="RUANGAN_PENEMPATAN" class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih Ruangan --</option>
                                                     <?php foreach ($get_ruangan as $row) : ?>
-                                                        <option value="<?= $row->KODE_RUANGAN; ?>" <?= $row->KODE_RUANGAN == $approval_kabag->KODE_RUANGAN_DEFAULT ? "selected" : ""; ?>><?= $row->NAMA_RUANGAN; ?></option>
+                                                        <option value="<?= $row->KODE_RUANGAN; ?>" <?= $row->KODE_RUANGAN == $approval_gm->KODE_RUANGAN_DEFAULT ? "selected" : ""; ?>><?= $row->NAMA_RUANGAN; ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                                 <div class="invalid-feedback">
@@ -66,7 +62,7 @@
                                                 <select disabled name="LOKASI_PENEMPATAN" id="LOKASI_PENEMPATAN" class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih Lokasi --</option>
                                                     <?php foreach ($get_lokasi as $row) : ?>
-                                                        <option value="<?= $row->KODE_LOKASI; ?>" <?= $row->KODE_LOKASI == $approval_kabag->KODE_LOKASI_DEFAULT ? "selected" : ""; ?>><?= $row->NAMA_LOKASI; ?></option>
+                                                        <option value="<?= $row->KODE_LOKASI; ?>" <?= $row->KODE_LOKASI == $approval_gm->KODE_LOKASI_DEFAULT ? "selected" : ""; ?>><?= $row->NAMA_LOKASI; ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                                 <div class="invalid-feedback">
@@ -91,8 +87,8 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="form-group col-12 col-md-12 col-lg-12">
-                                                <label>KETERANGAN</label>
-                                                <textarea required name="KETERANGAN_PENGAJUAN" id="KETERANGAN_PENGAJUAN" placeholder="Masukkan keterangan pengajuan" class="form-control" rows="3"></textarea>
+                                                <label>KETERANGAN PENGAJUAN</label>
+                                                <textarea disabled name="KETERANGAN_PENGAJUAN" id="KETERANGAN_PENGAJUAN" placeholder="Masukkan keterangan pengajuan" class="form-control" rows="3"><?= $approval_gm->KETERANGAN_PENGAJUAN; ?></textarea>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan KETERANGAN!
                                                 </div>
@@ -133,8 +129,8 @@
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.id}">
                                     <td>${item.nama}</td>
-                                    <td><input type="number" class="form-control jumlah" name="JUMLAH_PENGADAAN[${index}]" value="${item.jumlah || ''}"></td>
-                                    <td><input type="text" class="form-control keperluan" name="KEPERLUAN[${index}]" value="${item.keperluan || ''}"></td>
+                                    <td><input type="number" class="form-control jumlah" name="JUMLAH_PENGADAAN[${index}]" value="${item.jumlah || ''}" disabled></td>
+                                    <td><input type="text" class="form-control keperluan" name="KEPERLUAN[${index}]" value="${item.keperluan || ''}" disabled></td>
                                     <td><button class="btn btn-danger remove-item" data-index="${index}">Hapus</button></td>
                                 </tr>
                             `);
@@ -197,20 +193,6 @@
                         });
                     }
 
-                    // Simpan data ketika input KETERANGAN_PENGAJUAN berubah
-                    $('#KETERANGAN_PENGAJUAN').on('change', function() {
-                        saveFormData();
-                    });
-
-                    // Form Data Save to Local Storage
-                    function saveFormData() {
-                        let formData = {
-                            KETERANGAN_PENGAJUAN: $('#KETERANGAN_PENGAJUAN').val()
-                        };
-
-                        localStorage.setItem('formPengadaan', JSON.stringify(formData));
-                    }
-
                     // Fungsi untuk menghapus data dari localStorage
                     $('#selected-items-body').on('click', '.remove-item', function() {
                         var index = $(this).data("index");
@@ -221,37 +203,29 @@
                     });
 
                     // Update data ke database
-                    $('#FORM_TRANSAKSI_PENGADAAN_APPROVAL_KABAG').on('submit', function(e) {
+                    $('#FORM_TRANSAKSI_PENGADAAN_APPROVAL_GM').on('submit', function(e) {
                         e.preventDefault();
 
                         let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
-                        let formData = JSON.parse(localStorage.getItem('formPengadaan')) || {};
 
                         if (selectedItems.length == 0) {
                             swal('Error', 'Tidak ada produk yang dipilih.', 'error');
                             return;
                         }
 
-                        if (!formData.KETERANGAN_PENGAJUAN) {
-                            swal('Error', 'Lengkapi Keterangan Pengajuan.', 'error');
-                            return;
-                        }
-
                         // Kirim data untuk update
                         $.ajax({
-                            url: "<?php echo base_url(); ?>transaksi_pengadaan/update_approval_kabag", // Ubah menjadi update
+                            url: "<?php echo base_url(); ?>transaksi_pengadaan/update_approval_gm", // Ubah menjadi update
                             type: "POST",
                             data: {
                                 id_transaksi: idTransaksi, // Kirim ID transaksi agar dapat diupdate
-                                items: selectedItems,
-                                form: formData
+                                items: selectedItems
                             },
                             success: function(response) {
                                 let res = JSON.parse(response);
                                 if (res.success) {
-                                    swal('Sukses', 'Update Data Berhasil!', 'success').then(function() {
+                                    swal('Sukses', 'Pengajuan Pengadaan Di Setujui!', 'success').then(function() {
                                         localStorage.removeItem('selectedItems'); // Hapus localStorage setelah disimpan
-                                        localStorage.removeItem('formPengadaan'); // Hapus localStorage setelah disimpan
                                         sessionStorage.removeItem("dbDataLoaded"); // Hapus localStorage setelah disimpan
                                         location.href = "<?php echo base_url(); ?>" + "transaksi_pengadaan";
                                     });
@@ -270,27 +244,27 @@
                         swal({
                             title: 'Masukkan Keterangan Cancel',
                             content: {
-                                element: 'input',
+                                element: 'textarea',
                                 attributes: {
                                     placeholder: 'Keterangan',
-                                    type: 'text',
+                                    id: 'KETERANGAN_CANCEL_GM',
                                 },
                             },
                         }).then((data) => {
-                            // swal('Keterangan Cancel :  ' + data + '!');
+                            // swal('Keterangan Cancel :  ' + $('#KETERANGAN_CANCEL_GM').val() + '!');
                             let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
                             $.ajax({
-                                url: "<?php echo base_url(); ?>transaksi_pengadaan/disapprove_kabag/",
+                                url: "<?php echo base_url(); ?>transaksi_pengadaan/disapprove_gm/",
                                 type: "POST",
                                 data: {
                                     id_transaksi: idTransaksi,
-                                    KETERANGAN_CANCEL_KABAG: data,
+                                    KETERANGAN_CANCEL_GM: $('#KETERANGAN_CANCEL_GM').val(),
                                     items: selectedItems
                                 },
                                 success: function(response) {
                                     let res = JSON.parse(response);
                                     if (res.success) {
-                                        swal('Sukses', 'Disapprove Data Berhasil!', 'success').then(function() {
+                                        swal('Sukses', 'Pengajuan Pengadaan Berhasil Ditolak!', 'success').then(function() {
                                             localStorage.removeItem('selectedItems'); // Hapus localStorage setelah disimpan
                                             sessionStorage.removeItem("dbDataLoaded"); // Hapus localStorage setelah disimpan
                                             location.href = "<?php echo base_url(); ?>" + "transaksi_pengadaan";
