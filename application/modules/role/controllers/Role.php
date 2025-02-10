@@ -98,6 +98,9 @@ class Role extends CI_Controller
         
 
         $data = $this->input->post();
+        $data['KODE_ROLE'] = $this->uuid->v4();
+
+
         $result = $this->M_ROLE->insert_role($data);
 
         if ($result) {
@@ -107,10 +110,11 @@ class Role extends CI_Controller
         }
     }
 
-    public function insert_detail_role()
+    public function insert_detail_role($KODE_ROLE)
     {
         // Ambil data dari POST
         $datas = $this->input->post('data');
+        $clear = $this->M_ROLE->hapus_detail_role($KODE_ROLE);
         
         foreach ($datas as $item) {
                 $data = [

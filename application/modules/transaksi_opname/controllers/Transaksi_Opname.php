@@ -7,6 +7,10 @@ class Transaksi_opname extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->library('session');
+        $this->load->model('role/M_ROLE');
+        
+
         $this->load->model('M_TRANSAKSI_OPNAME');
         $this->load->model('departement/M_DEPARTEMENT');
         $this->load->model('maping_area/M_MAPING_AREA');
@@ -16,17 +20,25 @@ class Transaksi_opname extends CI_Controller
         $this->load->helper('url_helper');
         $this->load->library('Uuid');
         $this->load->library('TanggalIndo');
+
+        if ( !$this->session->userdata( 'isLoggedIn' ) ) {
+            redirect('login');
+        }
     }
 
     public function index($page = 'transaksi_opname')
     {
-        $this->load->library('session');
+
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI OPNAME','LIST OPNAME');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+        
         //echo $this->uuid->v4();
 
         $data['M_TRANSAKSI_OPNAME'] = $this->M_TRANSAKSI_OPNAME->get_data();
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
-        //$data[ 'get_kategori' ] = $this->M_TRANSAKSI_OPNAME->get_kategori();
 
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
@@ -61,6 +73,11 @@ class Transaksi_opname extends CI_Controller
 
     public function tambah($page = 'transaksi_opname')
     {
+        
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI OPNAME','PENGAJUAN');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
@@ -76,6 +93,11 @@ class Transaksi_opname extends CI_Controller
 
     public function aproval_kabag($KODE, $page = 'transaksi_opname')
     {
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI OPNAME','APROVAL KABAG');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
@@ -95,6 +117,10 @@ class Transaksi_opname extends CI_Controller
 
     public function detail($KODE, $page = 'transaksi_opname')
     {
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI OPNAME','DETAIL OPNAME');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
@@ -109,6 +135,7 @@ class Transaksi_opname extends CI_Controller
 
     public function insert()
     {
+
         $items = $this->input->post('items');
         $formData = $this->input->post('form');
         $uuid_transaksi = $this->uuid->v4();
@@ -121,6 +148,7 @@ class Transaksi_opname extends CI_Controller
                 'TANGGAL_OPNAME' => date('Y-m-d'),
                 'CATATAN_OPNAME' => $formData['CATATAN_OPNAME'],
                 'AREA_OPNAME' => $formData['AREA_OPNAME'],
+                'STATUS_OPNAME' => 'MENUNGGU APROVAL KABAG',
                 'RUANGAN_OPNAME' => $formData['RUANGAN_OPNAME'],
                 'LOKASI_OPNAME' => $formData['LOKASI_OPNAME'],
             ];
@@ -163,7 +191,7 @@ class Transaksi_opname extends CI_Controller
     }
 
     public function hapus($KODE_ITEM)
-    {
+    {        
         // Proses hapus data
         $result = $this->M_TRANSAKSI_OPNAME->hapus($KODE_ITEM);
         redirect('karyawan');

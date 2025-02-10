@@ -41,7 +41,7 @@ class M_FITUR extends CI_Model
         $this->db->from('VIEW_FITUR');
         $this->db->where('KODE_FITUR', $KODE);
         $query = $this->db->get();
-        return $query;
+        return $query->row();
     }
 
     public function get_latest_data()
@@ -72,5 +72,11 @@ class M_FITUR extends CI_Model
     {
         $this->db->where('KODE_FITUR', $KODE);
         return $this->db->delete($this->table_fitur);
+    }
+
+    public function hapus_detail_fitur($KODE)
+    {
+        $this->db->where('KODE_DETAIL_FITUR', $KODE);
+        return $this->db->delete($this->table_detail_fitur);
     }
 }
