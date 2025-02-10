@@ -50,4 +50,13 @@ defined( 'BASEPATH' ) or exit( 'No direct script access allowed' );
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'departement';
+
+
+$route['logout'] = 'login/logout';
+$route['non_akses'] = 'login/non_akses';
+
+
+
+
+
 // $route['( :any )'] = 'pages/view/$1';

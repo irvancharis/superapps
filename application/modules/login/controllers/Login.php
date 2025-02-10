@@ -9,6 +9,7 @@ class Login extends CI_Controller
  {
         parent::__construct();
         $this->load->helper( 'url_helper' );
+        $this->load->model('M_LOGIN');
     }
 
     public function index( )
@@ -18,54 +19,38 @@ class Login extends CI_Controller
     }
 
 
-    public function login()
+    public function ceklogin()
  {
-        helper( [ 'form' ] );
+                $username = $this->input->post('username');
+                $password = $this->input->post('password');
+                $user = $this->M_LOGIN->getuser($username);
 
-        if ( $this->request->getMethod() === 'post' ) {
-            $rules = [
-                'username' => 'required|min_length[3]|max_length[50]',
-                'password' => 'required|min_length[8]|max_length[255]|validateUser[username,password]',
-            ];
+                if ($user) {
+                    if ($password == $user->PASSWORD) {
+                        $this->load->library('session');
+                        $this->session->set_userdata('isLoggedIn',true);
+                        $this->session->set_userdata('UUID_USER',$user->UUID_USER);
+                        $this->session->set_userdata('ROLE',$user->KODE_ROLE);
 
-            $errors = [
-                'password' => [
-                    'validateUser' => 'Username atau Password salah',
-                ],
-            ];
-
-            if ( !$this->validate( $rules, $errors ) ) {
-                $data[ 'validation' ] = $this->validator;
-            } else {
-                $model = new UserModel();
-
-                $user = $model->where( 'username', $this->request->getVar( 'username' ) )->first();
-
-                $this->setUserSession( $user );
-
-                return redirect()->to( '/dashboard' );
-            }
-        }
-
-        echo view( 'login' );
-    }
-
-    private function setUserSession( $user )
- {
-        $data = [
-            'id' => $user[ 'id' ],
-            'username' => $user[ 'username' ],
-            'isLoggedIn' => true,
-        ];
-
-        session()->set( $data );
-        return true;
+                        return redirect()->to('/transaksi_opname');
+                    } else {
+                        echo json_encode(['success' => false, 'error' => 'password salah.']);
+                    }
+                } else {
+                    echo json_encode(['success' => false, 'error' => 'email tidak terdaftar.']);
+                }
     }
 
     public function logout()
  {
-        session()->destroy();
+        $this->session->unset_userdata(array('isLoggedIn', 'UUID_USER'));
         return redirect()->to( '/login' );
+    }
+
+
+    public function non_akses()
+ {
+        $this->load->view( 'akses' );
     }
 
 }

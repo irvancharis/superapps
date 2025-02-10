@@ -9,7 +9,7 @@
 
 <body>
     <h2>Login</h2>
-    <form action="/login" method="post">
+    <form action="<?php echo base_url('login/'); ?>ceklogin" method="post">
         <div>
             <label for="username">Username</label>
             <input type="text" name="username" id="username">

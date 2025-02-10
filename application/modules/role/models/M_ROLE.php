@@ -13,6 +13,18 @@ class M_ROLE extends CI_Model
         $this->load->database();
     }
 
+
+    public function get_role_session($KODE_ROLE, $NAMA_FITUR,$NAMA_DETAIL_FITUR)
+    {
+        $this->db->select('*');
+        $this->db->from('VIEW_ROLE');
+        $this->db->where('KODE_ROLE', $KODE_ROLE);
+        $this->db->where('NAMA_FITUR', $NAMA_FITUR);
+        $this->db->where('NAMA_DETAIL_FITUR', $NAMA_DETAIL_FITUR);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
     public function get_role()
     {
         $query = $this->db->get('ROLE_');
