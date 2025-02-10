@@ -75,7 +75,7 @@ $(document).ready(function() {
         // Kirim data ke server melalui AJAX
         $.ajax({
             url: "<?php echo base_url(); ?>" +
-                "role/insert_detail_role/", // Endpoint untuk proses input
+                "role/insert_detail_role/<?= $get_role->KODE_ROLE ?>", // Endpoint untuk proses input
             type: 'POST',
             data: {data: selectedItems},
             success: function(response) {
