@@ -12,23 +12,8 @@
                                         <div class="row">
 
                                             <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>FITUR</label>
-                                                <select required name="KODE_FITUR" id="KODE_FITUR"
-                                                    class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih
-                                                        Fitur --</option>
-                                                    <?php foreach ($get_fitur as $row) : ?>
-                                                    <option value="<?= $row->KODE_FITUR; ?>">
-                                                        <?= $row->NAMA_FITUR; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan kategori!
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>NAMA DETAIL FITUR</label>
+                                                <input type="hidden" name="KODE_FITUR" value="<?= $kode_fitur; ?>">
                                                 <input required type="text" class="form-control" id="NAMA_DETAIL_FITUR"
                                                     name="NAMA_DETAIL_FITUR">
                                                 <div class="invalid-feedback">
@@ -72,14 +57,14 @@ $(document).ready(function() {
 
         // Kirim data ke server melalui AJAX
         $.ajax({
-            url: "<?php echo base_url(); ?>" + "fitur/insert_detail_fitur", // Endpoint untuk proses input
+            url: "<?php echo base_url(); ?>" + "fitur/insert_detail_fitur/", // Endpoint untuk proses input
             type: 'POST',
             data: formData,
             success: function(response) {
                 let res = JSON.parse(response);
                 if (res.success) {
                     swal('Sukses', 'Tambah Data Berhasil!', 'success').then(function() {
-                        location.href = "<?php echo base_url(); ?>fitur";
+                        location.href = "<?php echo base_url(); ?>fitur/detail/<?=$kode_fitur; ?>";
                     });
                 } else {
                     alert('Gagal menyimpan data: ' + response.error);

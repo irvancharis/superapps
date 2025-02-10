@@ -32,14 +32,6 @@ class Fitur extends CI_Controller
         echo json_encode($result);
     }
 
-
-    public function get_kategori_produk()
-    {
-        $result = $this->M_FITUR->get_kategori_produk();
-        echo json_encode($result);
-    }
-
-
     public function tambah_fitur($page = 'user')
     {
         $this->load->library('session');
@@ -50,11 +42,12 @@ class Fitur extends CI_Controller
             $this->load->view('fitur_tambah', $data);
     }
 
-    public function tambah_detail_fitur($page = 'user')
+    public function tambah_detail_fitur($KODE_FITUR,$page = 'user')
     {
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
+        $data['kode_fitur'] = $KODE_FITUR;
         $data['get_fitur'] = $this->M_FITUR->get_fitur();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
@@ -79,8 +72,8 @@ class Fitur extends CI_Controller
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
-        $query = $this->M_FITUR->get_fitur_single($KODE_FITUR);
-        $data['get_fitur'] = $query->row();
+        $data['get_fitur'] = $this->M_FITUR->get_fitur_single($KODE_FITUR);
+        $data['get_detail_fitur'] = $this->M_FITUR->get_detail_fitur($KODE_FITUR);
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('fitur_detail', $data);
@@ -156,6 +149,14 @@ class Fitur extends CI_Controller
     {
         // Proses hapus data
         $result = $this->M_FITUR->hapus($KODE_FITUR);
+        redirect('fitur');
+    }
+
+
+    public function hapus_detail_fitur($KODE_FITUR)
+    {
+        // Proses hapus data
+        $result = $this->M_FITUR->hapus_detail_fitur($KODE_FITUR);
         redirect('fitur');
     }
 }

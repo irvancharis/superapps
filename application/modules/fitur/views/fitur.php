@@ -8,7 +8,6 @@
                                     <h4>DATA FITUR</h4>
                                     <div class="card-header-action">
                                         <a href="<?php echo base_url('fitur/tambah_fitur') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Fitur</a>
-                                        <a href="<?php echo base_url('fitur/tambah_detail_fitur') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Detail Fitur</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -34,7 +33,7 @@
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">
-                                                                    <a href="<?= site_url('fitur/edit/' . $d->KODE_FITUR); ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Edit</a>
+                                                                    <a href="<?= site_url('fitur/detail/' . $d->KODE_FITUR); ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Setting Fitur</a>
                                                                     <div class="dropdown-divider"></div>
                                                                     <a href="<?= site_url('fitur/hapus/' . $d->KODE_FITUR); ?>" class="dropdown-item has-icon text-danger hapus-btn" onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>
                                                                         Delete</a>
