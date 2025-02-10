@@ -1,10 +1,10 @@
 <?php
-class M_PRODUK_ITEM extends CI_Model
+class M_USER extends CI_Model
 {
 
     // Nama tabel
-    protected $table = 'PRODUK_ITEM';
-    protected $view_produk_item = 'VIEW_PRODUK_ITEM';
+    protected $table = 'USER';
+    protected $view_user = 'VIEW_USER';
 
     public function __construct()
     {
@@ -12,38 +12,31 @@ class M_PRODUK_ITEM extends CI_Model
         $this->load->database();
     }
 
-    public function get_produk_item()
+    public function get_user()
     {
-        $query = $this->db->get('VIEW_PRODUK_ITEM');
+        $query = $this->db->get('VIEW_USER');
         return $query->result_object();
     }
 
-    public function getFilteredProduk($search)
+    public function getFilteredUSER($search)
     {
-        $query = "SELECT * FROM VIEW_PRODUK_ITEM WHERE NAMA_ITEM LIKE '%$search%' OR KODE_ITEM LIKE '%$search%' OR NAMA_PRODUK_KATEGORI LIKE '%$search%'";
+        $query = "SELECT * FROM VIEW_USER WHERE NAMA_USER LIKE '%$search%' OR UUID_USER LIKE '%$search%' ";
         $result = $this->db->query($query);
         return $result->result();
     }
 
-    public function get_produk_item_single($KODE_ITEM)
+    public function get_user_single($KODE_USER)
     {
         $this->db->select('*');
-        $this->db->from('VIEW_PRODUK_ITEM');
-        $this->db->where('KODE_ITEM', $KODE_ITEM);
+        $this->db->from('VIEW_USER');
+        $this->db->where('UUID_USER', $KODE_USER);
         $query = $this->db->get();
-        return $query;
+        return $query->row();
     }
-
-    public function get_kategori_produk()
-    {
-        $query = $this->db->get('PRODUK_KATEGORI');
-        return $query->result_object();
-    }
-
 
     public function get_latest_data()
     {
-        $this->db->order_by('KODE_ITEM', 'DESC');
+        $this->db->order_by('KODE_USER', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get($this->table);
         return $query->result_object();
@@ -54,15 +47,15 @@ class M_PRODUK_ITEM extends CI_Model
         return $this->db->insert($this->table, $data);
     }
 
-    public function update($KODE_ITEM, $data)
+    public function update($KODE_USER, $data)
     {
-        $this->db->where('KODE_ITEM', $KODE_ITEM);
+        $this->db->where('UUID_USER', $KODE_USER);
         return $this->db->update($this->table, $data);
     }
 
-    public function hapus($KODE_ITEM)
+    public function hapus($KODE_USER)
     {
-        $this->db->where('KODE_ITEM', $KODE_ITEM);
+        $this->db->where('UUID_USER', $KODE_USER);
         return $this->db->delete($this->table);
     }
 }

@@ -12,7 +12,7 @@ class Fitur extends CI_Controller
         $this->load->library('TanggalIndo');
     }
 
-    public function index($page = 'fitur')
+    public function index($page = 'user')
     {
         $this->load->library('session');
 
@@ -61,7 +61,7 @@ class Fitur extends CI_Controller
             $this->load->view('fitur_detail_tambah', $data);
     }
 
-    public function edit($KODE_FITUR, $page = 'fitur')
+    public function edit($KODE_FITUR, $page = 'user')
     {
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
@@ -74,7 +74,7 @@ class Fitur extends CI_Controller
             $this->load->view('fitur_edit', $data);
     }
 
-    public function detail($KODE_FITUR, $page = 'fitur')
+    public function detail($KODE_FITUR, $page = 'user')
     {
         $this->load->library('session');
         $this->session->set_userdata('page', $page);

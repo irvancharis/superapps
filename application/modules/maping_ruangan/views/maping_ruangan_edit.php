@@ -28,7 +28,7 @@
                                             </div>
                                             
                                             
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <div class="form-group col-12 col-md-6 col-lg-6">   
                                                 <label>KETERANGAN RUANGAN</label>
                                                 <textarea required name="KETERANGAN_RUANGAN" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket"><?= $get_maping_ruangan->KETERANGAN_RUANGAN; ?></textarea>
                                             </div>

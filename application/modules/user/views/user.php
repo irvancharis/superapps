@@ -5,9 +5,9 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>DATA PRODUK ITEM</h4>
+                                    <h4>DATA USER</h4>
                                     <div class="card-header-action">
-                                        <a href="<?php echo base_url('produk_item/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
+                                        <a href="<?php echo base_url('user/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -16,33 +16,27 @@
                                             <thead>
                                                 <tr>
                                                     <th>UUID_USER</th>
-                                                    <th>NAMA PRODUK</th>
-                                                    <th>KATEGORI</th>
+                                                    <th>NAMA</th>
+                                                    <th>JABATAN</th>
+                                                    <th>ROLE</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($M_PRODUK_ITEM as $index => $d) : ?>
+                                                <?php foreach ($M_USER as $index => $d) : ?>
                                                     <tr>
-                                                        <td class="text-center pt-2">
-                                                            <div class="custom-checkbox custom-control">
-                                                                <input required type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
-                                                                    id="checkbox-1">
-                                                                <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td><?php echo $index + 1; ?></td>
-                                                        <td><?php echo $d->KODE_ITEM; ?></td>
-                                                        <td><?php echo $d->NAMA_ITEM; ?></td>
-                                                        <td><?php echo $d->NAMA_PRODUK_KATEGORI; ?></td>
+                                                        <td><?php echo $d->UUID_USER; ?></td>
+                                                        <td><?php echo $d->NAMA_KARYAWAN; ?></td>
+                                                        <td><?php echo $d->NAMA_JABATAN; ?></td>
+                                                        <td><?php echo $d->NAMA_ROLE; ?></td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">
-                                                                    <a href="<?= site_url('produk_item/detail/' . $d->KODE_ITEM); ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a>
-                                                                    <a href="<?= site_url('produk_item/edit/' . $d->KODE_ITEM); ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Edit</a>
+                                                                    <a href="<?= site_url('user/detail/' . $d->UUID_USER); ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a>
+                                                                    <a href="<?= site_url('user/edit/' . $d->UUID_USER); ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Edit</a>
                                                                     <div class="dropdown-divider"></div>
-                                                                    <a href="<?= site_url('produk_item/hapus/' . $d->KODE_ITEM); ?>" class="dropdown-item has-icon text-danger hapus-btn" onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>
+                                                                    <a href="<?= site_url('user/hapus/' . $d->UUID_USER); ?>" class="dropdown-item has-icon text-danger hapus-btn" onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>
                                                                         Delete</a>
                                                                 </div>
                                                             </div>
@@ -342,12 +336,12 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="formModal">Hapus Data Produk</h5>
+                            <h5 class="modal-title" id="formModal">Hapus Data USER</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="formHapusproduk">
+                        <form id="formHapususer">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <input required type="hidden" id="id_technician_hapus" class="form-control" placeholder="ID" name="KODE_ITEM">
@@ -370,7 +364,7 @@
             <script>
                 $(document).ready(function() {
 
-                    $('#formHapusproduk').on('submit', function(e) {
+                    $('#formHapususer').on('submit', function(e) {
                         e.preventDefault();
 
                         // Ambil data dari form
@@ -378,7 +372,7 @@
 
                         // Kirim data ke server melalui AJAX
                         $.ajax({
-                            url: "<?php echo base_url(); ?>" + "produk_item/hapus", // Endpoint untuk proses input
+                            url: "<?php echo base_url(); ?>" + "user_item/hapus", // Endpoint untuk proses input
                             type: 'POST',
                             data: formData,
                             success: function(response) {
