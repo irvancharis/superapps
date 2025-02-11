@@ -145,6 +145,23 @@ class Transaksi_pengadaan extends CI_Controller
             $this->load->view('transaksi_pengadaan_approval_gm', $data);
     }
 
+    public function approval_head($id_transaksi_pengadaan)
+    {
+        $this->load->library('session');
+        $this->session->set_userdata('page', 'transaksi_pengadaan');
+        $data['page'] = $this->session->userdata('page');
+        $data['approval_head'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi($id_transaksi_pengadaan);
+        $data['get_area'] = $this->M_TRANSAKSI_PENGADAAN->get_area();
+        $data['get_ruangan'] = $this->M_TRANSAKSI_PENGADAAN->get_ruangan();
+        $data['get_lokasi'] = $this->M_TRANSAKSI_PENGADAAN->get_lokasi();
+        $data['get_departemen'] = $this->M_TRANSAKSI_PENGADAAN->get_departemen();
+        $data['id_transaksi_pengadaan'] = $id_transaksi_pengadaan;
+        log_message('error', 'Data returned: ' . json_encode($data['approval_head']));
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('transaksi_pengadaan_approval_head', $data);
+    }
+
     public function get_data_transaksi_detail($id_transaksi_pengadaan)
     {
         $produk = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi_detail($id_transaksi_pengadaan);
@@ -210,7 +227,7 @@ class Transaksi_pengadaan extends CI_Controller
                 'TANGGAL_PENGAJUAN' => date('Y-m-d H:i:s'),
                 'STATUS_PENGADAAN' => 'MENUNGGU APROVAL KABAG',
                 'NO_REGISTER' => $formData['NO_REGISTER'],
-                'KODE_USER_PENGAJUAN' => 1,
+                'KODE_USER_PENGAJUAN' => 11,
                 'KODE_AREA_DEFAULT' => $formData['AREA_PENEMPATAN'],
                 'KODE_RUANGAN_DEFAULT' => $formData['RUANGAN_PENEMPATAN'],
                 'KODE_LOKASI_DEFAULT' => $formData['LOKASI_PENEMPATAN'],
@@ -306,9 +323,48 @@ class Transaksi_pengadaan extends CI_Controller
 
         // Update tabel transaksi_pengadaan
         $data_update = [
-            'KODE_APROVAL_GM' => 1,
+            'KODE_APROVAL_GM' => 3,
             'TANGGAL_APROVAL_GM' => date('Y-m-d'),
             'STATUS_PENGADAAN' => 'MENUNGGU APROVAL HEAD',
+        ];
+
+        $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
+
+        if (!$update) {
+            echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
+            return;
+        }
+
+        // Update transaksi_pengadaan_detail
+        $this->M_TRANSAKSI_PENGADAAN->delete_detail($id_transaksi); // Hapus data lama
+        foreach ($items as $item) {
+            $data_detail = [
+                'UUID_TRANSAKSI_PENGADAAN' => $id_transaksi,
+                'KODE_PRODUK_ITEM' => $item['id'],
+                'JUMLAH_PENGADAAN' => $item['jumlah'],
+                'KEPERLUAN' => $item['keperluan']
+            ];
+            $this->M_TRANSAKSI_PENGADAAN->insert_detail($data_detail);
+        }
+
+        echo json_encode(['success' => true]);
+    }
+
+    public function update_approval_head()
+    {
+        $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
+        $items = $this->input->post('items');
+
+        if (!$id_transaksi || empty($items)) {
+            echo json_encode(['success' => false, 'error' => 'Data tidak lengkap!']);
+            return;
+        }
+
+        // Update tabel transaksi_pengadaan
+        $data_update = [
+            'KODE_APROVAL_HEAD' => 4,
+            'TANGGAL_APROVAL_GM' => date('Y-m-d'),
+            'STATUS_PENGADAAN' => 'PROSES PENGADAAN',
         ];
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
@@ -389,6 +445,48 @@ class Transaksi_pengadaan extends CI_Controller
         // Update tabel transaksi_pengadaan
         $data_update = [
             'KETERANGAN_CANCEL_GM' => $form,
+        ];
+
+        $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
+
+        if (!$update) {
+            echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
+            return;
+        }
+
+        // Update transaksi_pengadaan_detail
+        $this->M_TRANSAKSI_PENGADAAN->delete_detail($id_transaksi); // Hapus data lama
+        foreach ($items as $item) {
+            $data_detail = [
+                'UUID_TRANSAKSI_PENGADAAN' => $id_transaksi,
+                'KODE_PRODUK_ITEM' => $item['id'],
+                'JUMLAH_PENGADAAN' => $item['jumlah'],
+                'KEPERLUAN' => $item['keperluan']
+            ];
+            $this->M_TRANSAKSI_PENGADAAN->insert_detail($data_detail);
+        }
+
+        if ($update) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Gagal memperbarui data.']);
+        }
+    }
+
+    public function disapprove_head()
+    {
+        $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
+        $form = $this->input->post('KETERANGAN_CANCEL_HEAD');
+        $items = $this->input->post('items');
+
+        if (!$id_transaksi || empty($form) || empty($items)) {
+            echo json_encode(['success' => false, 'error' => 'Data tidak lengkap!']);
+            return;
+        }
+
+        // Update tabel transaksi_pengadaan
+        $data_update = [
+            'KETERANGAN_CANCEL_HEAD' => $form,
         ];
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);

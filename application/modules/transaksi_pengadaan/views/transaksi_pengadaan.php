@@ -27,7 +27,6 @@
                                                     <th>USER PENGAJUAN</th>
                                                     <th>APPROVAL</th>
                                                     <th>STATUS</th>
-                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -44,16 +43,16 @@
                                                         <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
                                                         <td><?php echo $d->NAMA_USER_PENGAJUAN; ?></td>
                                                         <td>
-                                                            <?php echo 'KABAG - ( ' . (($d->NAMA_APROVAL_KABAG != null) ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
-                                                            <?php echo 'GM - ( ' . (($d->NAMA_APROVAL_GM != null) ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
-                                                            <?php echo 'HEAD - ( ' . (($d->NAMA_APROVAL_HEAD != null) ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>') . ' )'; ?>
+                                                            <?php echo 'KABAG - ( ' . (($d->NAMA_APROVAL_KABAG != null) ? $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
+                                                            <?php echo 'GM - ( ' . (($d->NAMA_APROVAL_GM != null) ? $d->NAMA_APROVAL_GM . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_GM . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
+                                                            <?php echo 'HEAD - ( ' . (($d->NAMA_APROVAL_HEAD != null) ? $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?>
                                                         </td>
                                                         <td><?php if ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL KABAG") {
-                                                                echo '<span class="badge badge-success">MENUNGGU APROVAL KABAG</span>';
+                                                                echo '<span class="badge badge-success">MENUNGGU APROVAL KABAG</span> <a href="' . base_url("transaksi_pengadaan/approval_kabag/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL GM") {
-                                                                echo '<span class="badge badge-success">MENUNGGU APROVAL GM</span>';
+                                                                echo '<span class="badge badge-success">MENUNGGU APROVAL GM</span> <a href="' . base_url("transaksi_pengadaan/approval_gm/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL HEAD") {
-                                                                echo '<span class="badge badge-success">MENUNGGU APROVAL HEAD</span>';
+                                                                echo '<span class="badge badge-success">MENUNGGU APROVAL HEAD</span> <a href="' . base_url("transaksi_pengadaan/approval_head/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "PROSES PENGADAAN") {
                                                                 echo '<span class="badge badge-success">PROSES PENGADAAN</span>';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU KIRIMAN BARANG") {
@@ -64,26 +63,6 @@
                                                                 echo '<span class="badge badge-success">PROSES PENYERAHAN</span>';
                                                             } else {
                                                                 echo '<span class="badge badge-danger">SELESAI</span>';
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php
-                                                            $approval_links = [
-                                                                'MENUNGGU APROVAL KABAG' => 'approval_kabag',
-                                                                'MENUNGGU APROVAL GM' => 'approval_gm',
-                                                                'MENUNGGU APROVAL HEAD' => 'approval_head'
-                                                            ];
-
-                                                            foreach ($approval_links as $status => $route) {
-                                                                if (
-                                                                    ($route == 'approval_kabag' && $d->STATUS_PENGADAAN == 'MENUNGGU APROVAL KABAG') ||
-                                                                    ($route == 'approval_gm' && !in_array($d->STATUS_PENGADAAN, ['MENUNGGU APROVAL KABAG', 'MENUNGGU APROVAL HEAD'])) ||
-                                                                    ($route == 'approval_head' && !in_array($d->STATUS_PENGADAAN, ['MENUNGGU APROVAL KABAG', 'MENUNGGU APROVAL GM']))
-                                                                ) {
-                                                                    echo '<a href="' . base_url("transaksi_pengadaan/$route/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn">
-                                                                                    <i class="fas fa-eye"></i></a>';
-                                                                }
                                                             }
                                                             ?>
                                                         </td>
