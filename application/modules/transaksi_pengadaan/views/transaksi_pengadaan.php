@@ -54,7 +54,7 @@
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL HEAD") {
                                                                 echo '<span class="badge badge-success">MENUNGGU APROVAL HEAD</span> <a href="' . base_url("transaksi_pengadaan/approval_head/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "PROSES PENGADAAN") {
-                                                                echo '<span class="badge badge-success">PROSES PENGADAAN</span>';
+                                                                echo '<span class="badge badge-success">PROSES PENGADAAN</span> <a href="' . base_url("transaksi_pengadaan/proses_pengadaan/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU KIRIMAN BARANG") {
                                                                 echo '<span class="badge badge-success">MENUNGGU KIRIMAN BARANG</span>';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU PENYERAHAN") {
