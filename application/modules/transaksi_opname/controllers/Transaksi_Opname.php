@@ -143,8 +143,9 @@ class Transaksi_opname extends CI_Controller
         if (!empty($formData) && !empty($items)) {
             // Simpan data transaksi utama
             $data_transaksi = [
+                'USER_PELAKSANA' => $this->session->userdata('ID_KARYAWAN'),
                 'UUID_TRANSAKSI_OPNAME' => $uuid_transaksi,
-                'KODE_DEPARTEMEN' => $formData['KODE_DEPARTEMEN'],
+                'KODE_DEPARTEMEN' => $this->session->userdata('ID_DEPARTEMEN'),
                 'TANGGAL_OPNAME' => date('Y-m-d'),
                 'CATATAN_OPNAME' => $formData['CATATAN_OPNAME'],
                 'AREA_OPNAME' => $formData['AREA_OPNAME'],

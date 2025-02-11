@@ -30,6 +30,13 @@ class Login extends CI_Controller
                         $this->load->library('session');
                         $this->session->set_userdata('isLoggedIn',true);
                         $this->session->set_userdata('UUID_USER',$user->UUID_USER);
+                        $this->session->set_userdata('ID_AREA',$user->ID_AREA);
+                        $this->session->set_userdata('NAMA_AREA',$user->NAMA_AREA);
+                        $this->session->set_userdata('ID_JABATAN',$user->ID_JABATAN);
+                        $this->session->set_userdata('NAMA_JABATAN',$user->NAMA_JABATAN);
+                        $this->session->set_userdata('ID_KARYAWAN',$user->ID_KARYAWAN);
+                        $this->session->set_userdata('ID_DEPARTEMEN',$user->ID_DEPARTEMENT);
+                        $this->session->set_userdata('NAMA_DEPARTEMEN',$user->NAMA_DEPARTEMEN);
                         $this->session->set_userdata('ROLE',$user->KODE_ROLE);
 
                         return redirect()->to('/transaksi_opname');
