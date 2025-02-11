@@ -24,6 +24,8 @@
                                                     </th>
                                                     <th>REGISTER</th>
                                                     <th>DEPARTEMEN</th>
+                                                    <th>USER PENGAJUAN</th>
+                                                    <th>APPROVAL</th>
                                                     <th>STATUS</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -40,6 +42,12 @@
                                                         </td>
                                                         <td><?php echo $d->NO_REGISTER; ?></td>
                                                         <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
+                                                        <td><?php echo $d->NAMA_USER_PENGAJUAN; ?></td>
+                                                        <td>
+                                                            <?php echo 'KABAG - ( ' . (($d->NAMA_APROVAL_KABAG != null) ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
+                                                            <?php echo 'GM - ( ' . (($d->NAMA_APROVAL_GM != null) ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
+                                                            <?php echo 'HEAD - ( ' . (($d->NAMA_APROVAL_HEAD != null) ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>') . ' )'; ?>
+                                                        </td>
                                                         <td><?php if ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL KABAG") {
                                                                 echo '<span class="badge badge-success">MENUNGGU APROVAL KABAG</span>';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL GM") {

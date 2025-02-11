@@ -18,10 +18,9 @@ class Transaksi_pengadaan extends CI_Controller
         $this->load->library('session');
         // echo $this->uuid->v4();
 
-        $data['M_TRANSAKSI_PENGADAAN'] = $this->M_TRANSAKSI_PENGADAAN->get_data();
+        $data['M_TRANSAKSI_PENGADAAN'] = $this->M_TRANSAKSI_PENGADAAN->get_data_view();
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
-        //$data[ 'get_kategori' ] = $this->M_TRANSAKSI_PENGADAAN->get_kategori();
 
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
