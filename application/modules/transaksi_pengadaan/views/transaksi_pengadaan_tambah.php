@@ -73,7 +73,7 @@
                                         </div>
                                         <div class="table-responsive">
                                             <h6 class="font-medium mt-5 text-center">DATA PRODUK</h6>
-                                            <table class="table table-striped" id="table-2">
+                                            <table class="table table-striped" id="table-data-produk">
                                                 <thead>
                                                     <tr>
                                                         <th>PRODUK/ITEM</th>
@@ -102,6 +102,12 @@
 
             <script>
                 $(document).ready(function() {
+
+                    $('#table-data-produk').dataTable({
+                        paging: false,
+                        searching: false,
+                        info: false
+                    });
 
                     loadSelectedItems();
 
