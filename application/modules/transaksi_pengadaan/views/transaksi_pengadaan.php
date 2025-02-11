@@ -60,39 +60,24 @@
                                                             ?>
                                                         </td>
                                                         <td>
-                                                            <div class="dropdown">
-                                                                <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
-                                                                <div class="dropdown-menu">
-                                                                    <!-- <a href="<?= base_url('transaksi_pengadaan/approval_kabag/' . $d->UUID_TRANSAKSI_PENGADAAN); ?>" class="dropdown-item has-icon view-btn <?php echo $d->STATUS_PENGADAAN != 'MENUNGGU APROVAL KABAG' ? 'd-none' : 'd-block'; ?>"><i class="fas fa-edit"></i> Approval KABAG</a>
-                                                                    <a href="<?= base_url('transaksi_pengadaan/approval_gm/' . $d->UUID_TRANSAKSI_PENGADAAN); ?>" class="dropdown-item has-icon view-btn <?php echo ($d->STATUS_PENGADAAN == 'MENUNGGU APROVAL KABAG' || $d->STATUS_PENGADAAN == 'MENUNGGU APROVAL HEAD') ? 'd-none' : 'd-block'; ?>"><i class="fas fa-edit"></i> Approval GM</a>
-                                                                    <a href="<?= base_url('transaksi_pengadaan/approval_head/' . $d->UUID_TRANSAKSI_PENGADAAN); ?>" class="dropdown-item has-icon view-btn <?php echo ($d->STATUS_PENGADAAN == 'MENUNGGU APROVAL KABAG' || $d->STATUS_PENGADAAN == 'MENUNGGU APROVAL GM') ? 'd-none' : 'd-block'; ?>"><i class="fas fa-edit"></i> Approval HEAD</a> -->
+                                                            <?php
+                                                            $approval_links = [
+                                                                'MENUNGGU APROVAL KABAG' => 'approval_kabag',
+                                                                'MENUNGGU APROVAL GM' => 'approval_gm',
+                                                                'MENUNGGU APROVAL HEAD' => 'approval_head'
+                                                            ];
 
-                                                                    <?php
-                                                                    $approval_links = [
-                                                                        'MENUNGGU APROVAL KABAG' => 'approval_kabag',
-                                                                        'MENUNGGU APROVAL GM' => 'approval_gm',
-                                                                        'MENUNGGU APROVAL HEAD' => 'approval_head'
-                                                                    ];
-
-                                                                    foreach ($approval_links as $status => $route) {
-                                                                        if (
-                                                                            ($route == 'approval_kabag' && $d->STATUS_PENGADAAN == 'MENUNGGU APROVAL KABAG') ||
-                                                                            ($route == 'approval_gm' && !in_array($d->STATUS_PENGADAAN, ['MENUNGGU APROVAL KABAG', 'MENUNGGU APROVAL HEAD'])) ||
-                                                                            ($route == 'approval_head' && !in_array($d->STATUS_PENGADAAN, ['MENUNGGU APROVAL KABAG', 'MENUNGGU APROVAL GM']))
-                                                                        ) {
-                                                                            echo '<a href="' . base_url("transaksi_pengadaan/$route/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="dropdown-item has-icon view-btn">
-                                                                                    <i class="fas fa-edit"></i> Approval ' . strtoupper(str_replace('approval_', '', $route)) . '
-                                                                                </a>';
-                                                                        }
-                                                                    }
-                                                                    ?>
-
-                                                                    <a href="<?= site_url('transaksi_pengadaan/edit/' . $d->UUID_TRANSAKSI_PENGADAAN); ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Edit</a>
-                                                                    <div class="dropdown-divider"></div>
-                                                                    <a href="<?= site_url('transaksi_pengadaan/hapus/' . $d->UUID_TRANSAKSI_PENGADAAN); ?>" class="dropdown-item has-icon text-danger hapus-btn" onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>
-                                                                        Delete</a>
-                                                                </div>
-                                                            </div>
+                                                            foreach ($approval_links as $status => $route) {
+                                                                if (
+                                                                    ($route == 'approval_kabag' && $d->STATUS_PENGADAAN == 'MENUNGGU APROVAL KABAG') ||
+                                                                    ($route == 'approval_gm' && !in_array($d->STATUS_PENGADAAN, ['MENUNGGU APROVAL KABAG', 'MENUNGGU APROVAL HEAD'])) ||
+                                                                    ($route == 'approval_head' && !in_array($d->STATUS_PENGADAAN, ['MENUNGGU APROVAL KABAG', 'MENUNGGU APROVAL GM']))
+                                                                ) {
+                                                                    echo '<a href="' . base_url("transaksi_pengadaan/$route/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn">
+                                                                                    <i class="fas fa-eye"></i></a>';
+                                                                }
+                                                            }
+                                                            ?>
                                                         </td>
                                                     </tr>
                                                 <?php endforeach; ?>
