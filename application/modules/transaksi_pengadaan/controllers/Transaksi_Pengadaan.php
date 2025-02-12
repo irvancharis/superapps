@@ -354,7 +354,8 @@ class Transaksi_pengadaan extends CI_Controller
         $items = $this->input->post('items');
 
         if (!$id_transaksi || empty($form) || empty($items)) {
-            echo json_encode(['success' => false, 'error' => 'Data tidak lengkap!']);
+            echo json_encode(['success' => false, 'error' => 'Harap isi Keterangan Pengajuan Pengadaan
+            !']);
             return;
         }
 
@@ -473,7 +474,7 @@ class Transaksi_pengadaan extends CI_Controller
         $items = $this->input->post('items');
 
         if (!$id_transaksi || empty($form) || empty($items)) {
-            echo json_encode(['success' => false, 'error' => 'Data tidak lengkap!']);
+            echo json_encode(['success' => false, 'error' => 'Harap isi Keterangan Cancel!']);
             return;
         }
 
@@ -515,7 +516,7 @@ class Transaksi_pengadaan extends CI_Controller
         $items = $this->input->post('items');
 
         if (!$id_transaksi || empty($form) || empty($items)) {
-            echo json_encode(['success' => false, 'error' => 'Data tidak lengkap!']);
+            echo json_encode(['success' => false, 'error' => 'Harap isi Keterangan Cancel!']);
             return;
         }
 

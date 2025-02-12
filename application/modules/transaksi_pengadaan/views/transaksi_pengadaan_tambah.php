@@ -7,10 +7,6 @@
                                 <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGADAAN_TAMBAH">
                                     <div class="card-header">
                                         <h4>INPUT DATA TRANSAKSI PENGADAAN</h4>
-                                        <div class="card-header-action">
-                                            <a href="javascript:void(0)" id="btn-pengadaan-produk" class="btn btn-primary"><i class="fas fa-search"></i></a>
-                                            <a href="javascript:void(0)" id="btn-tambah-produk" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="row mt-2">
@@ -63,7 +59,11 @@
                                             </div>
                                         </div>
                                         <div class="table-responsive">
-                                            <h6 class="font-medium mt-5 text-center">DATA PRODUK</h6>
+                                            <h6 class="font-medium mt-5 text-center">DETAIL DATA PRODUK</h6>
+                                            <div class="card-header-action text-right">
+                                                <a href="javascript:void(0)" id="btn-pengadaan-produk" class="btn btn-primary"><i class="fas fa-search"></i></a>
+                                                <a href="javascript:void(0)" id="btn-tambah-produk" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                            </div>
                                             <table class="table table-striped" id="table-data-produk">
                                                 <thead>
                                                     <tr>
@@ -79,7 +79,8 @@
                                         </div>
                                     </div>
                                     <div class="card-footer text-center">
-                                        <button type="submit" class="btn btn-primary" id="btn-simpan"><i class="fa fa-save"></i> SIMPAN</button>
+                                        <button type="submit" class="btn btn-primary mx-2" id="btn-simpan"><i class="fa fa-save"></i> SIMPAN</button>
+                                        <a href="<?php echo base_url(); ?>transaksi_pengadaan" class="btn btn-secondary"><i class="fa fa-times"></i> BATAL</a>
                                     </div>
                                 </form>
                             </div>
@@ -138,7 +139,7 @@
                             success: function(response) {
                                 let res = JSON.parse(response);
                                 if (res.success) {
-                                    swal('Sukses', 'Simpan Data Berhasil!', 'success').then(function() {
+                                    swal('Sukses', 'Pengadaan Berhasil Diajukan!', 'success').then(function() {
                                         localStorage.removeItem('selectedItems'); // Hapus localStorage setelah disimpan
                                         localStorage.removeItem('formPengadaan'); // Hapus localStorage setelah disimpan
                                         location.href = "<?php echo base_url(); ?>" + "transaksi_pengadaan";
