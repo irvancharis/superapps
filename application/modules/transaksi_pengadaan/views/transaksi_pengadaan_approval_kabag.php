@@ -7,10 +7,6 @@
                                 <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGADAAN_APPROVAL_KABAG">
                                     <div class="card-header">
                                         <h4>APPROVAL KABAG TRANSAKSI PENGADAAN</h4>
-                                        <div class="card-header-action">
-                                            <a href="javascript:void(0)" id="btn-pengadaan-produk" class="btn btn-primary"><i class="fas fa-search"></i></a>
-                                            <a href="javascript:void(0)" id="btn-tambah-produk" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="row mt-2">
@@ -93,6 +89,7 @@
                                     <div class="card-footer text-center">
                                         <button type="submit" class="btn btn-success" id="btn-approve"><i class="fa fa-check"></i> APPROVE</button>
                                         <button type="button" class="btn btn-danger" id="btn-disapprove"><i class="fa fa-times"></i> DISAPPROVE</button>
+                                        <a href="<?php echo base_url(); ?>transaksi_pengadaan" class="btn btn-secondary float-right"><i class="fa fa-arrow-left"></i> KEMBALI</a>
                                     </div>
                                 </form>
                             </div>
@@ -240,7 +237,7 @@
                             success: function(response) {
                                 let res = JSON.parse(response);
                                 if (res.success) {
-                                    swal('Sukses', 'Update Data Berhasil!', 'success').then(function() {
+                                    swal('Sukses', 'Pengajuan Pengadaan Di Setujui!', 'success').then(function() {
                                         localStorage.removeItem('selectedItems'); // Hapus localStorage setelah disimpan
                                         localStorage.removeItem('formPengadaan'); // Hapus localStorage setelah disimpan
                                         sessionStorage.removeItem("dbDataLoaded"); // Hapus localStorage setelah disimpan
@@ -281,7 +278,7 @@
                                 success: function(response) {
                                     let res = JSON.parse(response);
                                     if (res.success) {
-                                        swal('Sukses', 'Disapprove Data Berhasil!', 'success').then(function() {
+                                        swal('Sukses', 'Pengajuan Pengadaan Berhasil Ditolak!', 'success').then(function() {
                                             localStorage.removeItem('selectedItems'); // Hapus localStorage setelah disimpan
                                             sessionStorage.removeItem("dbDataLoaded"); // Hapus localStorage setelah disimpan
                                             location.href = "<?php echo base_url(); ?>" + "transaksi_pengadaan";
