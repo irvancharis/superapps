@@ -4,7 +4,7 @@
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <form class="needs-validation" novalidate="" id="FORM_KARYAWAN_TAMBAH">
+                                <form enctype="multipart/form-data" class="needs-validation" id="FORM_KARYAWAN_TAMBAH">
                                     <div class="card-header">
                                         <h4>INPUT DATA KARYAWAN</h4>
                                     </div>
@@ -67,6 +67,15 @@
                                                     Masukkan ALAMAT  !
                                                 </div>
                                             </div>
+
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>FOTO</label>
+                                                <input required type="file" class="form-control" id="FOTO" name="FOTO" accept="image/gif, image/jpeg, image/png">
+                                                <div class="invalid-feedback">
+                                                    Masukkan FOTO  !
+                                                </div>
+                                            </div>
+
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>TELEPON</label>
                                                 <input required type="number" oninput="this.value = this.value.replace(/\D+/g, '')" class="form-control" id="TELEPON" name="TELEPON">
@@ -185,13 +194,15 @@
                         e.preventDefault();
 
                         // Ambil data dari form
-                        let formData = $(this).serialize();
+                        let formData = new FormData(this);
 
                         // Kirim data ke server melalui AJAX
                         $.ajax({
                             url: "<?php echo base_url(); ?>" + "karyawan/insert", // Endpoint untuk proses input
                             type: 'POST',
                             data: formData,
+                            processData: false,
+                            contentType: false,
                             success: function(response) {
                                 let res = JSON.parse(response);
                                 if (res.success) {

@@ -11,259 +11,92 @@
                                     <div class="card-body">
                                         <div class="row">
 
-
                                             <div class="form-group col-12 col-md-12 col-lg-6">
                                                 <table class="table table-striped table-sm">
                                                     <tbody>
                                                         <tr>
-                                                            <th>AREA</th>
-                                                            <td><?= $transaksi->UUID_TRANSAKSI_OPNAME; ?></td>
+                                                            <th>ID KARYAWAN</th>
+                                                            <td><?= $get_single->ID_KARYAWAN; ?></td>
                                                         </tr>
                                                         <tr>
-                                                            <th>TANGGAL OPNAME</th>
-                                                            <td><?= $this->tanggalindo->formatTanggal($transaksi->TANGGAL_OPNAME);?>
+                                                            <th>NAMA KARYAWAN</th>
+                                                            <td><?= $get_single->NAMA_KARYAWAN; ?></td>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <th>DEPARTEMEN</th>
-                                                            <td><?= $transaksi->NAMA_USER_PELAKSANA; ?></td>
+                                                            <th>JABATAN</th>
+                                                            <td><?= $get_single->NAMA_JABATAN; ?></td>
                                                         </tr>
                                                         <tr>
                                                             <th>DEPARTEMEN</th>
-                                                            <td><?= $transaksi->NAMA_DEPARTEMEN; ?></td>
+                                                            <td><?= $get_single->NAMA_DEPARTEMEN; ?></td>
                                                         </tr>
                                                         <tr>
-                                                            <th>AREA</th>
-                                                            <td><?= $transaksi->NAMA_AREA; ?></td>
+                                                            <th>NIK</th>
+                                                            <td><?= $get_single->NIK; ?></td>
                                                         </tr>
                                                         <tr>
-                                                            <th>RUANGAN</th>
-                                                            <td><?= $transaksi->NAMA_RUANGAN; ?></td>
+                                                            <th>NIP</th>
+                                                            <td><?= $get_single->NIP; ?></td>
                                                         </tr>
                                                         <tr>
-                                                            <th>LOKASI</th>
-                                                            <td><?= $transaksi->NAMA_LOKASI; ?></td>
+                                                            <th>ALAMAT</th>
+                                                            <td><?= $get_single->ALAMAT; ?></td>
                                                         </tr>
                                                         <tr>
-                                                            <th>CATATAN OPNAME</th>
-                                                            <td><?= $transaksi->CATATAN_OPNAME; ?></td>
+                                                            <th>TELEPON</th>
+                                                            <td><?= $get_single->TELEPON; ?></td>
                                                         </tr>
-
                                                         <tr>
-                                                            <th>STATUS OPNAME</th>
-                                                            <td><?= $transaksi->STATUS_OPNAME; ?></td>
+                                                            <th>EMAIL</th>
+                                                            <td><?= $get_single->EMAIL; ?></td>
                                                         </tr>
 
                                                     </tbody>
                                                 </table>
                                             </div>
 
+                                            <div class="form-group col-12 col-md-12 col-lg-6">
+                                                <table class="table table-striped table-sm">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>TEMPAT LAHIR</th>
+                                                            <td><?= $get_single->TEMPAT_LAHIR; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>TANGGAL LAHIR</th>
+                                                            <td><?= $get_single->TANGGAL_LAHIR; ?></td>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>JENIS KELAMIN</th>
+                                                            <td><?= $get_single->JENIS_KELAMIN; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>PENDIDIKAN AKHIR</th>
+                                                            <td><?= $get_single->PENDIDIKAN_AKHIR; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>AGAMA</th>
+                                                            <td><?= $get_single->AGAMA; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>AKTIF MULAI TANGGAL</th>
+                                                            <td><?= $this->tanggalindo->formatTanggal($get_single->AKTIF_MULAI_TANGGAL);?>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>BATAS KONTRAK KERJA</th>
+                                                            <td><?= $this->tanggalindo->formatTanggal($get_single->BATAS_KONTRAK_KERJA);?>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>STATUS</th>
+                                                            <td><?= $get_single->STATUS_KARYAWAN; ?></td>
+                                                        </tr>
 
-
-
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>AREA</label>
-                                                <select readonly required name="ID_MAPING_AREA" id="ID_MAPING_AREA"
-                                                    class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih Area
-                                                        --</option>
-                                                    <?php foreach ($get_area as $row) : ?>
-                                                    <option
-                                                        <?php if ($row->KODE_AREA == $get_single->ID_MAPING_AREA) echo "selected"; ?>
-                                                        value="<?= $row->KODE_AREA; ?>"><?= $row->NAMA_AREA; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan AREA!
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>DEPARTEMEN</label>
-                                                <select readonly required name="ID_DEPARTEMENT" id="ID_DEPARTEMENT"
-                                                    class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih
-                                                        Departement --</option>
-                                                    <?php foreach ($get_departemen as $row) : ?>
-                                                    <option
-                                                        <?php if ($row->KODE_DEPARTEMEN == $get_single->ID_DEPARTEMENT) echo "selected"; ?>
-                                                        value="<?= $row->KODE_DEPARTEMEN; ?>">
-                                                        <?= $row->NAMA_DEPARTEMEN; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan DEPARTEMENT!
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>JABATAN</label>
-                                                <select readonly required name="ID_JABATAN" id="ID_JABATAN"
-                                                    class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih
-                                                        Jabatan --</option>
-                                                    <?php foreach ($get_jabatan as $row) : ?>
-                                                    <option
-                                                        <?php if ($row->KODE_JABATAN == $get_single->ID_JABATAN) echo "selected"; ?>
-                                                        value="<?= $row->KODE_JABATAN; ?>"><?= $row->NAMA_JABATAN; ?>
-                                                    </option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan JABATAN!
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>NIP</label>
-                                                <input readonly required type="text" value="<?= $get_single->NIP; ?>"
-                                                    name="NIP" id="NIP" class="form-control">
-                                                <div class="invalid-feedback">
-                                                    Masukkan NIP?
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>NAMA KARYAWAN</label>
-                                                <input readonly required type="text"
-                                                    value="<?= $get_single->NAMA_KARYAWAN; ?>" class="form-control"
-                                                    id="NAMA_KARYAWAN" name="NAMA_KARYAWAN">
-                                                <div class="invalid-feedback">
-                                                    Masukkan NAMA KARYAWAN !
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>ALAMAT</label>
-                                                <input readonly required type="text" value="<?= $get_single->ALAMAT; ?>"
-                                                    class="form-control" id="ALAMAT" name="ALAMAT">
-                                                <div class="invalid-feedback">
-                                                    Masukkan ALAMAT !
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>TELEPON</label>
-                                                <input readonly required type="text"
-                                                    value="<?= $get_single->TELEPON; ?>" class="form-control"
-                                                    id="TELEPON" name="TELEPON">
-                                                <div class="invalid-feedback">
-                                                    Masukkan TELEPON !
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>EMAIL</label>
-                                                <input readonly required type="text" value="<?= $get_single->EMAIL; ?>"
-                                                    class="form-control" id="EMAIL" name="EMAIL">
-                                                <div class="invalid-feedback">
-                                                    Masukkan EMAIL !
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>PENDIDIKAN AKHIR</label>
-                                                <input readonly required type="text"
-                                                    value="<?= $get_single->PENDIDIKAN_AKHIR; ?>" class="form-control"
-                                                    id="PENDIDIKAN_AKHIR" name="PENDIDIKAN_AKHIR">
-                                                <div class="invalid-feedback">
-                                                    Masukkan PENDIDIKAN AKHIR !
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>NIK</label>
-                                                <input readonly required readonly type="text"
-                                                    value="<?= $get_single->NIK; ?>" class="form-control" id="NIK"
-                                                    name="NIK">
-                                                <div class="invalid-feedback">
-                                                    Masukkan NIK !
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>TEMPAT LAHIR</label>
-                                                <input readonly required type="text"
-                                                    value="<?= $get_single->TEMPAT_LAHIR; ?>" class="form-control"
-                                                    id="TEMPAT_LAHIR" name="TEMPAT_LAHIR">
-                                                <div class="invalid-feedback">
-                                                    Masukkan TEMPAT LAHIR !
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>TANGGAL LAHIR</label>
-                                                <input readonly required type="DATE"
-                                                    value="<?= $get_single->TANGGAL_LAHIR; ?>" class="form-control"
-                                                    id="TANGGAL_LAHIR" name="TANGGAL_LAHIR">
-                                                <div class="invalid-feedback">
-                                                    Masukkan TANGGAL LAHIR !
-                                                </div>
+                                                    </tbody>
+                                                </table>
                                             </div>
 
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>JENIS KELAMIN</label>
-                                                <select readonly required name="JENIS_KELAMIN" id="JENIS_KELAMIN"
-                                                    class="form-control">
-                                                    <option
-                                                        <?php if ('LAKI-LAKI' == $get_single->JENIS_KELAMIN) echo "selected"; ?>
-                                                        value="LAKI-LAKI" class="text-center">LAKI-LAKI</option>
-                                                    <option
-                                                        <?php if ('PEREMPUAN' == $get_single->JENIS_KELAMIN) echo "selected"; ?>
-                                                        value="PEREMPUAN" class="text-center">PEREMPUAN</option>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan JENIS KELAMIN!
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>AGAMA</label>
-                                                <select readonly required name="AGAMA" id="AGAMA" class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih
-                                                        Kategori --</option>
-                                                    <option <?php if ('ISLAM' == $get_single->AGAMA) echo "selected"; ?>
-                                                        value="ISLAM" class="text-center">ISLAM</option>
-                                                    <option
-                                                        <?php if ('KRISTEN' == $get_single->AGAMA) echo "selected"; ?>
-                                                        value="KRISTEN" class="text-center">KRISTEN</option>
-                                                    <option
-                                                        <?php if ('PROTESTAN' == $get_single->AGAMA) echo "selected"; ?>
-                                                        value="PROTESTAN" class="text-center">PROTESTAN</option>
-                                                    <option <?php if ('HINDU' == $get_single->AGAMA) echo "selected"; ?>
-                                                        value="HINDU" class="text-center">HINDU</option>
-                                                    <option <?php if ('BUDHA' == $get_single->AGAMA) echo "selected"; ?>
-                                                        value="BUDHA" class="text-center">BUDHA</option>
-                                                    <option
-                                                        <?php if ('KONGHUCU' == $get_single->AGAMA) echo "selected"; ?>
-                                                        value="KONGHUCU" class="text-center">KONGHUCU</option>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan AGAMA!
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>AKTIF MULAI TANGGAL</label>
-                                                <input readonly required type="DATE"
-                                                    value="<?= $get_single->AKTIF_MULAI_TANGGAL; ?>"
-                                                    class="form-control" id="AKTIF_MULAI_TANGGAL"
-                                                    name="AKTIF_MULAI_TANGGAL">
-                                                <div class="invalid-feedback">
-                                                    Masukkan AKTIF MULAI TANGGAL !
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>BATAS KONTRAK KERJA</label>
-                                                <input readonly required type="DATE"
-                                                    value="<?= $get_single->BATAS_KONTRAK_KERJA; ?>"
-                                                    class="form-control" id="BATAS_KONTRAK_KERJA"
-                                                    name="BATAS_KONTRAK_KERJA">
-                                                <div class="invalid-feedback">
-                                                    Masukkan BATAS KONTRAK KERJA !
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>STATUS KARYAWAN</label>
-                                                <select readonly required name="STATUS_KARYAWAN" id="STATUS_KARYAWAN"
-                                                    class="form-control">
-                                                    <option value="AKTIF" class="text-center">AKTIF</option>
-                                                    <option value="NONAKTIF" class="text-center">NON-AKTIF</option>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan STATUS KARYAWAN!
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="card-footer text-right">

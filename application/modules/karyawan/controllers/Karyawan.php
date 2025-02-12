@@ -7,6 +7,8 @@ class Karyawan extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_KARYAWAN');
+        $this->load->library('Uuid');
+        $this->load->library('TanggalIndo');
         $this->load->helper('url_helper');
     }
 
@@ -91,22 +93,36 @@ class Karyawan extends CI_Controller
 
     public function insert()
     {
-        $KODE_ITEM = $this->input->post('NIK');
+        $KODE = $this->uuid->v4();
+        
+        $config['upload_path'] = APPPATH . '../assets/uploads/';  
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['max_size'] = 2048; // 2MB
+        $config['file_name'] = $KODE;
 
-        // Validasi 
-        if (empty($KODE_ITEM)) {
-            $errors[] = 'NIK tidak boleh kosong.';
-        }       
+        $this->load->library('upload', $config);
+        $result = '';
 
-
-        $inputan = $this->input->post(null, TRUE);
-		$result = $this->M_KARYAWAN->insert($inputan);
-
-        if ($result) {
-            echo json_encode(['success' => true]);
+        if (!$this->upload->do_upload('FOTO')) {
+            echo json_encode(['success' => false, 'error' => 'Gagal upload foto.']);
         } else {
+            // Ambil data file yang diupload
+            $data = $this->upload->data();
+            $extension = $data['file_ext'];
+
+            $inputan = $this->input->post(null, TRUE);
+            $inputan['FOTO'] = $KODE.$extension;
+            $inputan['ID_KARYAWAN'] = $KODE;
+		    $result = $this->M_KARYAWAN->insert($inputan);
+
+            if ($result) {
+            echo json_encode(['success' => true]);
+            } else {
             echo json_encode(['success' => false, 'error' => 'Gagal menyimpan data.']);
+            }
         }
+
+        
     }
 
     public function update()
