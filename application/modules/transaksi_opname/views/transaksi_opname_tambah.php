@@ -139,14 +139,14 @@
 
                     // Get Data Produk Lock
                     $('#btn-lock-produk').on('click', function() {
-                        var formPengadaan = JSON.parse(localStorage.getItem("formPengadaan")) || {};
+                        var FormOpname = JSON.parse(localStorage.getItem("FormOpname")) || {};
 
                         // Cek apakah semua properti yang dibutuhkan ada di dalam objek
                         var isComplete = (
-                            formPengadaan.AREA_OPNAME &&
-                            formPengadaan.KODE_DEPARTEMEN &&
-                            formPengadaan.RUANGAN_OPNAME &&
-                            formPengadaan.LOKASI_OPNAME
+                            FormOpname.AREA_OPNAME &&
+                            FormOpname.KODE_DEPARTEMEN &&
+                            FormOpname.RUANGAN_OPNAME &&
+                            FormOpname.LOKASI_OPNAME
                         );
 
                         if (isComplete) {
@@ -154,10 +154,10 @@
                                 url: "<?php echo base_url(); ?>" + "transaksi_opname/get_produk_input_opname",
                                 type: "GET",
                                 data: {
-                                    KODE_AREA: formPengadaan.AREA_OPNAME,
-                                    KODE_DEPARTEMEN: formPengadaan.KODE_DEPARTEMEN,
-                                    KODE_RUANGAN: formPengadaan.RUANGAN_OPNAME,
-                                    KODE_LOKASI: formPengadaan.LOKASI_OPNAME
+                                    KODE_AREA: FormOpname.AREA_OPNAME,
+                                    KODE_DEPARTEMEN: FormOpname.KODE_DEPARTEMEN,
+                                    KODE_RUANGAN: FormOpname.RUANGAN_OPNAME,
+                                    KODE_LOKASI: FormOpname.LOKASI_OPNAME
                                 },
                                 success: function(response) {
                                     let res = JSON.parse(response);
@@ -256,7 +256,7 @@
                         e.preventDefault();
 
                         let storedProdukItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
-                        let formData = JSON.parse(localStorage.getItem('formPengadaan')) || {};
+                        let formData = JSON.parse(localStorage.getItem('FormOpname')) || {};
 
                         if (storedProdukItems.length == 0) {
                             swal('Error', 'Tidak ada produk yang dipilih.', 'error').then(function() {
@@ -285,7 +285,7 @@
                                         localStorage.removeItem(
                                             'storedProdukItems'); // Hapus localStorage setelah disimpan
                                         localStorage.removeItem(
-                                            'formPengadaan'); // Hapus localStorage setelah disimpan
+                                            'FormOpname'); // Hapus localStorage setelah disimpan
                                         location.href = "<?php echo base_url(); ?>" +
                                             "transaksi_opname";
                                     });
@@ -306,12 +306,12 @@
                             CATATAN_OPNAME: $('#CATATAN_OPNAME').val() == '' ? null : $('#CATATAN_OPNAME').val()
                         };
 
-                        localStorage.setItem('formPengadaan', JSON.stringify(formData));
+                        localStorage.setItem('FormOpname', JSON.stringify(formData));
                     }
 
                     // Form Data Load from Local Storage
                     function loadFormData() {
-                        let formData = JSON.parse(localStorage.getItem('formPengadaan'));
+                        let formData = JSON.parse(localStorage.getItem('FormOpname'));
                         if (formData) {
                             $('#AREA_PENEMPATAN').val(formData.AREA_PENEMPATAN);
                             $('#DEPARTEMEN_PENGAJUAN').val(formData.DEPARTEMEN_PENGAJUAN);
@@ -349,6 +349,7 @@
                         $('#selected-items-body').on('input', '.stok-real', function() {
                             let rowIndex = $(this).closest('tr').data('index');
                             let stokReal = $(this).val();
+                            
                             let storedItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
                             storedItems[rowIndex].STOK_AKTUAL = stokReal;
                             localStorage.setItem('storedProdukItems', JSON.stringify(storedItems));

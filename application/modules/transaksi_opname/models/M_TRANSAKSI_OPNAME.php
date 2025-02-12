@@ -4,7 +4,8 @@ class M_TRANSAKSI_OPNAME extends CI_Model
 {
 
     // Nama tabel
-    protected $table = 'TRANSAKSI_PENGADAAN';
+    protected $table = 'TRANSAKSI_OPNAME';
+    protected $table_detail = 'TRANSAKSI_OPNAME_DETAIL';
     protected $VIEW_TRANSAKSI_OPNAME = 'VIEW_TRANSAKSI_OPNAME';
 
     public function __construct()
@@ -68,9 +69,22 @@ class M_TRANSAKSI_OPNAME extends CI_Model
         return $this->db->update($this->table, $data);
     }
 
+
+    public function update_transaksi($KODE, $data)
+    {
+        $this->db->where('UUID_TRANSAKSI_OPNAME', $KODE);
+        return $this->db->update($this->table, $data);
+    }
+
     public function hapus($KODE)
     {
         $this->db->where('NIK', $KODE);
         return $this->db->delete($this->table);
+    }
+
+    public function delete_detail($KODE)
+    {
+        $this->db->where('UUID_TRANSAKSI_OPNAME', $KODE);
+        return $this->db->delete($this->table_detail);
     }
 }

@@ -7,7 +7,7 @@
                 <div class="card">
                     <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_OPNAME">
                         <div class="card-header">
-                            <h4>APROVAL KABAG TRANSAKSI OPNAME</h4>
+                            <h4>APROVAL GM TRANSAKSI OPNAME</h4>
 
                         </div>
                         <div class="card-body">

@@ -108,6 +108,40 @@ class Transaksi_opname extends CI_Controller
             $this->load->view('transaksi_opname_aproval_kabag', $data);
     }
 
+    public function aproval_gm($KODE, $page = 'transaksi_opname')
+    {
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI OPNAME','APROVAL KABAG');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
+        $this->load->library('session');
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $query = $this->M_TRANSAKSI_OPNAME->get_single($KODE);
+        $data['get_single'] = $query->row();
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('transaksi_opname_aproval_kabag', $data);
+    }
+
+    public function aproval_head($KODE, $page = 'transaksi_opname')
+    {
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI OPNAME','APROVAL KABAG');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
+        $this->load->library('session');
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $query = $this->M_TRANSAKSI_OPNAME->get_single($KODE);
+        $data['get_single'] = $query->row();
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('transaksi_opname_aproval_kabag', $data);
+    }
+
 
     public function list_produk($KODE)
     {
@@ -171,6 +205,70 @@ class Transaksi_opname extends CI_Controller
             echo json_encode(['success' => false]);
         }
     }
+
+
+    public function disapprove_kabag()
+    {
+        $id_transaksi = $this->input->post('UUID_TRANSAKSI_OPNAME'); // Ambil ID transaksi
+        $form = $this->input->post('KETERANGAN_CANCEL_KABAG');
+        
+        // Update tabel transaksi_opname
+        $data_update = [
+            'TANGGAL_APROVAL_KABAG' => date('Y-m-d'),
+            'KODE_APROVAL_KABAG' => $this->session->userdata('ID_KARYAWAN'),
+            'STATUS_OPNAME' => 'CANCEL',
+            'KETERANGAN_CANCEL_KABAG' => $form,
+        ];
+
+        $update = $this->M_TRANSAKSI_OPNAME->update_transaksi($id_transaksi, $data_update);
+
+        if ($update) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Gagal memperbarui data.']);
+        }
+    }
+
+
+    public function update_approval_kabag()
+    {
+        $id_transaksi = $this->input->post('UUID_TRANSAKSI_OPNAME'); // Ambil ID transaksi
+
+        
+        $form = $this->input->post('form');
+        $items = $this->input->post('items');
+
+        // Update tabel transaksi_pengadaan
+        $data_update = [
+            'KODE_APROVAL_KABAG' => $this->session->userdata('ID_KARYAWAN'),
+            'CATATAN_OPNAME' => $form['KETERANGAN_PENGAJUAN'],
+            'TANGGAL_APROVAL_KABAG' => date('Y-m-d'),
+            'STATUS_OPNAME' => 'MENUNGGU APROVAL GM',
+        ];
+
+        $update = $this->M_TRANSAKSI_OPNAME->update_transaksi($id_transaksi, $data_update);
+
+        if (!$update) {
+            echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
+            return;
+        }
+
+        // Update transaksi_pengadaan_detail
+        $this->M_TRANSAKSI_OPNAME->delete_detail($id_transaksi); // Hapus data lama
+        
+        foreach ($items as $item) {
+                $data_produk = [
+                    'UUID_TRANSAKSI_OPNAME' => $item['UUID_TRANSAKSI_OPNAME'],
+                    'UUID_PRODUK_STOK' => $item['UUID_STOK'],
+                    'STOK_SYSTEM' => $item['JUMLAH_STOK'],
+                    'STOK_AKTUAL' => $item['STOK_AKTUAL'],
+                ];
+                $this->db->insert('TRANSAKSI_OPNAME_DETAIL', $data_produk);
+            }
+
+        echo json_encode(['success' => true]);
+    }
+    
 
     public function update()
     {
