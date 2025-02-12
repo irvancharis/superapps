@@ -50,10 +50,9 @@
                                                     <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
                                                     <td><?php echo $d->NAMA_USER_PELAKSANA; ?></td>
                                                     <td>
-                                                        <?php echo 'KABAG - ( '.$d->NAMA_APROVAL_KABAG.' )'; ?><br>
-                                                        <?php echo 'GM - ( '.$d->NAMA_APROVAL_GM.' )'; ?><br>
-                                                        <?php echo 'HEAD - ( '.$d->NAMA_APROVAL_HEAD.' )'; ?>
-                                                    </td>
+                                                        <?php echo 'KABAG - ( ' . (($d->KODE_APROVAL_KABAG != null) ? $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
+                                                        <?php echo 'GM - ( ' . (($d->KODE_APROVAL_GM != null) ? $d->NAMA_APROVAL_GM . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_GM . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
+                                                        <?php echo 'HEAD - ( ' . (($d->KODE_APROVAL_HEAD != null) ? $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?>
                                                     <td>
                                                         <?php if($d->STATUS_OPNAME == 'MENUNGGU APROVAL KABAG')
                                                             {
@@ -89,6 +88,11 @@
                                                             {
                                                         ?>
                                                         <span class="badge badge-warning">SELESAI</span>
+                                                        <?php
+                                                            }elseif($d->STATUS_OPNAME == 'CANCEL')
+                                                            {
+                                                        ?>
+                                                        <span class="badge badge-danger">CANCEL</span>
                                                         <?php
                                                             }
                                                         ?>

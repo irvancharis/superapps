@@ -11,6 +11,8 @@
                                     <div class="card-body">
                                         <div class="row">
 
+                                        <img src="<?php echo base_url('assets/upload/karyawan/').$get_single->FOTO; ?>" alt="">
+
                                             <div class="form-group col-12 col-md-12 col-lg-6">
                                                 <table class="table table-striped table-sm">
                                                     <tbody>
