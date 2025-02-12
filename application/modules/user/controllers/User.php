@@ -77,6 +77,8 @@ class User extends CI_Controller
         // Ambil data dari POST
         $DATA = $this->input->post();
         $DATA['UUID_USER'] = $this->uuid->v4();
+        $password = $DATA['PASSWORD'];
+        $DATA['PASSWORD'] = password_hash($password, PASSWORD_DEFAULT);
         
         $result = $this->M_USER->insert($DATA);
 

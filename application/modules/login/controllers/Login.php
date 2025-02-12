@@ -26,7 +26,7 @@ class Login extends CI_Controller
                 $user = $this->M_LOGIN->getuser($username);
 
                 if ($user) {
-                    if ($password == $user->PASSWORD) {
+                    if (password_verify($password, $user->PASSWORD)) {
                         $this->load->library('session');
                         $this->session->set_userdata('isLoggedIn',true);
                         $this->session->set_userdata('UUID_USER',$user->UUID_USER);
