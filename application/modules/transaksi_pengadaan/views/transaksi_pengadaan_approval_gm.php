@@ -9,15 +9,6 @@
                                         <h4>APPROVAL GENERAL MANAGER TRANSAKSI PENGADAAN</h4>
                                     </div>
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="form-group col-12 col-md-4 col-lg-4">
-                                                <label>NO.REGISTER</label>
-                                                <input disabled type="text" class="form-control" id="NO_REGISTER" name="NO_REGISTER" value="<?= $approval_gm->NO_REGISTER; ?>">
-                                                <div class="invalid-feedback">
-                                                    Masukkan NO. REGISTER !
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="row mt-2">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
@@ -78,7 +69,6 @@
                                                         <th>PRODUK/ITEM</th>
                                                         <th>JUMLAH</th>
                                                         <th>KEPERLUAN</th>
-                                                        <th>ACTION</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="selected-items-body">
@@ -131,7 +121,6 @@
                                     <td>${item.nama}</td>
                                     <td><input type="number" class="form-control jumlah" name="JUMLAH_PENGADAAN[${index}]" value="${item.jumlah || ''}" disabled></td>
                                     <td><input type="text" class="form-control keperluan" name="KEPERLUAN[${index}]" value="${item.keperluan || ''}" disabled></td>
-                                    <td><button class="btn btn-danger remove-item" data-index="${index}">Hapus</button></td>
                                 </tr>
                             `);
                         });
@@ -192,15 +181,6 @@
                             localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
                         });
                     }
-
-                    // Fungsi untuk menghapus data dari localStorage
-                    $('#selected-items-body').on('click', '.remove-item', function() {
-                        var index = $(this).data("index");
-                        let selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
-                        selectedItems.splice(index, 1);
-                        localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
-                        loadSelectedItems();
-                    });
 
                     // Update data ke database
                     $('#FORM_TRANSAKSI_PENGADAAN_APPROVAL_GM').on('submit', function(e) {

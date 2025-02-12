@@ -21,36 +21,36 @@ class M_KARYAWAN extends CI_Model
     public function get_single($KODE)
     {
         $this->db->select('*');
-		$this->db->from('VIEW_KARYAWAN');
-		$this->db->where('NIK', $KODE);
-		$query = $this->db->get();
+        $this->db->from('VIEW_KARYAWAN');
+        $this->db->where('NIK', $KODE);
+        $query = $this->db->get();
         return $query;
     }
 
     public function get_karyawan_by_area($KODE)
     {
         $this->db->select('*');
-		$this->db->from('VIEW_KARYAWAN');
-		$this->db->where('ID_MAPING_AREA', $KODE);
-		$query = $this->db->get();
+        $this->db->from('VIEW_KARYAWAN');
+        $this->db->where('ID_MAPING_AREA', $KODE);
+        $query = $this->db->get();
         return $query;
     }
 
     public function get_karyawan_by_departemen($KODE)
     {
         $this->db->select('*');
-		$this->db->from('VIEW_KARYAWAN');
-		$this->db->where('ID_DEPARTEMEN', $KODE);
-		$query = $this->db->get();
-        return $query;
+        $this->db->from('VIEW_KARYAWAN');
+        $this->db->where('ID_DEPARTEMENT', $KODE);
+        $query = $this->db->get();
+        return $query->result();
     }
 
     public function get_karyawan_by_jabatan($KODE)
     {
         $this->db->select('*');
-		$this->db->from('VIEW_KARYAWAN');
-		$this->db->where('ID_JABATAN', $KODE);
-		$query = $this->db->get();
+        $this->db->from('VIEW_KARYAWAN');
+        $this->db->where('ID_JABATAN', $KODE);
+        $query = $this->db->get();
         return $query;
     }
 
@@ -73,7 +73,7 @@ class M_KARYAWAN extends CI_Model
     }
 
 
-    
+
     public function get_latest_data()
     {
         $this->db->order_by('IDTICKET', 'DESC');

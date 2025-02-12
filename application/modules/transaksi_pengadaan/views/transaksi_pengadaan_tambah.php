@@ -13,15 +13,6 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="form-group col-12 col-md-4 col-lg-4">
-                                                <label>NO.REGISTER</label>
-                                                <input required type="text" class="form-control" id="NO_REGISTER" name="NO_REGISTER">
-                                                <div class="invalid-feedback">
-                                                    Masukkan NO. REGISTER !
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="row mt-2">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
@@ -115,10 +106,6 @@
                     loadFormData();
 
                     // Simpan data ketika input berubah
-                    $('input[name="NO_REGISTER"]').on('change', function() {
-                        saveFormData();
-                    });
-                    // Simpan data ketika input berubah
                     $('select').on('change', function() {
                         saveFormData();
                     });
@@ -193,7 +180,6 @@
                     // Form Data Save to Local Storage
                     function saveFormData() {
                         let formData = {
-                            NO_REGISTER: $('input[name="NO_REGISTER"]').val(),
                             AREA_PENEMPATAN: $('#AREA_PENEMPATAN').val(),
                             DEPARTEMEN_PENGAJUAN: $('#DEPARTEMEN_PENGAJUAN').val(),
                             RUANGAN_PENEMPATAN: $('#RUANGAN_PENEMPATAN').val(),
@@ -207,7 +193,6 @@
                     function loadFormData() {
                         let formData = JSON.parse(localStorage.getItem('formPengadaan'));
                         if (formData) {
-                            $('input[name="NO_REGISTER"]').val(formData.NO_REGISTER);
                             $('#AREA_PENEMPATAN').val(formData.AREA_PENEMPATAN);
                             $('#DEPARTEMEN_PENGAJUAN').val(formData.DEPARTEMEN_PENGAJUAN);
                             $('#RUANGAN_PENEMPATAN').val(formData.RUANGAN_PENEMPATAN);
