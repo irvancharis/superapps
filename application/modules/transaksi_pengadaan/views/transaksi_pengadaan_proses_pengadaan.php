@@ -79,7 +79,6 @@
                                                         <th>PRODUK/ITEM</th>
                                                         <th>JUMLAH</th>
                                                         <th>KEPERLUAN</th>
-                                                        <th>ACTION</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="selected-items-body">
@@ -135,7 +134,6 @@
                                     <td>${item.nama}</td>
                                     <td><input type="number" class="form-control jumlah" name="JUMLAH_PENGADAAN[${index}]" value="${item.jumlah || ''}" disabled></td>
                                     <td><input type="text" class="form-control keperluan" name="KEPERLUAN[${index}]" value="${item.keperluan || ''}" disabled></td>
-                                    <td><button class="btn btn-danger remove-item" data-index="${index}">Hapus</button></td>
                                 </tr>
                             `);
                         });
@@ -205,15 +203,6 @@
 
                         localStorage.setItem('formPengadaan', JSON.stringify(formData));
                     }
-
-                    // Fungsi untuk menghapus data dari localStorage
-                    $('#selected-items-body').on('click', '.remove-item', function() {
-                        var index = $(this).data("index");
-                        let selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
-                        selectedItems.splice(index, 1);
-                        localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
-                        loadSelectedItems();
-                    });
 
                     // Update data ke database
                     $('#FORM_TRANSAKSI_PENGADAAN_PROSES_PENGADAAN').on('submit', function(e) {

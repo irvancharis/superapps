@@ -9,6 +9,7 @@ class Transaksi_pengadaan extends CI_Controller
         parent::__construct();
         $this->load->model('M_TRANSAKSI_PENGADAAN');
         $this->load->model('produk_item/M_PRODUK_ITEM');
+        $this->load->model('karyawan/M_KARYAWAN');
         $this->load->helper('url_helper');
         $this->load->library('Uuid');
     }
@@ -183,6 +184,61 @@ class Transaksi_pengadaan extends CI_Controller
             $this->load->view('transaksi_pengadaan_proses_pengadaan', $data);
     }
 
+    // MENUNGGU KIRIMAN BARANG
+    public function m_kiriman_barang($id_transaksi_pengadaan)
+    {
+        $this->load->library('session');
+        $this->session->set_userdata('page', 'transaksi_pengadaan');
+        $data['page'] = $this->session->userdata('page');
+        $data['m_kiriman_barang'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi($id_transaksi_pengadaan);
+        $data['get_area'] = $this->M_TRANSAKSI_PENGADAAN->get_area();
+        $data['get_ruangan'] = $this->M_TRANSAKSI_PENGADAAN->get_ruangan();
+        $data['get_lokasi'] = $this->M_TRANSAKSI_PENGADAAN->get_lokasi();
+        $data['get_departemen'] = $this->M_TRANSAKSI_PENGADAAN->get_departemen();
+        $data['id_transaksi_pengadaan'] = $id_transaksi_pengadaan;
+        log_message('error', 'Data returned: ' . json_encode($data['m_kiriman_barang']));
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('transaksi_pengadaan_m_kiriman_barang', $data);
+    }
+
+    // PENYERAHAN BARANG
+    public function penyerahan_barang($id_transaksi_pengadaan)
+    {
+        $this->load->library('session');
+        $this->session->set_userdata('page', 'transaksi_pengadaan');
+        $data['page'] = $this->session->userdata('page');
+        $data['penyerahan_barang'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi($id_transaksi_pengadaan);
+        $data['get_area'] = $this->M_TRANSAKSI_PENGADAAN->get_area();
+        $data['get_ruangan'] = $this->M_TRANSAKSI_PENGADAAN->get_ruangan();
+        $data['get_lokasi'] = $this->M_TRANSAKSI_PENGADAAN->get_lokasi();
+        $data['get_departemen'] = $this->M_TRANSAKSI_PENGADAAN->get_departemen();
+        $data['id_transaksi_pengadaan'] = $id_transaksi_pengadaan;
+        $data['karyawan'] = $this->M_KARYAWAN->get_karyawan_by_departemen($data['penyerahan_barang']->KODE_DEPARTEMEN_PENGAJUAN);
+        log_message('error', 'Data returned: ' . json_encode($data['karyawan']));
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('transaksi_pengadaan_penyerahan_barang', $data);
+    }
+
+    // PENYERAHAN BARANG USER
+    public function penyerahan_barang_user($id_transaksi_pengadaan)
+    {
+        $this->load->library('session');
+        $this->session->set_userdata('page', 'transaksi_pengadaan');
+        $data['page'] = $this->session->userdata('page');
+        $data['penyerahan_barang_user'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi($id_transaksi_pengadaan);
+        $data['get_area'] = $this->M_TRANSAKSI_PENGADAAN->get_area();
+        $data['get_ruangan'] = $this->M_TRANSAKSI_PENGADAAN->get_ruangan();
+        $data['get_lokasi'] = $this->M_TRANSAKSI_PENGADAAN->get_lokasi();
+        $data['get_departemen'] = $this->M_TRANSAKSI_PENGADAAN->get_departemen();
+        $data['id_transaksi_pengadaan'] = $id_transaksi_pengadaan;
+        $data['karyawan'] = $this->M_KARYAWAN->get_karyawan_by_departemen($data['penyerahan_barang_user']->KODE_DEPARTEMEN_PENGAJUAN);
+        log_message('error', 'Data returned: ' . json_encode($data['karyawan']));
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('transaksi_pengadaan_penyerahan_barang_user', $data);
+    }
 
     public function get_data_transaksi_detail($id_transaksi_pengadaan)
     {
@@ -248,7 +304,6 @@ class Transaksi_pengadaan extends CI_Controller
                 'KODE_DEPARTEMEN_PENGAJUAN' => $formData['DEPARTEMEN_PENGAJUAN'],
                 'TANGGAL_PENGAJUAN' => date('Y-m-d H:i:s'),
                 'STATUS_PENGADAAN' => 'MENUNGGU APROVAL KABAG',
-                'NO_REGISTER' => $formData['NO_REGISTER'],
                 'KODE_USER_PENGAJUAN' => 11,
                 'KODE_AREA_DEFAULT' => $formData['AREA_PENEMPATAN'],
                 'KODE_RUANGAN_DEFAULT' => $formData['RUANGAN_PENEMPATAN'],
@@ -553,6 +608,126 @@ class Transaksi_pengadaan extends CI_Controller
             'NO_REGISTER' => $form['NO_REGISTER'],
             'TANGGAL_PENGADAAN' => date('Y-m-d'),
             'STATUS_PENGADAAN' => 'MENUNGGU KIRIMAN BARANG',
+        ];
+
+        $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
+
+        if (!$update) {
+            echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
+            return;
+        }
+
+        // Update transaksi_pengadaan_detail
+        $this->M_TRANSAKSI_PENGADAAN->delete_detail($id_transaksi); // Hapus data lama
+        foreach ($items as $item) {
+            $data_detail = [
+                'UUID_TRANSAKSI_PENGADAAN' => $id_transaksi,
+                'KODE_PRODUK_ITEM' => $item['id'],
+                'JUMLAH_PENGADAAN' => $item['jumlah'],
+                'KEPERLUAN' => $item['keperluan']
+            ];
+            $this->M_TRANSAKSI_PENGADAAN->insert_detail($data_detail);
+        }
+
+        echo json_encode(['success' => true]);
+    }
+
+    public function update_m_kiriman_barang()
+    {
+        $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
+        $items = $this->input->post('items');
+        $form = $this->input->post('form');
+
+        if (!$id_transaksi || empty($items) || empty($form)) {
+            echo json_encode(['success' => false, 'error' => 'Data tidak lengkap!']);
+            return;
+        }
+
+        // Update tabel transaksi_pengadaan
+        $data_update = [
+            'NO_RESI' => $form['NO_RESI'],
+            'TANGGAL_PENGADAAN' => date('Y-m-d'),
+            'STATUS_PENGADAAN' => 'MENUNGGU PENYERAHAN',
+        ];
+
+        $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
+
+        if (!$update) {
+            echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
+            return;
+        }
+
+        // Update transaksi_pengadaan_detail
+        $this->M_TRANSAKSI_PENGADAAN->delete_detail($id_transaksi); // Hapus data lama
+        foreach ($items as $item) {
+            $data_detail = [
+                'UUID_TRANSAKSI_PENGADAAN' => $id_transaksi,
+                'KODE_PRODUK_ITEM' => $item['id'],
+                'JUMLAH_PENGADAAN' => $item['jumlah'],
+                'KEPERLUAN' => $item['keperluan']
+            ];
+            $this->M_TRANSAKSI_PENGADAAN->insert_detail($data_detail);
+        }
+
+        echo json_encode(['success' => true]);
+    }
+
+    public function update_penyerahan_barang()
+    {
+        $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
+        $items = $this->input->post('items');
+        $form = $this->input->post('form');
+
+        if (!$id_transaksi || empty($items) || empty($form)) {
+            echo json_encode(['success' => false, 'error' => 'Data tidak lengkap!']);
+            return;
+        }
+
+        // Update tabel transaksi_pengadaan
+        $data_update = [
+            'KODE_USER_PENERIMA_KIRIMAN' => $form['KODE_USER_PENERIMAAN_BARANG'],
+            'TANGGAL_PENERIMAAN_KIRIMAN' => date('Y-m-d'),
+            'STATUS_PENGADAAN' => 'PROSES PENYERAHAN',
+        ];
+
+        $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
+
+        if (!$update) {
+            echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
+            return;
+        }
+
+        // Update transaksi_pengadaan_detail
+        $this->M_TRANSAKSI_PENGADAAN->delete_detail($id_transaksi); // Hapus data lama
+        foreach ($items as $item) {
+            $data_detail = [
+                'UUID_TRANSAKSI_PENGADAAN' => $id_transaksi,
+                'KODE_PRODUK_ITEM' => $item['id'],
+                'JUMLAH_PENGADAAN' => $item['jumlah'],
+                'KEPERLUAN' => $item['keperluan']
+            ];
+            $this->M_TRANSAKSI_PENGADAAN->insert_detail($data_detail);
+        }
+
+        echo json_encode(['success' => true]);
+    }
+
+    public function update_penyerahan_barang_user()
+    {
+        $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
+        $items = $this->input->post('items');
+        $form = $this->input->post('form');
+
+        if (!$id_transaksi || empty($items) || empty($form)) {
+            echo json_encode(['success' => false, 'error' => 'Data tidak lengkap!']);
+            return;
+        }
+
+        // Update tabel transaksi_pengadaan
+        $data_update = [
+            'KODE_USER_PENYERAHAN_BARANG' => $form['KODE_USER_PENERIMA_BARANG'],
+            'TANGGAL_PENYERAHAN_BARANG' => date('Y-m-d'),
+            'STATUS_PENGADAAN' => 'SELESAI',
         ];
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);

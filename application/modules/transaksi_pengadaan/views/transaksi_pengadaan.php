@@ -56,11 +56,11 @@
                                                             } elseif ($d->STATUS_PENGADAAN == "PROSES PENGADAAN") {
                                                                 echo '<span class="badge badge-success">PROSES PENGADAAN</span> <a href="' . base_url("transaksi_pengadaan/proses_pengadaan/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU KIRIMAN BARANG") {
-                                                                echo '<span class="badge badge-success">MENUNGGU KIRIMAN BARANG</span>';
+                                                                echo '<span class="badge badge-success">MENUNGGU KIRIMAN BARANG</span> <a href="' . base_url("transaksi_pengadaan/m_kiriman_barang/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU PENYERAHAN") {
-                                                                echo '<span class="badge badge-success">MENUNGGU PENYERAHAN</span>';
+                                                                echo '<span class="badge badge-success">MENUNGGU PENYERAHAN</span> <a href="' . base_url("transaksi_pengadaan/penyerahan_barang/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "PROSES PENYERAHAN") {
-                                                                echo '<span class="badge badge-success">PROSES PENYERAHAN</span>';
+                                                                echo '<span class="badge badge-success">PROSES PENYERAHAN</span> <a href="' . base_url("transaksi_pengadaan/penyerahan_barang_user/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             } else {
                                                                 echo '<span class="badge badge-danger">SELESAI</span>';
                                                             }
