@@ -18,6 +18,13 @@ class M_PRODUK_STOK extends CI_Model
         return $query->result_object();
     }
 
+    public function getProdukMaping($area, $ruangan, $lokasi, $departemen)
+    {
+        $query = "SELECT * FROM VIEW_PRODUK_STOK WHERE KODE_AREA = '$area' OR KODE_RUANGAN = '$ruangan' OR KODE_LOKASI = '$lokasi' OR KODE_DEPARTEMEN = '$departemen'";
+        $result = $this->db->query($query);
+        return $result->result_object();
+    }
+
     public function getFilteredProduk($search)
     {
         $query = "SELECT * FROM VIEW_PRODUK_STOK WHERE NAMA_PRODUK LIKE '%$search%' OR KODE_ITEM LIKE '%$search%' OR NAMA_PRODUK_KATEGORI LIKE '%$search%'";

@@ -7,6 +7,10 @@ class Produk_stok extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_PRODUK_STOK');
+        $this->load->model('maping_area/M_MAPING_AREA');
+        $this->load->model('maping_ruangan/M_MAPING_RUANGAN');
+        $this->load->model('maping_lokasi/M_MAPING_LOKASI');
+        $this->load->model('departement/M_DEPARTEMENT');
         $this->load->helper('url_helper');
         $this->load->library('ciqrcode');
     }
@@ -16,6 +20,10 @@ class Produk_stok extends CI_Controller
         $this->load->library('session');
 
         $data['M_PRODUK_STOK'] = $this->M_PRODUK_STOK->get_produk_stok();
+        $data['get_area'] = $this->M_MAPING_AREA->get_area();
+        $data['get_ruangan'] = $this->M_MAPING_RUANGAN->get_maping_ruangan();
+        $data['get_lokasi'] = $this->M_MAPING_LOKASI->get_maping_lokasi();
+        $data['get_departemen'] = $this->M_DEPARTEMENT->get_departemen();
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         //$data['get_kategori'] = $this->M_PRODUK_STOK->get_kategori();
@@ -28,6 +36,18 @@ class Produk_stok extends CI_Controller
     public function get_single($KODE_ITEM)
     {
         $result = $this->M_PRODUK_STOK->get_produk_stok_single($KODE_ITEM);
+        echo json_encode($result);
+    }
+
+
+    public function get_produk_stok()
+    {
+        $area = $this->input->post('KODE_AREA');
+        $ruangan = $this->input->post('KODE_RUANGAN');
+        $lokasi = $this->input->post('KODE_LOKASI');
+        $departemen = $this->input->post('KODE_DEPARTEMEN'); 
+        
+        $result = $this->M_PRODUK_STOK->getProdukMaping($area, $ruangan, $lokasi, $departemen);
         echo json_encode($result);
     }
 
