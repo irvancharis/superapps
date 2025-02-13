@@ -78,23 +78,28 @@ class Produk_item extends CI_Controller
     public function insert()
     {
         // Ambil data dari POST
-        $get_last_produk = $this->M_PRODUK_ITEM->get_latest_data();
-        $KODE_ITEM = isset($get_last_produk[0]->KODE_ITEM) ? $get_last_produk[0]->KODE_ITEM + 1 : 1;
-        $NAMA_ITEM = $this->input->post('NAMA_ITEM');
-        $KODE_KATEGORI = $this->input->post('KODE_KATEGORI');
-        $KETERANGAN_ITEM = $this->input->post('KETERANGAN_ITEM');
+        $inputan = $this->input->post(null, TRUE);
+        $KODE_ITEM = $this->input->post('KODE_ITEM');
+        
+        $config['upload_path'] = APPPATH . '../assets/uploads/item/';  
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['max_size'] = 2048; // 2MB
+        $config['file_name'] = $KODE_ITEM;
 
+        $this->load->library('upload', $config);
+        $result = '';
 
-        // Proses simpan data
-        $data = [
-            'KODE_ITEM' => $KODE_ITEM,
-            'NAMA_ITEM' => $NAMA_ITEM,
-            'KODE_KATEGORI' => $KODE_KATEGORI,
-            'KETERANGAN_ITEM' => $KETERANGAN_ITEM,
-            'FOTO_ITEM' => null
-        ];
+        if (!$this->upload->do_upload('FOTO_ITEM')) {
+            echo json_encode(['success' => false, 'error' => 'Gagal upload foto.']);
+        } else {
+            // Ambil data file yang diupload
+            $data = $this->upload->data();
+            $extension = $data['file_ext'];
+            $inputan['FOTO_ITEM'] = $KODE_ITEM.$extension;
 
-        $result = $this->M_PRODUK_ITEM->insert($data);
+        $result = $this->M_PRODUK_ITEM->insert($inputan);
+
+        }
 
         if ($result) {
             echo json_encode(['success' => true]);

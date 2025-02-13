@@ -95,7 +95,7 @@ class Karyawan extends CI_Controller
     {
         $KODE = $this->uuid->v4();
         
-        $config['upload_path'] = APPPATH . '../assets/uploads/';  
+        $config['upload_path'] = APPPATH . '../assets/uploads/karyawan/';  
         $config['allowed_types'] = 'jpg|jpeg|png';
         $config['max_size'] = 2048; // 2MB
         $config['file_name'] = $KODE;

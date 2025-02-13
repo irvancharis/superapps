@@ -14,7 +14,7 @@
 
                                             <div class="form-group col-12 col-md-3 col-lg-3">
                                                 <center>
-                                                    <img src="<?php echo base_url('assets/uploads/').$get_single->FOTO; ?>"
+                                                    <img src="<?php echo base_url('assets/uploads/karyawan/').$get_single->FOTO; ?>"
                                                         alt="">
                                                 </center>
                                             </div>
