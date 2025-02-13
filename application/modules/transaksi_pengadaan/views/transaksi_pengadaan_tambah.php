@@ -24,7 +24,7 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DEPARTEMEN</label>
-                                                <select required name="DEPARTEMEN_PENGAJUAN" id="DEPARTEMEN_PENGAJUAN" class="form-control">
+                                                <select disabled name="DEPARTEMEN_PENGAJUAN" id="DEPARTEMEN_PENGAJUAN" class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih Departement --</option>
                                                     <?php foreach ($get_departemen as $row) : ?>
                                                         <option value="<?= $row->KODE_DEPARTEMEN; ?>" <?php echo $row->KODE_DEPARTEMEN == $this->session->userdata('ID_DEPARTEMEN') ? "selected" : ""; ?>><?= $row->NAMA_DEPARTEMEN; ?></option>
@@ -40,6 +40,9 @@
                                                 <label>RUANGAN</label>
                                                 <select required name="RUANGAN_PENEMPATAN" id="RUANGAN_PENEMPATAN" class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih Ruangan --</option>
+                                                    <?php foreach ($get_ruangan as $row) : ?>
+                                                        <option value="<?= $row->KODE_RUANGAN; ?>"><?= $row->NAMA_RUANGAN; ?></option>
+                                                    <?php endforeach; ?>
                                                 </select>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan RUANGAN!
@@ -139,7 +142,7 @@
                             success: function(response) {
                                 let res = JSON.parse(response);
                                 if (res.success) {
-                                    swal('Sukses', 'Pengadaan Berhasil Diajukan!', 'success').then(function() {
+                                    swal('Sukses', 'Pengajuan Berhasil Dikirim!', 'success').then(function() {
                                         localStorage.removeItem('selectedItems'); // Hapus localStorage setelah disimpan
                                         localStorage.removeItem('formPengadaan'); // Hapus localStorage setelah disimpan
                                         location.href = "<?php echo base_url(); ?>" + "transaksi_pengadaan";
@@ -302,6 +305,12 @@
                             }
                         });
                     });
+                });
+
+                // Hapus semua data localStorage & sessionStorage ketika user meninggalkan halaman
+                $(window).on('beforeunload', function() {
+                    localStorage.clear(); // Hapus semua data localStorage
+                    sessionStorage.clear(); // Hapus semua data sessionStorage
                 });
             </script>
             </body>
