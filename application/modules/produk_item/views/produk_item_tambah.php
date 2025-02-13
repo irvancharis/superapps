@@ -36,12 +36,28 @@
                                                     Silahkan masukkan kategori!
                                                 </div>
                                             </div>
+
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>SATUAN</label>
+                                                <input required type="text" class="form-control" id="SATUAN" name="SATUAN">
+                                                <div class="invalid-feedback">
+                                                    Masukkan nama produk  !
+                                                </div>
+                                            </div>
                                             
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KETERANGAN PRODUK</label>
                                                 <textarea required name="KETERANGAN_ITEM" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket"></textarea>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan keterangan produk anda!
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>FOTO</label>
+                                                <input required type="file" class="form-control" id="FOTO_ITEM" name="FOTO_ITEM" accept="image/gif, image/jpeg, image/png">
+                                                <div class="invalid-feedback">
+                                                    Masukkan FOTO  !
                                                 </div>
                                             </div>
                                         </div>
@@ -66,14 +82,16 @@
                     $('#FORM_PRODUK_ITEM_TAMBAH').on('submit', function(e) {
                         e.preventDefault();
 
-                        // Ambil data dari form
-                        let formData = $(this).serialize();
+                       // Ambil data dari form
+                        let formData = new FormData(this);
 
                         // Kirim data ke server melalui AJAX
                         $.ajax({
                             url: "<?php echo base_url(); ?>" + "produk_item/insert", // Endpoint untuk proses input
                             type: 'POST',
                             data: formData,
+                            processData: false,
+                            contentType: false,
                             success: function(response) {
                                 let res = JSON.parse(response);
                                 if (res.success) {

@@ -6,31 +6,49 @@
                             <div class="card">
                                 <form class="needs-validation" novalidate="" id="FORM_DATA">
                                     <div class="card-header">
-                                        <h4>INPUT DATA PRODUK ITEM</h4>
+                                        <h4>DETAIL PRODUK ITEM</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>KODE PRODUK</label>
-                                                <input required type="text" name="KODE_ITEM" id="KODE_ITEM" value="<?= $get_produk_item->KODE_ITEM; ?>" class="form-control" readonly>
+                                            <div class="form-group col-12 col-md-12 col-lg-12">
+                                                <center>
+                                                    <img src="<?php echo base_url('assets/uploads/item/').$get_produk_item->FOTO_ITEM; ?>"
+                                                        alt="">
+                                                </center>
                                             </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>NAMA PRODUK</label>
-                                                <input required type="text" class="form-control" id="NAMA_ITEM" value="<?= $get_produk_item->NAMA_ITEM; ?>" name="NAMA_ITEM" readonly>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>KATEGORI PRODUK</label>
-                                                <input required type="text" class="form-control" id="NAMA_PRODUK_KATEGORI" value="<?= $get_produk_item->NAMA_PRODUK_KATEGORI; ?>" name="NAMA_ITEM" readonly>
-                                            </div>
-                                            
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>KETERANGAN PRODUK</label>
-                                                <textarea required name="KETERANGAN_ITEM" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket" readonly><?= $get_produk_item->KETERANGAN_ITEM; ?></textarea>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-12 col-md-12 col-lg-12">
+                                                <table class="table table-striped table-sm">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>KODE PRODUK ITEM</th>
+                                                            <td><?= $get_produk_item->KODE_ITEM; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>NAMA PRODUK ITEM</th>
+                                                            <td><?= $get_produk_item->NAMA_ITEM; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>KATEGORI</th>
+                                                            <td><?= $get_produk_item->NAMA_PRODUK_KATEGORI; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>SATUAN</th>
+                                                            <td><?= $get_produk_item->SATUAN; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>KETERANGAN</th>
+                                                            <td><?= $get_produk_item->KETERANGAN_ITEM; ?></td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-footer text-right">
-                                    <a href="<?=site_url('produk_item');?>" class="btn btn-primary">Kembali</a>
+                                        <a href="<?=site_url('produk_item');?>" class="btn btn-primary">Kembali</a>
                                     </div>
                                 </form>
                             </div>
@@ -38,9 +56,9 @@
                     </div>
                 </section>
             </div>
-            
 
-            <?php $this->load->view('layout/footer'); ?>            
+
+            <?php $this->load->view('layout/footer'); ?>
             </body>
 
 
