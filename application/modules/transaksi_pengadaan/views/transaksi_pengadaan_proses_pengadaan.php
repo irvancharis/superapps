@@ -9,16 +9,6 @@
                                         <h4>TRANSAKSI PENGADAAN - PROSES PENGADAAN</h4>
                                     </div>
                                     <div class="card-body">
-
-                                        <div class="row">
-                                            <div class="form-group col-12 col-md-12 col-lg-12">
-                                                <label>NO.REGISTER</label>
-                                                <input required type="text" class="form-control" id="NO_REGISTER" name="NO_REGISTER" value="<?= $proses_pengadaan->NO_REGISTER; ?>">
-                                                <div class="invalid-feedback">
-                                                    Masukkan NO. REGISTER !
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="row mt-2">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
@@ -86,11 +76,18 @@
                                             </table>
                                         </div>
                                         <div class="row mt-3">
-                                            <div class="form-group col-12 col-md-12 col-lg-12">
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KETERANGAN PENGAJUAN</label>
                                                 <textarea disabled name="KETERANGAN_PENGAJUAN" id="KETERANGAN_PENGAJUAN" placeholder="Masukkan keterangan pengajuan" class="form-control" rows="3"><?= $proses_pengadaan->KETERANGAN_PENGAJUAN; ?></textarea>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan KETERANGAN!
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>NO.REGISTER</label><span class="text-danger float-right font-italic font-weight-600">*). Wajib Di Isi</span>
+                                                <input required type="text" class="form-control" id="NO_REGISTER" name="NO_REGISTER" value="<?= $proses_pengadaan->NO_REGISTER; ?>">
+                                                <div class="invalid-feedback">
+                                                    Masukkan NO. REGISTER !
                                                 </div>
                                             </div>
                                         </div>
@@ -248,6 +245,12 @@
                             }
                         });
                     });
+                });
+
+                // Hapus semua data localStorage & sessionStorage ketika user meninggalkan halaman
+                $(window).on('beforeunload', function() {
+                    localStorage.clear(); // Hapus semua data localStorage
+                    sessionStorage.clear(); // Hapus semua data sessionStorage
                 });
             </script>
             </body>

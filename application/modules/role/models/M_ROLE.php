@@ -14,7 +14,7 @@ class M_ROLE extends CI_Model
     }
 
 
-    public function get_role_session($KODE_ROLE, $NAMA_FITUR,$NAMA_DETAIL_FITUR)
+    public function get_role_session($KODE_ROLE, $NAMA_FITUR, $NAMA_DETAIL_FITUR)
     {
         $this->db->select('*');
         $this->db->from('VIEW_ROLE');
@@ -86,10 +86,9 @@ class M_ROLE extends CI_Model
     }
 
     public function insert_detail_role($data)
-    {        
-        
-        return $this->db->insert($this->table_detail_role, $data);
+    {
 
+        return $this->db->insert($this->table_detail_role, $data);
     }
 
     public function update($KODE, $data)

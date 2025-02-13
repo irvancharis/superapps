@@ -12,6 +12,12 @@ class Transaksi_pengadaan extends CI_Controller
         $this->load->model('karyawan/M_KARYAWAN');
         $this->load->helper('url_helper');
         $this->load->library('Uuid');
+        $this->load->library('session');
+        $this->load->model('role/M_ROLE');
+
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
     }
 
     public function index($page = 'transaksi_pengadaan')
@@ -116,6 +122,12 @@ class Transaksi_pengadaan extends CI_Controller
     // APPROVAL
     public function approval_kabag($id_transaksi_pengadaan)
     {
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGADAAN', 'APROVAL KABAG');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
+
         $this->load->library('session');
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
@@ -133,6 +145,12 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function approval_gm($id_transaksi_pengadaan)
     {
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGADAAN', 'APROVAL GM');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
+
         $this->load->library('session');
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
@@ -150,6 +168,12 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function approval_head($id_transaksi_pengadaan)
     {
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGADAAN', 'APROVAL HEAD');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
+
         $this->load->library('session');
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
@@ -169,6 +193,12 @@ class Transaksi_pengadaan extends CI_Controller
     // PROSES PENGADAAN
     public function proses_pengadaan($id_transaksi_pengadaan)
     {
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGADAAN', 'PROSES PENGADAAN');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
+
         $this->load->library('session');
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
@@ -304,7 +334,7 @@ class Transaksi_pengadaan extends CI_Controller
                 'KODE_DEPARTEMEN_PENGAJUAN' => $formData['DEPARTEMEN_PENGAJUAN'],
                 'TANGGAL_PENGAJUAN' => date('Y-m-d H:i:s'),
                 'STATUS_PENGADAAN' => 'MENUNGGU APROVAL KABAG',
-                'KODE_USER_PENGAJUAN' => 11,
+                'KODE_USER_PENGAJUAN' => $this->session->userdata('ID_KARYAWAN'),
                 'KODE_AREA_DEFAULT' => $formData['AREA_PENEMPATAN'],
                 'KODE_RUANGAN_DEFAULT' => $formData['RUANGAN_PENEMPATAN'],
                 'KODE_LOKASI_DEFAULT' => $formData['LOKASI_PENEMPATAN'],
@@ -361,7 +391,7 @@ class Transaksi_pengadaan extends CI_Controller
 
         // Update tabel transaksi_pengadaan
         $data_update = [
-            'KODE_APROVAL_KABAG' => 1,
+            'KODE_APROVAL_KABAG' => $this->session->userdata('ID_KARYAWAN'),
             'KETERANGAN_PENGAJUAN' => $form['KETERANGAN_PENGAJUAN'],
             'TANGGAL_APROVAL_KABAG' => date('Y-m-d'),
             'STATUS_PENGADAAN' => 'MENUNGGU APROVAL GM',
@@ -401,7 +431,7 @@ class Transaksi_pengadaan extends CI_Controller
 
         // Update tabel transaksi_pengadaan
         $data_update = [
-            'KODE_APROVAL_GM' => 3,
+            'KODE_APROVAL_GM' => $this->session->userdata('ID_KARYAWAN'),
             'TANGGAL_APROVAL_GM' => date('Y-m-d'),
             'STATUS_PENGADAAN' => 'MENUNGGU APROVAL HEAD',
         ];
@@ -440,7 +470,7 @@ class Transaksi_pengadaan extends CI_Controller
 
         // Update tabel transaksi_pengadaan
         $data_update = [
-            'KODE_APROVAL_HEAD' => 4,
+            'KODE_APROVAL_HEAD' => $this->session->userdata('ID_KARYAWAN'),
             'TANGGAL_APROVAL_GM' => date('Y-m-d'),
             'STATUS_PENGADAAN' => 'PROSES PENGADAAN',
         ];
@@ -606,6 +636,7 @@ class Transaksi_pengadaan extends CI_Controller
 
         // Update tabel transaksi_pengadaan
         $data_update = [
+            'KODE_USER_PENGADAAN' => $this->session->userdata('ID_KARYAWAN'),
             'NO_REGISTER' => $form['NO_REGISTER'],
             'TANGGAL_PENGADAAN' => date('Y-m-d'),
             'STATUS_PENGADAAN' => 'MENUNGGU KIRIMAN BARANG',
