@@ -122,7 +122,7 @@ class Transaksi_opname extends CI_Controller
         $data['get_single'] = $query->row();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
-            $this->load->view('transaksi_opname_aproval_kabag', $data);
+            $this->load->view('transaksi_opname_aproval_gm', $data);
     }
 
     public function aproval_head($KODE, $page = 'transaksi_opname')
@@ -139,7 +139,7 @@ class Transaksi_opname extends CI_Controller
         $data['get_single'] = $query->row();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
-            $this->load->view('transaksi_opname_aproval_kabag', $data);
+            $this->load->view('transaksi_opname_aproval_head', $data);
     }
 
 
@@ -210,7 +210,7 @@ class Transaksi_opname extends CI_Controller
     public function disapprove_kabag()
     {
         $id_transaksi = $this->input->post('UUID_TRANSAKSI_OPNAME'); // Ambil ID transaksi
-        $form = $this->input->post('KETERANGAN_CANCEL_KABAG');
+        $form = $this->input->post('KETERANGAN_CANCEL');
         
         // Update tabel transaksi_opname
         $data_update = [
@@ -241,9 +241,131 @@ class Transaksi_opname extends CI_Controller
         // Update tabel transaksi_pengadaan
         $data_update = [
             'KODE_APROVAL_KABAG' => $this->session->userdata('ID_KARYAWAN'),
-            'CATATAN_OPNAME' => $form['KETERANGAN_PENGAJUAN'],
+            'CATATAN_OPNAME' => $form['CATATAN_OPNAME'],
             'TANGGAL_APROVAL_KABAG' => date('Y-m-d'),
             'STATUS_OPNAME' => 'MENUNGGU APROVAL GM',
+        ];
+
+        $update = $this->M_TRANSAKSI_OPNAME->update_transaksi($id_transaksi, $data_update);
+
+        if (!$update) {
+            echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
+            return;
+        }
+
+        // Update transaksi_pengadaan_detail
+        $this->M_TRANSAKSI_OPNAME->delete_detail($id_transaksi); // Hapus data lama
+        
+        foreach ($items as $item) {
+                $data_produk = [
+                    'UUID_TRANSAKSI_OPNAME' => $item['UUID_TRANSAKSI_OPNAME'],
+                    'UUID_PRODUK_STOK' => $item['UUID_STOK'],
+                    'STOK_SYSTEM' => $item['JUMLAH_STOK'],
+                    'STOK_AKTUAL' => $item['STOK_AKTUAL'],
+                ];
+                $this->db->insert('TRANSAKSI_OPNAME_DETAIL', $data_produk);
+            }
+
+        echo json_encode(['success' => true]);
+    }
+
+    public function disapprove_gm()
+    {
+        $id_transaksi = $this->input->post('UUID_TRANSAKSI_OPNAME'); // Ambil ID transaksi
+        $form = $this->input->post('KETERANGAN_CANCEL');
+        
+        // Update tabel transaksi_opname
+        $data_update = [
+            'TANGGAL_APROVAL_GM' => date('Y-m-d'),
+            'KODE_APROVAL_GM' => $this->session->userdata('ID_KARYAWAN'),
+            'STATUS_OPNAME' => 'CANCEL',
+            'KETERANGAN_CANCEL_GM' => $form,
+        ];
+
+        $update = $this->M_TRANSAKSI_OPNAME->update_transaksi($id_transaksi, $data_update);
+
+        if ($update) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Gagal memperbarui data.']);
+        }
+    }
+
+
+    public function update_approval_gm()
+    {
+        $id_transaksi = $this->input->post('UUID_TRANSAKSI_OPNAME'); // Ambil ID transaksi
+
+        
+        $form = $this->input->post('form');
+        $items = $this->input->post('items');
+
+        // Update tabel transaksi_pengadaan
+        $data_update = [
+            'KODE_APROVAL_GM' => $this->session->userdata('ID_KARYAWAN'),
+            'TANGGAL_APROVAL_GM' => date('Y-m-d'),
+            'STATUS_OPNAME' => 'MENUNGGU APROVAL HEAD',
+        ];
+
+        $update = $this->M_TRANSAKSI_OPNAME->update_transaksi($id_transaksi, $data_update);
+
+        if (!$update) {
+            echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
+            return;
+        }
+
+        // Update transaksi_pengadaan_detail
+        $this->M_TRANSAKSI_OPNAME->delete_detail($id_transaksi); // Hapus data lama
+        
+        foreach ($items as $item) {
+                $data_produk = [
+                    'UUID_TRANSAKSI_OPNAME' => $item['UUID_TRANSAKSI_OPNAME'],
+                    'UUID_PRODUK_STOK' => $item['UUID_STOK'],
+                    'STOK_SYSTEM' => $item['JUMLAH_STOK'],
+                    'STOK_AKTUAL' => $item['STOK_AKTUAL'],
+                ];
+                $this->db->insert('TRANSAKSI_OPNAME_DETAIL', $data_produk);
+            }
+
+        echo json_encode(['success' => true]);
+    }
+
+    public function disapprove_head()
+    {
+        $id_transaksi = $this->input->post('UUID_TRANSAKSI_OPNAME'); // Ambil ID transaksi
+        $form = $this->input->post('KETERANGAN_CANCEL');
+        
+        // Update tabel transaksi_opname
+        $data_update = [
+            'TANGGAL_APROVAL_HEAD' => date('Y-m-d'),
+            'KODE_APROVAL_HEAD' => $this->session->userdata('ID_KARYAWAN'),
+            'STATUS_OPNAME' => 'CANCEL',
+            'KETERANGAN_CANCEL_HEAD' => $form,
+        ];
+
+        $update = $this->M_TRANSAKSI_OPNAME->update_transaksi($id_transaksi, $data_update);
+
+        if ($update) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Gagal memperbarui data.']);
+        }
+    }
+
+
+    public function update_approval_head()
+    {
+        $id_transaksi = $this->input->post('UUID_TRANSAKSI_OPNAME'); // Ambil ID transaksi
+
+        
+        $form = $this->input->post('form');
+        $items = $this->input->post('items');
+
+        // Update tabel transaksi_pengadaan
+        $data_update = [
+            'KODE_APROVAL_HEAD' => $this->session->userdata('ID_KARYAWAN'),
+            'TANGGAL_APROVAL_HEAD' => date('Y-m-d'),
+            'STATUS_OPNAME' => 'SELESAI',
         ];
 
         $update = $this->M_TRANSAKSI_OPNAME->update_transaksi($id_transaksi, $data_update);
