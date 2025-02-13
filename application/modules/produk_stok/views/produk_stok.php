@@ -113,6 +113,11 @@
             <script>
 $(document).ready(function() {
 
+    localStorage.removeItem(
+        'FormMapping');
+
+
+
     $('select').on('change', function() {
         saveFormData();
     });
@@ -225,6 +230,7 @@ $(document).ready(function() {
 
     // Get Data Produk Lock
     $('#btn-show-produk').on('click', function() {
+
         var FormMapping = localStorage.getItem("FormMapping");
 
         try {
@@ -234,30 +240,22 @@ $(document).ready(function() {
             return;
         }
 
-        // Cek apakah semua properti yang dibutuhkan ada di dalam objek
-        var isComplete = (
-            FormMapping.AREA &&
-            FormMapping.DEPARTEMEN &&
-            FormMapping.RUANGAN &&
-            FormMapping.LOKASI
-        );
 
-        if (isComplete) {
-            $.ajax({
-                url: "<?php echo base_url(); ?>" + "produk_stok/get_produk_stok",
-                type: "POST",
-                dataType: "json", // Pastikan server mengembalikan data JSON
-                data: {
-                    KODE_AREA: FormMapping.AREA,
-                    KODE_DEPARTEMEN: FormMapping.DEPARTEMEN,
-                    KODE_RUANGAN: FormMapping.RUANGAN,
-                    KODE_LOKASI: FormMapping.LOKASI
-                },
-                success: function(response) {
-                    if (Array.isArray(response) && response.length > 0) {
-                        let rows = '';
-                        $.each(response, function(index, data) {
-                            rows += `<tr>
+        $.ajax({
+            url: "<?php echo base_url(); ?>" + "produk_stok/get_produk_stok",
+            type: "POST",
+            dataType: "json", // Pastikan server mengembalikan data JSON
+            data: {
+                KODE_AREA: FormMapping.AREA,
+                KODE_DEPARTEMEN: FormMapping.DEPARTEMEN,
+                KODE_RUANGAN: FormMapping.RUANGAN,
+                KODE_LOKASI: FormMapping.LOKASI
+            },
+            success: function(response) {
+                if (response.length > 0) {
+                    let rows = '';
+                    $.each(response, function(index, data) {
+                        rows += `<tr>
                             <td><img width="100px" src="<?php echo base_url('produk_stok/qr/')?>${data.KODE_ITEM}" alt=""></td>
                             <td><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${data.FOTO_ITEM}" alt=""></td>
                             <td>${data.KODE_ITEM}</td>
@@ -267,21 +265,20 @@ $(document).ready(function() {
                             <td>-${data.NAMA_AREA}<br>-${data.NAMA_RUANGAN}<br>-${data.NAMA_LOKASI}</td>
                             <td>${data.JUMLAH_STOK}</td>
                          </tr>`;
-                        });
-                        $('#selected-items-body').html(rows);
-                    } else {
-                        $('#selected-items-body').html(
-                            '<tr><td colspan="3">Data tidak ditemukan.</td></tr>');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                    alert('Terjadi kesalahan saat mengambil data.');
+                    });
+                    $('#selected-items-body').html(rows);
+                } else {
+                    $('#selected-items-body').html(
+                        '<tr><td colspan="12"><center>Data tidak ditemukan.</center></td></tr>'
+                    );
                 }
-            });
-        } else {
-            alert('Harap lengkapi data sebelum mengambil produk.');
-        }
+            },
+            error: function(xhr, status, error) {
+                $('#selected-items-body').html(
+                    '<tr><td colspan="12"><center>Data tidak ditemukan.</center></td></tr>'
+                );
+            }
+        });
     });
 
 
