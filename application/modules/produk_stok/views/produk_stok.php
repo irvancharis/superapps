@@ -256,8 +256,8 @@ $(document).ready(function() {
                     let rows = '';
                     $.each(response, function(index, data) {
                         rows += `<tr>
-                            <td><img width="100px" src="<?php echo base_url('produk_stok/qr/')?>${data.KODE_ITEM}" alt=""></td>
-                            <td><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${data.FOTO_ITEM}" alt=""></td>
+                            <td><center><img width="100px" src="<?php echo base_url('produk_stok/qr/')?>${data.KODE_ITEM}" alt=""></center></td>
+                            <td><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${data.FOTO_ITEM}" alt=""></center></td>
                             <td>${data.KODE_ITEM}</td>
                             <td>${data.NAMA_PRODUK}</td>
                             <td>${data.NAMA_PRODUK_KATEGORI}</td>
