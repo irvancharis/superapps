@@ -9,11 +9,17 @@
                                         <h4>DETAIL DATA KARYAWAN</h4>
                                     </div>
                                     <div class="card-body">
+
                                         <div class="row">
 
-                                        <img src="<?php echo base_url('assets/upload/karyawan/').$get_single->FOTO; ?>" alt="">
+                                            <div class="form-group col-12 col-md-3 col-lg-3">
+                                                <center>
+                                                    <img src="<?php echo base_url('assets/uploads/').$get_single->FOTO; ?>"
+                                                        alt="">
+                                                </center>
+                                            </div>
 
-                                            <div class="form-group col-12 col-md-12 col-lg-6">
+                                            <div class="form-group col-12 col-md-4 col-lg-9">
                                                 <table class="table table-striped table-sm">
                                                     <tbody>
                                                         <tr>
@@ -28,6 +34,10 @@
                                                         <tr>
                                                             <th>JABATAN</th>
                                                             <td><?= $get_single->NAMA_JABATAN; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>AREA</th>
+                                                            <td><?= $get_single->NAMA_AREA; ?></td>
                                                         </tr>
                                                         <tr>
                                                             <th>DEPARTEMEN</th>
@@ -54,13 +64,6 @@
                                                             <td><?= $get_single->EMAIL; ?></td>
                                                         </tr>
 
-                                                    </tbody>
-                                                </table>
-                                            </div>
-
-                                            <div class="form-group col-12 col-md-12 col-lg-6">
-                                                <table class="table table-striped table-sm">
-                                                    <tbody>
                                                         <tr>
                                                             <th>TEMPAT LAHIR</th>
                                                             <td><?= $get_single->TEMPAT_LAHIR; ?></td>
@@ -81,6 +84,14 @@
                                                         <tr>
                                                             <th>AGAMA</th>
                                                             <td><?= $get_single->AGAMA; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>GOLONGAN DARAH</th>
+                                                            <td><?= $get_single->GOLONGAN_DARAH; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>STATUS PERKAWINAN</th>
+                                                            <td><?= $get_single->STATUS_PERKAWINAN; ?></td>
                                                         </tr>
                                                         <tr>
                                                             <th>AKTIF MULAI TANGGAL</th>

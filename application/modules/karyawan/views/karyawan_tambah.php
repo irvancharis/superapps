@@ -145,6 +145,35 @@
                                                     Silahkan masukkan AGAMA!
                                                 </div>
                                             </div>
+
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>GOLONGAN DARAH</label>
+                                                <select required name="GOLONGAN_DARAH" id="GOLONGAN_DARAH" class="form-control">
+                                                <option value="" class="text-center" selected disabled>-- Pilih Kategori --</option>
+                                                    <option value="O" class="text-center"  >O</option>
+                                                    <option value="A" class="text-center"  >A</option>
+                                                    <option value="B" class="text-center"  >B</option>                                                   
+                                                    <option value="AB" class="text-center"  >AB</option>
+                                                    <option value="TIDAK TAHU" class="text-center"  >TIDAK TAHU</option>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Silahkan masukkan AGAMA!
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>STATUS KAWIN</label>
+                                                <select required name="STATUS_PERKAWINAN" id="STATUS_PERKAWINAN" class="form-control">
+                                                <option value="" class="text-center" selected disabled>-- Pilih Kategori --</option>
+                                                    <option value="BELUM MENIKAH" class="text-center"  >BALUM MENIKAH</option>
+                                                    <option value="SUDAH MENIKAH" class="text-center"  >SUDAH MENIKAH</option>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Silahkan masukkan AGAMA!
+                                                </div>
+                                            </div>
+                                            
                                             
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AKTIF MULAI TANGGAL</label>

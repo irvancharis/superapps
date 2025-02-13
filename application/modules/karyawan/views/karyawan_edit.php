@@ -136,6 +136,33 @@
                                                     Silahkan masukkan AGAMA!
                                                 </div>
                                             </div>
+
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>GOLONGAN DARAH</label>
+                                                <select required name="GOLONGAN_DARAH" id="GOLONGAN_DARAH" class="form-control">
+                                                <option value="" class="text-center" selected disabled>-- Pilih Kategori --</option>
+                                                    <option <?php if ('O' == $get_single->GOLONGAN_DARAH) echo "selected"; ?> value="O" class="text-center"  >O</option>
+                                                    <option <?php if ('A' == $get_single->GOLONGAN_DARAH) echo "selected"; ?> value="A" class="text-center"  >A</option>
+                                                    <option <?php if ('B' == $get_single->GOLONGAN_DARAH) echo "selected"; ?> value="B" class="text-center"  >B</option>                                                   
+                                                    <option <?php if ('AB' == $get_single->GOLONGAN_DARAH) echo "selected"; ?> value="AB" class="text-center"  >AB</option>
+                                                    <option <?php if ('TIDAK TAHU' == $get_single->GOLONGAN_DARAH) echo "selected"; ?> value="TIDAK TAHU" class="text-center"  >TIDAK TAHU</option>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Silahkan masukkan AGAMA!
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>STATUS KAWIN</label>
+                                                <select required name="STATUS_PERKAWINAN" id="STATUS_PERKAWINAN" class="form-control">
+                                                <option value="" class="text-center" selected disabled>-- Pilih Kategori --</option>
+                                                    <option <?php if ('BELUM MENIKAH' == $get_single->STATUS_PERKAWINAN) echo "selected"; ?> value="BELUM MENIKAH" class="text-center"  >BELUM MENIKAH</option>
+                                                    <option <?php if ('SUDAH MENIKAH' == $get_single->STATUS_PERKAWINAN) echo "selected"; ?> value="SUDAH MENIKAH" class="text-center"  >SUDAH MENIKAH</option>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Silahkan masukkan AGAMA!
+                                                </div>
+                                            </div>
                                             
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AKTIF MULAI TANGGAL</label>
