@@ -89,7 +89,6 @@
                                                     <th>KODE</th>
                                                     <th>NAMA PRODUK</th>
                                                     <th>KATEGORI</th>
-                                                    <th>DEPARTEMEN</th>
                                                     <th>MAPING</th>
                                                     <th>STOK</th>
                                                 </tr>
@@ -261,8 +260,7 @@ $(document).ready(function() {
                             <td>${data.KODE_ITEM}</td>
                             <td>${data.NAMA_PRODUK}</td>
                             <td>${data.NAMA_PRODUK_KATEGORI}</td>
-                            <td>${data.NAMA_DEPARTEMEN}</td>
-                            <td>-${data.NAMA_AREA}<br>-${data.NAMA_RUANGAN}<br>-${data.NAMA_LOKASI}</td>
+                            <td><i class="fa fa-map-marker"></i> ${data.NAMA_AREA}<br><i class="fa fa-building"></i> ${data.NAMA_RUANGAN}<br> <i class="fa fa-users"></i> ${data.NAMA_DEPARTEMEN}<br><i class="fa fa-box"></i> ${data.NAMA_LOKASI}</td>
                             <td>${data.JUMLAH_STOK}</td>
                          </tr>`;
                     });
