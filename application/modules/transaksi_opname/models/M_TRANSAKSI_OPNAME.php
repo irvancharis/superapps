@@ -87,4 +87,10 @@ class M_TRANSAKSI_OPNAME extends CI_Model
         $this->db->where('UUID_TRANSAKSI_OPNAME', $KODE);
         return $this->db->delete($this->table_detail);
     }
+
+    public function update_real_stok($KODE, $data)
+    {
+        $this->db->where('UUID_STOK', $KODE);
+        return $this->db->update('PRODUK_STOK', $data);
+    }
 }

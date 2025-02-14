@@ -314,19 +314,7 @@ class Transaksi_opname extends CI_Controller
             return;
         }
 
-        // Update transaksi_pengadaan_detail
-        $this->M_TRANSAKSI_OPNAME->delete_detail($id_transaksi); // Hapus data lama
         
-        foreach ($items as $item) {
-                $data_produk = [
-                    'UUID_TRANSAKSI_OPNAME' => $item['UUID_TRANSAKSI_OPNAME'],
-                    'UUID_PRODUK_STOK' => $item['UUID_STOK'],
-                    'STOK_SYSTEM' => $item['JUMLAH_STOK'],
-                    'STOK_AKTUAL' => $item['STOK_AKTUAL'],
-                ];
-                $this->db->insert('TRANSAKSI_OPNAME_DETAIL', $data_produk);
-            }
-
         echo json_encode(['success' => true]);
     }
 
@@ -376,16 +364,14 @@ class Transaksi_opname extends CI_Controller
         }
 
         // Update transaksi_pengadaan_detail
-        $this->M_TRANSAKSI_OPNAME->delete_detail($id_transaksi); // Hapus data lama
         
         foreach ($items as $item) {
+            $UUID_STOK = $item['UUID_STOK'];
+            
                 $data_produk = [
-                    'UUID_TRANSAKSI_OPNAME' => $item['UUID_TRANSAKSI_OPNAME'],
-                    'UUID_PRODUK_STOK' => $item['UUID_STOK'],
-                    'STOK_SYSTEM' => $item['JUMLAH_STOK'],
-                    'STOK_AKTUAL' => $item['STOK_AKTUAL'],
+                    'JUMLAH_STOK' => $item['STOK_AKTUAL'],
                 ];
-                $this->db->insert('TRANSAKSI_OPNAME_DETAIL', $data_produk);
+                $this->M_TRANSAKSI_OPNAME->update_real_stok($UUID_STOK, $data_produk);
             }
 
         echo json_encode(['success' => true]);
