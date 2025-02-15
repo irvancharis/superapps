@@ -30,12 +30,10 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DEPARTEMEN</label>
-                                                <select required name="DEPARTEMEN" id="DEPARTEMEN"
+                                                <select disabled required name="DEPARTEMEN" id="DEPARTEMEN"
                                                     class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih
-                                                        Departement --</option>
                                                     <?php foreach ($get_departemen as $row) : ?>
-                                                        <option value="<?= $row->KODE_DEPARTEMEN; ?>">
+                                                        <option value="<?= $row->KODE_DEPARTEMEN; ?>" <?php echo $row->KODE_DEPARTEMEN == $this->session->userdata('ID_DEPARTEMEN') ? "selected " : ""; ?>>
                                                             <?= $row->NAMA_DEPARTEMEN; ?></option>
                                                     <?php endforeach; ?>
                                                 </select>

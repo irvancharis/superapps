@@ -7,11 +7,10 @@
                 <div class="card">
                     <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGHAPUSAN">
                         <div class="card-header">
-                            <h4>APROVAL HEAD TRANSAKSI PENGHAPUSAN</h4>
+                            <h4>APROVAL KABAG TRANSAKSI PENGHAPUSAN</h4>
 
                         </div>
                         <div class="card-body">
-
 
                             <div class="form-group col-12 col-md-12 col-lg-12">
                                 <table class="table table-striped table-sm ">
@@ -19,32 +18,36 @@
                                         <tr>
                                             <th>AREA</th>
                                             <td><?= $get_single->NAMA_AREA; ?></td>
+                                            <input type="hidden" class="form-control" name="area" id="area" required
+                                                value="<?= $get_single->NAMA_AREA; ?>" readonly>
                                         </tr>
                                         <tr>
                                             <th>DEPARTEMEN</th>
                                             <td><?= $get_single->NAMA_DEPARTEMEN; ?></td>
+                                            <input type="hidden" class="form-control" name="departemen" id="departemen"
+                                                required value="<?= $get_single->NAMA_DEPARTEMEN; ?>" readonly>
                                         </tr>
                                         <tr>
                                             <th>RUANGAN</th>
                                             <td><?= $get_single->NAMA_RUANGAN; ?></td>
+                                            <input type="hidden" class="form-control" name="ruangan" id="ruangan"
+                                                required value="<?= $get_single->NAMA_RUANGAN; ?>" readonly>
                                         </tr>
                                         <tr>
                                             <th>LOKASI</th>
                                             <td><?= $get_single->NAMA_LOKASI; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>KETERANGAN PENGHAPUSAN</th>
-                                            <td><?= $get_single->KETERANGAN_PENGHAPUSAN; ?></td>
+                                            <input type="hidden" class="form-control" name="lokasi" id="lokasi" required
+                                                value="<?= $get_single->NAMA_LOKASI; ?>" readonly>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table table-striped table-sm" id="dataprodukitem">
+                                <table class="table table-striped" id="dataprodukitem">
                                     <thead>
                                         <tr>
-                                            <th>IMAGE</th>
+                                            <th>FOTO</th>
                                             <th>PRODUK/ITEM</th>
                                             <th>JUMLAH PENGHAPUSAN</th>
                                         </tr>
@@ -54,6 +57,16 @@
                                 </table>
                             </div><br><br>
 
+                            <div class="form-group col-12 col-md-12 col-lg-12">
+                                <label>KETERANGAN</label>
+                                <textarea name="KETERANGAN_PENGHAPUSAN" placeholder="Masukkan keterangan penghapusan"
+                                    class="form-control"
+                                    id="KETERANGAN_PENGHAPUSAN"><?= $get_single->KETERANGAN_PENGHAPUSAN; ?></textarea>
+                                <div class="invalid-feedback">
+                                    Silahkan masukkan keterangan penghapusan!
+                                </div>
+
+                            </div>
                             <div class="card-footer text-center">
                                 <button type="button" class="btn btn-danger" id="btn-disapprove">
                                     <i class="fa fa-save"></i> DISAPROVE</button>
@@ -75,18 +88,15 @@ $(document).ready(function() {
 
     $('#dataprodukitem').dataTable({
         paging: false,
-        searching: false,
-        sorting: false
-    });
-
+        searching: false
+    });    
 
     simpan_list_produk_ke_localstorage();
 
 
     async function simpan_list_produk_ke_localstorage() {
         const response = await fetch(
-            '<?=site_url('transaksi_penghapusan/list_produk/').$get_single->UUID_TRANSAKSI_PENGHAPUSAN;?>'
-            );
+            '<?=site_url('transaksi_penghapusan/list_produk/').$get_single->UUID_TRANSAKSI_PENGHAPUSAN;?>');
         const products = await response.json();
         localStorage.setItem('storedProdukItems', JSON.stringify(products));
 
@@ -100,12 +110,12 @@ $(document).ready(function() {
         tbody.empty();
 
         selectedItems.forEach(function(item, index) {
-            tbody.append(`
+                tbody.append(`
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.KODE_ITEM}">
-                                    <td class="text-center col-2"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${item.FOTO_ITEM}" alt=""></center></td>
+                                    <td><center><img width="100px" src="<?php echo base_url('assets/uploads/transaksi_penghapusan/')?>${item.FOTO_KONDISI_AWAL}" alt=""></center></td>
                                     <td>${item.NAMA_PRODUK}</td>
-                                    <td class="text-center col-2">${item.JUMLAH_PENGHAPUSAN}</td>
+                                    <td class="text-center">${item.JUMLAH_PENGHAPUSAN}</td>
                                 </tr>
                             `);
         });
@@ -139,6 +149,7 @@ $(document).ready(function() {
 
         let storedProdukItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
         let formData = JSON.parse(localStorage.getItem('FormPenghapusan')) || {};
+        formData['KETERANGAN_PENGHAPUSAN'] = $('#KETERANGAN_PENGHAPUSAN').val();
 
         if (storedProdukItems.length == 0) {
             swal('Error', 'Tidak ada produk yang dipilih.', 'error').then(function() {
@@ -147,7 +158,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: "<?php echo base_url(); ?>" + "transaksi_penghapusan/update_approval_head",
+            url: "<?php echo base_url(); ?>" + "transaksi_penghapusan/update_approval_kabag",
             type: "POST",
             data: {
                 UUID_TRANSAKSI_PENGHAPUSAN: '<?= $get_single->UUID_TRANSAKSI_PENGHAPUSAN ?>',
@@ -191,11 +202,11 @@ $(document).ready(function() {
             },
         }).then((data) => {
             $.ajax({
-                url: "<?php echo base_url(); ?>transaksi_penghapusan/disapprove_head/",
+                url: "<?php echo base_url(); ?>transaksi_penghapusan/disapprove_kabag/",
                 type: "POST",
                 data: {
                     UUID_TRANSAKSI_PENGHAPUSAN: '<?= $get_single->UUID_TRANSAKSI_PENGHAPUSAN ?>',
-                    KETERANGAN_CANCEL_KABAG: data
+                    KETERANGAN_CANCEL: data
                 },
                 success: function(response) {
                     let res = JSON.parse(response);

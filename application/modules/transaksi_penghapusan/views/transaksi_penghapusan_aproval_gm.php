@@ -103,9 +103,9 @@ $(document).ready(function() {
             tbody.append(`
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.KODE_ITEM}">
-                                    <td><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${item.FOTO_ITEM}" alt=""></center></td>
+                                    <td class="text-center col-2"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${item.FOTO_ITEM}" alt=""></center></td>
                                     <td>${item.NAMA_PRODUK}</td>
-                                    <td class="text-center">${item.JUMLAH_PENGHAPUSAN}</td>
+                                    <td class="text-center col-2">${item.JUMLAH_PENGHAPUSAN}</td>
                                 </tr>
                             `);
         });
