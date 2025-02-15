@@ -16,9 +16,9 @@
                                         <table class="table table-striped" id="TABEL">
                                             <thead>
                                                 <tr>
-                                                    <th>TANGGAL PENGHAPUSAN</th>
+                                                    <th>TANGGAL PENGAJUAN</th>
                                                     <th>DEPARTEMEN</th>
-                                                    <th>PELAKSANA</th>
+                                                    <th>USER PENGAJUAN</th>
                                                     <th>APROVAL</th>
                                                     <th>STATUS</th>
                                                 </tr>
@@ -27,10 +27,10 @@
                                                 <?php foreach ($M_TRANSAKSI_PENGHAPUSAN as $index => $d) : ?>
                                                 <tr>
                                                     
-                                                    <td><?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGHAPUSAN, 'l, d F Y'); ?>
+                                                    <td><?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGAJUAN, 'l, d F Y'); ?>
                                                     </td>
                                                     <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
-                                                    <td><?php echo $d->NAMA_USER_PELAKSANA; ?></td>
+                                                    <td><?php echo $d->NAMA_USER_PENGAJUAN; ?></td>
                                                     <td>
                                                         <?php echo 'KABAG - ( ' . (($d->KODE_APROVAL_KABAG != null) ? $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
                                                         <?php echo 'GM - ( ' . (($d->KODE_APROVAL_GM != null) ? $d->NAMA_APROVAL_GM . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_GM . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>

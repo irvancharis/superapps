@@ -7,7 +7,7 @@
                 <div class="card">
                     <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGHAPUSAN">
                         <div class="card-header">
-                            <h4>APROVAL GM TRANSAKSI PENGHAPUSAN</h4>
+                            <h4>APROVAL HEAD TRANSAKSI PENGHAPUSAN</h4>
 
                         </div>
                         <div class="card-body">
@@ -34,7 +34,7 @@
                                         </tr>
                                         <tr>
                                             <th>KETERANGAN PENGHAPUSAN</th>
-                                            <td><?= $get_single->CATATAN_PENGHAPUSAN; ?></td>
+                                            <td><?= $get_single->KETERANGAN_PENGHAPUSAN; ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -44,10 +44,9 @@
                                 <table class="table table-striped table-sm" id="dataprodukitem">
                                     <thead>
                                         <tr>
-                                            <th>FOTO</th>
-                                            <th>PRODUK</th>
-                                            <th class="text-center">STOK SISTEM</th>
-                                            <th class="text-center">STOK REAL</th>
+                                            <th>IMAGE</th>
+                                            <th>PRODUK/ITEM</th>
+                                            <th>JUMLAH PENGHAPUSAN</th>
                                         </tr>
                                     </thead>
                                     <tbody id="selected-items-body">
@@ -86,7 +85,8 @@ $(document).ready(function() {
 
     async function simpan_list_produk_ke_localstorage() {
         const response = await fetch(
-            '<?=site_url('transaksi_penghapusan/list_produk/').$get_single->UUID_TRANSAKSI_PENGHAPUSAN;?>');
+            '<?=site_url('transaksi_penghapusan/list_produk/').$get_single->UUID_TRANSAKSI_PENGHAPUSAN;?>'
+            );
         const products = await response.json();
         localStorage.setItem('storedProdukItems', JSON.stringify(products));
 
@@ -100,28 +100,14 @@ $(document).ready(function() {
         tbody.empty();
 
         selectedItems.forEach(function(item, index) {
-            if (item.STOK_AKTUAL == item.JUMLAH_STOK) {
-                tbody.append(`
+            tbody.append(`
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.KODE_ITEM}">
                                     <td><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${item.FOTO_ITEM}" alt=""></center></td>
                                     <td>${item.NAMA_PRODUK}</td>
-                                    <td class="text-center">${item.JUMLAH_STOK}</td>
-                                    <td class="text-center">${item.STOK_AKTUAL}</td>                                    
+                                    <td class="text-center">${item.JUMLAH_PENGHAPUSAN}</td>
                                 </tr>
                             `);
-            }else{
-                tbody.append(`
-                                <tr data-index="${index}" style="background-color:rgb(255, 242, 168);">
-                                    <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.KODE_ITEM}">
-                                    <td><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${item.FOTO_ITEM}" alt=""></center></td>
-                                    <td>${item.NAMA_PRODUK}</td>
-                                    <td class="text-center">${item.JUMLAH_STOK}</td>
-                                    <td class="text-center">${item.STOK_AKTUAL}</td>                                    
-                                </tr>
-                            `);
-            }
-
         });
         // Perbarui listener input setelah render ulang
         attachInputListeners();
@@ -161,7 +147,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: "<?php echo base_url(); ?>" + "transaksi_penghapusan/update_approval_gm",
+            url: "<?php echo base_url(); ?>" + "transaksi_penghapusan/update_approval_head",
             type: "POST",
             data: {
                 UUID_TRANSAKSI_PENGHAPUSAN: '<?= $get_single->UUID_TRANSAKSI_PENGHAPUSAN ?>',
@@ -205,11 +191,11 @@ $(document).ready(function() {
             },
         }).then((data) => {
             $.ajax({
-                url: "<?php echo base_url(); ?>transaksi_penghapusan/disapprove_gm/",
+                url: "<?php echo base_url(); ?>transaksi_penghapusan/disapprove_head/",
                 type: "POST",
                 data: {
                     UUID_TRANSAKSI_PENGHAPUSAN: '<?= $get_single->UUID_TRANSAKSI_PENGHAPUSAN ?>',
-                    KETERANGAN_CANCEL: data
+                    KETERANGAN_CANCEL_KABAG: data
                 },
                 success: function(response) {
                     let res = JSON.parse(response);

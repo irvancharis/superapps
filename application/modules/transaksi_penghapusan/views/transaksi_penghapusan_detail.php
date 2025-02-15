@@ -46,8 +46,8 @@
                                                             <td><?= $transaksi->NAMA_LOKASI; ?></td>
                                                         </tr>
                                                         <tr>
-                                                            <th>CATATAN PENGHAPUSAN</th>
-                                                            <td><?= $transaksi->CATATAN_PENGHAPUSAN; ?></td>
+                                                            <th>KETERANGAN PENGHAPUSAN</th>
+                                                            <td><?= $transaksi->KETERANGAN_PENGHAPUSAN; ?></td>
                                                         </tr>
 
                                                         <tr>
