@@ -56,7 +56,7 @@ class Produk_item extends CI_Controller
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_PRODUK_ITEM->get_produk_item_single($KODE_ITEM);
         $data['get_kategori_produk'] = $this->M_PRODUK_ITEM->get_kategori_produk();
-        $data['get_produk_item'] = $query->row();
+        $data['get_produk_item'] = $query;
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('produk_item_edit', $data);
@@ -80,8 +80,8 @@ class Produk_item extends CI_Controller
         // Ambil data dari POST
         $inputan = $this->input->post(null, TRUE);
         $KODE_ITEM = $this->input->post('KODE_ITEM');
-        
-        $config['upload_path'] = APPPATH . '../assets/uploads/item/';  
+
+        $config['upload_path'] = APPPATH . '../assets/uploads/item/';
         $config['allowed_types'] = 'jpg|jpeg|png';
         $config['max_size'] = 2048; // 2MB
         $config['file_name'] = $KODE_ITEM;
@@ -95,10 +95,9 @@ class Produk_item extends CI_Controller
             // Ambil data file yang diupload
             $data = $this->upload->data();
             $extension = $data['file_ext'];
-            $inputan['FOTO_ITEM'] = $KODE_ITEM.$extension;
+            $inputan['FOTO_ITEM'] = $KODE_ITEM . $extension;
 
-        $result = $this->M_PRODUK_ITEM->insert($inputan);
-
+            $result = $this->M_PRODUK_ITEM->insert($inputan);
         }
 
         if ($result) {
@@ -108,14 +107,15 @@ class Produk_item extends CI_Controller
         }
     }
 
-    public function update()
+    public function update($KODE)
     {
-        $KODE_ITEM = $this->input->post('KODE_ITEM');
+        $KODE_ITEM = $KODE;
         $NAMA_ITEM = $this->input->post('NAMA_ITEM');
         $KODE_KATEGORI = $this->input->post('KODE_KATEGORI');
         $KETERANGAN_ITEM = $this->input->post('KETERANGAN_ITEM');
 
         // Validasi 
+        $errors = [];
         if (empty($KODE_ITEM)) {
             $errors[] = 'KODE ITEM tidak boleh kosong.';
         }
@@ -129,7 +129,46 @@ class Produk_item extends CI_Controller
             $errors[] = 'KETERANGAN ITEM tidak boleh kosong.';
         }
 
+        if (!empty($errors)) {
+            echo json_encode(['success' => false, 'error' => implode(', ', $errors)]);
+            return;
+        }
+
+        // Ambil data produk item lama
+        $produk_item = $this->M_PRODUK_ITEM->get_produk_item_single($KODE_ITEM);
+        $foto_lama = $produk_item->FOTO_ITEM;
+
+        // Konfigurasi Upload
+        $config['upload_path'] = APPPATH . '../assets/uploads/item/';
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['max_size'] = 2048; // 2MB
+        $config['file_name'] = $KODE_ITEM;
+
         $inputan = $this->input->post(null, TRUE);
+
+        if (!empty($_FILES['FOTO_ITEM']['name'])) { // Jika ada file yang diupload
+            // Hapus foto lama jika ada
+            if (!empty($foto_lama) && file_exists(APPPATH . '../assets/uploads/item/' . $foto_lama)) {
+                unlink(APPPATH . '../assets/uploads/item/' . $foto_lama);
+            }
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('FOTO_ITEM')) {
+                // Ambil data file baru
+                $data = $this->upload->data();
+                $extension = $data['file_ext'];
+                $inputan['FOTO_ITEM'] = $KODE_ITEM . $extension;
+            } else {
+                echo json_encode(['success' => false, 'error' => 'Gagal upload foto.']);
+                return;
+            }
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Gagal upload foto.']);
+            return;
+        }
+
+        // Update data di database
         $result = $this->M_PRODUK_ITEM->update($KODE_ITEM, $inputan);
 
         if ($result) {
@@ -139,10 +178,17 @@ class Produk_item extends CI_Controller
         }
     }
 
+
     public function hapus($KODE_ITEM)
     {
         // Proses hapus data
         $result = $this->M_PRODUK_ITEM->hapus($KODE_ITEM);
         redirect('produk_item');
     }
+
+    // public function coba($KODE)
+    // {
+    //     $produk_item = $this->M_PRODUK_ITEM->get_produk_item_single($KODE);
+    //     echo json_encode($produk_item);
+    // }
 }

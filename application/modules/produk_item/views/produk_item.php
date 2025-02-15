@@ -26,6 +26,7 @@
                                                     <th>KODE PRODUK</th>
                                                     <th>NAMA PRODUK</th>
                                                     <th>KATEGORI</th>
+                                                    <th>FOTO ITEM</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -43,6 +44,18 @@
                                                         <td><?php echo $d->KODE_ITEM; ?></td>
                                                         <td><?php echo $d->NAMA_ITEM; ?></td>
                                                         <td><?php echo $d->NAMA_PRODUK_KATEGORI; ?></td>
+                                                        <td class="text-center">
+                                                            <div class="gallery d-flex justify-content-center">
+                                                                <a class="gallery-item w-25"
+                                                                    href="<?php echo base_url('assets/uploads/item/') . $d->FOTO_ITEM; ?>"
+                                                                    data-image="<?php echo base_url('assets/uploads/item/') . $d->FOTO_ITEM; ?>"
+                                                                    data-title="<?= $d->NAMA_ITEM; ?>">
+                                                                    <img src="<?php echo base_url('assets/uploads/item/') . $d->FOTO_ITEM; ?>"
+                                                                        alt="<?= $d->NAMA_ITEM; ?>"
+                                                                        class="img-thumbnail" style="width: 100px;">
+                                                                </a>
+                                                            </div>
+                                                        </td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
@@ -405,6 +418,17 @@
                             }
                         });
                     });
+
+                    // Initialize Chocolate JS
+                    if (jQuery().Chocolat) {
+                        $(".gallery").Chocolat({
+                            className: 'gallery',
+                            imageSelector: '.gallery-item',
+                            imageSize: 'contain', // Menyesuaikan gambar agar pas dalam layar
+                            fullScreen: false, // Tidak otomatis fullscreen
+                            backgroundColor: 'rgba(0,0,0,0.9)', // Background gelap
+                        });
+                    }
                 });
             </script>
 

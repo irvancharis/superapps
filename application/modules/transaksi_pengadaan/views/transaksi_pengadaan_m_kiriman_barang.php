@@ -9,7 +9,6 @@
                                         <h4>TRANSAKSI PENGADAAN - MENUNGGU KIRIMAN BARANG</h4>
                                     </div>
                                     <div class="card-body">
-
                                         <div class="row">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>NO.REGISTER</label>

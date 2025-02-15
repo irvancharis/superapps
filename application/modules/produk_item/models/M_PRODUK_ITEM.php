@@ -31,7 +31,7 @@ class M_PRODUK_ITEM extends CI_Model
         $this->db->from('VIEW_PRODUK_ITEM');
         $this->db->where('KODE_ITEM', $KODE_ITEM);
         $query = $this->db->get();
-        return $query;
+        return $query->row();
     }
 
     public function get_kategori_produk()
