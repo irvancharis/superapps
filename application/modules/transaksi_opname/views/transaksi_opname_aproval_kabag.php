@@ -12,49 +12,42 @@
                         </div>
                         <div class="card-body">
 
-                            <div class="row mt-2">
-                                <div class="form-group col-12 col-md-6 col-lg-6">
-                                    <label>AREA</label>
-                                    <input type="text" class="form-control" name="area" id="area" required
-                                        value="<?= $get_single->NAMA_AREA; ?>" readonly>
-
-                                    <div class="invalid-feedback">
-                                        Silahkan masukkan AREA!
-                                    </div>
-                                </div>
-                                <div class="form-group col-12 col-md-6 col-lg-6">
-                                    <label>DEPARTEMEN</label>
-                                    <input type="text" class="form-control" name="departemen" id="departemen" required
-                                        value="<?= $get_single->NAMA_DEPARTEMEN; ?>" readonly>
-                                    <div class="invalid-feedback">
-                                        Silahkan masukkan DEPARTEMENT!
-                                    </div>
-                                </div>
+                            <div class="form-group col-12 col-md-12 col-lg-12">
+                                <table class="table table-striped table-sm ">
+                                    <tbody>
+                                        <tr>
+                                            <th>AREA</th>
+                                            <td><?= $get_single->NAMA_AREA; ?></td>
+                                            <input type="hidden" class="form-control" name="area" id="area" required
+                                                value="<?= $get_single->NAMA_AREA; ?>" readonly>
+                                        </tr>
+                                        <tr>
+                                            <th>DEPARTEMEN</th>
+                                            <td><?= $get_single->NAMA_DEPARTEMEN; ?></td>
+                                            <input type="hidden" class="form-control" name="departemen" id="departemen"
+                                                required value="<?= $get_single->NAMA_DEPARTEMEN; ?>" readonly>
+                                        </tr>
+                                        <tr>
+                                            <th>RUANGAN</th>
+                                            <td><?= $get_single->NAMA_RUANGAN; ?></td>
+                                            <input type="hidden" class="form-control" name="ruangan" id="ruangan"
+                                                required value="<?= $get_single->NAMA_RUANGAN; ?>" readonly>
+                                        </tr>
+                                        <tr>
+                                            <th>LOKASI</th>
+                                            <td><?= $get_single->NAMA_LOKASI; ?></td>
+                                            <input type="hidden" class="form-control" name="lokasi" id="lokasi" required
+                                                value="<?= $get_single->NAMA_LOKASI; ?>" readonly>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="row">
-                                <div class="form-group col-12 col-md-6 col-lg-6">
-                                    <label>RUANGAN</label>
-                                    <input type="text" class="form-control" name="ruangan" id="ruangan" required
-                                        value="<?= $get_single->NAMA_RUANGAN; ?>" readonly>
-                                    <div class="invalid-feedback">
-                                        Silahkan masukkan RUANGAN!
-                                    </div>
-                                </div>
-                                <div class="form-group col-12 col-md-6 col-lg-6">
-                                    <label>LOKASI</label>
-                                    <input type="text" class="form-control" name="lokasi" id="lokasi" required
-                                        value="<?= $get_single->NAMA_LOKASI; ?>" readonly>
-                                    <div class="invalid-feedback">
-                                        Silahkan masukkan LOKASI!
-                                    </div>
-                                </div>
-                            </div>
-
 
                             <div class="table-responsive">
                                 <table class="table table-striped" id="dataprodukitem">
                                     <thead>
                                         <tr>
+                                            <th>FOTO</th>
                                             <th>PRODUK/ITEM</th>
                                             <th>STOK SISTEM</th>
                                             <th>STOK REAL</th>
@@ -67,9 +60,9 @@
 
                             <div class="form-group col-12 col-md-12 col-lg-12">
                                 <label>KETERANGAN</label>
-                                <textarea name="description_ticket" placeholder="Masukkan keterangan opname"
+                                <textarea name="CATATAN_OPNAME" placeholder="Masukkan keterangan opname"
                                     class="form-control"
-                                    id="description_ticket"><?= $get_single->CATATAN_OPNAME; ?></textarea>
+                                    id="CATATAN_OPNAME"><?= $get_single->CATATAN_OPNAME; ?></textarea>
                                 <div class="invalid-feedback">
                                     Silahkan masukkan keterangan opname!
                                 </div>
@@ -97,8 +90,7 @@ $(document).ready(function() {
     $('#dataprodukitem').dataTable({
         paging: false,
         searching: false
-    });
-
+    });    
 
     simpan_list_produk_ke_localstorage();
 
@@ -119,14 +111,27 @@ $(document).ready(function() {
         tbody.empty();
 
         selectedItems.forEach(function(item, index) {
-            tbody.append(`
+            if (item.STOK_AKTUAL == item.JUMLAH_STOK) {
+                tbody.append(`
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.KODE_ITEM}">
+                                    <td><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${item.FOTO_ITEM}" alt=""></center></td>
                                     <td>${item.NAMA_PRODUK}</td>
-                                    <td>${item.JUMLAH_STOK}</td>
-                                    <td><input type="text" class="form-control stok-real" name="STOK_AKTUAL[${index}]" value="${item.STOK_AKTUAL || ''}"></td>                                    
+                                    <td class="text-center">${item.JUMLAH_STOK}</td>
+                                    <td><input type="text" class="form-control stok-real" name="STOK_AKTUAL[${index}]" value="${item.STOK_AKTUAL || ''}"></td>                                                                    
                                 </tr>
                             `);
+            } else {
+                tbody.append(`
+                                <tr data-index="${index}" style="background-color:rgb(255, 242, 168);">
+                                    <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.KODE_ITEM}">
+                                    <td><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${item.FOTO_ITEM}" alt=""></center></td>
+                                    <td>${item.NAMA_PRODUK}</td>
+                                    <td class="text-center">${item.JUMLAH_STOK}</td>
+                                    <td><input type="text" class="form-control stok-real" name="STOK_AKTUAL[${index}]" value="${item.STOK_AKTUAL || ''}"></td>                                                                                                       
+                                </tr>
+                            `);
+            }
         });
         // Perbarui listener input setelah render ulang
         attachInputListeners();
@@ -158,6 +163,7 @@ $(document).ready(function() {
 
         let storedProdukItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
         let formData = JSON.parse(localStorage.getItem('FormOpname')) || {};
+        formData['CATATAN_OPNAME'] = $('#CATATAN_OPNAME').val();
 
         if (storedProdukItems.length == 0) {
             swal('Error', 'Tidak ada produk yang dipilih.', 'error').then(function() {
@@ -214,7 +220,7 @@ $(document).ready(function() {
                 type: "POST",
                 data: {
                     UUID_TRANSAKSI_OPNAME: '<?= $get_single->UUID_TRANSAKSI_OPNAME ?>',
-                    KETERANGAN_CANCEL_KABAG: data
+                    KETERANGAN_CANCEL: data
                 },
                 success: function(response) {
                     let res = JSON.parse(response);

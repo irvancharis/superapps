@@ -1,12 +1,12 @@
 <?php
 
-class M_TRANSAKSI_OPNAME extends CI_Model
+class M_TRANSAKSI_PENGHAPUSAN extends CI_Model
 {
 
     // Nama tabel
-    protected $table = 'TRANSAKSI_OPNAME';
-    protected $table_detail = 'TRANSAKSI_OPNAME_DETAIL';
-    protected $VIEW_TRANSAKSI_OPNAME = 'VIEW_TRANSAKSI_OPNAME';
+    protected $table = 'TRANSAKSI_PENGHAPUSAN';
+    protected $table_detail = 'TRANSAKSI_PENGHAPUSAN_DETAIL';
+    protected $VIEW_TRANSAKSI_PENGHAPUSAN = 'VIEW_TRANSAKSI_PENGHAPUSAN';
 
     public function __construct()
     {
@@ -16,15 +16,15 @@ class M_TRANSAKSI_OPNAME extends CI_Model
 
     public function get_data()
     {
-        $query = $this->db->get('VIEW_TRANSAKSI_OPNAME');
+        $query = $this->db->get('VIEW_TRANSAKSI_PENGHAPUSAN');
         return $query->result_object();
     }
 
     public function get_single($KODE)
     {
         $this->db->select('*');
-        $this->db->from('VIEW_TRANSAKSI_OPNAME');
-        $this->db->where('UUID_TRANSAKSI_OPNAME', $KODE);
+        $this->db->from('VIEW_TRANSAKSI_PENGHAPUSAN');
+        $this->db->where('UUID_TRANSAKSI_PENGHAPUSAN', $KODE);
         $query = $this->db->get();
         return $query;
     }
@@ -32,8 +32,8 @@ class M_TRANSAKSI_OPNAME extends CI_Model
     public function get_detail_single($KODE)
     {
         $this->db->select('*');
-        $this->db->from('VIEW_TRANSAKSI_OPNAME_DETAIL');
-        $this->db->where('UUID_TRANSAKSI_OPNAME', $KODE);
+        $this->db->from('VIEW_TRANSAKSI_PENGHAPUSAN_DETAIL');
+        $this->db->where('UUID_TRANSAKSI_PENGHAPUSAN', $KODE);
         $query = $this->db->get();
         return $query->result_object();
     }
@@ -46,7 +46,7 @@ class M_TRANSAKSI_OPNAME extends CI_Model
         return $query->result_object();
     }
 
-    public function get_produk_input_opname($KODE_AREA, $KODE_RUANGAN, $KODE_LOKASI, $KODE_DEPARTEMEN)
+    public function get_produk_input_penghapusan($KODE_AREA, $KODE_RUANGAN, $KODE_LOKASI, $KODE_DEPARTEMEN)
     {
         $this->db->select('*');
         $this->db->from('VIEW_PRODUK_STOK');
@@ -72,7 +72,7 @@ class M_TRANSAKSI_OPNAME extends CI_Model
 
     public function update_transaksi($KODE, $data)
     {
-        $this->db->where('UUID_TRANSAKSI_OPNAME', $KODE);
+        $this->db->where('UUID_TRANSAKSI_PENGHAPUSAN', $KODE);
         return $this->db->update($this->table, $data);
     }
 
@@ -84,7 +84,7 @@ class M_TRANSAKSI_OPNAME extends CI_Model
 
     public function delete_detail($KODE)
     {
-        $this->db->where('UUID_TRANSAKSI_OPNAME', $KODE);
+        $this->db->where('UUID_TRANSAKSI_PENGHAPUSAN', $KODE);
         return $this->db->delete($this->table_detail);
     }
 

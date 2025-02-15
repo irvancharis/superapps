@@ -5,9 +5,9 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>DATA TRANSAKSI OPNAME</h4>
+                                    <h4>DATA TRANSAKSI PENGHAPUSAN</h4>
                                     <div class="card-header-action">
-                                        <a href="<?php echo base_url('transaksi_opname/tambah') ?>"
+                                        <a href="<?php echo base_url('transaksi_penghapusan/tambah') ?>"
                                             class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
                                     </div>
                                 </div>
@@ -16,7 +16,7 @@
                                         <table class="table table-striped" id="TABEL">
                                             <thead>
                                                 <tr>
-                                                    <th>TANGGAL OPNAME</th>
+                                                    <th>TANGGAL PENGHAPUSAN</th>
                                                     <th>DEPARTEMEN</th>
                                                     <th>PELAKSANA</th>
                                                     <th>APROVAL</th>
@@ -24,10 +24,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($M_TRANSAKSI_OPNAME as $index => $d) : ?>
+                                                <?php foreach ($M_TRANSAKSI_PENGHAPUSAN as $index => $d) : ?>
                                                 <tr>
                                                     
-                                                    <td><?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_OPNAME, 'l, d F Y'); ?>
+                                                    <td><?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGHAPUSAN, 'l, d F Y'); ?>
                                                     </td>
                                                     <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
                                                     <td><?php echo $d->NAMA_USER_PELAKSANA; ?></td>
@@ -36,42 +36,42 @@
                                                         <?php echo 'GM - ( ' . (($d->KODE_APROVAL_GM != null) ? $d->NAMA_APROVAL_GM . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_GM . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
                                                         <?php echo 'HEAD - ( ' . (($d->KODE_APROVAL_HEAD != null) ? $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?>
                                                     <td>
-                                                        <?php if($d->STATUS_OPNAME == 'MENUNGGU APROVAL KABAG')
+                                                        <?php if($d->STATUS_PENGHAPUSAN == 'MENUNGGU APROVAL KABAG')
                                                             {
                                                         ?>
                                                         <span class="badge badge-warning">MENUNGGU APROVAL KABAG</span>
-                                                        <a href="<?=site_url('transaksi_opname/aproval_kabag/'.$d->UUID_TRANSAKSI_OPNAME);?>"
+                                                        <a href="<?=site_url('transaksi_penghapusan/aproval_kabag/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
                                                             class="btn btn-primary"><i class="fas fa-eye"></i>
                                                         </a>
 
                                                         <?php
                                                             }
-                                                            elseif($d->STATUS_OPNAME == 'MENUNGGU APROVAL GM')
+                                                            elseif($d->STATUS_PENGHAPUSAN == 'MENUNGGU APROVAL GM')
                                                             {
                                                         ?>
                                                         <span class="badge badge-warning">MENUNGGU APROVAL GM</span>
-                                                        <a href="<?=site_url('transaksi_opname/aproval_gm/'.$d->UUID_TRANSAKSI_OPNAME);?>"
+                                                        <a href="<?=site_url('transaksi_penghapusan/aproval_gm/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
                                                             class="btn btn-primary"><i class="fas fa-eye"></i>
                                                         </a>
 
                                                         <?php
                                                             }
-                                                            elseif($d->STATUS_OPNAME == 'MENUNGGU APROVAL HEAD')
+                                                            elseif($d->STATUS_PENGHAPUSAN == 'MENUNGGU APROVAL HEAD')
                                                             {
                                                         ?>
                                                         <span class="badge badge-warning">MENUNGGU APROVAL HEAD</span>
-                                                        <a href="<?=site_url('transaksi_opname/aproval_head/'.$d->UUID_TRANSAKSI_OPNAME);?>"
+                                                        <a href="<?=site_url('transaksi_penghapusan/aproval_head/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
                                                             class="btn btn-primary"><i class="fas fa-eye"></i>
                                                         </a>
 
                                                         <?php
                                                         }
-                                                            elseif($d->STATUS_OPNAME == 'SELESAI')
+                                                            elseif($d->STATUS_PENGHAPUSAN == 'SELESAI')
                                                             {
                                                         ?>
                                                         <span class="badge badge-success">SELESAI</span>
                                                         <?php
-                                                            }elseif($d->STATUS_OPNAME == 'CANCEL')
+                                                            }elseif($d->STATUS_PENGHAPUSAN == 'CANCEL')
                                                             {
                                                         ?>
                                                         <span class="badge badge-danger">CANCEL</span>
