@@ -15,11 +15,12 @@ class Transaksi_penghapusan extends CI_Controller
         $this->load->model('maping_ruangan/M_MAPING_RUANGAN');
         $this->load->model('maping_lokasi/M_MAPING_LOKASI');
         $this->load->model('karyawan/M_KARYAWAN');
+        $this->load->model('produk_item/M_PRODUK_ITEM');
         $this->load->helper('url_helper');
         $this->load->library('Uuid');
         $this->load->library('TanggalIndo');
 
-        if ( !$this->session->userdata( 'isLoggedIn' ) ) {
+        if (!$this->session->userdata('isLoggedIn')) {
             redirect('login');
         }
     }
@@ -27,11 +28,13 @@ class Transaksi_penghapusan extends CI_Controller
     public function index($page = 'transaksi_penghapusan')
     {
 
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI PENGHAPUSAN','LIST PENGHAPUSAN');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGHAPUSAN', 'LIST PENGHAPUSAN');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
-        
+
         //echo $this->uuid->v4();
 
         $data['M_TRANSAKSI_PENGHAPUSAN'] = $this->M_TRANSAKSI_PENGHAPUSAN->get_data();
@@ -55,6 +58,35 @@ class Transaksi_penghapusan extends CI_Controller
         echo json_encode($result);
     }
 
+    public function get_produk()
+    {
+        $search = $this->input->post('search')['value'];
+        $search = strtoupper($search);
+
+        log_message('error', 'Search query: ' . $search); // Tambahkan log ini
+
+        if (empty($search)) {
+            echo json_encode([
+                "draw" => intval($this->input->post('draw')),
+                "recordsTotal" => 0,
+                "recordsFiltered" => 0,
+                "data" => []
+            ]);
+            return;
+        }
+
+        $data = $this->M_PRODUK_ITEM->getFilteredProdukStok($search);
+
+        log_message('error', 'Data returned: ' . json_encode($data)); // Tambahkan log ini
+
+        echo json_encode([
+            "draw" => intval($this->input->post('draw')),
+            "recordsTotal" => count($data),
+            "recordsFiltered" => count($data),
+            "data" => $data
+        ]);
+    }
+
     public function get_produk_input_penghapusan()
     {
         $KODE_AREA = $this->input->get('KODE_AREA');
@@ -69,12 +101,33 @@ class Transaksi_penghapusan extends CI_Controller
         }
     }
 
+    public function transaksi_penghapusan_produk()
+    {
+        $this->load->library('session');
+        $this->session->set_userdata('page', 'transaksi_penghapusan');
+        $data['page'] = $this->session->userdata('page');
+
+        $this->load->view('transaksi_penghapusan_produk', $data);
+    }
+
+    public function transaksi_penghapusan_tambah_produk()
+    {
+        $this->load->library('session');
+        $this->session->set_userdata('page', 'transaksi_penghapusan');
+        $data['page'] = $this->session->userdata('page');
+        $data['get_kategori_produk'] = $this->M_PRODUK_ITEM->get_kategori_produk();
+
+        $this->load->view('transaksi_penghapusan_tambah_produk', $data);
+    }
+
     public function tambah($page = 'transaksi_penghapusan')
     {
-        
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI PENGHAPUSAN','PENGAJUAN');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGHAPUSAN', 'PENGAJUAN');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
@@ -91,9 +144,11 @@ class Transaksi_penghapusan extends CI_Controller
 
     public function aproval_kabag($KODE, $page = 'transaksi_penghapusan')
     {
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI PENGHAPUSAN','APROVAL KABAG');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGHAPUSAN', 'APROVAL KABAG');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
 
         $this->load->library('session');
@@ -108,9 +163,11 @@ class Transaksi_penghapusan extends CI_Controller
 
     public function aproval_gm($KODE, $page = 'transaksi_penghapusan')
     {
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI PENGHAPUSAN','APROVAL KABAG');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGHAPUSAN', 'APROVAL KABAG');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
 
         $this->load->library('session');
@@ -125,9 +182,11 @@ class Transaksi_penghapusan extends CI_Controller
 
     public function aproval_head($KODE, $page = 'transaksi_penghapusan')
     {
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI PENGHAPUSAN','APROVAL KABAG');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGHAPUSAN', 'APROVAL KABAG');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
 
         $this->load->library('session');
@@ -149,9 +208,11 @@ class Transaksi_penghapusan extends CI_Controller
 
     public function detail($KODE, $page = 'transaksi_penghapusan')
     {
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI PENGHAPUSAN','DETAIL PENGHAPUSAN');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGHAPUSAN', 'DETAIL PENGHAPUSAN');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
@@ -165,67 +226,67 @@ class Transaksi_penghapusan extends CI_Controller
             $this->load->view('transaksi_penghapusan_detail', $data);
     }
 
-   public function insert()
-{
-    $inputan = $this->input->post(null, TRUE);
-    $KODE_ITEM = $this->input->post('KODE_ITEM');
-    
-    $uuid_transaksi = $this->uuid->v4();
+    public function insert()
+    {
+        $inputan = $this->input->post(null, TRUE);
+        $KODE_ITEM = $this->input->post('KODE_ITEM');
 
-    $data_transaksi = [
-        'USER_PENGAJUAN' => $this->session->userdata('ID_KARYAWAN'),
-        'UUID_TRANSAKSI_PENGHAPUSAN' => $uuid_transaksi,
-        'KODE_DEPARTEMEN' => $this->session->userdata('ID_DEPARTEMEN'),
-        'TANGGAL_PENGAJUAN' => date('Y-m-d'),
-        'KETERANGAN_PENGHAPUSAN' => $inputan['KETERANGAN'],
-        'AREA_PENGHAPUSAN' => $inputan['AREA'],
-        'STATUS_PENGHAPUSAN' => 'MENUNGGU APROVAL KABAG',
-        'RUANGAN_PENGHAPUSAN' => $inputan['RUANGAN'],
-        'LOKASI_PENGHAPUSAN' => $inputan['LOKASI'],
-    ];
-    
-    $this->db->insert('TRANSAKSI_PENGHAPUSAN', $data_transaksi);
+        $uuid_transaksi = $this->uuid->v4();
 
-    // Cek apakah ada file yang diunggah
-    if (!empty($_FILES['FOTO_KONDISI_AWAL']['name'][0])) {
-        $files = $_FILES;
-        $count = count($_FILES['FOTO_KONDISI_AWAL']['name']);
+        $data_transaksi = [
+            'USER_PENGAJUAN' => $this->session->userdata('ID_KARYAWAN'),
+            'UUID_TRANSAKSI_PENGHAPUSAN' => $uuid_transaksi,
+            'KODE_DEPARTEMEN' => $this->session->userdata('ID_DEPARTEMEN'),
+            'TANGGAL_PENGAJUAN' => date('Y-m-d'),
+            'KETERANGAN_PENGHAPUSAN' => $inputan['KETERANGAN'],
+            'AREA_PENGHAPUSAN' => $inputan['AREA'],
+            'STATUS_PENGHAPUSAN' => 'MENUNGGU APROVAL KABAG',
+            'RUANGAN_PENGHAPUSAN' => $inputan['RUANGAN'],
+            'LOKASI_PENGHAPUSAN' => $inputan['LOKASI'],
+        ];
 
-        for ($i = 0; $i < $count; $i++) {
-            $FOTO_NAME = $this->uuid->v4();
+        $this->db->insert('TRANSAKSI_PENGHAPUSAN', $data_transaksi);
 
-            $_FILES['file']['name'] = $files['FOTO_KONDISI_AWAL']['name'][$i];
-            $_FILES['file']['type'] = $files['FOTO_KONDISI_AWAL']['type'][$i];
-            $_FILES['file']['tmp_name'] = $files['FOTO_KONDISI_AWAL']['tmp_name'][$i];
-            $_FILES['file']['error'] = $files['FOTO_KONDISI_AWAL']['error'][$i];
-            $_FILES['file']['size'] = $files['FOTO_KONDISI_AWAL']['size'][$i];
+        // Cek apakah ada file yang diunggah
+        if (!empty($_FILES['FOTO_KONDISI_AWAL']['name'][0])) {
+            $files = $_FILES;
+            $count = count($_FILES['FOTO_KONDISI_AWAL']['name']);
 
-            $config['upload_path'] = FCPATH . 'assets/uploads/transaksi_penghapusan/';
-            $config['allowed_types'] = 'jpg|jpeg|png';
-            $config['max_size'] = 2048; // 2MB
-            $config['file_name'] = $FOTO_NAME;
+            for ($i = 0; $i < $count; $i++) {
+                $FOTO_NAME = $this->uuid->v4();
 
-            $this->load->library('upload', $config);
+                $_FILES['file']['name'] = $files['FOTO_KONDISI_AWAL']['name'][$i];
+                $_FILES['file']['type'] = $files['FOTO_KONDISI_AWAL']['type'][$i];
+                $_FILES['file']['tmp_name'] = $files['FOTO_KONDISI_AWAL']['tmp_name'][$i];
+                $_FILES['file']['error'] = $files['FOTO_KONDISI_AWAL']['error'][$i];
+                $_FILES['file']['size'] = $files['FOTO_KONDISI_AWAL']['size'][$i];
 
-            if (!$this->upload->do_upload('file')) {
-                echo json_encode(['success' => false, 'error' => $this->upload->display_errors()]);
-                exit;
-            } else {
-                $data = $this->upload->data();                
-                $data_produk = [
-                    'UUID_TRANSAKSI_PENGHAPUSAN' => $uuid_transaksi,
-                    'UUID_PRODUK_STOK' => $inputan['UUID_STOK'][$i],
-                    'JUMLAH_PENGHAPUSAN' => $inputan['JUMLAH_PENGHAPUSAN'][$i],                    
-                    'FOTO_KONDISI_AWAL' => $data['file_name'],
-                    'KETERANGAN_ITEM' => $inputan['KETERANGAN_ITEM'][$i],
-                ];
-                $this->db->insert('TRANSAKSI_PENGHAPUSAN_DETAIL', $data_produk);
+                $config['upload_path'] = FCPATH . 'assets/uploads/transaksi_penghapusan/';
+                $config['allowed_types'] = 'jpg|jpeg|png';
+                $config['max_size'] = 2048; // 2MB
+                $config['file_name'] = $FOTO_NAME;
+
+                $this->load->library('upload', $config);
+
+                if (!$this->upload->do_upload('file')) {
+                    echo json_encode(['success' => false, 'error' => $this->upload->display_errors()]);
+                    exit;
+                } else {
+                    $data = $this->upload->data();
+                    $data_produk = [
+                        'UUID_TRANSAKSI_PENGHAPUSAN' => $uuid_transaksi,
+                        'UUID_PRODUK_STOK' => $inputan['UUID_STOK'][$i],
+                        'JUMLAH_PENGHAPUSAN' => $inputan['JUMLAH_PENGHAPUSAN'][$i],
+                        'FOTO_KONDISI_AWAL' => $data['file_name'],
+                        'KETERANGAN_ITEM' => $inputan['KETERANGAN_ITEM'][$i],
+                    ];
+                    $this->db->insert('TRANSAKSI_PENGHAPUSAN_DETAIL', $data_produk);
+                }
             }
         }
-    }
 
-    echo json_encode(['success' => true]);
-}
+        echo json_encode(['success' => true]);
+    }
 
 
 
@@ -234,7 +295,7 @@ class Transaksi_penghapusan extends CI_Controller
     {
         $id_transaksi = $this->input->post('UUID_TRANSAKSI_PENGHAPUSAN'); // Ambil ID transaksi
         $form = $this->input->post('KETERANGAN_CANCEL');
-        
+
         // Update tabel transaksi_penghapusan
         $data_update = [
             'TANGGAL_APROVAL_KABAG' => date('Y-m-d'),
@@ -257,7 +318,7 @@ class Transaksi_penghapusan extends CI_Controller
     {
         $id_transaksi = $this->input->post('UUID_TRANSAKSI_PENGHAPUSAN'); // Ambil ID transaksi
 
-        
+
         $form = $this->input->post('form');
         $items = $this->input->post('items');
 
@@ -274,7 +335,7 @@ class Transaksi_penghapusan extends CI_Controller
         if (!$update) {
             echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
             return;
-        }        
+        }
 
         echo json_encode(['success' => true]);
     }
@@ -283,7 +344,7 @@ class Transaksi_penghapusan extends CI_Controller
     {
         $id_transaksi = $this->input->post('UUID_TRANSAKSI_PENGHAPUSAN'); // Ambil ID transaksi
         $form = $this->input->post('KETERANGAN_CANCEL');
-        
+
         // Update tabel transaksi_penghapusan
         $data_update = [
             'TANGGAL_APROVAL_GM' => date('Y-m-d'),
@@ -306,7 +367,7 @@ class Transaksi_penghapusan extends CI_Controller
     {
         $id_transaksi = $this->input->post('UUID_TRANSAKSI_PENGHAPUSAN'); // Ambil ID transaksi
 
-        
+
         $form = $this->input->post('form');
         $items = $this->input->post('items');
 
@@ -324,7 +385,7 @@ class Transaksi_penghapusan extends CI_Controller
             return;
         }
 
-        
+
         echo json_encode(['success' => true]);
     }
 
@@ -332,7 +393,7 @@ class Transaksi_penghapusan extends CI_Controller
     {
         $id_transaksi = $this->input->post('UUID_TRANSAKSI_PENGHAPUSAN'); // Ambil ID transaksi
         $form = $this->input->post('KETERANGAN_CANCEL');
-        
+
         // Update tabel transaksi_penghapusan
         $data_update = [
             'TANGGAL_APROVAL_HEAD' => date('Y-m-d'),
@@ -355,7 +416,7 @@ class Transaksi_penghapusan extends CI_Controller
     {
         $id_transaksi = $this->input->post('UUID_TRANSAKSI_PENGHAPUSAN'); // Ambil ID transaksi
 
-        
+
         $form = $this->input->post('form');
         $items = $this->input->post('items');
 
@@ -374,7 +435,7 @@ class Transaksi_penghapusan extends CI_Controller
         }
 
         // Update transaksi_pengadaan_detail
-        
+
         foreach ($items as $item) {
             $UUID_STOK = $item['UUID_STOK'];
             $data_produk = $item['JUMLAH_PENGHAPUSAN'];
@@ -383,7 +444,7 @@ class Transaksi_penghapusan extends CI_Controller
 
         echo json_encode(['success' => true]);
     }
-    
+
 
     public function update()
     {
@@ -405,7 +466,7 @@ class Transaksi_penghapusan extends CI_Controller
     }
 
     public function hapus($KODE_ITEM)
-    {        
+    {
         // Proses hapus data
         $result = $this->M_TRANSAKSI_PENGHAPUSAN->hapus($KODE_ITEM);
         redirect('karyawan');

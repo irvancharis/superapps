@@ -86,10 +86,23 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer text-center">
-                                        <button type="submit" class="btn btn-success" id="btn-approve"><i class="fa fa-check"></i> APPROVE</button>
-                                        <button type="button" class="btn btn-danger" id="btn-disapprove"><i class="fa fa-times"></i> DISAPPROVE</button>
-                                        <a href="<?php echo base_url(); ?>transaksi_pengadaan" class="btn btn-secondary float-right"><i class="fa fa-arrow-left"></i> KEMBALI</a>
+                                    <div class="card-footer text-center row">
+                                        <!-- Tombol APPROVE & DISAPPROVE di tengah -->
+                                        <div class="col-12 col-md-8 col-lg-7 col-xl-7 mb-2 mb-md-0 text-md-right">
+                                            <button type="submit" class="btn btn-success mx-1" id="btn-approve">
+                                                <i class="fa fa-check"></i> APPROVE
+                                            </button>
+                                            <button type="button" class="btn btn-danger mx-1" id="btn-disapprove">
+                                                <i class="fa fa-times"></i> DISAPPROVE
+                                            </button>
+                                        </div>
+
+                                        <!-- Tombol KEMBALI di kanan -->
+                                        <div class="col-12 col-md-4 col-lg-5 col-xl-5 text-md-right">
+                                            <a href="<?php echo base_url(); ?>transaksi_pengadaan" class="btn btn-secondary">
+                                                <i class="fa fa-arrow-left"></i> KEMBALI
+                                            </a>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
