@@ -9,24 +9,7 @@
                                         <h4>TRANSAKSI PENGADAAN - PENYERAHAN BARANG KE USER</h4>
                                     </div>
                                     <div class="card-body">
-
                                         <div class="row">
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>NO.REGISTER</label>
-                                                <input disabled type="text" class="form-control" id="NO_REGISTER" name="NO_REGISTER" value="<?= $penyerahan_barang_user->NO_REGISTER; ?>">
-                                                <div class="invalid-feedback">
-                                                    Masukkan NO. REGISTER !
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6 about accelerator">
-                                                <label>NO.RESI</label>
-                                                <input disabled type="text" class="form-control" id="NO_RESI" name="NO_RESI" value="<?= $penyerahan_barang_user->NO_RESI; ?>">
-                                                <div class="invalid-feedback">
-                                                    Masukkan NO. RESI !
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mt-2">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
                                                 <select disabled name="AREA_PENEMPATAN" id="AREA_PENEMPATAN" class="form-control">
@@ -83,6 +66,7 @@
                                             <table class="table table-striped" id="table-approval-produk">
                                                 <thead>
                                                     <tr>
+                                                        <th>FOTO PRODUK</th>
                                                         <th>PRODUK/ITEM</th>
                                                         <th>JUMLAH</th>
                                                         <th>KEPERLUAN</th>
@@ -93,15 +77,29 @@
                                             </table>
                                         </div>
                                         <div class="row mt-3">
-                                            <div class="form-group col-12 col-md-12 col-lg-12">
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KETERANGAN PENGAJUAN</label>
                                                 <textarea disabled name="KETERANGAN_PENGAJUAN" id="KETERANGAN_PENGAJUAN" placeholder="Masukkan keterangan pengajuan" class="form-control" rows="3"><?= $penyerahan_barang_user->KETERANGAN_PENGAJUAN; ?></textarea>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan KETERANGAN!
                                                 </div>
                                             </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>NO.REGISTER</label>
+                                                <input disabled type="text" class="form-control" id="NO_REGISTER" name="NO_REGISTER" value="<?= $penyerahan_barang_user->NO_REGISTER; ?>">
+                                                <div class="invalid-feedback">
+                                                    Masukkan NO. REGISTER !
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="row">
+                                            <div class="form-group col-12 col-md-6 col-lg-6 about accelerator">
+                                                <label>NO.RESI</label>
+                                                <input disabled type="text" class="form-control" id="NO_RESI" name="NO_RESI" value="<?= $penyerahan_barang_user->NO_RESI; ?>">
+                                                <div class="invalid-feedback">
+                                                    Masukkan NO. RESI !
+                                                </div>
+                                            </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>USER PENERIMA</label>
                                                 <select class="form-control" name="KODE_USER_PENERIMA_KIRIMAN" id="KODE_USER_PENERIMA_KIRIMAN" disabled>
@@ -114,6 +112,8 @@
                                                     Masukkan USER PENERIMA !
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>BARANG DISERAHKAN KEPADA :</label>
                                                 <select class="form-control" name="KODE_USER_PENERIMA_BARANG" id="KODE_USER_PENERIMA_BARANG" required>
@@ -130,6 +130,7 @@
                                     </div>
                                     <div class="card-footer text-center">
                                         <button type="submit" class="btn btn-success" id="btn-approve"><i class="fa fa-check"></i> UPDATE PENGADAAN</button>
+                                        <a href="<?php echo base_url(); ?>transaksi_pengadaan" class="btn btn-secondary float-right"><i class="fa fa-arrow-left"></i> KEMBALI</a>
                                     </div>
                                 </form>
                             </div>
@@ -164,6 +165,7 @@
                             tbody.append(`
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.id}">
+                                    <td class="text-center"><img style="width: 100px;" src="<?php echo base_url('assets/uploads/item/'); ?>${item.foto}" alt=""></td>
                                     <td>${item.nama}</td>
                                     <td><input type="number" class="form-control jumlah" name="JUMLAH_PENGADAAN[${index}]" value="${item.jumlah || ''}" disabled></td>
                                     <td><input type="text" class="form-control keperluan" name="KEPERLUAN[${index}]" value="${item.keperluan || ''}" disabled></td>
@@ -192,7 +194,8 @@
                                         id: item.KODE_PRODUK_ITEM,
                                         nama: item.NAMA_ITEM,
                                         jumlah: item.JUMLAH_PENGADAAN,
-                                        keperluan: item.KEPERLUAN
+                                        keperluan: item.KEPERLUAN,
+                                        foto: item.FOTO_ITEM
                                     }));
 
                                     // Gabungkan data, tetapi hanya simpan yang tidak duplikat
