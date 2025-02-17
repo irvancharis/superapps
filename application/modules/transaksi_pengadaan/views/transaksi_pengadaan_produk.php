@@ -55,6 +55,7 @@
                                         <th>KODE PRODUK</th>
                                         <th>NAMA PRODUK</th>
                                         <th>KATEGORI</th>
+                                        <th>FOTO ITEM</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -127,12 +128,20 @@
                     data: "NAMA_PRODUK_KATEGORI"
                 },
                 {
+                    data: "FOTO_ITEM",
+                    render: function(data, type, row, meta) {
+                        return `<img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${data}" alt="">`;
+                    }
+                },
+                {
                     data: null,
                     render: function(data, type, row) {
                         return `<a href="javascript:void(0);" class="btn btn-primary btn-round has-icon view-btn add-item" 
                         data-id="${row.KODE_ITEM}" 
                         data-nama="${row.NAMA_ITEM}" 
-                        data-kategori="${row.NAMA_PRODUK_KATEGORI}">
+                        data-kategori="${row.NAMA_PRODUK_KATEGORI}"
+                        data-foto="${row.FOTO_ITEM}"
+                        >
                         <i class="fas fa-plus"></i></a>`;
                     }
                 }
@@ -153,7 +162,8 @@
             var item = {
                 id: $(this).data("id"),
                 nama: $(this).data("nama"),
-                kategori: $(this).data("kategori")
+                kategori: $(this).data("kategori"),
+                foto: $(this).data("foto")
             };
 
             // Cek apakah item sudah ada

@@ -70,6 +70,7 @@
                                             <table class="table table-striped" id="table-data-produk">
                                                 <thead>
                                                     <tr>
+                                                        <th>FOTO PRODUK</th>
                                                         <th>PRODUK/ITEM</th>
                                                         <th>JUMLAH</th>
                                                         <th>KEPERLUAN</th>
@@ -214,6 +215,7 @@
                             tbody.append(`
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.id}">
+                                    <td class="text-center"><img style="width: 100px;" src="<?php echo base_url('assets/uploads/item/'); ?>${item.foto}" alt=""></td>
                                     <td>${item.nama}</td>
                                     <td><input type="number" class="form-control jumlah" name="JUMLAH_PENGADAAN[${index}]" value="${item.jumlah || ''}"></td>
                                     <td><input type="text" class="form-control keperluan" name="KEPERLUAN[${index}]" value="${item.keperluan || ''}"></td>
