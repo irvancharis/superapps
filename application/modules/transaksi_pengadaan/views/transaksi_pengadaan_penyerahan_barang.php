@@ -6,7 +6,7 @@
                             <div class="card">
                                 <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGADAAN_PROSES_PENGADAAN">
                                     <div class="card-header">
-                                        <h4>TRANSAKSI PENGADAAN - PROSES PENYERAHAN BARANG</h4>
+                                        <h4>TRANSAKSI PENGADAAN - PENYERAHAN BARANG</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -101,22 +101,55 @@
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>USER PENERIMA</label><span class="text-danger float-right font-italic font-weight-600">*). Wajib Di Isi</span>
-                                                <select class="form-control" name="KODE_USER_PENERIMAAN_BARANG" id="KODE_USER_PENERIMAAN_BARANG" required>
+                                                <label>USER PENERIMA KIRIMAN</label>
+                                                <select class="form-control" name="KODE_USER_PENERIMA_KIRIMAN" id="KODE_USER_PENERIMA_KIRIMAN" disabled>
                                                     <option value="" class="text-center" selected disabled>---- Pilih User ----</option>
                                                     <?php foreach ($karyawan as $row) : ?>
+                                                        <option value="<?= $row->ID_KARYAWAN; ?>" <?= $row->ID_KARYAWAN == $penyerahan_barang->KODE_USER_PENERIMA_KIRIMAN ? "selected" : ""; ?>><?= $row->NAMA_KARYAWAN; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Masukkan USER PENERIMA KIRIMAN !
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-12 col-md-6 col-lg-6 about accelerator">
+                                                <label>USER PENYERAHAN BARANG</label>
+                                                <select class="form-control" name="KODE_USER_PENYERAHAN_BARANG" id="KODE_USER_PENYERAHAN_BARANG" disabled>
+                                                    <option value="" class="text-center" selected disabled>---- Pilih User ----</option>
+                                                    <?php foreach ($karyawan as $row) : ?>
+                                                        <option value="<?= $row->ID_KARYAWAN; ?>" <?= $row->ID_KARYAWAN == $this->session->userdata('ID_KARYAWAN') ? "selected" : ""; ?>><?= $row->NAMA_KARYAWAN; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Masukkan USER PENYERAHAN BARANG !
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>USER PENERIMA BARANG</label>
+                                                <select class="form-control" name="KODE_USER_PENERIMA_BARANG" id="KODE_USER_PENERIMA_BARANG" required>
+                                                    <option value="" class="text-center" selected disabled>---- Pilih User ----</option>
+                                                    <?php foreach ($karyawan_departemen as $row) : ?>
                                                         <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->NAMA_KARYAWAN; ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                                 <div class="invalid-feedback">
-                                                    Masukkan USER PENERIMA !
+                                                    Masukkan USER PENERIMA BARANG !
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer text-center">
-                                        <button type="submit" class="btn btn-success" id="btn-approve"><i class="fa fa-check"></i> UPDATE PENGADAAN</button>
-                                        <a href="<?php echo base_url(); ?>transaksi_pengadaan" class="btn btn-secondary float-right"><i class="fa fa-arrow-left"></i> KEMBALI</a>
+                                    <div class="card-footer text-center row">
+                                        <!-- Tombol PROSES PENGADAAN di tengah -->
+                                        <div class="col-12 col-md-8 col-lg-7 col-xl-7 mb-2 mb-md-0 text-md-right">
+                                            <button type="submit" class="btn btn-success" id="btn-approve"><i class="fa fa-check"></i> PROSES PENYERAHAN BARANG</button>
+                                        </div>
+
+                                        <!-- Tombol KEMBALI di kanan -->
+                                        <div class="col-12 col-md-4 col-lg-5 col-xl-5 text-md-right">
+                                            <a href="<?php echo base_url(); ?>transaksi_pengadaan" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> KEMBALI</a>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -138,7 +171,7 @@
 
                     let idTransaksi = "<?php echo $id_transaksi_pengadaan; ?>"; // ID transaksi dari PHP
 
-                    $('#KODE_USER_PENERIMAAN_BARANG').on('change', function() {
+                    $('#KODE_USER_PENERIMA_BARANG').on('change', function() {
                         saveFormData();
                     })
 
@@ -220,7 +253,8 @@
                     // Form Data Save to Local Storage
                     function saveFormData() {
                         let formData = {
-                            KODE_USER_PENERIMAAN_BARANG: $('#KODE_USER_PENERIMAAN_BARANG').val(),
+                            KODE_USER_PENYERAHAN_BARANG: $('#KODE_USER_PENYERAHAN_BARANG').val(),
+                            KODE_USER_PENERIMA_BARANG: $('#KODE_USER_PENERIMA_BARANG').val(),
                         };
 
                         localStorage.setItem('formPengadaan', JSON.stringify(formData));
@@ -238,7 +272,7 @@
                             return;
                         }
 
-                        if (!formData.KODE_USER_PENERIMAAN_BARANG) {
+                        if (!formData.KODE_USER_PENERIMA_BARANG) {
                             swal('Error', 'Lengkapi semua data.', 'error');
                             return;
                         }

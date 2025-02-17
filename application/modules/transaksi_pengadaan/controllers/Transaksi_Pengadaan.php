@@ -226,6 +226,7 @@ class Transaksi_pengadaan extends CI_Controller
         $data['get_lokasi'] = $this->M_TRANSAKSI_PENGADAAN->get_lokasi();
         $data['get_departemen'] = $this->M_TRANSAKSI_PENGADAAN->get_departemen();
         $data['id_transaksi_pengadaan'] = $id_transaksi_pengadaan;
+        $data['karyawan'] = $this->M_KARYAWAN->get_karyawan();
         log_message('error', 'Data returned: ' . json_encode($data['m_kiriman_barang']));
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
@@ -244,7 +245,8 @@ class Transaksi_pengadaan extends CI_Controller
         $data['get_lokasi'] = $this->M_TRANSAKSI_PENGADAAN->get_lokasi();
         $data['get_departemen'] = $this->M_TRANSAKSI_PENGADAAN->get_departemen();
         $data['id_transaksi_pengadaan'] = $id_transaksi_pengadaan;
-        $data['karyawan'] = $this->M_KARYAWAN->get_karyawan_by_departemen($data['penyerahan_barang']->KODE_DEPARTEMEN_PENGAJUAN);
+        $data['karyawan'] = $this->M_KARYAWAN->get_karyawan();
+        $data['karyawan_departemen'] = $this->M_KARYAWAN->get_karyawan_by_departemen($data['penyerahan_barang']->KODE_DEPARTEMEN_PENGAJUAN);
         log_message('error', 'Data returned: ' . json_encode($data['karyawan']));
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
@@ -291,6 +293,12 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function tambah($page = 'transaksi_pengadaan')
     {
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGADAAN', 'PENGAJUAN');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
+
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
@@ -471,7 +479,7 @@ class Transaksi_pengadaan extends CI_Controller
         // Update tabel transaksi_pengadaan
         $data_update = [
             'KODE_APROVAL_HEAD' => $this->session->userdata('ID_KARYAWAN'),
-            'TANGGAL_APROVAL_GM' => date('Y-m-d'),
+            'TANGGAL_APROVAL_HEAD' => date('Y-m-d'),
             'STATUS_PENGADAAN' => 'PROSES PENGADAAN',
         ];
 
@@ -678,7 +686,8 @@ class Transaksi_pengadaan extends CI_Controller
         // Update tabel transaksi_pengadaan
         $data_update = [
             'NO_RESI' => $form['NO_RESI'],
-            'TANGGAL_PENGADAAN' => date('Y-m-d'),
+            'KODE_USER_PENERIMA_KIRIMAN' => $this->session->userdata('ID_KARYAWAN'),
+            'TANGGAL_PENERIMAAN_KIRIMAN' => date('Y-m-d'),
             'STATUS_PENGADAAN' => 'MENUNGGU PENYERAHAN',
         ];
 
@@ -717,9 +726,10 @@ class Transaksi_pengadaan extends CI_Controller
 
         // Update tabel transaksi_pengadaan
         $data_update = [
-            'KODE_USER_PENERIMA_KIRIMAN' => $form['KODE_USER_PENERIMAAN_BARANG'],
-            'TANGGAL_PENERIMAAN_KIRIMAN' => date('Y-m-d'),
-            'STATUS_PENGADAAN' => 'PROSES PENYERAHAN',
+            'KODE_USER_PENYERAHAN_BARANG' => $form['KODE_USER_PENYERAHAN_BARANG'],
+            'KODE_USER_PENERIMA_BARANG' => $form['KODE_USER_PENERIMA_BARANG'],
+            'TANGGAL_PENYERAHAN_BARANG' => date('Y-m-d'),
+            'STATUS_PENGADAAN' => 'SELESAI',
         ];
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);

@@ -6,7 +6,7 @@
                             <div class="card">
                                 <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGADAAN_PROSES_PENGADAAN">
                                     <div class="card-header">
-                                        <h4>TRANSAKSI PENGADAAN - PROSES PENGADAAN</h4>
+                                        <h4>TRANSAKSI PENGADAAN - PENGADAAN</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="row mt-2">
@@ -93,9 +93,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer text-center">
-                                        <button type="submit" class="btn btn-success" id="btn-approve"><i class="fa fa-check"></i> UPDATE PENGADAAN</button>
-                                        <a href="<?php echo base_url(); ?>transaksi_pengadaan" class="btn btn-secondary float-right"><i class="fa fa-arrow-left"></i> KEMBALI</a>
+                                    <div class="card-footer text-center row">
+                                        <!-- Tombol PROSES PENGADAAN di tengah -->
+                                        <div class="col-12 col-md-8 col-lg-7 col-xl-7 mb-2 mb-md-0 text-md-right">
+                                            <button type="submit" class="btn btn-success" id="btn-approve"><i class="fa fa-check"></i> PROSES PENGADAAN</button>
+                                        </div>
+
+                                        <!-- Tombol KEMBALI di kanan -->
+                                        <div class="col-12 col-md-4 col-lg-5 col-xl-5 text-md-right">
+                                            <a href="<?php echo base_url(); ?>transaksi_pengadaan" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> KEMBALI</a>
+                                        </div>
                                     </div>
                                 </form>
                             </div>

@@ -6,7 +6,7 @@
                             <div class="card">
                                 <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGADAAN_PROSES_PENGADAAN">
                                     <div class="card-header">
-                                        <h4>TRANSAKSI PENGADAAN - MENUNGGU KIRIMAN BARANG</h4>
+                                        <h4>TRANSAKSI PENGADAAN - PENERIMAAN KIRIMAN BARANG</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -100,11 +100,30 @@
                                                     Masukkan NO. RESI !
                                                 </div>
                                             </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>USER PENERIMA KIRIMAN</label><span class="text-danger float-right font-italic font-weight-600">*). Wajib Di Isi</span>
+                                                <select class="form-control" name="KODE_USER_PENERIMA_KIRIMAN" id="KODE_USER_PENERIMA_KIRIMAN" disabled>
+                                                    <option value="" class="text-center" selected disabled>---- Pilih User ----</option>
+                                                    <?php foreach ($karyawan as $row) : ?>
+                                                        <option value="<?= $row->ID_KARYAWAN; ?>" <?= $row->ID_KARYAWAN == $this->session->userdata('ID_KARYAWAN') ? "selected" : ""; ?>><?= $row->NAMA_KARYAWAN; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Masukkan USER PENERIMA KIRIMAN !
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer text-center">
-                                        <button type="submit" class="btn btn-success" id="btn-approve"><i class="fa fa-check"></i> UPDATE PENGADAAN</button>
-                                        <a href="<?php echo base_url(); ?>transaksi_pengadaan" class="btn btn-secondary float-right"><i class="fa fa-arrow-left"></i> KEMBALI</a>
+                                    <div class="card-footer text-center row">
+                                        <!-- Tombol PROSES PENGADAAN di tengah -->
+                                        <div class="col-12 col-md-8 col-lg-7 col-xl-7 mb-2 mb-md-0 text-md-right">
+                                            <button type="submit" class="btn btn-success" id="btn-approve"><i class="fa fa-check"></i> TERIMA KIRIMAN BARANG</button>
+                                        </div>
+
+                                        <!-- Tombol KEMBALI di kanan -->
+                                        <div class="col-12 col-md-4 col-lg-5 col-xl-5 text-md-right">
+                                            <a href="<?php echo base_url(); ?>transaksi_pengadaan" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> KEMBALI</a>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -118,6 +137,8 @@
 
             <script>
                 $(document).ready(function() {
+                    console.log('<?php echo $this->session->userdata('ID_KARYAWAN'); ?>');
+
                     $('#table-approval-produk').DataTable({
                         paging: false,
                         searching: false,
