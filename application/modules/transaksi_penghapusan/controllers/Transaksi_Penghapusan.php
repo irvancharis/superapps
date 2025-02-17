@@ -217,6 +217,7 @@ class Transaksi_penghapusan extends CI_Controller
                     'UUID_PRODUK_STOK' => $inputan['UUID_STOK'][$i],
                     'JUMLAH_PENGHAPUSAN' => $inputan['JUMLAH_PENGHAPUSAN'][$i],                    
                     'FOTO_KONDISI_AWAL' => $data['file_name'],
+                    'KETERANGAN_ITEM' => $inputan['KETERANGAN_ITEM'][$i],
                 ];
                 $this->db->insert('TRANSAKSI_PENGHAPUSAN_DETAIL', $data_produk);
             }

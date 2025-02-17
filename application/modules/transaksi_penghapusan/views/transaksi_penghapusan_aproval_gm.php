@@ -45,8 +45,9 @@
                                     <thead>
                                         <tr>
                                             <th>FOTO</th>
-                                            <th>PRODUK</th>
-                                            <th>JUMLAH PENGHAPUSAN</th>
+                                            <th>PRODUK/ITEM</th>
+                                            <th>JUMLAH</th>
+                                            <th>KETERANGAN</th>
                                         </tr>
                                     </thead>
                                     <tbody id="selected-items-body">
@@ -103,9 +104,10 @@ $(document).ready(function() {
             tbody.append(`
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.KODE_ITEM}">
-                                    <td class="text-center col-2"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${item.FOTO_ITEM}" alt=""></center></td>
+                                    <td class="text-center col-1"><center><img width="100px" src="<?php echo base_url('assets/uploads/transaksi_penghapusan/')?>${item.FOTO_KONDISI_AWAL}" alt=""></center></td>
                                     <td>${item.NAMA_PRODUK}</td>
-                                    <td class="text-center col-2">${item.JUMLAH_PENGHAPUSAN}</td>
+                                    <td class="text-center col-1">${item.JUMLAH_PENGHAPUSAN}</td>
+                                    <td class="col-4">${item.KETERANGAN_ITEM}</td>
                                 </tr>
                             `);
         });

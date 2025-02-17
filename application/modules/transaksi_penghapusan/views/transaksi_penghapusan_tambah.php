@@ -86,7 +86,8 @@
                                                     <tr>
                                                         <th>PRODUK/ITEM</th>
                                                         <th class="text-center col-1">STOK SISTEM</th>
-                                                        <th class="text-center col-2">JUMLAH PENGHAPUSAN</th>
+                                                        <th class="text-center col-2">JUMLAH</th>
+                                                        <th class="text-center col-2">KETERANGAN</th>
                                                         <th class="text-center col-4">FOTO</th>
                                                     </tr>
                                                 </thead>
@@ -322,8 +323,9 @@
                                         <td class="text-center col-1">${item.JUMLAH_STOK}</td>
                                         <input type="hidden" class="form-control UUID_STOK" name="UUID_STOK[${index}]" value="${item.UUID_STOK || ''}">
                                         <input type="hidden" class="form-control KODE_ITEM" name="KODE_ITEM[${index}]" value="${item.KODE_ITEM || ''}">
-                                        <td><input type="number" class="form-control" name="JUMLAH_PENGHAPUSAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
-                                        <td><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_KONDISI_AWAL[${index}]"></td>
+                                        <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PENGHAPUSAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
+                                        <td class="text-center col-3"><input type="text" class="form-control" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
+                                        <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_KONDISI_AWAL[${index}]"></td>
                                     </tr>
                                 `);
                             });
