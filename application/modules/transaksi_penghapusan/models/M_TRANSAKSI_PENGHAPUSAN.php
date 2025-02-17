@@ -32,7 +32,7 @@ class M_TRANSAKSI_PENGHAPUSAN extends CI_Model
     public function get_detail_single($KODE)
     {
         $this->db->select('*');
-        $this->db->from('VIEW_TRANSAKSI_PENGHAPUSAN_DETAIL');
+        $this->db->from('VIEW_TRANSAKSI_PENGHAPUSAN_DTL');
         $this->db->where('UUID_TRANSAKSI_PENGHAPUSAN', $KODE);
         $query = $this->db->get();
         return $query->result_object();
@@ -90,7 +90,8 @@ class M_TRANSAKSI_PENGHAPUSAN extends CI_Model
 
     public function update_real_stok($KODE, $data)
     {
-        $this->db->where('UUID_STOK', $KODE);
-        return $this->db->update('PRODUK_STOK', $data);
+        $this->db->where('UUID_STOK',$KODE);
+        $this->db->set('JUMLAH_STOK', 'JUMLAH_STOK - '.(int)$data, FALSE);
+        return $this->db->update('PRODUK_STOK');
     }
 }

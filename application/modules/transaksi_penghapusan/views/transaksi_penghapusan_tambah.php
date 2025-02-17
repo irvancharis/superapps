@@ -4,7 +4,7 @@
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGHAPUSAN_TAMBAH">
+                                <form class="needs-validation" enctype="multipart/form-data" novalidate="" id="FORM_TRANSAKSI_PENGHAPUSAN_TAMBAH">
                                     <div class="card-header">
                                         <h4>INPUT TRANSAKSI PENGHAPUSAN</h4>
 
@@ -14,7 +14,7 @@
                                         <div class="row mt-2">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
-                                                <select required name="AREA_PENEMPATAN" id="AREA_PENEMPATAN"
+                                                <select required name="AREA" id="AREA"
                                                     class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih
                                                         Area
@@ -30,12 +30,10 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DEPARTEMEN</label>
-                                                <select required name="DEPARTEMEN_PENGAJUAN" id="DEPARTEMEN_PENGAJUAN"
+                                                <select disabled required name="DEPARTEMEN" id="DEPARTEMEN"
                                                     class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih
-                                                        Departement --</option>
                                                     <?php foreach ($get_departemen as $row) : ?>
-                                                        <option value="<?= $row->KODE_DEPARTEMEN; ?>">
+                                                        <option value="<?= $row->KODE_DEPARTEMEN; ?>" <?php echo $row->KODE_DEPARTEMEN == $this->session->userdata('ID_DEPARTEMEN') ? "selected " : ""; ?>>
                                                             <?= $row->NAMA_DEPARTEMEN; ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
@@ -47,7 +45,7 @@
                                         <div class="row">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>RUANGAN</label>
-                                                <select required name="RUANGAN_PENEMPATAN" id="RUANGAN_PENEMPATAN"
+                                                <select required name="RUANGAN" id="RUANGAN"
                                                     class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih
                                                         Ruangan --</option>
@@ -62,7 +60,7 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>LOKASI</label>
-                                                <select required name="LOKASI_PENEMPATAN" id="LOKASI_PENEMPATAN"
+                                                <select required name="LOKASI" id="LOKASI"
                                                     class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih
                                                         Lokasi --</option>
@@ -87,8 +85,10 @@
                                                 <thead>
                                                     <tr>
                                                         <th>PRODUK/ITEM</th>
-                                                        <th>STOK SISTEM</th>
-                                                        <th>STOK REAL</th>
+                                                        <th class="text-center col-1">STOK SISTEM</th>
+                                                        <th class="text-center col-2">JUMLAH</th>
+                                                        <th class="text-center col-2">KETERANGAN</th>
+                                                        <th class="text-center col-4">FOTO</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="selected-items-body">
@@ -99,8 +99,8 @@
                                         <br><br>
                                         <div class="form-group col-12 col-md-12 col-lg-12">
                                             <label>KETERANGAN</label>
-                                            <textarea name="CATATAN_PENGHAPUSAN" placeholder="Masukkan keterangan penghapusan"
-                                                class="form-control" id="CATATAN_PENGHAPUSAN"></textarea>
+                                            <textarea name="KETERANGAN" placeholder="Masukkan keterangan penghapusan"
+                                                class="form-control" id="KETERANGAN"></textarea>
                                             <div class="invalid-feedback">
                                                 Silahkan masukkan keterangan penghapusan!
                                             </div>
@@ -143,10 +143,10 @@
 
                         // Cek apakah semua properti yang dibutuhkan ada di dalam objek
                         var isComplete = (
-                            FormPenghapusan.AREA_PENGHAPUSAN &&
-                            FormPenghapusan.KODE_DEPARTEMEN &&
-                            FormPenghapusan.RUANGAN_PENGHAPUSAN &&
-                            FormPenghapusan.LOKASI_PENGHAPUSAN
+                            FormPenghapusan.AREA &&
+                            FormPenghapusan.DEPARTEMEN &&
+                            FormPenghapusan.RUANGAN &&
+                            FormPenghapusan.LOKASI
                         );
 
                         if (isComplete) {
@@ -154,10 +154,10 @@
                                 url: "<?php echo base_url(); ?>" + "transaksi_penghapusan/get_produk_input_penghapusan",
                                 type: "GET",
                                 data: {
-                                    KODE_AREA: FormPenghapusan.AREA_PENGHAPUSAN,
-                                    KODE_DEPARTEMEN: FormPenghapusan.KODE_DEPARTEMEN,
-                                    KODE_RUANGAN: FormPenghapusan.RUANGAN_PENGHAPUSAN,
-                                    KODE_LOKASI: FormPenghapusan.LOKASI_PENGHAPUSAN
+                                    KODE_AREA: FormPenghapusan.AREA,
+                                    KODE_DEPARTEMEN: FormPenghapusan.DEPARTEMEN,
+                                    KODE_RUANGAN: FormPenghapusan.RUANGAN,
+                                    KODE_LOKASI: FormPenghapusan.LOKASI
                                 },
                                 success: function(response) {
                                     let res = JSON.parse(response);
@@ -184,12 +184,12 @@
                     $('select').on('change', function() {
                         saveFormData();
                     });
-                    $('#CATATAN_PENGHAPUSAN').on('change', function() {
+                    $('#KETERANGAN_PENGHAPUSAN').on('change', function() {
                         saveFormData();
                     });
 
                     // Get Ruangan By Area
-                    $('#AREA_PENEMPATAN').on('change', function() {
+                    $('#AREA').on('change', function() {
                         let area = $(this).val();
                         $.ajax({
                             url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_ruangan_by_area",
@@ -200,7 +200,7 @@
                             success: function(response) {
                                 var ruangan = JSON.parse(response);
                                 var data_ruangan = ruangan.data;
-                                var $ruanganPenempatan = $('#RUANGAN_PENEMPATAN');
+                                var $ruanganPenempatan = $('#RUANGAN');
 
                                 $ruanganPenempatan.empty().append(
                                     '<option value="" class="text-center" selected disabled>-- Pilih Ruangan --</option>'
@@ -221,7 +221,7 @@
                     });
 
                     // Get Lokasi By Ruangan
-                    $('#RUANGAN_PENEMPATAN').on('change', function() {
+                    $('#RUANGAN').on('change', function() {
                         let ruangan = $(this).val();
                         $.ajax({
                             url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_lokasi_by_ruangan",
@@ -232,7 +232,7 @@
                             success: function(response) {
                                 var lokasi = JSON.parse(response);
                                 var data_lokasi = lokasi.data;
-                                var $lokasiPenempatan = $('#LOKASI_PENEMPATAN');
+                                var $lokasiPenempatan = $('#LOKASI');
 
                                 $lokasiPenempatan.empty().append(
                                     '<option value="" class="text-center" selected disabled>-- Pilih Lokasi --</option>'
@@ -255,29 +255,15 @@
                     $('#FORM_TRANSAKSI_PENGHAPUSAN_TAMBAH').on('submit', function(e) {
                         e.preventDefault();
 
-                        let storedProdukItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
-                        let formData = JSON.parse(localStorage.getItem('FormPenghapusan')) || {};
+                        let formData = new FormData(this);
 
-                        if (storedProdukItems.length == 0) {
-                            swal('Error', 'Tidak ada produk yang dipilih.', 'error').then(function() {
-                                console.log(storedProdukItems);
-                            });
-                        }
-
-                        if (!formData.AREA_PENGHAPUSAN || !formData.KODE_DEPARTEMEN || !formData
-                            .RUANGAN_PENGHAPUSAN || !formData.LOKASI_PENGHAPUSAN || !formData.CATATAN_PENGHAPUSAN) {
-                            swal('Error', 'Lengkapi semua data.', 'error').then(function() {
-                                return;
-                            });
-                        }
 
                         $.ajax({
                             url: "<?php echo base_url(); ?>" + "transaksi_penghapusan/insert",
                             type: "POST",
-                            data: {
-                                items: storedProdukItems,
-                                form: formData
-                            },
+                            data: formData,
+                            processData: false,
+                            contentType: false,
                             success: function(response) {
                                 let res = JSON.parse(response);
                                 if (res.success) {
@@ -299,11 +285,11 @@
                     // Form Data Save to Local Storage
                     function saveFormData() {
                         let formData = {
-                            AREA_PENGHAPUSAN: $('#AREA_PENEMPATAN').val(),
-                            KODE_DEPARTEMEN: $('#DEPARTEMEN_PENGAJUAN').val(),
-                            RUANGAN_PENGHAPUSAN: $('#RUANGAN_PENEMPATAN').val(),
-                            LOKASI_PENGHAPUSAN: $('#LOKASI_PENEMPATAN').val(),
-                            CATATAN_PENGHAPUSAN: $('#CATATAN_PENGHAPUSAN').val() == '' ? null : $('#CATATAN_PENGHAPUSAN').val()
+                            AREA: $('#AREA').val(),
+                            DEPARTEMEN: $('#DEPARTEMEN').val(),
+                            RUANGAN: $('#RUANGAN').val(),
+                            LOKASI: $('#LOKASI').val(),
+                            KETERANGAN: $('#KETERANGAN').val() == '' ? null : $('#KETERANGAN').val()
                         };
 
                         localStorage.setItem('FormPenghapusan', JSON.stringify(formData));
@@ -313,11 +299,11 @@
                     function loadFormData() {
                         let formData = JSON.parse(localStorage.getItem('FormPenghapusan'));
                         if (formData) {
-                            $('#AREA_PENEMPATAN').val(formData.AREA_PENEMPATAN);
-                            $('#DEPARTEMEN_PENGAJUAN').val(formData.DEPARTEMEN_PENGAJUAN);
-                            $('#RUANGAN_PENEMPATAN').val(formData.RUANGAN_PENEMPATAN);
-                            $('#LOKASI_PENEMPATAN').val(formData.LOKASI_PENEMPATAN);
-                            $('#CATATAN_PENGHAPUSAN').val(formData.CATATAN_PENGHAPUSAN);
+                            $('#AREA').val(formData.AREA);
+                            $('#DEPARTEMEN').val(formData.DEPARTEMEN);
+                            $('#RUANGAN').val(formData.RUANGAN);
+                            $('#LOKASI').val(formData.LOKASI);
+                            $('#KETERANGAN').val(formData.KETERANGAN);
                         }
                     }
 
@@ -334,8 +320,12 @@
                                 tbody.append(`
                                     <tr data-index="${index}">
                                         <td>${item.NAMA_PRODUK}</td>
-                                        <td>${item.JUMLAH_STOK}</td>
-                                        <td><input type="number" class="form-control stok-real" name="STOK_AKTUAL[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
+                                        <td class="text-center col-1">${item.JUMLAH_STOK}</td>
+                                        <input type="hidden" class="form-control UUID_STOK" name="UUID_STOK[${index}]" value="${item.UUID_STOK || ''}">
+                                        <input type="hidden" class="form-control KODE_ITEM" name="KODE_ITEM[${index}]" value="${item.KODE_ITEM || ''}">
+                                        <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PENGHAPUSAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
+                                        <td class="text-center col-3"><input type="text" class="form-control" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
+                                        <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_KONDISI_AWAL[${index}]"></td>
                                     </tr>
                                 `);
                             });
@@ -346,17 +336,17 @@
                     }
 
                     function attachInputListeners() {
-                        $('#selected-items-body').on('input', '.stok-real', function() {
+                        $('#selected-items-body').on('input', '.JUMLAH_PENGHAPUSAN', function() {
                             let rowIndex = $(this).closest('tr').data('index');
                             let stokReal = $(this).val();
                             
                             let storedItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
-                            storedItems[rowIndex].STOK_AKTUAL = stokReal;
+                            storedItems[rowIndex].JUMLAH_PENGHAPUSAN = stokReal;
                             localStorage.setItem('storedProdukItems', JSON.stringify(storedItems));
                         });
                     }
 
-                    $('#selected-items-body').on('input', '.stok-real', function() {
+                    $('#selected-items-body').on('input', '.JUMLAH_PENGHAPUSAN', function() {
                         let rowIndex = $(this).closest('tr').data('index');
                         let stokReal = $(this).val();
 

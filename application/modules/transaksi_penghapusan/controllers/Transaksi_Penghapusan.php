@@ -9,8 +9,6 @@ class Transaksi_penghapusan extends CI_Controller
         parent::__construct();
         $this->load->library('session');
         $this->load->model('role/M_ROLE');
-        
-
         $this->load->model('M_TRANSAKSI_PENGHAPUSAN');
         $this->load->model('departement/M_DEPARTEMENT');
         $this->load->model('maping_area/M_MAPING_AREA');
@@ -167,44 +165,69 @@ class Transaksi_penghapusan extends CI_Controller
             $this->load->view('transaksi_penghapusan_detail', $data);
     }
 
-    public function insert()
-    {
+   public function insert()
+{
+    $inputan = $this->input->post(null, TRUE);
+    $KODE_ITEM = $this->input->post('KODE_ITEM');
+    
+    $uuid_transaksi = $this->uuid->v4();
 
-        $items = $this->input->post('items');
-        $formData = $this->input->post('form');
-        $uuid_transaksi = $this->uuid->v4();
+    $data_transaksi = [
+        'USER_PENGAJUAN' => $this->session->userdata('ID_KARYAWAN'),
+        'UUID_TRANSAKSI_PENGHAPUSAN' => $uuid_transaksi,
+        'KODE_DEPARTEMEN' => $this->session->userdata('ID_DEPARTEMEN'),
+        'TANGGAL_PENGAJUAN' => date('Y-m-d'),
+        'KETERANGAN_PENGHAPUSAN' => $inputan['KETERANGAN'],
+        'AREA_PENGHAPUSAN' => $inputan['AREA'],
+        'STATUS_PENGHAPUSAN' => 'MENUNGGU APROVAL KABAG',
+        'RUANGAN_PENGHAPUSAN' => $inputan['RUANGAN'],
+        'LOKASI_PENGHAPUSAN' => $inputan['LOKASI'],
+    ];
+    
+    $this->db->insert('TRANSAKSI_PENGHAPUSAN', $data_transaksi);
 
-        if (!empty($formData) && !empty($items)) {
-            // Simpan data transaksi utama
-            $data_transaksi = [
-                'USER_PELAKSANA' => $this->session->userdata('ID_KARYAWAN'),
-                'UUID_TRANSAKSI_PENGHAPUSAN' => $uuid_transaksi,
-                'KODE_DEPARTEMEN' => $this->session->userdata('ID_DEPARTEMEN'),
-                'TANGGAL_PENGHAPUSAN' => date('Y-m-d'),
-                'CATATAN_PENGHAPUSAN' => $formData['CATATAN_PENGHAPUSAN'],
-                'AREA_PENGHAPUSAN' => $formData['AREA_PENGHAPUSAN'],
-                'STATUS_PENGHAPUSAN' => 'MENUNGGU APROVAL KABAG',
-                'RUANGAN_PENGHAPUSAN' => $formData['RUANGAN_PENGHAPUSAN'],
-                'LOKASI_PENGHAPUSAN' => $formData['LOKASI_PENGHAPUSAN'],
-            ];
-            $this->db->insert('TRANSAKSI_PENGHAPUSAN', $data_transaksi);
+    // Cek apakah ada file yang diunggah
+    if (!empty($_FILES['FOTO_KONDISI_AWAL']['name'][0])) {
+        $files = $_FILES;
+        $count = count($_FILES['FOTO_KONDISI_AWAL']['name']);
 
-            // Simpan detail produk
-            foreach ($items as $item) {
+        for ($i = 0; $i < $count; $i++) {
+            $FOTO_NAME = $this->uuid->v4();
+
+            $_FILES['file']['name'] = $files['FOTO_KONDISI_AWAL']['name'][$i];
+            $_FILES['file']['type'] = $files['FOTO_KONDISI_AWAL']['type'][$i];
+            $_FILES['file']['tmp_name'] = $files['FOTO_KONDISI_AWAL']['tmp_name'][$i];
+            $_FILES['file']['error'] = $files['FOTO_KONDISI_AWAL']['error'][$i];
+            $_FILES['file']['size'] = $files['FOTO_KONDISI_AWAL']['size'][$i];
+
+            $config['upload_path'] = FCPATH . 'assets/uploads/transaksi_penghapusan/';
+            $config['allowed_types'] = 'jpg|jpeg|png';
+            $config['max_size'] = 2048; // 2MB
+            $config['file_name'] = $FOTO_NAME;
+
+            $this->load->library('upload', $config);
+
+            if (!$this->upload->do_upload('file')) {
+                echo json_encode(['success' => false, 'error' => $this->upload->display_errors()]);
+                exit;
+            } else {
+                $data = $this->upload->data();                
                 $data_produk = [
                     'UUID_TRANSAKSI_PENGHAPUSAN' => $uuid_transaksi,
-                    'UUID_PRODUK_STOK' => $item['UUID_STOK'],
-                    'STOK_SYSTEM' => $item['JUMLAH_STOK'],
-                    'STOK_AKTUAL' => $item['STOK_AKTUAL'],
+                    'UUID_PRODUK_STOK' => $inputan['UUID_STOK'][$i],
+                    'JUMLAH_PENGHAPUSAN' => $inputan['JUMLAH_PENGHAPUSAN'][$i],                    
+                    'FOTO_KONDISI_AWAL' => $data['file_name'],
+                    'KETERANGAN_ITEM' => $inputan['KETERANGAN_ITEM'][$i],
                 ];
                 $this->db->insert('TRANSAKSI_PENGHAPUSAN_DETAIL', $data_produk);
             }
-
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false]);
         }
     }
+
+    echo json_encode(['success' => true]);
+}
+
+
 
 
     public function disapprove_kabag()
@@ -241,7 +264,7 @@ class Transaksi_penghapusan extends CI_Controller
         // Update tabel transaksi_pengadaan
         $data_update = [
             'KODE_APROVAL_KABAG' => $this->session->userdata('ID_KARYAWAN'),
-            'CATATAN_PENGHAPUSAN' => $form['CATATAN_PENGHAPUSAN'],
+            'KETERANGAN_PENGHAPUSAN' => $form['KETERANGAN_PENGHAPUSAN'],
             'TANGGAL_APROVAL_KABAG' => date('Y-m-d'),
             'STATUS_PENGHAPUSAN' => 'MENUNGGU APROVAL GM',
         ];
@@ -251,20 +274,7 @@ class Transaksi_penghapusan extends CI_Controller
         if (!$update) {
             echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
             return;
-        }
-
-        // Update transaksi_pengadaan_detail
-        $this->M_TRANSAKSI_PENGHAPUSAN->delete_detail($id_transaksi); // Hapus data lama
-        
-        foreach ($items as $item) {
-                $data_produk = [
-                    'UUID_TRANSAKSI_PENGHAPUSAN' => $item['UUID_TRANSAKSI_PENGHAPUSAN'],
-                    'UUID_PRODUK_STOK' => $item['UUID_STOK'],
-                    'STOK_SYSTEM' => $item['JUMLAH_STOK'],
-                    'STOK_AKTUAL' => $item['STOK_AKTUAL'],
-                ];
-                $this->db->insert('TRANSAKSI_PENGHAPUSAN_DETAIL', $data_produk);
-            }
+        }        
 
         echo json_encode(['success' => true]);
     }
@@ -367,12 +377,9 @@ class Transaksi_penghapusan extends CI_Controller
         
         foreach ($items as $item) {
             $UUID_STOK = $item['UUID_STOK'];
-            
-                $data_produk = [
-                    'JUMLAH_STOK' => $item['STOK_AKTUAL'],
-                ];
-                $this->M_TRANSAKSI_PENGHAPUSAN->update_real_stok($UUID_STOK, $data_produk);
-            }
+            $data_produk = $item['JUMLAH_PENGHAPUSAN'];
+            $this->M_TRANSAKSI_PENGHAPUSAN->update_real_stok($UUID_STOK, $data_produk);
+        }
 
         echo json_encode(['success' => true]);
     }
