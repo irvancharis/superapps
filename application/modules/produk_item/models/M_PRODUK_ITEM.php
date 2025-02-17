@@ -25,6 +25,13 @@ class M_PRODUK_ITEM extends CI_Model
         return $result->result();
     }
 
+    public function getFilteredProdukStok($search)
+    {
+        $query = "SELECT * FROM VIEW_PRODUK_STOK WHERE NAMA_PRODUK LIKE '%$search%' OR KODE_ITEM LIKE '%$search%' OR NAMA_PRODUK_KATEGORI LIKE '%$search%'";
+        $result = $this->db->query($query);
+        return $result->result();
+    }
+
     public function get_produk_item_single($KODE_ITEM)
     {
         $this->db->select('*');
