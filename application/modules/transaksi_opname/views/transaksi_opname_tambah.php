@@ -30,10 +30,11 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DEPARTEMEN</label>
-                                                <select disabled required name="DEPARTEMEN_PENGAJUAN" id="DEPARTEMEN_PENGAJUAN"
-                                                    class="form-control">
+                                                <select disabled required name="DEPARTEMEN_PENGAJUAN"
+                                                    id="DEPARTEMEN_PENGAJUAN" class="form-control">
                                                     <?php foreach ($get_departemen as $row) : ?>
-                                                    <option  value="<?= $row->KODE_DEPARTEMEN; ?>" <?php echo $row->KODE_DEPARTEMEN == $this->session->userdata('ID_DEPARTEMEN') ? "selected " : ""; ?> >
+                                                    <option value="<?= $row->KODE_DEPARTEMEN; ?>"
+                                                        <?php echo $row->KODE_DEPARTEMEN == $this->session->userdata('ID_DEPARTEMEN') ? "selected " : ""; ?>>
                                                         <?= $row->NAMA_DEPARTEMEN; ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
@@ -77,10 +78,18 @@
                                         </div>
 
                                         <div class="card-footer text-center">
-                                            <button type="button" class="btn btn-success" id="btn-lock-produk">
-                                                <i class="fa fa-save"></i> LOCK DATA
-                                                </label>
+                                            <label>
+                                                <button type="button" class="btn btn-danger" id="btn-riset">
+                                                    <i class="fa fa-redo"></i> RISET
+                                            </label>
+                                            
+                                            <label>
+                                                <button type="button" class="btn btn-success" id="btn-lock-produk">
+                                                    <i class="fa fa-save"></i> LOCK DATA
+                                            </label>
+
                                         </div>
+
                                         <div class="table-responsive">
                                             <table class="table table-striped" id="dataprodukitem">
                                                 <thead>
@@ -136,6 +145,12 @@ $(document).ready(function() {
 
     renderTable(storedItems);
     loadFormData();
+
+    $('#btn-riset').on('click', function() {
+        localStorage.removeItem('storedProdukItems');
+        localStorage.removeItem('FormOpname');
+        location.reload();
+    });
 
     // Get Data Produk Lock
     $('#btn-lock-produk').on('click', function() {
