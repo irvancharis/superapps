@@ -10,7 +10,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <div class="form-group col-12 col-md-6 col-lg-4">
                                                 <label>AREA</label>
                                                 <select required name="ID_MAPING_AREA" id="ID_MAPING_AREA" class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih Area --</option>
@@ -22,7 +22,7 @@
                                                     Silahkan masukkan AREA!
                                                 </div>
                                             </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <div class="form-group col-12 col-md-6 col-lg-4">
                                                 <label>DEPARTEMEN</label>
                                                 <select required name="ID_DEPARTEMENT" id="ID_DEPARTEMENT" class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih Departement --</option>
@@ -34,7 +34,7 @@
                                                     Silahkan masukkan DEPARTEMENT!
                                                 </div>
                                             </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <div class="form-group col-12 col-md-6 col-lg-4">
                                                 <label>JABATAN</label>
                                                 <select required name="ID_JABATAN" id="ID_JABATAN" class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih Jabatan --</option>
@@ -119,7 +119,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <div class="form-group col-12 col-md-6 col-lg-3">
                                                 <label>JENIS KELAMIN</label>
                                                 <select required name="JENIS_KELAMIN" id="JENIS_KELAMIN" class="form-control">
                                                     <option value="LAKI-LAKI" class="text-center"  >LAKI-LAKI</option>
@@ -130,7 +130,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <div class="form-group col-12 col-md-6 col-lg-3">
                                                 <label>AGAMA</label>
                                                 <select required name="AGAMA" id="AGAMA" class="form-control">
                                                 <option value="" class="text-center" selected disabled>-- Pilih Kategori --</option>
@@ -146,7 +146,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <div class="form-group col-12 col-md-6 col-lg-3">
                                                 <label>GOLONGAN DARAH</label>
                                                 <select required name="GOLONGAN_DARAH" id="GOLONGAN_DARAH" class="form-control">
                                                 <option value="" class="text-center" selected disabled>-- Pilih Kategori --</option>
@@ -162,7 +162,7 @@
                                             </div>
 
 
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <div class="form-group col-12 col-md-6 col-lg-3">
                                                 <label>STATUS KAWIN</label>
                                                 <select required name="STATUS_PERKAWINAN" id="STATUS_PERKAWINAN" class="form-control">
                                                 <option value="" class="text-center" selected disabled>-- Pilih Kategori --</option>

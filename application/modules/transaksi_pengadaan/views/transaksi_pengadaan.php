@@ -22,9 +22,9 @@
                                                             <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                                                         </div>
                                                     </th>
-                                                    <th>REGISTER</th>
-                                                    <th>DEPARTEMEN</th>
+                                                    <th>TANGGAL PENGAJUAN</th>
                                                     <th>USER PENGAJUAN</th>
+                                                    <th>DEPARTEMEN</th>
                                                     <th>APPROVAL</th>
                                                     <th>STATUS</th>
                                                 </tr>
@@ -39,9 +39,9 @@
                                                                 <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                                                             </div>
                                                         </td>
-                                                        <td><?php echo $d->NO_REGISTER; ?></td>
-                                                        <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>
+                                                        <td><?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGAJUAN, 'l, d F Y'); ?>
                                                         <td><?php echo $d->NAMA_USER_PENGAJUAN; ?></td>
+                                                        <td><i class="fa fa-map-marker"></i> <?php echo $d->NAMA_AREA; ?><br><i class="fa fa-building"></i> <?php echo $d->NAMA_RUANGAN; ?><br> <i class="fa fa-users"></i> <?php echo $d->NAMA_DEPARTEMEN; ?><br><i class="fa fa-box"></i> <?php echo $d->NAMA_LOKASI; ?></td>
                                                         <td>
                                                             <?php echo 'KABAG - ( ' . (($d->KODE_APROVAL_KABAG != null) ? $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
                                                             <?php echo 'GM - ( ' . (($d->KODE_APROVAL_GM != null) ? $d->NAMA_APROVAL_GM . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_GM . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
