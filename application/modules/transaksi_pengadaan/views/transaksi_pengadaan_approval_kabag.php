@@ -134,7 +134,13 @@
                             tbody.append(`
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.id}">
-                                    <td class="text-center col-2"><img style="width: 100px;" src="<?php echo base_url('assets/uploads/item/'); ?>${item.foto}" alt=""></td>
+                                    <td class="text-center">
+                                        <div class="gallery d-flex justify-content-center">
+                                            <a class="gallery-item w-25" href="<?php echo base_url('assets/uploads/item/') ?>${item.foto}" data-image="<?php echo base_url('assets/uploads/item/') ?>${item.foto}" data-title="${item.nama}">
+                                                <img style="width: 100px;" src="<?php echo base_url('assets/uploads/item/'); ?>${item.foto}" alt="">
+                                            </a>
+                                        </div>
+                                    </td>
                                     <td>${item.nama}</td>
                                     <td class="text-center col-1"><input type="number" class="form-control jumlah" name="JUMLAH_PENGADAAN[${index}]" value="${item.jumlah || ''}"></td>
                                     <td><input type="text" class="form-control keperluan" name="KEPERLUAN[${index}]" value="${item.keperluan || ''}"></td>
@@ -143,6 +149,17 @@
                             `);
                         });
                         attachInputListeners();
+
+                        // Initialize Chocolate JS
+                        if (jQuery().Chocolat) {
+                            $(".gallery").Chocolat({
+                                className: 'gallery',
+                                imageSelector: '.gallery-item',
+                                imageSize: 'contain', // Menyesuaikan gambar agar pas dalam layar
+                                fullScreen: false, // Tidak otomatis fullscreen
+                                backgroundColor: 'rgba(0,0,0,0.9)', // Background gelap
+                            });
+                        }
                     }
 
                     function loadDataFromDB() {
