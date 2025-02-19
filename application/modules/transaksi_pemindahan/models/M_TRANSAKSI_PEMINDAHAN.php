@@ -26,7 +26,7 @@ class M_TRANSAKSI_PEMINDAHAN extends CI_Model
         $this->db->from('VIEW_TRANSAKSI_PEMINDAHAN');
         $this->db->where('UUID_TRANSAKSI_PEMINDAHAN', $KODE);
         $query = $this->db->get();
-        return $query;
+        return $query->row();
     }
 
     public function get_detail_single($KODE)
@@ -88,10 +88,37 @@ class M_TRANSAKSI_PEMINDAHAN extends CI_Model
         return $this->db->delete($this->table_detail);
     }
 
-    public function update_real_stok($KODE, $data)
+    public function pengurangan_real_stok($KODE, $data)
     {
         $this->db->where('UUID_STOK',$KODE);
         $this->db->set('JUMLAH_STOK', 'JUMLAH_STOK - '.(int)$data, FALSE);
         return $this->db->update('PRODUK_STOK');
     }
+
+    public function penambahan_real_stok($KODE, $data)
+    {
+        $this->db->where('UUID_STOK',$KODE);
+        $this->db->set('JUMLAH_STOK', 'JUMLAH_STOK + '.(int)$data, FALSE);
+        return $this->db->update('PRODUK_STOK');
+    }
+
+
+public function cek_stok($KODE_ITEM,$KODE_AREA, $KODE_RUANGAN, $KODE_LOKASI, $KODE_DEPARTEMEN)
+    {
+        $this->db->select('*');
+        $this->db->from('VIEW_PRODUK_STOK');
+        $this->db->where('KODE_ITEM', $KODE_ITEM);
+        $this->db->where('KODE_AREA', $KODE_AREA);
+        $this->db->where('KODE_RUANGAN', $KODE_RUANGAN);
+        $this->db->where('KODE_LOKASI', $KODE_LOKASI);
+        $this->db->where('KODE_DEPARTEMEN', $KODE_DEPARTEMEN);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function insert_stok($data)
+    {
+        return $this->db->insert('PRODUK_STOK', $data);
+    }
+
 }

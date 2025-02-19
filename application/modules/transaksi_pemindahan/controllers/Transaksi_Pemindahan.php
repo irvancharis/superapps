@@ -150,12 +150,11 @@ class Transaksi_pemindahan extends CI_Controller
             redirect('non_akses');
         }
 
-
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_TRANSAKSI_PEMINDAHAN->get_single($KODE);
-        $data['get_single'] = $query->row();
+        $data['get_single'] = $query;
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('transaksi_pemindahan_aproval_kabag', $data);
@@ -174,7 +173,7 @@ class Transaksi_pemindahan extends CI_Controller
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_TRANSAKSI_PEMINDAHAN->get_single($KODE);
-        $data['get_single'] = $query->row();
+        $data['get_single'] = $query;
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('transaksi_pemindahan_aproval_gm', $data);
@@ -193,16 +192,45 @@ class Transaksi_pemindahan extends CI_Controller
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_TRANSAKSI_PEMINDAHAN->get_single($KODE);
-        $data['get_single'] = $query->row();
+        $data['get_single'] = $query;
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('transaksi_pemindahan_aproval_head', $data);
+    }
+
+    public function proses_pemindahan($KODE, $page = 'transaksi_pemindahan')
+    {
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PEMINDAHAN', 'APROVAL KABAG');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
+
+
+        $this->load->library('session');
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $query = $this->M_TRANSAKSI_PEMINDAHAN->get_single($KODE);
+        $data['get_single'] = $query;
+        
+        $KODE_DEPARTEMEN = $query->DEPARTEMEN_AKHIR;        
+        $karyawan = $this->M_KARYAWAN->get_karyawan_by_departemen($KODE_DEPARTEMEN);        
+        $data['karyawan'] = $karyawan;
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('transaksi_pemindahan_proses', $data);
     }
 
 
     public function list_produk($KODE)
     {
         $query = $this->M_TRANSAKSI_PEMINDAHAN->get_detail_single($KODE);
+        echo json_encode($query);
+    }
+
+    public function list_maping($KODE)
+    {
+        $query = $this->M_TRANSAKSI_PEMINDAHAN->get_single($KODE);
         echo json_encode($query);
     }
 
@@ -432,6 +460,29 @@ class Transaksi_pemindahan extends CI_Controller
         $data_update = [
             'KODE_APROVAL_HEAD' => $this->session->userdata('ID_KARYAWAN'),
             'TANGGAL_APROVAL_HEAD' => date('Y-m-d'),
+            'STATUS_PEMINDAHAN' => 'PROSES PEMINDAHAN',
+        ];
+
+        $update = $this->M_TRANSAKSI_PEMINDAHAN->update_transaksi($id_transaksi, $data_update);
+
+        if (!$update) {
+            echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
+            return;
+        }        
+
+        echo json_encode(['success' => true]);
+    }
+
+    public function update_proses_pemindahan()
+    {
+        $id_transaksi = $this->input->post('UUID_TRANSAKSI_PEMINDAHAN'); // Ambil ID transaksi
+        $USER_PENERIMA = $this->input->post('USER_PENERIMA');
+
+        // Update tabel transaksi_pengadaan
+        $data_update = [
+            'USER_PENYERAHAN' => $this->session->userdata('ID_KARYAWAN'),
+            'USER_PENERIMA' => $USER_PENERIMA,
+            'TANGGAL_REALISASI' => date('Y-m-d'),
             'STATUS_PEMINDAHAN' => 'SELESAI',
         ];
 
@@ -442,13 +493,41 @@ class Transaksi_pemindahan extends CI_Controller
             return;
         }
 
-        // Update transaksi_pengadaan_detail
+        $items = $this->input->post('items');
+        $list_maping = $this->input->post('form');        
 
         foreach ($items as $item) {
+            //pengurangan stok
             $UUID_STOK = $item['UUID_STOK'];
             $data_produk = $item['JUMLAH_PEMINDAHAN'];
-            $this->M_TRANSAKSI_PEMINDAHAN->update_real_stok($UUID_STOK, $data_produk);
+            $this->M_TRANSAKSI_PEMINDAHAN->pengurangan_real_stok($UUID_STOK, $data_produk);
+
+            //cek stok
+            $KODE_ITEM = $item['KODE_ITEM'];
+            $DEPARTEMEN = $list_maping['DEPARTEMEN_AKHIR'];
+            $AREA = $list_maping['AREA_AKHIR'];
+            $LOKASI = $list_maping['LOKASI_AKHIR'];
+            $RUANGAN = $list_maping['RUANGAN_AKHIR'];
+            $JUMLAH_PEMINDAHAN = $item['JUMLAH_PEMINDAHAN'];
+
+            $cek_stok = $this->M_TRANSAKSI_PEMINDAHAN->cek_stok($KODE_ITEM,$AREA,$RUANGAN,$LOKASI,$DEPARTEMEN);
+            if ($cek_stok) {
+                $this->M_TRANSAKSI_PEMINDAHAN->penambahan_real_stok($cek_stok->UUID_STOK,$JUMLAH_PEMINDAHAN);
+            } else {
+                $data = [
+                    'UUID_STOK' => $this->uuid->v4(),
+                    'KODE_ITEM' => $KODE_ITEM,
+                    'KODE_DEPARTEMEN' => $DEPARTEMEN,
+                    'KODE_AREA' => $AREA,
+                    'KODE_LOKASI' => $LOKASI,
+                    'KODE_RUANGAN' => $RUANGAN,
+                    'JUMLAH_STOK' => $JUMLAH_PEMINDAHAN
+                ];
+                $this->M_TRANSAKSI_PEMINDAHAN->insert_stok($data);
+            }
+            
         }
+
 
         echo json_encode(['success' => true]);
     }

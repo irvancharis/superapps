@@ -65,6 +65,16 @@
                                                         </a>
 
                                                         <?php
+                                                            }
+                                                            elseif($d->STATUS_PEMINDAHAN == 'PROSES PEMINDAHAN')
+                                                            {
+                                                        ?>
+                                                        <span class="badge badge-warning">PROSES PEMINDAHAN</span>
+                                                        <a href="<?=site_url('transaksi_pemindahan/proses_pemindahan/'.$d->UUID_TRANSAKSI_PEMINDAHAN);?>"
+                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
+                                                        </a>
+
+                                                        <?php
                                                         }
                                                             elseif($d->STATUS_PEMINDAHAN == 'SELESAI')
                                                             {
