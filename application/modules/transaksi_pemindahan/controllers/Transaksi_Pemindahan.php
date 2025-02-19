@@ -252,18 +252,19 @@ class Transaksi_pemindahan extends CI_Controller
         $this->db->insert('TRANSAKSI_PEMINDAHAN', $data_transaksi);
 
         // Cek apakah ada file yang diunggah
-        if (!empty($_FILES['FOTO_KONDISI_AWAL']['name'][0])) {
+        if (!empty($_FILES['FOTO_AWAL']['name'][0])) {
             $files = $_FILES;
-            $count = count($_FILES['FOTO_KONDISI_AWAL']['name']);
+            $count = count($_FILES['FOTO_AWAL']['name']);
 
+            
             for ($i = 0; $i < $count; $i++) {
                 $FOTO_NAME = $this->uuid->v4();
 
-                $_FILES['file']['name'] = $files['FOTO_KONDISI_AWAL']['name'][$i];
-                $_FILES['file']['type'] = $files['FOTO_KONDISI_AWAL']['type'][$i];
-                $_FILES['file']['tmp_name'] = $files['FOTO_KONDISI_AWAL']['tmp_name'][$i];
-                $_FILES['file']['error'] = $files['FOTO_KONDISI_AWAL']['error'][$i];
-                $_FILES['file']['size'] = $files['FOTO_KONDISI_AWAL']['size'][$i];
+                $_FILES['file']['name'] = $files['FOTO_AWAL']['name'][$i];
+                $_FILES['file']['type'] = $files['FOTO_AWAL']['type'][$i];
+                $_FILES['file']['tmp_name'] = $files['FOTO_AWAL']['tmp_name'][$i];
+                $_FILES['file']['error'] = $files['FOTO_AWAL']['error'][$i];
+                $_FILES['file']['size'] = $files['FOTO_AWAL']['size'][$i];
 
                 $config['upload_path'] = FCPATH . 'assets/uploads/transaksi_pemindahan/';
                 $config['allowed_types'] = 'jpg|jpeg|png';
@@ -271,6 +272,8 @@ class Transaksi_pemindahan extends CI_Controller
                 $config['file_name'] = $FOTO_NAME;
 
                 $this->load->library('upload', $config);
+
+                
 
                 if (!$this->upload->do_upload('file')) {
                     echo json_encode(['success' => false, 'error' => $this->upload->display_errors()]);
@@ -281,10 +284,11 @@ class Transaksi_pemindahan extends CI_Controller
                         'UUID_TRANSAKSI_PEMINDAHAN' => $uuid_transaksi,
                         'UUID_PRODUK_STOK' => $inputan['UUID_STOK'][$i],
                         'JUMLAH_PEMINDAHAN' => $inputan['JUMLAH_PEMINDAHAN'][$i],
-                        'FOTO_KONDISI_AWAL' => $data['file_name'],
-                        'KETERANGAN_ITEM' => $inputan['KETERANGAN_ITEM'][$i],
+                        'FOTO_AWAL' => $data['file_name'],
+                        'KEPERLUAN' => $inputan['KETERANGAN_ITEM'][$i],
                     ];
                     $this->db->insert('TRANSAKSI_PEMINDAHAN_DETAIL', $data_produk);
+
                 }
             }
         }
