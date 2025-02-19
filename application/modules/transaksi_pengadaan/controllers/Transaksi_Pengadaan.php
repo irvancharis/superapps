@@ -522,6 +522,7 @@ class Transaksi_pengadaan extends CI_Controller
         // Update tabel transaksi_pengadaan
         $data_update = [
             'KETERANGAN_CANCEL_KABAG' => $form,
+            'STATUS_PENGADAAN' => 'DITOLAK KABAG',
         ];
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
@@ -564,6 +565,7 @@ class Transaksi_pengadaan extends CI_Controller
         // Update tabel transaksi_pengadaan
         $data_update = [
             'KETERANGAN_CANCEL_GM' => $form,
+            'STATUS_PENGADAAN' => 'DITOLAK GM',
         ];
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
@@ -606,6 +608,7 @@ class Transaksi_pengadaan extends CI_Controller
         // Update tabel transaksi_pengadaan
         $data_update = [
             'KETERANGAN_CANCEL_HEAD' => $form,
+            'STATUS_PENGADAAN' => 'DITOLAK HEAD',
         ];
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
