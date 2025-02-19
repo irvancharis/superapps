@@ -9,6 +9,7 @@ class Transaksi_pengadaan extends CI_Controller
         parent::__construct();
         $this->load->model('M_TRANSAKSI_PENGADAAN');
         $this->load->model('produk_item/M_PRODUK_ITEM');
+        $this->load->model('produk_stok/M_PRODUK_STOK');
         $this->load->model('karyawan/M_KARYAWAN');
         $this->load->helper('url_helper');
         $this->load->library('Uuid');
@@ -751,6 +752,26 @@ class Transaksi_pengadaan extends CI_Controller
                 'KEPERLUAN' => $item['keperluan']
             ];
             $this->M_TRANSAKSI_PENGADAAN->insert_detail($data_detail);
+
+            // Update stok barang jika barang tidak ada di tabel Produk_Stok maka Insert jika ada maka Update
+            $cek_produk_stok = $this->M_PRODUK_STOK->get_produk_stok_single($item['id'])->row();
+            if ($cek_produk_stok) {
+                $data_update = [
+                    'JUMLAH_STOK' => $cek_produk_stok->JUMLAH_STOK + $item['jumlah']
+                ];
+                $this->M_PRODUK_STOK->update($item['id'], $data_update);
+            } else {
+                $data_insert = [
+                    'UUID_STOK' => $this->uuid->v4(),
+                    'KODE_ITEM' => $item['id'],
+                    'JUMLAH_STOK' => $item['jumlah'],
+                    'KODE_AREA' => $form['AREA_PENEMPATAN'],
+                    'KODE_RUANGAN' => $form['RUANGAN_PENEMPATAN'],
+                    'KODE_LOKASI' => $form['LOKASI_PENEMPATAN'],
+                    'KODE_DEPARTEMEN' => $form['DEPARTEMEN_PENGAJUAN'],
+                ];
+                $this->M_PRODUK_STOK->insert($data_insert);
+            }
         }
 
         echo json_encode(['success' => true]);

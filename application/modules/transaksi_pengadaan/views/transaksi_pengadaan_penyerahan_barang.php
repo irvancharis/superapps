@@ -253,6 +253,10 @@
                     // Form Data Save to Local Storage
                     function saveFormData() {
                         let formData = {
+                            AREA_PENEMPATAN: $('#AREA_PENEMPATAN').val(),
+                            DEPARTEMEN_PENGAJUAN: $('#DEPARTEMEN_PENGAJUAN').val(),
+                            RUANGAN_PENEMPATAN: $('#RUANGAN_PENEMPATAN').val(),
+                            LOKASI_PENEMPATAN: $('#LOKASI_PENEMPATAN').val(),
                             KODE_USER_PENYERAHAN_BARANG: $('#KODE_USER_PENYERAHAN_BARANG').val(),
                             KODE_USER_PENERIMA_BARANG: $('#KODE_USER_PENERIMA_BARANG').val(),
                         };

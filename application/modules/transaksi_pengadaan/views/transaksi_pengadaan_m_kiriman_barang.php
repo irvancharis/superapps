@@ -101,7 +101,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>USER PENERIMA KIRIMAN</label><span class="text-danger float-right font-italic font-weight-600">*). Wajib Di Isi</span>
+                                                <label>USER PENERIMA KIRIMAN</label>
                                                 <select class="form-control" name="KODE_USER_PENERIMA_KIRIMAN" id="KODE_USER_PENERIMA_KIRIMAN" disabled>
                                                     <option value="" class="text-center" selected disabled>---- Pilih User ----</option>
                                                     <?php foreach ($karyawan as $row) : ?>
