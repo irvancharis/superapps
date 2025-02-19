@@ -134,11 +134,11 @@
                             tbody.append(`
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.id}">
-                                    <td class="text-center"><img style="width: 100px;" src="<?php echo base_url('assets/uploads/item/'); ?>${item.foto}" alt=""></td>
+                                    <td class="text-center col-2"><img style="width: 100px;" src="<?php echo base_url('assets/uploads/item/'); ?>${item.foto}" alt=""></td>
                                     <td>${item.nama}</td>
-                                    <td><input type="number" class="form-control jumlah" name="JUMLAH_PENGADAAN[${index}]" value="${item.jumlah || ''}"></td>
+                                    <td class="text-center col-1"><input type="number" class="form-control jumlah" name="JUMLAH_PENGADAAN[${index}]" value="${item.jumlah || ''}"></td>
                                     <td><input type="text" class="form-control keperluan" name="KEPERLUAN[${index}]" value="${item.keperluan || ''}"></td>
-                                    <td><button class="btn btn-danger remove-item" data-index="${index}">Hapus</button></td>
+                                    <td class="text-center col-1"><button class="btn btn-danger remove-item" data-index="${index}">Hapus</button></td>
                                 </tr>
                             `);
                         });

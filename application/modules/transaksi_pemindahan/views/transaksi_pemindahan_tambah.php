@@ -5,17 +5,18 @@
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="card">
                                 <form class="needs-validation" enctype="multipart/form-data" novalidate=""
-                                    id="FORM_TRANSAKSI_PENGHAPUSAN_TAMBAH">
+                                    id="FORM_TRANSAKSI_PEMINDAHAN_TAMBAH">
                                     <div class="card-header">
-                                        <h4>INPUT TRANSAKSI PENGHAPUSAN</h4>
+                                        <h4>INPUT TRANSAKSI PEMINDAHAN</h4>
 
                                     </div>
                                     <div class="card-body">
-
-                                        <div class="row mt-2">
+                                        <h4 class="text-center" style="border-bottom:1px solid rgb(228, 228, 228)">LOKASI ASAL</h4>
+                                        <br>
+                                        <div class="row mt-2" >
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
-                                                <select required name="AREA" id="AREA" class="form-control">
+                                                <select required name="AREA_AWAL" id="AREA_AWAL" class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih
                                                         Area
                                                         --</option>
@@ -30,7 +31,7 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DEPARTEMEN</label>
-                                                <select disabled required name="DEPARTEMEN" id="DEPARTEMEN"
+                                                <select disabled required name="DEPARTEMEN_AWAL" id="DEPARTEMEN_AWAL"
                                                     class="form-control">
                                                     <?php foreach ($get_departemen as $row) : ?>
                                                     <option value="<?= $row->KODE_DEPARTEMEN; ?>"
@@ -46,7 +47,7 @@
                                         <div class="row">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>RUANGAN</label>
-                                                <select required name="RUANGAN" id="RUANGAN" class="form-control">
+                                                <select required name="RUANGAN_AWAL" id="RUANGAN_AWAL" class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih
                                                         Ruangan --</option>
                                                     <?php foreach ($get_ruangan as $row) : ?>
@@ -61,7 +62,7 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>LOKASI</label>
-                                                <select required name="LOKASI" id="LOKASI" class="form-control">
+                                                <select required name="LOKASI_AWAL" id="LOKASI_AWAL" class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih
                                                         Lokasi --</option>
                                                     <?php foreach ($get_lokasi as $row) : ?>
@@ -89,7 +90,7 @@
                                         </div>
                                         <div class="table-responsive">
                                             <div class="card-header-action text-right">
-                                                <a href="javascript:void(0)" id="btn-penghapusan-produk"
+                                                <a href="javascript:void(0)" id="btn-pemindahan-produk"
                                                     class="btn btn-primary"><i class="fas fa-search"></i></a>
                                                 <a href="javascript:void(0)" id="btn-tambah-produk"
                                                     class="btn btn-primary"><i class="fas fa-plus"></i></a>
@@ -111,12 +112,81 @@
                                         </div>
 
                                         <br><br>
+
+                                        <h4 class="text-center" style="border-bottom:1px solid rgb(228, 228, 228)">LOKASI PEMINDAHAN</h4>
+                                        <br>
+                                        <div class="row mt-2">
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>AREA</label>
+                                                <select required name="AREA_AKHIR" id="AREA_AKHIR" class="form-control">
+                                                    <option value="" class="text-center" selected disabled>-- Pilih
+                                                        Area
+                                                        --</option>
+                                                    <?php foreach ($get_area as $row) : ?>
+                                                    <option value="<?= $row->KODE_AREA; ?>"><?= $row->NAMA_AREA; ?>
+                                                    </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Silahkan masukkan AREA!
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>DEPARTEMEN</label>
+                                                <select required name="DEPARTEMEN_AKHIR" id="DEPARTEMEN_AKHIR"
+                                                    class="form-control">
+                                                    <option value="" class="text-center" selected disabled>-- Pilih
+                                                        Departemen --</option>
+                                                    <?php foreach ($get_departemen as $row) : ?>
+                                                    <option value="<?= $row->KODE_DEPARTEMEN; ?>">
+                                                        <?= $row->NAMA_DEPARTEMEN; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Silahkan masukkan DEPARTEMENT!
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>RUANGAN</label>
+                                                <select required name="RUANGAN_AKHIR" id="RUANGAN_AKHIR" class="form-control">
+                                                    <option value="" class="text-center" selected disabled>-- Pilih
+                                                        Ruangan --</option>
+                                                    <?php foreach ($get_ruangan as $row) : ?>
+                                                    <option value="<?= $row->KODE_RUANGAN; ?>">
+                                                        <?= $row->NAMA_RUANGAN; ?>
+                                                    </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Silahkan masukkan RUANGAN!
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>LOKASI</label>
+                                                <select required name="LOKASI_AKHIR" id="LOKASI_AKHIR" class="form-control">
+                                                    <option value="" class="text-center" selected disabled>-- Pilih
+                                                        Lokasi --</option>
+                                                    <?php foreach ($get_lokasi as $row) : ?>
+                                                    <option value="<?= $row->KODE_LOKASI; ?>"><?= $row->NAMA_LOKASI; ?>
+                                                    </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Silahkan masukkan LOKASI!
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
                                         <div class="form-group col-12 col-md-12 col-lg-12">
                                             <label>KETERANGAN</label>
-                                            <textarea name="KETERANGAN" placeholder="Masukkan keterangan penghapusan"
-                                                class="form-control" id="KETERANGAN"></textarea>
+                                            <textarea name="KETERANGAN_PEMINDAHAN" placeholder="Masukkan keterangan pemindahan"
+                                                class="form-control" id="KETERANGAN_PEMINDAHAN"></textarea>
                                             <div class="invalid-feedback">
-                                                Silahkan masukkan keterangan penghapusan!
+                                                Silahkan masukkan keterangan pemindahan!
                                             </div>
 
 
@@ -152,9 +222,9 @@ $(document).ready(function() {
     loadFormData();
 
     // Fancybox
-    $('#btn-penghapusan-produk').on('click', function() {
+    $('#btn-pemindahan-produk').on('click', function() {
         Fancybox.show([{
-            src: "<?php echo base_url('transaksi_penghapusan/transaksi_penghapusan_produk'); ?>",
+            src: "<?php echo base_url('transaksi_pemindahan/transaksi_pemindahan_produk'); ?>",
             type: "iframe",
             preload: false,
             width: "100%",
@@ -163,7 +233,7 @@ $(document).ready(function() {
     })
     $('#btn-tambah-produk').on('click', function() {
         Fancybox.show([{
-            src: "<?php echo base_url('transaksi_penghapusan/transaksi_penghapusan_tambah_produk'); ?>",
+            src: "<?php echo base_url('transaksi_pemindahan/transaksi_pemindahan_tambah_produk'); ?>",
             type: "iframe",
             preload: false,
             width: "100%",
@@ -181,32 +251,32 @@ $(document).ready(function() {
 
     $('#btn-riset').on('click', function() {
         localStorage.removeItem('storedProdukItems');
-        localStorage.removeItem('FormPenghapusan');
+        localStorage.removeItem('FormPemindahan');
         location.reload();
     });
 
     // Get Data Produk Lock
     $('#btn-lock-produk').on('click', function() {
-        var FormPenghapusan = JSON.parse(localStorage.getItem("FormPenghapusan")) || {};
+        var FormPemindahan = JSON.parse(localStorage.getItem("FormPemindahan")) || {};
 
         // Cek apakah semua properti yang dibutuhkan ada di dalam objek
         var isComplete = (
-            FormPenghapusan.AREA &&
-            FormPenghapusan.DEPARTEMEN &&
-            FormPenghapusan.RUANGAN &&
-            FormPenghapusan.LOKASI
+            FormPemindahan.AREA_AWAL &&
+            FormPemindahan.DEPARTEMEN_AWAL &&
+            FormPemindahan.RUANGAN_AWAL &&
+            FormPemindahan.LOKASI_AWAL
         );
 
         if (isComplete) {
             $.ajax({
                 url: "<?php echo base_url(); ?>" +
-                    "transaksi_penghapusan/get_produk_input_penghapusan",
+                    "transaksi_pemindahan/get_produk_input_pemindahan",
                 type: "GET",
                 data: {
-                    KODE_AREA: FormPenghapusan.AREA,
-                    KODE_DEPARTEMEN: FormPenghapusan.DEPARTEMEN,
-                    KODE_RUANGAN: FormPenghapusan.RUANGAN,
-                    KODE_LOKASI: FormPenghapusan.LOKASI
+                    KODE_AREA: FormPemindahan.AREA_AWAL,
+                    KODE_DEPARTEMEN: FormPemindahan.DEPARTEMEN_AWAL,
+                    KODE_RUANGAN: FormPemindahan.RUANGAN_AWAL,
+                    KODE_LOKASI: FormPemindahan.LOKASI_AWAL
                 },
                 success: function(response) {
                     let res = JSON.parse(response);
@@ -227,9 +297,9 @@ $(document).ready(function() {
                 }
             });
 
-            document.getElementById("AREA").disabled = true;
-            document.getElementById("LOKASI").disabled = true;
-            document.getElementById("RUANGAN").disabled = true;
+            document.getElementById("AREA_AWAL").disabled = true;
+            document.getElementById("LOKASI_AWAL").disabled = true;
+            document.getElementById("RUANGAN_AWAL").disabled = true;
 
         } else {
             alert('Harap lengkapi data sebelum mengambil produk.');
@@ -240,12 +310,12 @@ $(document).ready(function() {
     $('select').on('change', function() {
         saveFormData();
     });
-    $('#KETERANGAN_PENGHAPUSAN').on('change', function() {
+    $('#KETERANGAN_PEMINDAHAN').on('change', function() {
         saveFormData();
     });
 
     // Get Ruangan By Area
-    $('#AREA').on('change', function() {
+    $('#AREA_AWAL').on('change', function() {
         let area = $(this).val();
         $.ajax({
             url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_ruangan_by_area",
@@ -256,7 +326,7 @@ $(document).ready(function() {
             success: function(response) {
                 var ruangan = JSON.parse(response);
                 var data_ruangan = ruangan.data;
-                var $ruanganPenempatan = $('#RUANGAN');
+                var $ruanganPenempatan = $('#RUANGAN_AWAL');
 
                 $ruanganPenempatan.empty().append(
                     '<option value="" class="text-center" selected disabled>-- Pilih Ruangan --</option>'
@@ -277,7 +347,7 @@ $(document).ready(function() {
     });
 
     // Get Lokasi By Ruangan
-    $('#RUANGAN').on('change', function() {
+    $('#RUANGAN_AWAL').on('change', function() {
         let ruangan = $(this).val();
         $.ajax({
             url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_lokasi_by_ruangan",
@@ -288,7 +358,7 @@ $(document).ready(function() {
             success: function(response) {
                 var lokasi = JSON.parse(response);
                 var data_lokasi = lokasi.data;
-                var $lokasiPenempatan = $('#LOKASI');
+                var $lokasiPenempatan = $('#LOKASI_AWAL');
 
                 $lokasiPenempatan.empty().append(
                     '<option value="" class="text-center" selected disabled>-- Pilih Lokasi --</option>'
@@ -308,14 +378,77 @@ $(document).ready(function() {
         });
     });
 
-    $('#FORM_TRANSAKSI_PENGHAPUSAN_TAMBAH').on('submit', function(e) {
+    $('#AREA_AKHIR').on('change', function() {
+        let area = $(this).val();
+        $.ajax({
+            url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_ruangan_by_area",
+            type: "POST",
+            data: {
+                AREA_PENEMPATAN: area
+            },
+            success: function(response) {
+                var ruangan = JSON.parse(response);
+                var data_ruangan = ruangan.data;
+                var $ruanganPenempatan = $('#RUANGAN_AKHIR');
+
+                $ruanganPenempatan.empty().append(
+                    '<option value="" class="text-center" selected disabled>-- Pilih Ruangan --</option>'
+                );
+
+                $.each(data_ruangan, function(index, lokasi) {
+                    $ruanganPenempatan.append($('<option>', {
+                        value: lokasi.KODE_RUANGAN,
+                        text: lokasi.NAMA_RUANGAN
+                    }));
+                });
+
+            },
+            error: function() {
+                swal('Error', 'Tidak dapat terhubung ke server.', 'error');
+            }
+        });
+    });
+
+    // Get Lokasi By Ruangan
+    $('#RUANGAN_AKHIR').on('change', function() {
+        let ruangan = $(this).val();
+        $.ajax({
+            url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_lokasi_by_ruangan",
+            type: "POST",
+            data: {
+                RUANGAN_PENEMPATAN: ruangan
+            },
+            success: function(response) {
+                var lokasi = JSON.parse(response);
+                var data_lokasi = lokasi.data;
+                var $lokasiPenempatan = $('#LOKASI_AKHIR');
+
+                $lokasiPenempatan.empty().append(
+                    '<option value="" class="text-center" selected disabled>-- Pilih Lokasi --</option>'
+                );
+
+                $.each(data_lokasi, function(index, lokasi) {
+                    $lokasiPenempatan.append($('<option>', {
+                        value: lokasi.KODE_LOKASI,
+                        text: lokasi.NAMA_LOKASI
+                    }));
+                });
+
+            },
+            error: function() {
+                swal('Error', 'Tidak dapat terhubung ke server.', 'error');
+            }
+        });
+    });
+
+    $('#FORM_TRANSAKSI_PEMINDAHAN_TAMBAH').on('submit', function(e) {
         e.preventDefault();
 
         let formData = new FormData(this);
 
 
         $.ajax({
-            url: "<?php echo base_url(); ?>" + "transaksi_penghapusan/insert",
+            url: "<?php echo base_url(); ?>" + "transaksi_pemindahan/insert",
             type: "POST",
             data: formData,
             processData: false,
@@ -328,10 +461,10 @@ $(document).ready(function() {
                             'storedProdukItems'
                         ); // Hapus localStorage setelah disimpan
                         localStorage.removeItem(
-                            'FormPenghapusan'
+                            'FormPemindahan'
                         ); // Hapus localStorage setelah disimpan
                         location.href = "<?php echo base_url(); ?>" +
-                            "transaksi_penghapusan";
+                            "transaksi_pemindahan";
                     });
                 } else {
                     swal('Gagal', res.error, 'error');
@@ -343,25 +476,33 @@ $(document).ready(function() {
     // Form Data Save to Local Storage
     function saveFormData() {
         let formData = {
-            AREA: $('#AREA').val(),
-            DEPARTEMEN: $('#DEPARTEMEN').val(),
-            RUANGAN: $('#RUANGAN').val(),
-            LOKASI: $('#LOKASI').val(),
-            KETERANGAN: $('#KETERANGAN').val() == '' ? null : $('#KETERANGAN').val()
+            AREA_AWAL: $('#AREA_AWAL').val(),
+            DEPARTEMEN_AWAL: $('#DEPARTEMEN_AWAL').val(),
+            RUANGAN_AWAL: $('#RUANGAN_AWAL').val(),
+            LOKASI_AWAL: $('#LOKASI_AWAL').val(),
+            AREA_AKHIR: $('#AREA_AKHIR').val(),
+            DEPARTEMEN_AKHIR: $('#DEPARTEMEN_AKHIR').val(),
+            RUANGAN_AKHIR: $('#RUANGAN_AKHIR').val(),
+            LOKASI_AKHIR: $('#LOKASI_AKHIR').val(),
+            KETERANGAN: $('#KETERANGAN_PEMINDAHAN').val() == '' ? null : $('#KETERANGAN_PEMINDAHAN').val()
         };
 
-        localStorage.setItem('FormPenghapusan', JSON.stringify(formData));
+        localStorage.setItem('FormPemindahan', JSON.stringify(formData));
     }
 
     // Form Data Load from Local Storage
     function loadFormData() {
-        let formData = JSON.parse(localStorage.getItem('FormPenghapusan'));
+        let formData = JSON.parse(localStorage.getItem('FormPemindahan'));
         if (formData) {
-            $('#AREA').val(formData.AREA);
-            $('#DEPARTEMEN').val(formData.DEPARTEMEN);
-            $('#RUANGAN').val(formData.RUANGAN);
-            $('#LOKASI').val(formData.LOKASI);
-            $('#KETERANGAN').val(formData.KETERANGAN);
+            $('#AREA_AWAL').val(formData.AREA_AWAL);
+            $('#DEPARTEMEN_AWAL').val(formData.DEPARTEMEN_AWAL);
+            $('#RUANGAN_AWAL').val(formData.RUANGAN_AWAL);
+            $('#LOKASI_AWAL').val(formData.LOKASI_AWAL);
+            $('#AREA_AKHIR').val(formData.AREA_AKHIR);
+            $('#DEPARTEMEN_AKHIR').val(formData.DEPARTEMEN_AKHIR);
+            $('#RUANGAN_AKHIR').val(formData.RUANGAN_AKHIR);
+            $('#LOKASI_AKHIR').val(formData.LOKASI_AKHIR);
+            $('#KETERANGAN_PEMINDAHAN').val(formData.KETERANGAN);
         }
     }
 
@@ -379,7 +520,7 @@ $(document).ready(function() {
                                     <td class="text-center col-1">${item.JUMLAH_STOK}</td>
                                     <input type="hidden" class="form-control UUID_STOK" name="UUID_STOK[${index}]" value="${item.UUID_STOK || ''}">
                                     <input type="hidden" class="form-control KODE_ITEM" name="KODE_ITEM[${index}]" value="${item.KODE_ITEM || ''}">
-                                    <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PENGHAPUSAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
+                                    <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PEMINDAHAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
                                     <td class="text-center col-3"><input type="text" class="form-control" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
                                     <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_KONDISI_AWAL[${index}]"></td>
                                 </tr>
@@ -406,7 +547,7 @@ $(document).ready(function() {
                                         <td class="text-center col-1">${item.JUMLAH_STOK}</td>
                                         <input type="hidden" class="form-control UUID_STOK" name="UUID_STOK[${index}]" value="${item.UUID_STOK || ''}">
                                         <input type="hidden" class="form-control KODE_ITEM" name="KODE_ITEM[${index}]" value="${item.KODE_ITEM || ''}">
-                                        <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PENGHAPUSAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
+                                        <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PEMINDAHAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
                                         <td class="text-center col-3"><input type="text" class="form-control" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
                                         <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_KONDISI_AWAL[${index}]"></td>
                                     </tr>
@@ -419,17 +560,17 @@ $(document).ready(function() {
     }
 
     function attachInputListeners() {
-        $('#selected-items-body').on('input', '.JUMLAH_PENGHAPUSAN', function() {
+        $('#selected-items-body').on('input', '.JUMLAH_PEMINDAHAN', function() {
             let rowIndex = $(this).closest('tr').data('index');
             let stokReal = $(this).val();
 
             let storedItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
-            storedItems[rowIndex].JUMLAH_PENGHAPUSAN = stokReal;
+            storedItems[rowIndex].JUMLAH_PEMINDAHAN = stokReal;
             localStorage.setItem('storedProdukItems', JSON.stringify(storedItems));
         });
     }
 
-    $('#selected-items-body').on('input', '.JUMLAH_PENGHAPUSAN', function() {
+    $('#selected-items-body').on('input', '.JUMLAH_PEMINDAHAN', function() {
         let rowIndex = $(this).closest('tr').data('index');
         let stokReal = $(this).val();
 

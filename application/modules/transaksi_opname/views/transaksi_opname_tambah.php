@@ -192,6 +192,12 @@ $(document).ready(function() {
                     }
                 }
             });
+
+            document.getElementById("AREA_PENEMPATAN").disabled = true;
+            document.getElementById("LOKASI_PENEMPATAN").disabled = true;
+            document.getElementById("RUANGAN_PENEMPATAN").disabled = true;
+
+
         } else {
             alert('Harap lengkapi data sebelum mengambil produk.');
         }

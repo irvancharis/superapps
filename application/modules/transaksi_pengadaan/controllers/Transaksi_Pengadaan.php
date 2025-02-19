@@ -15,6 +15,8 @@ class Transaksi_pengadaan extends CI_Controller
         $this->load->library('Uuid');
         $this->load->library('session');
         $this->load->model('role/M_ROLE');
+        $this->load->library('Uuid');
+        $this->load->library('TanggalIndo');
 
         if (!$this->session->userdata('isLoggedIn')) {
             redirect('login');

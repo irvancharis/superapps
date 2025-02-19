@@ -19,7 +19,7 @@
                                                 </center>
                                             </div>
 
-                                            <div class="form-group col-12 col-md-4 col-lg-9">
+                                            <div class="form-group col-12 col-md-3 col-lg-8">
                                                 <table class="table table-striped table-sm">
                                                     <tbody>
                                                         <tr>
