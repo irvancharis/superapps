@@ -22,7 +22,7 @@
                                                 <table class="table table-striped table-sm">
                                                     <tbody>
                                                         <tr>
-                                                            <th>KODE PRODUK ITEM</th>
+                                                            <th class="col-3">KODE PRODUK ITEM</th>
                                                             <td><?= $get_produk_item->KODE_ITEM; ?></td>
                                                         </tr>
                                                         <tr>

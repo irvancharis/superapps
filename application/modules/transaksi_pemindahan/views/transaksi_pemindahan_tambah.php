@@ -17,7 +17,7 @@
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
                                                 <select required name="AREA_AWAL" id="AREA_AWAL" class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih
+                                                    <option value="" class="text-center" selected>-- Pilih
                                                         Area
                                                         --</option>
                                                     <?php foreach ($get_area as $row) : ?>
@@ -31,7 +31,7 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DEPARTEMEN</label>
-                                                <select disabled required name="DEPARTEMEN_AWAL" id="DEPARTEMEN_AWAL"
+                                                <select required name="DEPARTEMEN_AWAL" id="DEPARTEMEN_AWAL"
                                                     class="form-control">
                                                     <?php foreach ($get_departemen as $row) : ?>
                                                     <option value="<?= $row->KODE_DEPARTEMEN; ?>"
@@ -48,7 +48,7 @@
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>RUANGAN</label>
                                                 <select required name="RUANGAN_AWAL" id="RUANGAN_AWAL" class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih
+                                                    <option value="" class="text-center" selected>-- Pilih
                                                         Ruangan --</option>
                                                     <?php foreach ($get_ruangan as $row) : ?>
                                                     <option value="<?= $row->KODE_RUANGAN; ?>">
@@ -63,7 +63,7 @@
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>LOKASI</label>
                                                 <select required name="LOKASI_AWAL" id="LOKASI_AWAL" class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih
+                                                    <option value="" class="text-center" selected>-- Pilih
                                                         Lokasi --</option>
                                                     <?php foreach ($get_lokasi as $row) : ?>
                                                     <option value="<?= $row->KODE_LOKASI; ?>"><?= $row->NAMA_LOKASI; ?>
@@ -297,10 +297,6 @@ $(document).ready(function() {
                 }
             });
 
-            document.getElementById("AREA_AWAL").disabled = true;
-            document.getElementById("LOKASI_AWAL").disabled = true;
-            document.getElementById("RUANGAN_AWAL").disabled = true;
-
         } else {
             alert('Harap lengkapi data sebelum mengambil produk.');
         }
@@ -522,7 +518,7 @@ $(document).ready(function() {
                                     <input type="hidden" class="form-control KODE_ITEM" name="KODE_ITEM[${index}]" value="${item.KODE_ITEM || ''}">
                                     <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PEMINDAHAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
                                     <td class="text-center col-3"><input type="text" class="form-control" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
-                                    <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_KONDISI_AWAL[${index}]"></td>
+                                    <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_AWAL[${index}]"></td>
                                 </tr>
                             `);
         });
@@ -549,7 +545,7 @@ $(document).ready(function() {
                                         <input type="hidden" class="form-control KODE_ITEM" name="KODE_ITEM[${index}]" value="${item.KODE_ITEM || ''}">
                                         <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PEMINDAHAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
                                         <td class="text-center col-3"><input type="text" class="form-control" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
-                                        <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_KONDISI_AWAL[${index}]"></td>
+                                        <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_AWAL[${index}]"></td>
                                     </tr>
                                 `);
             });

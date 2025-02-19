@@ -68,7 +68,7 @@ class Produk_item extends CI_Controller
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_PRODUK_ITEM->get_produk_item_single($KODE_ITEM);
-        $data['get_produk_item'] = $query->row();
+        $data['get_produk_item'] = $query;
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('produk_item_detail', $data);
