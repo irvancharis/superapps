@@ -65,7 +65,7 @@
                                             <h6 class="font-medium mt-5 text-center">DETAIL DATA PRODUK</h6>
                                             <div class="card-header-action text-right">
                                                 <a href="javascript:void(0)" id="btn-pengadaan-produk" class="btn btn-primary"><i class="fas fa-search"></i></a>
-                                                <a href="javascript:void(0)" id="btn-tambah-produk" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                                <!-- <a href="javascript:void(0)" id="btn-tambah-produk" class="btn btn-primary"><i class="fas fa-plus"></i></a> -->
                                             </div>
                                             <table class="table table-striped" id="table-data-produk">
                                                 <thead>

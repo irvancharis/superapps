@@ -65,10 +65,10 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
     public function get_single($KODE)
     {
         $this->db->select('*');
-        $this->db->from('VIEW_KARYAWAN');
-        $this->db->where('NIK', $KODE);
+        $this->db->from('VIEW_TRANSAKSI_PENGADAAN');
+        $this->db->where('UUID_TRANSAKSI_PENGADAAN', $KODE);
         $query = $this->db->get();
-        return $query;
+        return $query->row();
     }
 
     public function get_area()

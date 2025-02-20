@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
 <!-- index.html  21 Nov 2019 03:44:50 GMT -->
 
 <head>
@@ -10,6 +8,7 @@
     <title>SAGROUP</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/app.min.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/bundles/chocolat/dist/css/chocolat.css'); ?>">
     <!-- Template CSS -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/components.css'); ?>">
@@ -71,124 +70,146 @@
 
     <?php $this->load->view('layout/footer'); ?>
 
-</body>
+    <script>
+        $(document).ready(function() {
 
-<!-- Bootstrap -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> -->
-<!-- Toast -->
-<script src="<?php echo base_url('assets/bundles/izitoast/js/iziToast.min.js') ?>"></script>
-<script>
-    $(document).ready(function() {
+            var selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
 
-        var selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
-
-        var table = $('#table-produk').DataTable({
-            processing: true,
-            serverSide: true,
-            paging: false,
-            info: false,
-            ajax: {
-                url: "<?php echo base_url() . 'transaksi_pengadaan/get_produk'; ?>",
-                type: "POST",
-                data: function(d) {
-                    if (d.search.value == "") {
-                        return false; // Jangan load data jika tidak ada pencarian
+            var table = $('#table-produk').DataTable({
+                processing: true,
+                serverSide: true,
+                paging: false,
+                info: false,
+                ajax: {
+                    url: "<?php echo base_url() . 'transaksi_pengadaan/get_produk'; ?>",
+                    type: "POST",
+                    data: function(d) {
+                        if (d.search.value == "") {
+                            return false; // Jangan load data jika tidak ada pencarian
+                        }
+                        return d;
                     }
-                    return d;
-                }
-            },
-            deferLoading: 0, // Jangan load data saat pertama kali halaman dibuka
-            searchDelay: 500, // Tunggu 500ms sebelum request (mengurangi load server)
-            lengthChange: false, // Sembunyikan dropdown jumlah data
-            pageLength: 10,
-            columns: [{
-                    data: null,
-                    render: function(data, type, row, meta) {
-                        return `
+                },
+                deferLoading: 0, // Jangan load data saat pertama kali halaman dibuka
+                searchDelay: 500, // Tunggu 500ms sebelum request (mengurangi load server)
+                lengthChange: false, // Sembunyikan dropdown jumlah data
+                pageLength: 10,
+                columns: [{
+                        data: null,
+                        render: function(data, type, row, meta) {
+                            return `
                     <div class="custom-checkbox custom-control">
                         <input required type="checkbox" data-checkboxes="mygroup" class="custom-control-input">
                         <label class="custom-control-label">&nbsp;</label>
                     </div>
                 `;
-                    }
-                },
-                {
-                    data: null,
-                    render: function(data, type, row, meta) {
-                        return meta.row + 1; // Auto increment nomor urut
-                    }
-                },
-                {
-                    data: "KODE_ITEM"
-                },
-                {
-                    data: "NAMA_ITEM"
-                },
-                {
-                    data: "NAMA_PRODUK_KATEGORI"
-                },
-                {
-                    data: "FOTO_ITEM",
-                    render: function(data, type, row, meta) {
-                        return `<img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${data}" alt="">`;
-                    }
-                },
-                {
-                    data: null,
-                    render: function(data, type, row) {
-                        return `<a href="javascript:void(0);" class="btn btn-primary btn-round has-icon view-btn add-item" 
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row, meta) {
+                            return meta.row + 1; // Auto increment nomor urut
+                        }
+                    },
+                    {
+                        data: "KODE_ITEM"
+                    },
+                    {
+                        data: "NAMA_ITEM"
+                    },
+                    {
+                        data: "NAMA_PRODUK_KATEGORI"
+                    },
+                    {
+                        data: "FOTO_ITEM",
+                        render: function(data, type, row, meta) {
+                            return `
+                            <div class="gallery d-flex justify-content-center p-2">
+                                <a class="gallery-item m-0 p-2 d-flex justify-content-center align-items-center w-100" 
+                                style="max-width: 200px;"
+                                href="<?php echo base_url('assets/uploads/item/') ?>${data}" 
+                                data-image="<?php echo base_url('assets/uploads/item/') ?>${data}" 
+                                data-title="${row.NAMA_ITEM}">
+                                
+                                    <img class="img-fluid" 
+                                        src="<?php echo base_url('assets/uploads/item/'); ?>${data}" 
+                                        alt="${row.NAMA_ITEM}" 
+                                        style="max-width: 100%; height: auto;"> 
+                                </a>
+                            </div>
+                        `;
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return `<a href="javascript:void(0);" class="btn btn-primary btn-round has-icon view-btn add-item" 
                         data-id="${row.KODE_ITEM}" 
                         data-nama="${row.NAMA_ITEM}" 
                         data-kategori="${row.NAMA_PRODUK_KATEGORI}"
                         data-foto="${row.FOTO_ITEM}"
                         >
                         <i class="fas fa-plus"></i></a>`;
+                        }
                     }
+                ]
+            });
+
+            // 🔥 Inisialisasi Ulang Chocolat Setiap Kali DataTable Render (draw.dt event)
+            $('#table-produk').on('draw.dt', function() {
+                if (jQuery().Chocolat) {
+                    $(".gallery").Chocolat({
+                        className: 'gallery',
+                        imageSelector: '.gallery-item',
+                        imageSize: 'contain',
+                        fullScreen: false,
+                        backgroundColor: 'rgba(0,0,0,0.9)',
+                    });
                 }
-            ]
-        });
+            });
 
-        // Event ketika user mengetik di kolom pencarian
-        $('#table-produk_filter input').unbind().on('keyup', function() {
-            let value = $(this).val();
-            let xvalue = value.toUpperCase();
-            if (xvalue.length > 1) {
-                table.search(xvalue).draw();
-            }
-        });
+            // Event ketika user mengetik di kolom pencarian
+            $('#table-produk_filter input').unbind().on('keyup', function() {
+                let value = $(this).val();
+                let xvalue = value.toUpperCase();
+                if (xvalue.length > 1) {
+                    table.search(xvalue).draw();
+                }
+            });
 
-        // Event listener untuk menambahkan item ke Local Storage
-        $('#table-produk').on('click', '.add-item', function() {
-            var item = {
-                id: $(this).data("id"),
-                nama: $(this).data("nama"),
-                kategori: $(this).data("kategori"),
-                foto: $(this).data("foto")
-            };
+            // Event listener untuk menambahkan item ke Local Storage
+            $('#table-produk').on('click', '.add-item', function() {
+                var item = {
+                    id: $(this).data("id"),
+                    nama: $(this).data("nama"),
+                    kategori: $(this).data("kategori"),
+                    foto: $(this).data("foto")
+                };
 
-            // Cek apakah item sudah ada
-            var exists = selectedItems.some(i => i.id === item.id);
-            if (!exists) {
-                selectedItems.push(item);
-                localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
-                iziToast.success({
-                    title: 'Sukses!',
-                    message: 'Berhasil menambahkan item ke daftar.',
-                    position: 'topRight'
-                });
-                // Kirim event ke parent window untuk update tabel
-                window.parent.postMessage({
-                    action: 'updateTable'
-                }, '*');
-            } else {
-                iziToast.warning({
-                    title: 'Gagal!',
-                    message: 'Data sudah ada.',
-                    position: 'topRight'
-                });
-            }
+                // Cek apakah item sudah ada
+                var exists = selectedItems.some(i => i.id === item.id);
+                if (!exists) {
+                    selectedItems.push(item);
+                    localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
+                    iziToast.success({
+                        title: 'Sukses!',
+                        message: 'Berhasil menambahkan item ke daftar.',
+                        position: 'topRight'
+                    });
+                    // Kirim event ke parent window untuk update tabel
+                    window.parent.postMessage({
+                        action: 'updateTable'
+                    }, '*');
+                } else {
+                    iziToast.warning({
+                        title: 'Gagal!',
+                        message: 'Data sudah ada.',
+                        position: 'topRight'
+                    });
+                }
+            });
         });
-    });
-</script>
+    </script>
+</body>
 
 </html>
