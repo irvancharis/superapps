@@ -65,23 +65,23 @@
                                             <h6 class="font-medium text-center"> <i class="fa fa-map-marker"></i> PENEMPATAN PRODUK/ITEM</h6>
                                             <table class="table table-striped table-hover table-md">
                                                 <tr>
-                                                    <th width="50%">AREA</th>
+                                                    <th class="col-2">AREA</th>
                                                     <td><?= $approval_gm->NAMA_AREA; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th width="50%">DEPARTEMEN</th>
+                                                    <th >DEPARTEMEN</th>
                                                     <td><?= $approval_gm->NAMA_DEPARTEMEN; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th width="50%">RUANGAN</th>
+                                                    <th >RUANGAN</th>
                                                     <td><?= $approval_gm->NAMA_RUANGAN; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th width="50%">LOKASI</th>
+                                                    <th >LOKASI</th>
                                                     <td><?= $approval_gm->NAMA_LOKASI; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th width="50%">KETERANGAN PENGAJUAN</th>
+                                                    <th >KETERANGAN PENGAJUAN</th>
                                                     <td><?= $approval_gm->KETERANGAN_PENGAJUAN; ?></td>
                                                 </tr>
                                             </table>
@@ -92,10 +92,10 @@
                                             <table class="table table-striped" id="table-approval-produk">
                                                 <thead>
                                                     <tr>
-                                                        <th>FOTO PRODUK</th>
+                                                        <th class="col-2">FOTO PRODUK</th>
                                                         <th>PRODUK/ITEM</th>
-                                                        <th>JUMLAH</th>
-                                                        <th>KEPERLUAN</th>
+                                                        <th class="col-1">JUMLAH</th>
+                                                        <th class="col-3">KEPERLUAN</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="selected-items-body">
