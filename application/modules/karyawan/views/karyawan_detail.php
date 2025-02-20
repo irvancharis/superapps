@@ -10,16 +10,8 @@
                                     </div>
                                     <div class="card-body">
 
-                                        <div class="row">
-
-                                            <div class="form-group col-12 col-md-3 col-lg-3">
-                                                <center>
-                                                    <img src="<?php echo base_url('assets/uploads/karyawan/').$get_single->FOTO; ?>"
-                                                        alt="">
-                                                </center>
-                                            </div>
-
-                                            <div class="form-group col-12 col-md-3 col-lg-8">
+                                        <div class="row ">
+                                            <div class="form-group col-6 col-md-2 col-lg-8">
                                                 <table class="table table-striped table-sm">
                                                     <tbody>
                                                         <tr>
@@ -108,6 +100,22 @@
 
                                                     </tbody>
                                                 </table>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-4 col-md-2 col-lg-6">
+                                                    <table class="table table-striped table-sm">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <img src="<?php echo base_url('assets/uploads/karyawan/').$get_single->FOTO; ?>"
+                                                                        alt="">
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
 
                                         </div>

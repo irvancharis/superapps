@@ -150,7 +150,6 @@ class Transaksi_penghapusan extends CI_Controller
             redirect('non_akses');
         }
 
-
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
@@ -197,6 +196,25 @@ class Transaksi_penghapusan extends CI_Controller
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('transaksi_penghapusan_aproval_head', $data);
+    }
+
+    public function proses_penghapusan($KODE, $page = 'transaksi_penghapusan')
+    {
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGHAPUSAN', 'APROVAL KABAG');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
+
+
+        $this->load->library('session');
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $query = $this->M_TRANSAKSI_PENGHAPUSAN->get_single($KODE);
+        $data['get_single'] = $query->row();
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('transaksi_penghapusan_proses', $data);
     }
 
 
@@ -424,7 +442,7 @@ class Transaksi_penghapusan extends CI_Controller
         $data_update = [
             'KODE_APROVAL_HEAD' => $this->session->userdata('ID_KARYAWAN'),
             'TANGGAL_APROVAL_HEAD' => date('Y-m-d'),
-            'STATUS_PENGHAPUSAN' => 'SELESAI',
+            'STATUS_PENGHAPUSAN' => 'PROSES PENGHAPUSAN',
         ];
 
         $update = $this->M_TRANSAKSI_PENGHAPUSAN->update_transaksi($id_transaksi, $data_update);
@@ -436,11 +454,11 @@ class Transaksi_penghapusan extends CI_Controller
 
         // Update transaksi_pengadaan_detail
 
-        foreach ($items as $item) {
-            $UUID_STOK = $item['UUID_STOK'];
-            $data_produk = $item['JUMLAH_PENGHAPUSAN'];
-            $this->M_TRANSAKSI_PENGHAPUSAN->update_real_stok($UUID_STOK, $data_produk);
-        }
+        // foreach ($items as $item) {
+        //     $UUID_STOK = $item['UUID_STOK'];
+        //     $data_produk = $item['JUMLAH_PENGHAPUSAN'];
+        //     $this->M_TRANSAKSI_PENGHAPUSAN->update_real_stok($UUID_STOK, $data_produk);
+        // }
 
         echo json_encode(['success' => true]);
     }
