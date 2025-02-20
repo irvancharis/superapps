@@ -9,7 +9,7 @@
                                         <h4>APPROVAL HEAD TRANSAKSI PENGADAAN</h4>
                                     </div>
                                     <div class="card-body">
-                                        <div class="row mt-2">
+                                        <!-- <div class="row mt-2">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
                                                 <select disabled name="AREA_PENEMPATAN" id="AREA_PENEMPATAN" class="form-control">
@@ -60,7 +60,33 @@
                                                     Silahkan masukkan LOKASI!
                                                 </div>
                                             </div>
+                                        </div> -->
+                                        <div class="table-responsive">
+                                            <h6 class="font-medium text-center"> <i class="fa fa-map-marker"></i> PENEMPATAN PRODUK/ITEM</h6>
+                                            <table class="table table-striped table-hover table-md">
+                                                <tr>
+                                                    <th width="50%">AREA</th>
+                                                    <td><?= $approval_head->NAMA_AREA; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th width="50%">DEPARTEMEN</th>
+                                                    <td><?= $approval_head->NAMA_DEPARTEMEN; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th width="50%">RUANGAN</th>
+                                                    <td><?= $approval_head->NAMA_RUANGAN; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th width="50%">LOKASI</th>
+                                                    <td><?= $approval_head->NAMA_LOKASI; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th width="50%">KETERANGAN PENGAJUAN</th>
+                                                    <td><?= $approval_head->KETERANGAN_PENGAJUAN; ?></td>
+                                                </tr>
+                                            </table>
                                         </div>
+
                                         <div class="table-responsive">
                                             <h6 class="font-medium mt-5 text-center">DATA PRODUK</h6>
                                             <table class="table table-striped" id="table-approval-produk">
@@ -76,7 +102,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="row mt-3">
+                                        <!-- <div class="row mt-3">
                                             <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>KETERANGAN PENGAJUAN</label>
                                                 <textarea disabled name="KETERANGAN_PENGAJUAN" id="KETERANGAN_PENGAJUAN" placeholder="Masukkan keterangan pengajuan" class="form-control" rows="3"><?= $approval_head->KETERANGAN_PENGAJUAN; ?></textarea>
@@ -84,7 +110,7 @@
                                                     Silahkan masukkan KETERANGAN!
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="card-footer text-center row">
                                         <!-- Tombol APPROVE & DISAPPROVE di tengah -->

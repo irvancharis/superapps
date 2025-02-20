@@ -9,7 +9,7 @@
                                         <h4>APPROVAL KABAG TRANSAKSI PENGADAAN</h4>
                                     </div>
                                     <div class="card-body">
-                                        <div class="row mt-2">
+                                        <!-- <div class="row mt-2">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
                                                 <select disabled name="AREA_PENEMPATAN" id="AREA_PENEMPATAN" class="form-control">
@@ -60,9 +60,31 @@
                                                     Silahkan masukkan LOKASI!
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="table-responsive">
-                                            <h6 class="font-medium mt-5 text-center">DATA PRODUK</h6>
+                                            <h6 class="font-medium text-center"> <i class="fa fa-map-marker"></i> PENEMPATAN PRODUK/ITEM</h6>
+                                            <table class="table table-striped table-hover table-md">
+                                                <tr>
+                                                    <th width="50%">AREA</th>
+                                                    <td><?= $approval_kabag->NAMA_AREA; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th width="50%">DEPARTEMEN</th>
+                                                    <td><?= $approval_kabag->NAMA_DEPARTEMEN; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th width="50%">RUANGAN</th>
+                                                    <td><i class="fa fa-users"></i> <?= $approval_kabag->NAMA_RUANGAN; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th width="50%">LOKASI</th>
+                                                    <td><i class="fa fa-box"></i> <?= $approval_kabag->NAMA_LOKASI; ?></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <div class="table-responsive">
+                                            <h6 class="font-medium mt-5 text-center"> <i class="fa fa-list"></i> DATA PRODUK</h6>
                                             <table class="table table-striped" id="table-approval-produk">
                                                 <thead>
                                                     <tr>
@@ -79,7 +101,7 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="form-group col-12 col-md-12 col-lg-12">
-                                                <label>KETERANGAN</label>
+                                                <label>KETERANGAN</label><span class="text-danger float-right font-italic font-weight-600">*). Wajib Di Isi</span>
                                                 <textarea required name="KETERANGAN_PENGAJUAN" id="KETERANGAN_PENGAJUAN" placeholder="Masukkan keterangan pengajuan" class="form-control" rows="3"></textarea>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan KETERANGAN!

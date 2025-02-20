@@ -134,7 +134,7 @@ class Transaksi_pengadaan extends CI_Controller
         $this->load->library('session');
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
-        $data['approval_kabag'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi($id_transaksi_pengadaan);
+        $data['approval_kabag'] = $this->M_TRANSAKSI_PENGADAAN->get_single($id_transaksi_pengadaan);
         $data['get_area'] = $this->M_TRANSAKSI_PENGADAAN->get_area();
         $data['get_ruangan'] = $this->M_TRANSAKSI_PENGADAAN->get_ruangan();
         $data['get_lokasi'] = $this->M_TRANSAKSI_PENGADAAN->get_lokasi();
@@ -157,7 +157,7 @@ class Transaksi_pengadaan extends CI_Controller
         $this->load->library('session');
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
-        $data['approval_gm'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi($id_transaksi_pengadaan);
+        $data['approval_gm'] = $this->M_TRANSAKSI_PENGADAAN->get_single($id_transaksi_pengadaan);
         $data['get_area'] = $this->M_TRANSAKSI_PENGADAAN->get_area();
         $data['get_ruangan'] = $this->M_TRANSAKSI_PENGADAAN->get_ruangan();
         $data['get_lokasi'] = $this->M_TRANSAKSI_PENGADAAN->get_lokasi();
@@ -180,7 +180,7 @@ class Transaksi_pengadaan extends CI_Controller
         $this->load->library('session');
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
-        $data['approval_head'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi($id_transaksi_pengadaan);
+        $data['approval_head'] = $this->M_TRANSAKSI_PENGADAAN->get_single($id_transaksi_pengadaan);
         $data['get_area'] = $this->M_TRANSAKSI_PENGADAAN->get_area();
         $data['get_ruangan'] = $this->M_TRANSAKSI_PENGADAAN->get_ruangan();
         $data['get_lokasi'] = $this->M_TRANSAKSI_PENGADAAN->get_lokasi();
@@ -205,7 +205,7 @@ class Transaksi_pengadaan extends CI_Controller
         $this->load->library('session');
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
-        $data['proses_pengadaan'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi($id_transaksi_pengadaan);
+        $data['proses_pengadaan'] = $this->M_TRANSAKSI_PENGADAAN->get_single($id_transaksi_pengadaan);
         $data['get_area'] = $this->M_TRANSAKSI_PENGADAAN->get_area();
         $data['get_ruangan'] = $this->M_TRANSAKSI_PENGADAAN->get_ruangan();
         $data['get_lokasi'] = $this->M_TRANSAKSI_PENGADAAN->get_lokasi();
@@ -223,7 +223,7 @@ class Transaksi_pengadaan extends CI_Controller
         $this->load->library('session');
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
-        $data['m_kiriman_barang'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi($id_transaksi_pengadaan);
+        $data['m_kiriman_barang'] = $this->M_TRANSAKSI_PENGADAAN->get_single($id_transaksi_pengadaan);
         $data['get_area'] = $this->M_TRANSAKSI_PENGADAAN->get_area();
         $data['get_ruangan'] = $this->M_TRANSAKSI_PENGADAAN->get_ruangan();
         $data['get_lokasi'] = $this->M_TRANSAKSI_PENGADAAN->get_lokasi();
@@ -242,7 +242,7 @@ class Transaksi_pengadaan extends CI_Controller
         $this->load->library('session');
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
-        $data['penyerahan_barang'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi($id_transaksi_pengadaan);
+        $data['penyerahan_barang'] = $this->M_TRANSAKSI_PENGADAAN->get_single($id_transaksi_pengadaan);
         $data['get_area'] = $this->M_TRANSAKSI_PENGADAAN->get_area();
         $data['get_ruangan'] = $this->M_TRANSAKSI_PENGADAAN->get_ruangan();
         $data['get_lokasi'] = $this->M_TRANSAKSI_PENGADAAN->get_lokasi();
