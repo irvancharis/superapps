@@ -66,6 +66,16 @@
 
                                                         <?php
                                                             }
+                                                            elseif($d->STATUS_PENGHAPUSAN == 'MENUNGGU JADWAL PENGHAPUSAN')
+                                                            {
+                                                        ?>
+                                                        <span class="badge badge-warning">MENUNGGU JADWAL PENGHAPUSAN</span>
+                                                        <a href="<?=site_url('transaksi_penghapusan/jadwal_penghapusan/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
+                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
+                                                        </a>
+
+                                                        <?php
+                                                            }
                                                             elseif($d->STATUS_PENGHAPUSAN == 'PROSES PENGHAPUSAN')
                                                             {
                                                         ?>

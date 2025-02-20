@@ -20,6 +20,12 @@ class M_TRANSAKSI_PENGHAPUSAN extends CI_Model
         return $query->result_object();
     }
 
+    public function get_metode()
+    {
+        $query = $this->db->get('METODE_PENGHAPUSAN');
+        return $query->result_object();
+    }
+
     public function get_single($KODE)
     {
         $this->db->select('*');
@@ -74,6 +80,13 @@ class M_TRANSAKSI_PENGHAPUSAN extends CI_Model
     {
         $this->db->where('UUID_TRANSAKSI_PENGHAPUSAN', $KODE);
         return $this->db->update($this->table, $data);
+    }
+
+    public function update_detail_transaksi($KODE_TRANSAKSI,$KODE_STOK, $data)
+    {
+        $this->db->where('UUID_TRANSAKSI_PENGHAPUSAN', $KODE_TRANSAKSI);
+        $this->db->where('UUID_PRODUK_STOK', $KODE_STOK);
+        return $this->db->update($this->table_detail, $data);
     }
 
     public function hapus($KODE)
