@@ -65,6 +65,16 @@
                                                         </a>
 
                                                         <?php
+                                                            }
+                                                            elseif($d->STATUS_PENGHAPUSAN == 'PROSES PENGHAPUSAN')
+                                                            {
+                                                        ?>
+                                                        <span class="badge badge-warning">PROSES PENGHAPUSAN</span>
+                                                        <a href="<?=site_url('transaksi_penghapusan/proses_penghapusan/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
+                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
+                                                        </a>
+
+                                                        <?php
                                                         }
                                                             elseif($d->STATUS_PENGHAPUSAN == 'SELESAI')
                                                             {

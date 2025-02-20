@@ -225,11 +225,7 @@ $(document).ready(function() {
                         swal('Gagal', 'Belum ada data produk.', 'error');
                     }
                 }
-            });
-
-            document.getElementById("AREA").disabled = true;
-            document.getElementById("LOKASI").disabled = true;
-            document.getElementById("RUANGAN").disabled = true;
+            });            
 
         } else {
             alert('Harap lengkapi data sebelum mengambil produk.');
