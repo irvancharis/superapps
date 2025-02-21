@@ -198,6 +198,25 @@ class Transaksi_penghapusan extends CI_Controller
             $this->load->view('transaksi_penghapusan_aproval_head', $data);
     }
 
+    public function jadwal_penghapusan($KODE, $page = 'transaksi_penghapusan')
+    {
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGHAPUSAN', 'APROVAL KABAG');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
+
+        $this->load->library('session');
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $query = $this->M_TRANSAKSI_PENGHAPUSAN->get_single($KODE);
+        $data['get_single'] = $query->row();
+        $data['metode_penghapusan'] = $this->M_TRANSAKSI_PENGHAPUSAN->get_metode();
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('transaksi_penghapusan_jadwal', $data);
+    }
+
     public function proses_penghapusan($KODE, $page = 'transaksi_penghapusan')
     {
         $SESSION_ROLE = $this->session->userdata('ROLE');
@@ -206,15 +225,108 @@ class Transaksi_penghapusan extends CI_Controller
             redirect('non_akses');
         }
 
-
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_TRANSAKSI_PENGHAPUSAN->get_single($KODE);
         $data['get_single'] = $query->row();
+        $data['metode_penghapusan'] = $this->M_TRANSAKSI_PENGHAPUSAN->get_metode();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('transaksi_penghapusan_proses', $data);
+    }
+
+    public function update_jadwal_pengahapusan()
+    {
+        $id_transaksi = $this->input->post('UUID_TRANSAKSI_PENGHAPUSAN'); // Ambil ID transaksi
+
+
+        $form = $this->input->post('form');
+        $items = $this->input->post('items');
+
+        // Update tabel transaksi_pengadaan
+        $data_update = [
+            'STATUS_PENGHAPUSAN' => 'PROSES PENGHAPUSAN',
+        ];
+
+        $update = $this->M_TRANSAKSI_PENGHAPUSAN->update_transaksi($id_transaksi, $data_update);
+
+        if (!$update) {
+            echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
+            return;
+        }
+
+        // Update transaksi_pengadaan_detail
+
+        foreach ($items as $item) {
+            $UUID_TRANSAKSI = $item['UUID_TRANSAKSI_PENGHAPUSAN'];
+            $UUID_STOK = $item['UUID_STOK'];
+            $data['KODE_METODE_PENGHAPUSAN'] = $item['KODE_METODE_PENGHAPUSAN'];
+            $this->M_TRANSAKSI_PENGHAPUSAN->update_detail_transaksi($UUID_TRANSAKSI, $UUID_STOK, $data);
+        }
+
+        echo json_encode(['success' => true]);
+    }
+
+    public function update_proses_pengahapusan()
+    {
+
+        $inputan = $this->input->post(null, TRUE);
+        $uuid = $this->input->post('UUID_TRANSAKSI_PENGHAPUSAN');      
+        
+        // Ambil data items dan ubah dari JSON string ke array PHP
+        $items_json = $this->input->post('items');
+        $items = json_decode($items_json, true); // Decode JSON ke array
+
+        // Update tabel transaksi_pengadaan
+        $data_update = [
+            'TANGGAL_REALISASI' => date('Y-m-d'),
+            'USER_PELAKSANA' => $this->session->userdata('ID_KARYAWAN'),
+            'STATUS_PENGHAPUSAN' => 'SELESAI',
+        ];
+
+        $update = $this->M_TRANSAKSI_PENGHAPUSAN->update_transaksi($uuid, $data_update);        
+
+        if (!$update) {            
+            echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
+            return;
+        }
+
+        // Cek apakah ada file yang diunggah
+        if (!empty($_FILES['FOTO_KONDISI_AKHIR']['name'][0])) {
+            $files = $_FILES;
+
+            foreach ($items as $i => $item) {
+                $FOTO_NAME = $this->uuid->v4();
+
+                $_FILES['file']['name'] = $files['FOTO_KONDISI_AKHIR']['name'][$i];
+                $_FILES['file']['type'] = $files['FOTO_KONDISI_AKHIR']['type'][$i];
+                $_FILES['file']['tmp_name'] = $files['FOTO_KONDISI_AKHIR']['tmp_name'][$i];
+                $_FILES['file']['error'] = $files['FOTO_KONDISI_AKHIR']['error'][$i];
+                $_FILES['file']['size'] = $files['FOTO_KONDISI_AKHIR']['size'][$i];
+
+                $config['upload_path'] = FCPATH . 'assets/uploads/transaksi_penghapusan/';
+                $config['allowed_types'] = 'jpg|jpeg|png';
+                $config['max_size'] = 2048; // 2MB
+                $config['file_name'] = $FOTO_NAME;
+
+                $this->load->library('upload', $config);
+
+                if (!$this->upload->do_upload('file')) {
+                    echo json_encode(['success' => false, 'error' => $this->upload->display_errors()]);
+                    exit;
+                } else {
+                    $data = $this->upload->data();
+                    
+                        $UUID_STOK = $item['UUID_STOK'];
+                        $data_produk = $item['JUMLAH_PENGHAPUSAN'];
+                        $this->M_TRANSAKSI_PENGHAPUSAN->update_real_stok($UUID_STOK, $data_produk);
+                    
+                }
+            }
+            echo json_encode(['success' => true]);
+        }
+        
     }
 
 
@@ -442,7 +554,7 @@ class Transaksi_penghapusan extends CI_Controller
         $data_update = [
             'KODE_APROVAL_HEAD' => $this->session->userdata('ID_KARYAWAN'),
             'TANGGAL_APROVAL_HEAD' => date('Y-m-d'),
-            'STATUS_PENGHAPUSAN' => 'PROSES PENGHAPUSAN',
+            'STATUS_PENGHAPUSAN' => 'MENUNGGU JADWAL PENGHAPUSAN',
         ];
 
         $update = $this->M_TRANSAKSI_PENGHAPUSAN->update_transaksi($id_transaksi, $data_update);
@@ -452,13 +564,7 @@ class Transaksi_penghapusan extends CI_Controller
             return;
         }
 
-        // Update transaksi_pengadaan_detail
-
-        // foreach ($items as $item) {
-        //     $UUID_STOK = $item['UUID_STOK'];
-        //     $data_produk = $item['JUMLAH_PENGHAPUSAN'];
-        //     $this->M_TRANSAKSI_PENGHAPUSAN->update_real_stok($UUID_STOK, $data_produk);
-        // }
+        
 
         echo json_encode(['success' => true]);
     }

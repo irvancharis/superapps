@@ -81,16 +81,16 @@
 
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped" id="table-2">
+                                        <table class="table table-striped" id="TABEL">
                                             <thead>
                                                 <tr>
-                                                    <th>QR</th>
-                                                    <th>FOTO</th>
-                                                    <th>KODE</th>
+                                                    <th class="text-center col-1">QR</th>
+                                                    <th class="text-center col-1">FOTO</th>
+                                                    <th class="text-center col-1">KODE</th>
                                                     <th>NAMA PRODUK</th>
-                                                    <th>KATEGORI</th>
-                                                    <th>MAPING</th>
-                                                    <th>STOK</th>
+                                                    <th class="text-center col-2">KATEGORI</th>
+                                                    <th class="text-center col-3">MAPING</th>
+                                                    <th class="text-center col-1">STOK</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="selected-items-body">
@@ -111,6 +111,9 @@
 
             <script>
 $(document).ready(function() {
+    $('#TABEL').dataTable({
+        paging: false
+    });
 
     localStorage.removeItem(
         'FormMapping');
@@ -255,13 +258,13 @@ $(document).ready(function() {
                     let rows = '';
                     $.each(response, function(index, data) {
                         rows += `<tr>
-                            <td><center><img width="100px" src="<?php echo base_url('produk_stok/qr/')?>${data.KODE_ITEM}" alt=""></center></td>
-                            <td><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${data.FOTO_ITEM}" alt=""></center></td>
-                            <td>${data.KODE_ITEM}</td>
+                            <td class="text-center col-1"><center><img width="100px" src="<?php echo base_url('produk_stok/qr/')?>${data.KODE_ITEM}" alt=""></center></td>
+                            <td class="text-center col-1"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${data.FOTO_ITEM}" alt=""></center></td>
+                            <td >${data.KODE_ITEM}</td>
                             <td>${data.NAMA_PRODUK}</td>
-                            <td>${data.NAMA_PRODUK_KATEGORI}</td>
+                            <td class="text-center">${data.NAMA_PRODUK_KATEGORI}</td>
                             <td><i class="fa fa-map-marker"></i> ${data.NAMA_AREA}<br><i class="fa fa-building"></i> ${data.NAMA_RUANGAN}<br> <i class="fa fa-users"></i> ${data.NAMA_DEPARTEMEN}<br><i class="fa fa-box"></i> ${data.NAMA_LOKASI}</td>
-                            <td>${data.JUMLAH_STOK}</td>
+                            <td class="text-center col-1">${data.JUMLAH_STOK}</td>
                          </tr>`;
                     });
                     $('#selected-items-body').html(rows);

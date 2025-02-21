@@ -63,21 +63,21 @@
                                         </div> -->
                                         <div class="table-responsive">
                                             <h6 class="font-medium text-center"> <i class="fa fa-map-marker"></i> PENEMPATAN PRODUK/ITEM</h6>
-                                            <table class="table table-striped table-hover table-md">
+                                            <table class="table table-striped table-md">
                                                 <tr>
-                                                    <th width="50%">AREA</th>
+                                                    <th class="col-2">AREA</th>
                                                     <td><?= $approval_kabag->NAMA_AREA; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th width="50%">DEPARTEMEN</th>
+                                                    <th >DEPARTEMEN</th>
                                                     <td><?= $approval_kabag->NAMA_DEPARTEMEN; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th width="50%">RUANGAN</th>
+                                                    <th >RUANGAN</th>
                                                     <td><i class="fa fa-users"></i> <?= $approval_kabag->NAMA_RUANGAN; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th width="50%">LOKASI</th>
+                                                    <th >LOKASI</th>
                                                     <td><i class="fa fa-box"></i> <?= $approval_kabag->NAMA_LOKASI; ?></td>
                                                 </tr>
                                             </table>
@@ -85,13 +85,13 @@
 
                                         <div class="table-responsive">
                                             <h6 class="font-medium mt-5 text-center"> <i class="fa fa-list"></i> DATA PRODUK</h6>
-                                            <table class="table table-striped" id="table-approval-produk">
+                                            <table class="table table-striped table-hover " id="table-approval-produk">
                                                 <thead>
                                                     <tr>
-                                                        <th>FOTO PRODUK</th>
+                                                        <th class="col-2">FOTO PRODUK</th>
                                                         <th>PRODUK/ITEM</th>
-                                                        <th>JUMLAH</th>
-                                                        <th>KEPERLUAN</th>
+                                                        <th class="col-1">JUMLAH</th>
+                                                        <th class="col-3">KEPERLUAN</th>
                                                         <th>ACTION</th>
                                                     </tr>
                                                 </thead>

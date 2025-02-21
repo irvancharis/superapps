@@ -5,10 +5,9 @@
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
-                    <form class="needs-validation" enctype="multipart/form-data" novalidate=""
-                        id="FORM_TRANSAKSI_PENGHAPUSAN">
+                    <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGHAPUSAN">
                         <div class="card-header">
-                            <h4>TRANSAKSI PENGHAPUSAN - PROSES PENGHAPUSAN</h4>
+                            <h4>TRANSAKSI PENGHAPUSAN - PENJADWALAN PENGHAPUSAN</h4>
 
                         </div>
                         <div class="card-body">
@@ -45,10 +44,10 @@
                                 <table class="table table-striped table-sm" id="dataprodukitem">
                                     <thead>
                                         <tr>
+                                            <th>FOTO</th>
                                             <th>PRODUK/ITEM</th>
-                                            <th class="text-center">JUMLAH</th>
-                                            <th class="text-center">METODE PENGHAPUSAN</th>
-                                            <th class="text-center">FOTO PENGHAPUSAN</th>
+                                            <th>JUMLAH</th>
+                                            <th>METODE PENGHAPUSAN</th>
                                         </tr>
                                     </thead>
                                     <tbody id="selected-items-body">
@@ -111,10 +110,15 @@ $(document).ready(function() {
             tbody.append(`
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.KODE_ITEM}">
+                                    <td class="text-center col-1"><center><img width="100px" src="<?php echo base_url('assets/uploads/transaksi_penghapusan/')?>${item.FOTO_KONDISI_AWAL}" alt=""></center></td>
                                     <td>${item.NAMA_PRODUK}</td>
                                     <td class="text-center col-1">${item.JUMLAH_PENGHAPUSAN}</td>
-                                    <td class="text-center col-2">${item.NAMA_METODE_PENGHAPUSAN}</td>
-                                    <td class="text-center col-3"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_KONDISI_AKHIR[${index}]"></td>
+                                    <td class="col-4">
+                                    <select class="form-control" required class="METODE_PENGHAPUSAN" onchange="set_metode(${index},$(this).val())" name="METODE_PENGHAPUSAN[${index}]">                                                       
+                                        <option value="">-- Pilih Metode Penghapusan --</option>
+                                        ${options}
+                                    </select>
+                                    </td>
                                 </tr>
                             `);
         });
@@ -122,43 +126,62 @@ $(document).ready(function() {
 
 
     $('#FORM_TRANSAKSI_PENGHAPUSAN').on('submit', function(e) {
-        e.preventDefault();
+            e.preventDefault();
 
-        let formData = new FormData(this); // Ambil data dari form
-        let storedProdukItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
+            let storedProdukItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
+            let formData = JSON.parse(localStorage.getItem('FormPenghapusan')) || {};
 
-        // Tambahkan data tambahan ke FormData
-        formData.append('UUID_TRANSAKSI_PENGHAPUSAN', '<?= $get_single->UUID_TRANSAKSI_PENGHAPUSAN ?>');
-        formData.append('items', JSON.stringify(storedProdukItems)); // Kirim array sebagai JSON string
+            $metode = [
+                storedProdukItems.KODE_METODE_PENGHAPUSAN !=''
+            ];
 
-        $.ajax({
-            url: "<?php echo base_url(); ?>" +
-                "transaksi_penghapusan/update_proses_pengahapusan",
-            type: "POST",
-            data: formData,
-            processData: false, // Mencegah jQuery memproses data
-            contentType: false, // Mencegah jQuery mengatur header `Content-Type`
-            success: function(response) {
-                try {
-                    let res = JSON.parse(response);
-                    if (res.success) {
-                        swal('Sukses', 'Simpan Data Berhasil!', 'success').then(function() {
-                            localStorage.removeItem(
-                            'storedProdukItems'); // Hapus localStorage setelah berhasil
-                            location.href = "<?php echo base_url(); ?>" +
-                                "transaksi_penghapusan";
-                        });
-                    } else {
-                        swal('Gagal', res.error, 'error');
-                    }
-                } catch (error) {
-                    console.error('Parsing JSON gagal:', error);
-                    swal('Error', 'Terjadi kesalahan pada server.', 'error');
-                }
+            //alert($metode);
+
+            var isComplete = (
+                $metode 
+            );
+
+            if (storedProdukItems.length == 0) {
+                swal('Error', 'Tidak ada produk yang dipilih.', 'error').then(function() {
+                    console.log(storedProdukItems);
+                });
             }
-        });
+            if (!isComplete) {
+                swal('Error', 'Lengkapi semua data.', 'error').then(function() {
+                    return;
+                });
+            } else {
+            $.ajax({
+                url: "<?php echo base_url(); ?>" +
+                    "transaksi_penghapusan/update_jadwal_pengahapusan",
+                type: "POST",
+                data: {
+                    UUID_TRANSAKSI_PENGHAPUSAN: '<?= $get_single->UUID_TRANSAKSI_PENGHAPUSAN ?>',
+                    items: storedProdukItems,
+                    form: formData
+                },
+                success: function(response) {
+                    try {
+                        let res = JSON.parse(response);
+                        if (res.success) {
+                            swal('Sukses', 'Simpan Data Berhasil!', 'success').then(function() {
+                                localStorage.removeItem(
+                                    'storedProdukItems'
+                                ); // Hapus localStorage setelah berhasil
+                                location.href = "<?php echo base_url(); ?>" +
+                                    "transaksi_penghapusan";
+                            });
+                        } else {
+                            swal('Gagal', res.error, 'error');
+                        }
+                    } catch (error) {
+                        console.error('Parsing JSON gagal:', error);
+                        swal('Error', 'Terjadi kesalahan pada server.', 'error');
+                    }
+                }
+            });
+        }
     });
-
 
 
 });
