@@ -37,7 +37,7 @@
                     </li>
                     <li>
                         <a href="<?php echo base_url('produk_stok'); ?>" class="nav-link"><i data-feather="box"></i><span>Stok</span></a>
-                    </li>
+                    </li>                    
                 </ul>
             </li>
             <li class="dropdown <?php (isset($page) && $page == 'departement') || (isset($page) && $page == 'jabatan') ? print 'active' : ''; ?>">

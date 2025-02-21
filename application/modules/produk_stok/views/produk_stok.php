@@ -91,6 +91,7 @@
                                                     <th class="text-center col-2">KATEGORI</th>
                                                     <th class="text-center col-3">MAPING</th>
                                                     <th class="text-center col-1">STOK</th>
+                                                    <th class="text-center col-1">ACTION</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="selected-items-body">
@@ -243,6 +244,7 @@ $(document).ready(function() {
         }
 
 
+
         $.ajax({
             url: "<?php echo base_url(); ?>" + "produk_stok/get_produk_stok",
             type: "POST",
@@ -257,6 +259,16 @@ $(document).ready(function() {
                 if (response.length > 0) {
                     let rows = '';
                     $.each(response, function(index, data) {
+
+                        let options = "";
+                        if (data.cek_aset == 0) {
+                            options += `
+                                    <label onclick="generate_aset('${data.UUID_STOK}')" class="btn btn-warning">
+                                        <i class="fa fa-eye"></i> GENERATE ASSET
+                                    </label>
+                            `;
+                        }
+
                         rows += `<tr>
                             <td class="text-center col-1"><center><img width="100px" src="<?php echo base_url('produk_stok/qr/')?>${data.KODE_ITEM}" alt=""></center></td>
                             <td class="text-center col-1"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${data.FOTO_ITEM}" alt=""></center></td>
@@ -265,6 +277,8 @@ $(document).ready(function() {
                             <td class="text-center">${data.NAMA_PRODUK_KATEGORI}</td>
                             <td><i class="fa fa-map-marker"></i> ${data.NAMA_AREA}<br><i class="fa fa-building"></i> ${data.NAMA_RUANGAN}<br> <i class="fa fa-users"></i> ${data.NAMA_DEPARTEMEN}<br><i class="fa fa-box"></i> ${data.NAMA_LOKASI}</td>
                             <td class="text-center col-1">${data.JUMLAH_STOK}</td>
+                            <td class="text-center col-2"><label onclick="detail_stok('${data.UUID_STOK}')" class="btn btn-primary" id="btn-show-produk"> <i class="fa fa-eye"></i> DETAIL</label> ${options}</td>
+                            
                          </tr>`;
                     });
                     $('#selected-items-body').html(rows);
@@ -285,6 +299,29 @@ $(document).ready(function() {
 
 
 });
+
+function generate_aset(uuid) {
+    $.ajax({
+        url: "<?php echo base_url(); ?>" + "produk_stok/generate_aset/" + uuid,
+        type: "POST",
+        success: function(response) {
+            let res = JSON.parse(response);
+            if (res.success) {
+                swal('Sukses', 'Simpan Data Berhasil!', 'success').then(function() {
+                    location.href = "<?php echo base_url(); ?>" +
+                        "produk_stok";
+                });
+            } else {
+                swal('Error', 'Tidak dapat terhubung ke server.', 'error');
+            }
+        }
+    });
+}
+
+
+function detail_stok(uuid) {
+    window.location.href = "<?php echo base_url(); ?>produk_stok/detail_stok/" + uuid;
+}
             </script>
 
             </html>

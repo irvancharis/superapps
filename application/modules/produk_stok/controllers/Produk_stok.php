@@ -13,6 +13,7 @@ class Produk_stok extends CI_Controller
         $this->load->model('departement/M_DEPARTEMENT');
         $this->load->helper('url_helper');
         $this->load->library('ciqrcode');
+        $this->load->library('Uuid');
     }
 
     public function index($page = 'produk_stok')
@@ -23,7 +24,7 @@ class Produk_stok extends CI_Controller
         $data['get_area'] = $this->M_MAPING_AREA->get_area();
         $data['get_ruangan'] = $this->M_MAPING_RUANGAN->get_maping_ruangan();
         $data['get_lokasi'] = $this->M_MAPING_LOKASI->get_maping_lokasi();
-        $data['get_departemen'] = $this->M_DEPARTEMENT->get_departemen();
+        $data['get_departemen'] = $this->M_DEPARTEMENT->get_departemen();        
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         //$data['get_kategori'] = $this->M_PRODUK_STOK->get_kategori();
@@ -31,6 +32,38 @@ class Produk_stok extends CI_Controller
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('produk_stok', $data);
+    }
+
+    public function scan()
+    {
+        $this->load->view('scan');
+    }
+
+    public function produk_aset_histori($kode,$page = 'produk_stok')
+    {
+        $this->load->library('session');
+
+        $data['histori_aset'] = $this->M_PRODUK_STOK->cek_histori_aset($kode);
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('produk_aset_histori', $data);
+    }
+
+
+    public function detail_stok($kode,$page = 'produk_stok')
+    {
+        $this->load->library('session');
+
+        $data['aset'] = $this->M_PRODUK_STOK->cek_aset($kode);
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('produk_stok_detail', $data);
     }
 
     public function get_single($KODE_ITEM)
@@ -42,13 +75,35 @@ class Produk_stok extends CI_Controller
 
     public function get_produk_stok()
     {
-        $area = $this->input->post('KODE_AREA');
-        $ruangan = $this->input->post('KODE_RUANGAN');
-        $lokasi = $this->input->post('KODE_LOKASI');
-        $departemen = $this->input->post('KODE_DEPARTEMEN'); 
-        
-        $result = $this->M_PRODUK_STOK->getProdukMaping($area, $ruangan, $lokasi, $departemen);
-        echo json_encode($result);
+    $area = $this->input->post('KODE_AREA');
+    $ruangan = $this->input->post('KODE_RUANGAN');
+    $lokasi = $this->input->post('KODE_LOKASI');
+    $departemen = $this->input->post('KODE_DEPARTEMEN');
+
+    $result = $this->M_PRODUK_STOK->getProdukMaping($area, $ruangan, $lokasi, $departemen);
+
+    // Konversi semua hasil menjadi array
+    $result = json_decode(json_encode($result), true);
+
+    foreach ($result as &$row) {
+        $row['cek_aset'] = $this->M_PRODUK_STOK->cek_aset($row['UUID_STOK']);
+    }
+    echo json_encode($result);
+    exit;
+
+    }
+
+    public function generate_aset($kode)
+    {
+        $stok = $this->M_PRODUK_STOK->get_jumlah_stok($kode);
+
+        for($i = 0; $i < $stok->JUMLAH_STOK; $i++) {
+            $data['UUID_STOK'] = $stok->UUID_STOK;
+            $data['UUID_ASET'] = $this->uuid->v4();
+            $this->M_PRODUK_STOK->insert_aset($data);
+        }
+
+        echo json_encode(['success' => true]);
     }
 
 

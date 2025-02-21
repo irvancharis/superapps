@@ -1,75 +1,78 @@
             <!-- Main Content -->
+
             <div class="main-content">
                 <section class="section">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>DETAIL PRODUK</h4>
+                                    <h4>DETAIL PRODUK STOK</h4>
                                 </div>
                                 <div class="card-body">
-                                    <center><img
-                                            src="<?php echo base_url('produk_stok/qr/').$get_produk_stok->UUID_STOK; ?>"
-                                            alt=""></center>
-                                    <div class="row">
-                                        <div class="form-group col-12 col-md-4 col-lg-4">
-                                            <label>UUID STOK</label>
-                                            <input required type="text" name="KODE_ITEM" id="KODE_ITEM"
-                                                value="<?= $get_produk_stok->UUID_STOK; ?>" class="form-control"
-                                                readonly>
-                                        </div>
-                                        <div class="form-group col-12 col-md-4 col-lg-4">
-                                            <label>KODE ITEM</label>
-                                            <input required type="text" class="form-control" id="NAMA_ITEM"
-                                                value="<?= $get_produk_stok->KODE_ITEM; ?>" name="NAMA_ITEM" readonly>
-                                        </div>
-                                        <div class="form-group col-12 col-md-4 col-lg-4">
-                                            <label>NAMA PRODUK</label>
-                                            <input required type="text" class="form-control" id="NAMA_PRODUK"
-                                                value="<?= $get_produk_stok->NAMA_PRODUK; ?>" name="NAMA_PRODUK"
-                                                readonly>
-                                        </div>
-                                        <div class="form-group col-12 col-md-4 col-lg-4">
-                                            <label>KETEGORI</label>
-                                            <input required type="text" class="form-control" id="NAMA_PRODUK_KATEGORI"
-                                                value="<?= $get_produk_stok->NAMA_PRODUK_KATEGORI; ?>" name="NAMA_PRODUK_KATEGORI"
-                                                readonly>
-                                        </div>
-                                        <div class="form-group col-12 col-md-4 col-lg-4">
-                                            <label>DEPARTEMEN</label>
-                                            <input required type="text" class="form-control" id="NAMA_DEPARTEMEN"
-                                                value="<?= $get_produk_stok->NAMA_DEPARTEMEN; ?>" name="NAMA_DEPARTEMEN"
-                                                readonly>
-                                        </div>
-                                        <div class="form-group col-12 col-md-4 col-lg-4">
-                                            <label>AREA</label>
-                                            <input required type="text" class="form-control" id="NAMA_PRODUK_KATEGORI"
-                                                value="<?= $get_produk_stok->NAMA_PRODUK_KATEGORI; ?>" name="NAMA_PRODUK_KATEGORI"
-                                                readonly>
-                                        </div>
-                                        <div class="form-group col-12 col-md-4 col-lg-4">
-                                            <label>RUANGAN</label>
-                                            <input required type="text" class="form-control" id="NAMA_PRODUK_KATEGORI"
-                                                value="<?= $get_produk_stok->NAMA_RUANGAN; ?>" name="NAMA_PRODUK_KATEGORI"
-                                                readonly>
-                                        </div>
-                                        <div class="form-group col-12 col-md-4 col-lg-4">
-                                            <label>LOKASI</label>
-                                            <input required type="text" class="form-control" id="NAMA_PRODUK_KATEGORI"
-                                                value="<?= $get_produk_stok->NAMA_LOKASI; ?>" name="NAMA_PRODUK_KATEGORI"
-                                                readonly>
-                                        </div>
-                                        <div class="form-group col-12 col-md-4 col-lg-4">
-                                            <label>JUMLAH STOK</label>
-                                            <input required type="text" class="form-control" id="NAMA_PRODUK_KATEGORI"
-                                                value="<?= $get_produk_stok->JUMLAH_STOK; ?>" name="NAMA_PRODUK_KATEGORI"
-                                                readonly>
-                                        </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" id="table-2">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center col-2">QR</th>
+                                                    <th>NAMA PRODUK</th>
+                                                    <th class="text-center col-2">PIC</th>
+                                                    <th class="text-center col-2">FOTO ITEM</th>
+                                                    <th class="text-center col-2">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($aset as $index => $d) : ?>
+                                                <tr>
+                                                    <td>
+                                                        <center><img width="120px"
+                                                                src="<?php echo base_url('produk_stok/qr/'.$d->NAMA_PRODUK)?>"
+                                                                alt=""></center>
+                                                    </td>
+                                                    <td><?php echo $d->NAMA_PRODUK; ?></td>
+                                                    <td><?php echo $d->NAMA_PIC; ?></td>
+                                                    <td class="text-center col-2">
+                                                        <img width="150px" style="cursor: pointer;" src="<?php echo base_url('assets/uploads/item/') . $d->FOTO_ITEM; ?>"
+                                                            alt="Thumbnail" class="thumbnail" onclick="showPopup(this)">
 
-                                    </div>
-                                    <div class="card-footer text-center">
-                                        <a href="<?=site_url('produk_stok');?>" class="btn btn-primary">
-                                            <i class="fa fa-arrow-left"></i> KEMBALI</a>
+                                                        <script>
+                                                        function showPopup(img) {
+                                                            let popupDiv = document.createElement("div");
+                                                            popupDiv.style.position = "fixed";
+                                                            popupDiv.style.top = "0";
+                                                            popupDiv.style.left = "0";
+                                                            popupDiv.style.width = "100%";
+                                                            popupDiv.style.height = "100%";
+                                                            popupDiv.style.background = "rgba(0, 0, 0, 0.8)";
+                                                            popupDiv.style.display = "flex";
+                                                            popupDiv.style.justifyContent = "center";
+                                                            popupDiv.style.alignItems = "center";
+                                                            popupDiv.style.cursor = "pointer";
+                                                            popupDiv.style.zIndex = "9999";
+
+                                                            let popupImg = document.createElement("img");
+                                                            popupImg.src = img.src;
+                                                            popupImg.style.maxWidth = "80%";
+                                                            popupImg.style.maxHeight = "80%";
+                                                            popupImg.style.borderRadius = "10px";
+                                                            popupImg.style.zIndex = "10000";
+
+                                                            popupDiv.appendChild(popupImg);
+                                                            popupDiv.onclick = function() {
+                                                                document.body.removeChild(popupDiv);
+                                                            };
+
+                                                            document.body.appendChild(popupDiv);
+                                                        }
+                                                        </script>
+                                                    </td>
+                                                    <td class="text-center col-2"><label
+                                                            onclick="detail_stok('<?php echo $d->UUID_ASET; ?>')"
+                                                            class="btn btn-success" id="btn-show-produk"> <i
+                                                                class="fa fa-eye"></i> CEK HISTORI</label></td>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
 
@@ -82,6 +85,13 @@
 
             <?php $this->load->view('layout/footer'); ?>
             </body>
+
+
+            <script>
+function detail_stok(UUID_STOK) {
+    window.location.href = "<?php echo base_url('produk_stok/produk_aset_histori/') ?>" + UUID_STOK;
+}
+            </script>
 
 
             <!-- index.html  21 Nov 2019 03:47:04 GMT -->
