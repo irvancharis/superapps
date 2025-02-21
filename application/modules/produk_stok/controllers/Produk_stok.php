@@ -12,6 +12,7 @@ class Produk_stok extends CI_Controller
         $this->load->model('maping_lokasi/M_MAPING_LOKASI');
         $this->load->model('departement/M_DEPARTEMENT');
         $this->load->helper('url_helper');
+        $this->load->library('TanggalIndo');
         $this->load->library('ciqrcode');
         $this->load->library('Uuid');
     }
@@ -47,8 +48,6 @@ class Produk_stok extends CI_Controller
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
 
-        $this->load->view('layout/navbar') .
-            $this->load->view('layout/sidebar', $data) .
             $this->load->view('produk_aset_histori', $data);
     }
 

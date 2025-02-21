@@ -89,7 +89,7 @@
 
             <script>
 function detail_stok(UUID_STOK) {
-    window.location.href = "<?php echo base_url('produk_stok/produk_aset_histori/') ?>" + UUID_STOK;
+    window.open("<?php echo base_url('produk_stok/produk_aset_histori/') ?>" + UUID_STOK, '_blank');
 }
             </script>
 
