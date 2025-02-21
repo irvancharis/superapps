@@ -21,14 +21,14 @@
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>REQUEST BY</label>
                                                 <input type="hidden" name="id_ticket" id="id_ticket" value="<?= isset($get_ticket->IDTICKET) ? $get_ticket->IDTICKET : ''; ?>">
-                                                <input type="text" name="request_by" id="request_by" class="form-control" value="<?= isset($get_ticket->REQUESTBY) ? $get_ticket->REQUESTBY : ''; ?>">
+                                                <input type="text" name="request_by" id="request_by" class="form-control" value="<?= isset($get_ticket->REQUESTBY) ? $get_ticket->REQUESTBY : ''; ?>" disabled>
                                                 <div class="invalid-feedback">
                                                     Di Request Oleh?
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DEPARTEMEN</label>
-                                                <select name="id_departemen" id="id_departemen" class="form-control">
+                                                <select name="id_departemen" id="id_departemen" class="form-control" disabled>
                                                     <option value="<?= isset($get_ticket->KODE_DEPARTEMEN) ? $get_ticket->KODE_DEPARTEMEN : ''; ?>"><?= isset($get_ticket->NAMA_DEPARTEMEN) ? $get_ticket->NAMA_DEPARTEMEN : ''; ?></option>
                                                 </select>
                                                 <div class="invalid-feedback">
@@ -37,14 +37,14 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>E-MAIL</label>
-                                                <input type="email" class="form-control" id="email_ticket" name="email_ticket" value="<?= isset($get_ticket->EMAIL_TICKET) ? $get_ticket->EMAIL_TICKET : ''; ?>">
+                                                <input type="email" class="form-control" id="email_ticket" name="email_ticket" value="<?= isset($get_ticket->EMAIL_TICKET) ? $get_ticket->EMAIL_TICKET : ''; ?>" disabled>
                                                 <div class="invalid-feedback">
                                                     Masukkan Email dengan benar!
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
-                                                <select name="id_area" id="id_area" class="form-control">
+                                                <select name="id_area" id="id_area" class="form-control" disabled>
                                                     <option value="<?= isset($get_ticket->KODE_AREA) ? $get_ticket->KODE_AREA : ''; ?>"><?= isset($get_ticket->NAMA_AREA) ? $get_ticket->NAMA_AREA : ''; ?></option>
                                                 </select>
                                                 <div class="invalid-feedback">
@@ -53,7 +53,7 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DEPARTEMEN DIREQUEST</label>
-                                                <select name="id_departemen_request" id="id_departemen_request" class="form-control">
+                                                <select name="id_departemen_request" id="id_departemen_request" class="form-control" disabled>
                                                     <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
                                                     <?php foreach ($get_departement as $row) : ?>
                                                         <option value="<?= $row->KODE_DEPARTEMEN; ?>" <?= ($get_ticket->DEPARTEMENT_DIREQUEST == $row->KODE_DEPARTEMEN) ? 'selected' : ''; ?>><?= $row->NAMA_DEPARTEMEN; ?></option>
@@ -86,18 +86,18 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DESCRIPTION</label>
-                                                <textarea name="description_ticket" placeholder="Masukkan deskripsi keluhan" class="form-control" id="description_ticket"><?= isset($get_ticket->DESCRIPTION_TICKET) ? $get_ticket->DESCRIPTION_TICKET : ''; ?></textarea>
+                                                <textarea name="description_ticket" placeholder="Masukkan deskripsi keluhan" class="form-control" id="description_ticket" disabled><?= isset($get_ticket->DESCRIPTION_TICKET) ? $get_ticket->DESCRIPTION_TICKET : ''; ?></textarea>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan deskripsi keluhan anda!
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DATE TICKET DONE</label>
-                                                <input type="datetime-local" class="form-control" id="date_ticket_done" name="date_ticket_done" readonly>
+                                                <input type="datetime-local" class="form-control" id="date_ticket_done" name="date_ticket_done" disabled>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>TECHNICIAN</label>
-                                                <select name="id_technician" id="id_technician" class="form-control">
+                                                <select name="id_technician" id="id_technician" class="form-control" required>
                                                     <option value="" class="text-center" selected disabled>-- Pilih Teknisi --</option>
                                                     <?php foreach ($get_technician as $row) : ?>
                                                         <option value="<?= $row->IDTECH; ?>" <?= ($get_ticket->TECHNICIAN == $row->IDTECH) ? 'selected' : ''; ?>><?= $row->NAME_TECHNICIAN; ?></option>
@@ -427,12 +427,19 @@
                         // Menambahkan kelas warna sesuai pilihan
                         if ($('#approval0').is(':checked')) {
                             $('#label-approval0').addClass('bg-warning text-white');
+                            $('#id_technician').prop('disabled', true);
                         } else if ($('#approval1').is(':checked')) {
                             $('#label-approval1').addClass('bg-success text-white');
+                            $('#id_technician').prop('disabled', false);
                         } else if ($('#approval2').is(':checked')) {
                             $('#label-approval2').addClass('bg-danger text-white');
+                            $('#id_technician').prop('disabled', true);
+                            $('#id_technician').val('');
                         }
                     });
+
+                    // Trigger event change saat halaman pertama kali dimuat
+                    $('input[name="approval_ticket"]:checked').trigger('change');
 
                     // Fungsi untuk update tampilan progress bar
                     function updateProgressBar(progressValue) {
@@ -485,7 +492,7 @@
                                         let isChecked = selectedTickets.some(ticket => ticket.TYPE_TICKET === item.NAMA_JOBLIST) ? 'checked' : '';
                                         $(".type-ticket").append(`
                                             <label class="selectgroup-item">
-                                                <input type="checkbox" name="type_ticket[]" value="${item.NAMA_JOBLIST}" class="selectgroup-input" ${isChecked}>
+                                                <input type="checkbox" name="type_ticket[]" value="${item.NAMA_JOBLIST}" class="selectgroup-input" ${isChecked} disabled>
                                                 <span class="selectgroup-button">${item.NAMA_JOBLIST}</span>
                                             </label>
                                         `);

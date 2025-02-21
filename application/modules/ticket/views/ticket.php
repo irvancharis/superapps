@@ -59,8 +59,7 @@
                                                         <td><?php echo $d->NAME_TECHNICIAN; ?></td>
                                                         <td>
                                                             <div class="progress">
-                                                                <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0"
-                                                                    aria-valuemax="100" id="progress-bar" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
+                                                                <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
                                                             </div>
                                                         </td>
                                                         <td> <?php
@@ -79,10 +78,10 @@
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">
-                                                                    <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a>
-                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Edit</a>
-                                                                    <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a>
-                                                                    <a href="#" class="dropdown-item has-icon update-status" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Status</a>
+                                                                    <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
+                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Proses</a>
+                                                                    <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
+                                                                    <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Status</a>
                                                                     <div class="dropdown-divider"></div>
                                                                     <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTICKET; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
                                                                         Delete</a>
@@ -233,14 +232,6 @@
 
             <script>
                 $(document).ready(function() {
-                    // Fungsi untuk update tampilan progress bar
-                    function updateProgressBar(progressValue) {
-                        $("#progress-bar")
-                            .css("width", progressValue + "%") // Ubah lebar progress bar
-                            .attr("aria-valuenow", progressValue) // Update atribut aksesibilitas
-                            .text(progressValue + "%"); // Ubah teks progress bar
-                    }
-
                     $('.hapus-btn').on('click', function() {
                         const id = $(this).data('id');
 
@@ -276,13 +267,14 @@
                         });
                     });
 
-                    // Ambil nilai status_ticket dari elemen yang sudah ada di halaman
-                    let progressValue = $("#progress-bar").data("status");
-
-                    // Pastikan nilai progress tidak null atau undefined
-                    if (progressValue !== undefined) {
-                        updateProgressBar(progressValue);
-                    }
+                    // 🚀 1. Inisialisasi Semua Progress Bar Saat Halaman Dimuat
+                    $(".progress-bar").each(function() {
+                        const id = $(this).data("id");
+                        const progressValue = $(this).data("status");
+                        if (progressValue !== undefined) {
+                            updateProgressBar(id, progressValue);
+                        }
+                    });
 
                     // Update Status Ticket
                     $(".update-status").click(function() {
@@ -297,25 +289,25 @@
                                 element: "div",
                                 attributes: {
                                     innerHTML: `
-                    <div class="selectgroup selectgroup-pills">
-                        <label class="selectgroup-item">
-                            <input type="radio" name="status_ticket" value="0" class="selectgroup-input-radio" id="status0">
-                            <span class="selectgroup-button status" id="label-status0">DALAM ANTRIAN</span>
-                        </label>
-                        <label class="selectgroup-item">
-                            <input type="radio" name="status_ticket" value="25" class="selectgroup-input-radio" id="status1">
-                            <span class="selectgroup-button status" id="label-status1">SEDANG DIKERJAKAN</span>
-                        </label>
-                        <label class="selectgroup-item">
-                            <input type="radio" name="status_ticket" value="50" class="selectgroup-input-radio" id="status2">
-                            <span class="selectgroup-button status" id="label-status2">MENUNGGU VALIDASI</span>
-                        </label>
-                        <label class="selectgroup-item">
-                            <input type="radio" name="status_ticket" value="100" class="selectgroup-input-radio" id="status3">
-                            <span class="selectgroup-button status" id="label-status3">SELESAI</span>
-                        </label>
-                    </div>
-                    `
+                                        <div class="selectgroup selectgroup-pills">
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="status_ticket" value="0" class="selectgroup-input-radio" id="status0">
+                                                <span class="selectgroup-button status" id="label-status0">DALAM ANTRIAN</span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="status_ticket" value="25" class="selectgroup-input-radio" id="status1">
+                                                <span class="selectgroup-button status" id="label-status1">SEDANG DIKERJAKAN</span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="status_ticket" value="50" class="selectgroup-input-radio" id="status2">
+                                                <span class="selectgroup-button status" id="label-status2">MENUNGGU VALIDASI</span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="status_ticket" value="100" class="selectgroup-input-radio" id="status3">
+                                                <span class="selectgroup-button status" id="label-status3">SELESAI</span>
+                                            </label>
+                                        </div>
+                                    `
                                 }
                             },
                             buttons: {
@@ -350,6 +342,8 @@
                                         if (response.success) {
                                             swal("Berhasil!", "Status tiket berhasil diperbarui.", "success")
                                                 .then(() => {
+                                                    // Update progress bar hanya pada baris yang relevan
+                                                    updateProgressBar(id_ticket, selectedStatus);
                                                     // Reload halaman setelah update sukses
                                                     location.reload();
                                                 });
@@ -369,6 +363,14 @@
                             $(`input[name='status_ticket'][value='${currentStatus}']`).prop("checked", true).trigger("change");
                         }, 500);
                     });
+
+                    // Fungsi untuk update tampilan progress bar
+                    function updateProgressBar(id, progressValue) {
+                        $(`.progress-bar[data-id='${id}']`)
+                            .css("width", progressValue + "%")
+                            .attr("aria-valuenow", progressValue)
+                            .text(progressValue + "%");
+                    }
 
                     // Fungsi untuk mengatur kelas warna ketika radio button dipilih
                     $(document).on("change", "input[name='status_ticket']", function() {

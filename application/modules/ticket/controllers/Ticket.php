@@ -219,12 +219,6 @@ class Ticket extends CI_Controller
     {
         // Ambil data dari POST
         $id_ticket =  $this->input->post('id_ticket');
-        $requestby = $this->input->post('request_by');
-        $id_departement = $this->input->post('id_departemen');
-        $email_ticket = $this->input->post('email_ticket');
-        $site_ticket = $this->input->post('id_area');
-        $type_ticket = $this->input->post('type_ticket');
-        $description_ticket = $this->input->post('description_ticket');
         $id_technician = $this->input->post('id_technician');
         $status_ticket = $this->input->post('status_ticket');
         $approval_ticket = $this->input->post('approval_ticket');
@@ -238,27 +232,8 @@ class Ticket extends CI_Controller
             $date_ticket_done = null; // Atau set default jika diperlukan
         }
 
-        // Cek apakah $type_ticket dari form merupakan array atau tidak
-        if (is_array($type_ticket)) {
-            // Jika dalam bentuk array (saat Create atau Edit dari form)
-            if (empty($type_ticket)) {
-                $errors[] = 'Pilih setidaknya satu jenis keluhan.';
-            } else {
-                $type_ticket = implode(',', $type_ticket); // Gabungkan array menjadi string
-            }
-        } else {
-            // Jika dalam bentuk string (saat mengambil dari database untuk Edit)
-            $type_ticket = !empty($type_ticket) ? explode(',', $type_ticket) : []; // Ubah ke array
-        }
-
         // Jika validasi lolos, lanjutkan proses penyimpanan
         $data = [
-            'REQUESTBY' => $requestby,
-            'DEPARTEMENT' => $id_departement,
-            'EMAIL_TICKET' => $email_ticket,
-            'SITE_TICKET' => $site_ticket,
-            'TYPE_TICKET' => $type_ticket,
-            'DESCRIPTION_TICKET' => $description_ticket,
             'DATE_TICKET_DONE' => $date_ticket_done,
             'TECHNICIAN' => $id_technician,
             'STATUS_TICKET' => $status_ticket,
