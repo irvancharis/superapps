@@ -169,6 +169,18 @@ class Produk_stok extends CI_Controller
         $this->ciqrcode->generate($params);  // QR Code akan langsung tampil di browser
     }
 
+    public function print_qr_aset($kode) {
+        $data['aset'] = $this->M_PRODUK_STOK->cek_aset($kode);
+        $this->load->view('print_qr_aset', $data);
+
+    }
+
+    public function print_qr_single($kode) {
+        $data['aset'] = $this->M_PRODUK_STOK->cek_aset_single($kode);
+        $this->load->view('print_qr_single', $data);
+
+    }
+
 
 
     public function qr_link() {

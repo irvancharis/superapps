@@ -9,15 +9,19 @@
                                     <h4>DETAIL PRODUK STOK</h4>
                                 </div>
                                 <div class="card-body">
+
                                     <div class="table-responsive">
-                                        <table class="table table-striped" id="table-2">
+                                        <table class="table table-striped" id="tabel">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center col-2">QR</th>
                                                     <th>NAMA PRODUK</th>
                                                     <th class="text-center col-2">PIC</th>
                                                     <th class="text-center col-2">FOTO ITEM</th>
-                                                    <th class="text-center col-2">Action</th>
+                                                    <th class="text-center col-2"><button
+                                                            class="btn btn-outline-secondary"
+                                                            onclick="window.open('<?php echo base_url('produk_stok/print_qr_aset/'.$this->uri->segment(3)) ?>','_blank')"><i
+                                                                class="fas fa-print"></i></button></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -66,10 +70,17 @@
                                                         }
                                                         </script>
                                                     </td>
-                                                    <td class="text-center col-2"><label
+                                                    <td class="text-center col-2">
+                                                        <label
                                                             onclick="detail_stok('<?php echo $d->UUID_STOK; ?>','<?php echo $d->UUID_ASET; ?>')"
-                                                            class="btn btn-success" id="btn-show-produk"> <i
-                                                                class="fa fa-eye"></i> CEK HISTORI</label></td>
+                                                            class="btn btn-outline-primary" id="btn-show-produk"> <i
+                                                                class="fa fa-eye"></i> CEK HISTORI
+                                                        </label>
+                                                        <label class="btn btn-outline-secondary"
+                                                            onclick="window.open('<?php echo base_url('produk_stok/print_qr_single/'.$d->UUID_ASET) ?>','_blank')"><i
+                                                                class="fas fa-print"></i>
+                                                        </label>
+                                                    </td>
                                                 </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -89,9 +100,15 @@
 
 
             <script>
-                function detail_stok(UUID_STOK,UUID_ASET) {
-                    window.open("<?php echo base_url('produk_stok/produk_aset_histori/') ?>"+UUID_STOK+"/"+UUID_ASET, '_blank');
-                }
+$('#tabel').dataTable({
+    paging: false,
+    searching: true,
+    info: false
+});
+
+function detail_stok(UUID_STOK, UUID_ASET) {
+    window.open("<?php echo base_url('produk_stok/produk_aset_histori/') ?>" + UUID_STOK + "/" + UUID_ASET, '_blank');
+}
             </script>
 
 
