@@ -32,6 +32,13 @@ class M_PRODUK_STOK extends CI_Model
         return $query->result_object();
     }
 
+    public function cek_detail_produk($kode)
+    {
+        $this->db->where('UUID_STOK', $kode);
+        $query = $this->db->get('VIEW_ASET');
+        return $query->row();
+    }
+
     public function cek_histori_aset($kode)
     {
         $this->db->where('UUID_ASET', $kode);

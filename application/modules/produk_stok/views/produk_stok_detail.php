@@ -25,13 +25,14 @@
                                                 <tr>
                                                     <td>
                                                         <center><img width="120px"
-                                                                src="<?php echo base_url('produk_stok/qr/'.$d->NAMA_PRODUK)?>"
+                                                                src="<?php echo base_url('produk_stok/qr_link/'.$d->UUID_STOK.'/'.$d->UUID_ASET)?>"
                                                                 alt=""></center>
                                                     </td>
                                                     <td><?php echo $d->NAMA_PRODUK; ?></td>
                                                     <td><?php echo $d->NAMA_PIC; ?></td>
                                                     <td class="text-center col-2">
-                                                        <img width="150px" style="cursor: pointer;" src="<?php echo base_url('assets/uploads/item/') . $d->FOTO_ITEM; ?>"
+                                                        <img width="150px" style="cursor: pointer;"
+                                                            src="<?php echo base_url('assets/uploads/item/') . $d->FOTO_ITEM; ?>"
                                                             alt="Thumbnail" class="thumbnail" onclick="showPopup(this)">
 
                                                         <script>
@@ -66,7 +67,7 @@
                                                         </script>
                                                     </td>
                                                     <td class="text-center col-2"><label
-                                                            onclick="detail_stok('<?php echo $d->UUID_ASET; ?>')"
+                                                            onclick="detail_stok('<?php echo $d->UUID_STOK; ?>','<?php echo $d->UUID_ASET; ?>')"
                                                             class="btn btn-success" id="btn-show-produk"> <i
                                                                 class="fa fa-eye"></i> CEK HISTORI</label></td>
                                                 </tr>
@@ -88,9 +89,9 @@
 
 
             <script>
-function detail_stok(UUID_STOK) {
-    window.open("<?php echo base_url('produk_stok/produk_aset_histori/') ?>" + UUID_STOK, '_blank');
-}
+                function detail_stok(UUID_STOK,UUID_ASET) {
+                    window.open("<?php echo base_url('produk_stok/produk_aset_histori/') ?>"+UUID_STOK+"/"+UUID_ASET, '_blank');
+                }
             </script>
 
 

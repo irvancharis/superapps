@@ -40,11 +40,12 @@ class Produk_stok extends CI_Controller
         $this->load->view('scan');
     }
 
-    public function produk_aset_histori($kode,$page = 'produk_stok')
+    public function produk_aset_histori($kode_stok,$kode_aset,$page = 'produk_stok')
     {
         $this->load->library('session');
 
-        $data['histori_aset'] = $this->M_PRODUK_STOK->cek_histori_aset($kode);
+        $data['aset'] = $this->M_PRODUK_STOK->cek_detail_produk($kode_stok);
+        $data['histori_aset'] = $this->M_PRODUK_STOK->cek_histori_aset($kode_aset);
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
 
@@ -161,6 +162,33 @@ class Produk_stok extends CI_Controller
         $this->ciqrcode->initialize($config);
 
         $params['data'] = $kode ? $kode : 'DefaultCode';
+        $params['level'] = 'H';
+        $params['size'] = 10;
+        $params['savename'] = null;  // Jangan simpan file, langsung output
+
+        $this->ciqrcode->generate($params);  // QR Code akan langsung tampil di browser
+    }
+
+
+
+    public function qr_link() {
+        header("Content-Type: image/png");  // Set header agar output langsung sebagai gambar
+
+        $config['cacheable']    = false;    // Tidak perlu cache
+        $config['quality']      = true;
+        $config['size']         = '1024';
+        $config['black']        = [0, 0, 0];    // Warna hitam untuk QR
+        $config['white']        = [255, 255, 255]; // Warna putih untuk background
+        $this->ciqrcode->initialize($config);
+
+        // URL yang ingin disimpan dalam QR Code
+        $stok = $this->uri->segment(3);
+        $aset = $this->uri->segment(4);
+        
+
+        $link_url = 'http://192.168.3.108/superapps/produk_stok/produk_aset_histori/'.$stok.'/'.$aset;
+
+        $params['data'] = $link_url;
         $params['level'] = 'H';
         $params['size'] = 10;
         $params['savename'] = null;  // Jangan simpan file, langsung output
