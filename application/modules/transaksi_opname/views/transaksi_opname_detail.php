@@ -104,7 +104,7 @@ $(document).ready(function() {
             tbody.append(`
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.KODE_ITEM}">
-                                    <td class="text-center col-2"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${item.FOTO_ITEM}" alt=""></center></td>
+                                    <td class="text-center col-2"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${item.FOTO_ITEM}" alt="Thumbnail" style="cursor: pointer;" class="thumbnail" onclick="showPopup(this)"></center></td>
                                     <td>${item.NAMA_PRODUK}</td>
                                     <td class="text-center col-2">${item.JUMLAH_STOK}</td>
                                     <td class="text-center col-2">${item.STOK_AKTUAL}</td>                                    
@@ -217,6 +217,36 @@ $(document).ready(function() {
     });
 
 });
+
+
+function showPopup(img) {
+    let popupDiv = document.createElement("div");
+    popupDiv.style.position = "fixed";
+    popupDiv.style.top = "0";
+    popupDiv.style.left = "0";
+    popupDiv.style.width = "100%";
+    popupDiv.style.height = "100%";
+    popupDiv.style.background = "rgba(0, 0, 0, 0.8)";
+    popupDiv.style.display = "flex";
+    popupDiv.style.justifyContent = "center";
+    popupDiv.style.alignItems = "center";
+    popupDiv.style.cursor = "pointer";
+    popupDiv.style.zIndex = "9999";
+
+    let popupImg = document.createElement("img");
+    popupImg.src = img.src;
+    popupImg.style.maxWidth = "80%";
+    popupImg.style.maxHeight = "80%";
+    popupImg.style.borderRadius = "10px";
+    popupImg.style.zIndex = "10000";
+
+    popupDiv.appendChild(popupImg);
+    popupDiv.onclick = function() {
+        document.body.removeChild(popupDiv);
+    };
+
+    document.body.appendChild(popupDiv);
+}
 </script>
 </body>
 
