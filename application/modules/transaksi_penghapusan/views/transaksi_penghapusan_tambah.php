@@ -89,10 +89,10 @@
                                         </div>
                                         <div class="table-responsive">
                                             <div class="card-header-action text-right">
-                                                <a href="javascript:void(0)" id="btn-penghapusan-produk"
-                                                    class="btn btn-primary"><i class="fas fa-search"></i></a>
-                                                <a href="javascript:void(0)" id="btn-tambah-produk"
-                                                    class="btn btn-primary"><i class="fas fa-plus"></i></a>
+
+                                                <a id="btnshowproduk" href="#" class="btn btn-primary"><i
+                                                        class="fas fa-search"></i></a>
+
                                             </div>
                                             <table class="table table-striped" id="dataprodukitem">
                                                 <thead>
@@ -103,6 +103,7 @@
                                                         <th class="text-center col-2">JUMLAH</th>
                                                         <th class="text-center col-2">KETERANGAN</th>
                                                         <th class="text-center col-4">FOTO KONDISI</th>
+                                                        <th class="text-center col-1"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="selected-items-body">
@@ -136,6 +137,18 @@
 
             <?php $this->load->view('layout/footer'); ?>
 
+            <script src="<?php echo base_url('assets/js/fancybox.umd.js') ?>"></script>
+
+            <script>
+Fancybox.bind("[data-fancybox]", {
+    Html: {
+        iframeAttr: {
+            allow: "encrypted-media *; autoplay; fullscreen"
+        }
+    }
+})
+            </script>
+
             <script>
 $(document).ready(function() {
 
@@ -145,32 +158,27 @@ $(document).ready(function() {
         info: false
     });
 
+
     // Cek apakah sudah ada data di LocalStorage
     let storedItems = JSON.parse(localStorage.getItem("storedProdukItems")) || [];
 
     loadSelectedItems();
     loadFormData();
 
-    // Fancybox
-    $('#btn-penghapusan-produk').on('click', function() {
+    $('#btnshowproduk').on('click', function() {
+
+        let formPenghapusan = JSON.parse(localStorage.getItem("FormPenghapusan")) || [];
+
         Fancybox.show([{
-            src: "<?php echo base_url('transaksi_penghapusan/transaksi_penghapusan_produk'); ?>",
+            src: "<?php echo base_url('transaksi_penghapusan/get_produk_maping/'); ?>" +
+                formPenghapusan.AREA + "/" + formPenghapusan.RUANGAN + "/" + formPenghapusan
+                .LOKASI + "/" + formPenghapusan.DEPARTEMEN,
             type: "iframe",
             preload: false,
             width: "100%",
             height: "100%",
         }, ]);
     })
-    $('#btn-tambah-produk').on('click', function() {
-        Fancybox.show([{
-            src: "<?php echo base_url('transaksi_penghapusan/transaksi_penghapusan_tambah_produk'); ?>",
-            type: "iframe",
-            preload: false,
-            width: "100%",
-            height: "100%",
-        }, ]);
-    })
-    // End Fancybox
 
     // Tangkap event dari Fancybox
     window.addEventListener('message', function(event) {
@@ -185,51 +193,24 @@ $(document).ready(function() {
         location.reload();
     });
 
-    // Get Data Produk Lock
+
     $('#btn-lock-produk').on('click', function() {
-        var FormPenghapusan = JSON.parse(localStorage.getItem("FormPenghapusan")) || {};
 
-        // Cek apakah semua properti yang dibutuhkan ada di dalam objek
-        var isComplete = (
-            FormPenghapusan.AREA &&
-            FormPenghapusan.DEPARTEMEN &&
-            FormPenghapusan.RUANGAN &&
-            FormPenghapusan.LOKASI
-        );
+        saveFormData();
 
-        if (isComplete) {
-            $.ajax({
-                url: "<?php echo base_url(); ?>" +
-                    "transaksi_penghapusan/get_produk_input_penghapusan",
-                type: "GET",
-                data: {
-                    KODE_AREA: FormPenghapusan.AREA,
-                    KODE_DEPARTEMEN: FormPenghapusan.DEPARTEMEN,
-                    KODE_RUANGAN: FormPenghapusan.RUANGAN,
-                    KODE_LOKASI: FormPenghapusan.LOKASI
-                },
-                success: function(response) {
-                    let res = JSON.parse(response);
-                    if (res.success) {
-                        // Pastikan setiap objek memiliki STOK_AKTUAL, jika tidak, tambahkan nilai default
-                        let updatedData = res.data.map(item => ({
-                            ...item,
-                            STOK_AKTUAL: item.STOK_AKTUAL ||
-                                0 // Tambahkan default jika tidak ada
-                        }));
-                        // Simpan data ke LocalStorage
-                        localStorage.setItem("storedProdukItems", JSON.stringify(
-                            updatedData));
-                        renderTable(updatedData);
-                    } else {
-                        swal('Gagal', 'Belum ada data produk.', 'error');
-                    }
-                }
-            });            
+        document.getElementById("AREA").addEventListener("mousedown", function(e) {
+            e.preventDefault(); // Mencegah dropdown terbuka
+        });
+        document.getElementById("RUANGAN").addEventListener("mousedown", function(e) {
+            e.preventDefault(); // Mencegah dropdown terbuka
+        });
+        document.getElementById("LOKASI").addEventListener("mousedown", function(e) {
+            e.preventDefault(); // Mencegah dropdown terbuka
+        });
+        document.getElementById("DEPARTEMEN").addEventListener("mousedown", function(e) {
+            e.preventDefault(); // Mencegah dropdown terbuka
+        });
 
-        } else {
-            alert('Harap lengkapi data sebelum mengambil produk.');
-        }
     });
 
     // Simpan data ketika input berubah
@@ -244,7 +225,8 @@ $(document).ready(function() {
     $('#AREA').on('change', function() {
         let area = $(this).val();
         $.ajax({
-            url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_ruangan_by_area",
+            url: "<?php echo base_url(); ?>" +
+                "transaksi_pengadaan/get_ruangan_by_area",
             type: "POST",
             data: {
                 AREA_PENEMPATAN: area
@@ -276,7 +258,8 @@ $(document).ready(function() {
     $('#RUANGAN').on('change', function() {
         let ruangan = $(this).val();
         $.ajax({
-            url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_lokasi_by_ruangan",
+            url: "<?php echo base_url(); ?>" +
+                "transaksi_pengadaan/get_lokasi_by_ruangan",
             type: "POST",
             data: {
                 RUANGAN_PENEMPATAN: ruangan
@@ -319,16 +302,17 @@ $(document).ready(function() {
             success: function(response) {
                 let res = JSON.parse(response);
                 if (res.success) {
-                    swal('Sukses', 'Simpan Data Berhasil!', 'success').then(function() {
-                        localStorage.removeItem(
-                            'storedProdukItems'
-                        ); // Hapus localStorage setelah disimpan
-                        localStorage.removeItem(
-                            'FormPenghapusan'
-                        ); // Hapus localStorage setelah disimpan
-                        location.href = "<?php echo base_url(); ?>" +
-                            "transaksi_penghapusan";
-                    });
+                    swal('Sukses', 'Simpan Data Berhasil!', 'success').then(
+                        function() {
+                            localStorage.removeItem(
+                                'storedProdukItems'
+                            ); // Hapus localStorage setelah disimpan
+                            localStorage.removeItem(
+                                'FormPenghapusan'
+                            ); // Hapus localStorage setelah disimpan
+                            location.href = "<?php echo base_url(); ?>" +
+                                "transaksi_penghapusan";
+                        });
                 } else {
                     swal('Gagal', res.error, 'error');
                 }
@@ -361,6 +345,8 @@ $(document).ready(function() {
         }
     }
 
+
+
     // Fungsi Load Data dari Local Storage
     function loadSelectedItems() {
         storedProdukItems = JSON.parse(localStorage.getItem("storedProdukItems")) || [];
@@ -378,6 +364,9 @@ $(document).ready(function() {
                                     <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PENGHAPUSAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
                                     <td class="text-center col-3"><input type="text" class="form-control" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
                                     <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_KONDISI_AWAL[${index}]"></td>
+                                    <td>
+                                        <button class="btn btn-danger remove-item" data-index="${index}">Hapus</button>
+                                    </td>
                                 </tr>
                             `);
         });
@@ -385,34 +374,20 @@ $(document).ready(function() {
         attachInputListeners();
     }
 
-    // Fungsi untuk menampilkan data dalam tabel
-    function renderTable(data) {
-        let storedItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
-        let tbody = $("#selected-items-body");
-        tbody.empty(); // Kosongkan isi tabel sebelum diisi ulang
+    // Hapus data local Storage
+    $('#selected-items-body').on('click', '.remove-item', function() {
+        let selectedItems = JSON.parse(localStorage.getItem("storedProdukItems")) || [];
+        let index = $(this).data("index");
 
-        if (data.length === 0) {
-            tbody.append('<tr><td colspan="4" class="text-center">Tidak ada data ditemukan</td></tr>');
-        } else {
-            data.forEach((item, index) => {
-                tbody.append(`
-                                    <tr data-index="${index}">
-                                        <td class="text-center col-1"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/') ?>${item.FOTO_ITEM}" alt=""></center></td>    
-                                        <td>${item.NAMA_PRODUK}</td>
-                                        <td class="text-center col-1">${item.JUMLAH_STOK}</td>
-                                        <input type="hidden" class="form-control UUID_STOK" name="UUID_STOK[${index}]" value="${item.UUID_STOK || ''}">
-                                        <input type="hidden" class="form-control KODE_ITEM" name="KODE_ITEM[${index}]" value="${item.KODE_ITEM || ''}">
-                                        <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PENGHAPUSAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
-                                        <td class="text-center col-3"><input type="text" class="form-control" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
-                                        <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_KONDISI_AWAL[${index}]"></td>
-                                    </tr>
-                                `);
-            });
+        if (index > -1) {
+            selectedItems.splice(index, 1);
+            localStorage.setItem("storedProdukItems", JSON.stringify(
+                selectedItems)); // Perbaikan di sini
         }
 
-        // Perbarui listener input setelah render ulang
-        attachInputListeners();
-    }
+        loadSelectedItems();
+    });
+
 
     function attachInputListeners() {
         $('#selected-items-body').on('input', '.JUMLAH_PENGHAPUSAN', function() {

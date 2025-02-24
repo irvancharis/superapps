@@ -11,9 +11,10 @@
 
                                     </div>
                                     <div class="card-body">
-                                        <h4 class="text-center" style="border-bottom:1px solid rgb(228, 228, 228)">LOKASI ASAL</h4>
+                                        <h4 class="text-center" style="border-bottom:1px solid rgb(228, 228, 228)">
+                                            LOKASI ASAL</h4>
                                         <br>
-                                        <div class="row mt-2" >
+                                        <div class="row mt-2">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
                                                 <select required name="AREA_AWAL" id="AREA_AWAL" class="form-control">
@@ -47,7 +48,8 @@
                                         <div class="row">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>RUANGAN</label>
-                                                <select required name="RUANGAN_AWAL" id="RUANGAN_AWAL" class="form-control">
+                                                <select required name="RUANGAN_AWAL" id="RUANGAN_AWAL"
+                                                    class="form-control">
                                                     <option value="" class="text-center" selected>-- Pilih
                                                         Ruangan --</option>
                                                     <?php foreach ($get_ruangan as $row) : ?>
@@ -62,7 +64,8 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>LOKASI</label>
-                                                <select required name="LOKASI_AWAL" id="LOKASI_AWAL" class="form-control">
+                                                <select required name="LOKASI_AWAL" id="LOKASI_AWAL"
+                                                    class="form-control">
                                                     <option value="" class="text-center" selected>-- Pilih
                                                         Lokasi --</option>
                                                     <?php foreach ($get_lokasi as $row) : ?>
@@ -90,10 +93,8 @@
                                         </div>
                                         <div class="table-responsive">
                                             <div class="card-header-action text-right">
-                                                <a href="javascript:void(0)" id="btn-pemindahan-produk"
-                                                    class="btn btn-primary"><i class="fas fa-search"></i></a>
-                                                <a href="javascript:void(0)" id="btn-tambah-produk"
-                                                    class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                                <a id="btnshowproduk" href="#" class="btn btn-primary"><i
+                                                        class="fas fa-search"></i></a>
                                             </div>
                                             <table class="table table-striped" id="dataprodukitem">
                                                 <thead>
@@ -113,7 +114,8 @@
 
                                         <br><br>
 
-                                        <h4 class="text-center" style="border-bottom:1px solid rgb(228, 228, 228)">LOKASI PEMINDAHAN</h4>
+                                        <h4 class="text-center" style="border-bottom:1px solid rgb(228, 228, 228)">
+                                            LOKASI PEMINDAHAN</h4>
                                         <br>
                                         <div class="row mt-2">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
@@ -150,7 +152,8 @@
                                         <div class="row">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>RUANGAN</label>
-                                                <select required name="RUANGAN_AKHIR" id="RUANGAN_AKHIR" class="form-control">
+                                                <select required name="RUANGAN_AKHIR" id="RUANGAN_AKHIR"
+                                                    class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih
                                                         Ruangan --</option>
                                                     <?php foreach ($get_ruangan as $row) : ?>
@@ -165,7 +168,8 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>LOKASI</label>
-                                                <select required name="LOKASI_AKHIR" id="LOKASI_AKHIR" class="form-control">
+                                                <select required name="LOKASI_AKHIR" id="LOKASI_AKHIR"
+                                                    class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih
                                                         Lokasi --</option>
                                                     <?php foreach ($get_lokasi as $row) : ?>
@@ -183,8 +187,9 @@
 
                                         <div class="form-group col-12 col-md-12 col-lg-12">
                                             <label>KETERANGAN</label>
-                                            <textarea name="KETERANGAN_PEMINDAHAN" placeholder="Masukkan keterangan pemindahan"
-                                                class="form-control" id="KETERANGAN_PEMINDAHAN"></textarea>
+                                            <textarea name="KETERANGAN_PEMINDAHAN"
+                                                placeholder="Masukkan keterangan pemindahan" class="form-control"
+                                                id="KETERANGAN_PEMINDAHAN"></textarea>
                                             <div class="invalid-feedback">
                                                 Silahkan masukkan keterangan pemindahan!
                                             </div>
@@ -209,6 +214,22 @@
             <script>
 $(document).ready(function() {
 
+
+    $('#btnshowproduk').on('click', function() {
+
+        let formPenghapusan = JSON.parse(localStorage.getItem("FormPemindahan")) || [];
+
+        Fancybox.show([{
+            src: "<?php echo base_url('transaksi_pemindahan/get_produk_maping/'); ?>" +
+                formPenghapusan.AREA_AWAL + "/" + formPenghapusan.RUANGAN_AWAL + "/" + formPenghapusan
+                .LOKASI_AWAL + "/" + formPenghapusan.DEPARTEMEN_AWAL,
+            type: "iframe",
+            preload: false,
+            width: "100%",
+            height: "100%",
+        }, ]);
+    })
+
     $('#dataprodukitem').dataTable({
         paging: false,
         searching: false,
@@ -221,26 +242,6 @@ $(document).ready(function() {
     loadSelectedItems();
     loadFormData();
 
-    // Fancybox
-    $('#btn-pemindahan-produk').on('click', function() {
-        Fancybox.show([{
-            src: "<?php echo base_url('transaksi_pemindahan/transaksi_pemindahan_produk'); ?>",
-            type: "iframe",
-            preload: false,
-            width: "100%",
-            height: "100%",
-        }, ]);
-    })
-    $('#btn-tambah-produk').on('click', function() {
-        Fancybox.show([{
-            src: "<?php echo base_url('transaksi_pemindahan/transaksi_pemindahan_tambah_produk'); ?>",
-            type: "iframe",
-            preload: false,
-            width: "100%",
-            height: "100%",
-        }, ]);
-    })
-    // End Fancybox
 
     // Tangkap event dari Fancybox
     window.addEventListener('message', function(event) {
@@ -257,49 +258,24 @@ $(document).ready(function() {
 
     // Get Data Produk Lock
     $('#btn-lock-produk').on('click', function() {
-        var FormPemindahan = JSON.parse(localStorage.getItem("FormPemindahan")) || {};
+        $('#btn-lock-produk').on('click', function() {
 
-        // Cek apakah semua properti yang dibutuhkan ada di dalam objek
-        var isComplete = (
-            FormPemindahan.AREA_AWAL &&
-            FormPemindahan.DEPARTEMEN_AWAL &&
-            FormPemindahan.RUANGAN_AWAL &&
-            FormPemindahan.LOKASI_AWAL
-        );
+            saveFormData();
 
-        if (isComplete) {
-            $.ajax({
-                url: "<?php echo base_url(); ?>" +
-                    "transaksi_pemindahan/get_produk_input_pemindahan",
-                type: "GET",
-                data: {
-                    KODE_AREA: FormPemindahan.AREA_AWAL,
-                    KODE_DEPARTEMEN: FormPemindahan.DEPARTEMEN_AWAL,
-                    KODE_RUANGAN: FormPemindahan.RUANGAN_AWAL,
-                    KODE_LOKASI: FormPemindahan.LOKASI_AWAL
-                },
-                success: function(response) {
-                    let res = JSON.parse(response);
-                    if (res.success) {
-                        // Pastikan setiap objek memiliki STOK_AKTUAL, jika tidak, tambahkan nilai default
-                        let updatedData = res.data.map(item => ({
-                            ...item,
-                            STOK_AKTUAL: item.STOK_AKTUAL ||
-                                0 // Tambahkan default jika tidak ada
-                        }));
-                        // Simpan data ke LocalStorage
-                        localStorage.setItem("storedProdukItems", JSON.stringify(
-                            updatedData));
-                        renderTable(updatedData);
-                    } else {
-                        swal('Gagal', 'Belum ada data produk.', 'error');
-                    }
-                }
+            document.getElementById("AREA").addEventListener("mousedown", function(e) {
+                e.preventDefault(); // Mencegah dropdown terbuka
+            });
+            document.getElementById("RUANGAN").addEventListener("mousedown", function(e) {
+                e.preventDefault(); // Mencegah dropdown terbuka
+            });
+            document.getElementById("LOKASI").addEventListener("mousedown", function(e) {
+                e.preventDefault(); // Mencegah dropdown terbuka
+            });
+            document.getElementById("DEPARTEMEN").addEventListener("mousedown", function(e) {
+                e.preventDefault(); // Mencegah dropdown terbuka
             });
 
-        } else {
-            alert('Harap lengkapi data sebelum mengambil produk.');
-        }
+        });
     });
 
     // Simpan data ketika input berubah
