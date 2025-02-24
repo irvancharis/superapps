@@ -105,6 +105,7 @@
                                                         <th class="text-center col-2">JUMLAH</th>
                                                         <th class="text-center col-2">KETERANGAN</th>
                                                         <th class="text-center col-4">FOTO KONDISI</th>
+                                                        <th class="text-center col-1"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="selected-items-body">
@@ -221,7 +222,8 @@ $(document).ready(function() {
 
         Fancybox.show([{
             src: "<?php echo base_url('transaksi_pemindahan/get_produk_maping/'); ?>" +
-                formPenghapusan.AREA_AWAL + "/" + formPenghapusan.RUANGAN_AWAL + "/" + formPenghapusan
+                formPenghapusan.AREA_AWAL + "/" + formPenghapusan.RUANGAN_AWAL + "/" +
+                formPenghapusan
                 .LOKASI_AWAL + "/" + formPenghapusan.DEPARTEMEN_AWAL,
             type: "iframe",
             preload: false,
@@ -262,16 +264,16 @@ $(document).ready(function() {
 
             saveFormData();
 
-            document.getElementById("AREA").addEventListener("mousedown", function(e) {
+            document.getElementById("AREA_AWAL").addEventListener("mousedown", function(e) {
                 e.preventDefault(); // Mencegah dropdown terbuka
             });
-            document.getElementById("RUANGAN").addEventListener("mousedown", function(e) {
+            document.getElementById("RUANGAN_AWAL").addEventListener("mousedown", function(e) {
                 e.preventDefault(); // Mencegah dropdown terbuka
             });
-            document.getElementById("LOKASI").addEventListener("mousedown", function(e) {
+            document.getElementById("LOKASI_AWAL").addEventListener("mousedown", function(e) {
                 e.preventDefault(); // Mencegah dropdown terbuka
             });
-            document.getElementById("DEPARTEMEN").addEventListener("mousedown", function(e) {
+            document.getElementById("DEPARTEMEN_AWAL").addEventListener("mousedown", function(e) {
                 e.preventDefault(); // Mencegah dropdown terbuka
             });
 
@@ -495,12 +497,32 @@ $(document).ready(function() {
                                     <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PEMINDAHAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
                                     <td class="text-center col-3"><input type="text" class="form-control" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
                                     <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_AWAL[${index}]"></td>
+                                    <td class="text-center col-1">
+                                        <button class="btn btn-danger remove-item" data-index="${index}">Hapus</button>
+                                    </td>
                                 </tr>
                             `);
         });
         // Perbarui listener input setelah render ulang
         attachInputListeners();
     }
+
+
+
+    // Hapus data local Storage
+    $('#selected-items-body').on('click', '.remove-item', function() {
+        let selectedItems = JSON.parse(localStorage.getItem("storedProdukItems")) || [];
+        let index = $(this).data("index");
+
+        if (index > -1) {
+            selectedItems.splice(index, 1);
+            localStorage.setItem("storedProdukItems", JSON.stringify(
+            selectedItems)); // Perbaikan di sini
+        }
+
+        loadSelectedItems();
+    });
+
 
     // Fungsi untuk menampilkan data dalam tabel
     function renderTable(data) {
@@ -522,6 +544,9 @@ $(document).ready(function() {
                                         <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PEMINDAHAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
                                         <td class="text-center col-3"><input type="text" class="form-control" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
                                         <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_AWAL[${index}]"></td>
+                                        <td class="text-center col-1">
+                                        <button class="btn btn-danger remove-item" data-index="${index}">Hapus</button>
+                                    </td>
                                     </tr>
                                 `);
             });
