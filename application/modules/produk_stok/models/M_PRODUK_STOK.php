@@ -18,6 +18,41 @@ class M_PRODUK_STOK extends CI_Model
         return $query->result_object();
     }
 
+    public function get_jumlah_stok($kode)
+    {
+        $this->db->where('UUID_STOK', $kode);
+        $query = $this->db->get('VIEW_PRODUK_STOK');
+        return $query->row();
+    }
+
+    public function cek_aset($kode)
+    {
+        $this->db->where('UUID_STOK', $kode);
+        $query = $this->db->get('VIEW_ASET');
+        return $query->result_object();
+    }
+
+    public function cek_aset_single($kode)
+    {
+        $this->db->where('UUID_ASET', $kode);
+        $query = $this->db->get('VIEW_ASET');
+        return $query->row();
+    }
+
+    public function cek_detail_produk($kode)
+    {
+        $this->db->where('UUID_STOK', $kode);
+        $query = $this->db->get('VIEW_ASET');
+        return $query->row();
+    }
+
+    public function cek_histori_aset($kode)
+    {
+        $this->db->where('UUID_ASET', $kode);
+        $query = $this->db->get('VIEW_ASET_DETAIL');
+        return $query->result_object();
+    }
+
     public function getProdukMaping($area, $ruangan, $lokasi, $departemen)
     {
         if (!empty($area)) {
@@ -98,6 +133,11 @@ class M_PRODUK_STOK extends CI_Model
         $this->db->limit(1);
         $query = $this->db->get($this->table);
         return $query->result_object();
+    }
+
+    public function insert_aset($data)
+    {
+        return $this->db->insert('ASET', $data);
     }
 
     public function insert($data)
