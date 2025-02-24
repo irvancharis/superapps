@@ -260,24 +260,22 @@ $(document).ready(function() {
 
     // Get Data Produk Lock
     $('#btn-lock-produk').on('click', function() {
-        $('#btn-lock-produk').on('click', function() {
 
-            saveFormData();
+        saveFormData();
 
-            document.getElementById("AREA_AWAL").addEventListener("mousedown", function(e) {
-                e.preventDefault(); // Mencegah dropdown terbuka
-            });
-            document.getElementById("RUANGAN_AWAL").addEventListener("mousedown", function(e) {
-                e.preventDefault(); // Mencegah dropdown terbuka
-            });
-            document.getElementById("LOKASI_AWAL").addEventListener("mousedown", function(e) {
-                e.preventDefault(); // Mencegah dropdown terbuka
-            });
-            document.getElementById("DEPARTEMEN_AWAL").addEventListener("mousedown", function(e) {
-                e.preventDefault(); // Mencegah dropdown terbuka
-            });
-
+        document.getElementById("AREA_AWAL").addEventListener("mousedown", function(e) {
+            e.preventDefault(); // Mencegah dropdown terbuka
         });
+        document.getElementById("RUANGAN_AWAL").addEventListener("mousedown", function(e) {
+            e.preventDefault(); // Mencegah dropdown terbuka
+        });
+        document.getElementById("LOKASI_AWAL").addEventListener("mousedown", function(e) {
+            e.preventDefault(); // Mencegah dropdown terbuka
+        });
+        document.getElementById("DEPARTEMEN_AWAL").addEventListener("mousedown", function(e) {
+            e.preventDefault(); // Mencegah dropdown terbuka
+        });
+
     });
 
     // Simpan data ketika input berubah
@@ -517,7 +515,7 @@ $(document).ready(function() {
         if (index > -1) {
             selectedItems.splice(index, 1);
             localStorage.setItem("storedProdukItems", JSON.stringify(
-            selectedItems)); // Perbaikan di sini
+                selectedItems)); // Perbaikan di sini
         }
 
         loadSelectedItems();

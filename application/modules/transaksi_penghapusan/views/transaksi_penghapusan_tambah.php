@@ -219,24 +219,22 @@ $(document).ready(function() {
 
     // Get Data Produk Lock
     $('#btn-lock-produk').on('click', function() {
-        $('#btn-lock-produk').on('click', function() {
 
-            saveFormData();
+        saveFormData();
 
-            document.getElementById("AREA").addEventListener("mousedown", function(e) {
-                e.preventDefault(); // Mencegah dropdown terbuka
-            });
-            document.getElementById("RUANGAN").addEventListener("mousedown", function(e) {
-                e.preventDefault(); // Mencegah dropdown terbuka
-            });
-            document.getElementById("LOKASI").addEventListener("mousedown", function(e) {
-                e.preventDefault(); // Mencegah dropdown terbuka
-            });
-            document.getElementById("DEPARTEMEN").addEventListener("mousedown", function(e) {
-                e.preventDefault(); // Mencegah dropdown terbuka
-            });
-
+        document.getElementById("AREA").addEventListener("mousedown", function(e) {
+            e.preventDefault(); // Mencegah dropdown terbuka
         });
+        document.getElementById("RUANGAN").addEventListener("mousedown", function(e) {
+            e.preventDefault(); // Mencegah dropdown terbuka
+        });
+        document.getElementById("LOKASI").addEventListener("mousedown", function(e) {
+            e.preventDefault(); // Mencegah dropdown terbuka
+        });
+        document.getElementById("DEPARTEMEN").addEventListener("mousedown", function(e) {
+            e.preventDefault(); // Mencegah dropdown terbuka
+        });
+
     });
 
     // Simpan data ketika input berubah
@@ -377,7 +375,8 @@ $(document).ready(function() {
 
         if (index > -1) {
             selectedItems.splice(index, 1);
-            localStorage.setItem("storedProdukItems", JSON.stringify(selectedItems)); // Perbaikan di sini
+            localStorage.setItem("storedProdukItems", JSON.stringify(
+                selectedItems)); // Perbaikan di sini
         }
 
         loadSelectedItems();
@@ -401,41 +400,12 @@ $(document).ready(function() {
                                     <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PENGHAPUSAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
                                     <td class="text-center col-3"><input type="text" class="form-control" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
                                     <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_KONDISI_AWAL[${index}]"></td>
-                                    <td>
+                                    <td class="text-center col-1">
                                         <button class="btn btn-danger remove-item" data-index="${index}">Hapus</button>
                                     </td>
                                 </tr>
                             `);
         });
-        // Perbarui listener input setelah render ulang
-        attachInputListeners();
-    }
-
-    // Fungsi untuk menampilkan data dalam tabel
-    function renderTable(data) {
-        let storedItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
-        let tbody = $("#selected-items-body");
-        tbody.empty(); // Kosongkan isi tabel sebelum diisi ulang
-
-        if (data.length === 0) {
-            tbody.append('<tr><td colspan="4" class="text-center">Tidak ada data ditemukan</td></tr>');
-        } else {
-            data.forEach((item, index) => {
-                tbody.append(`
-                                    <tr data-index="${index}">
-                                        <td class="text-center col-1"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/') ?>${item.FOTO_ITEM}" alt=""></center></td>    
-                                        <td>${item.NAMA_PRODUK}</td>
-                                        <td class="text-center col-1">${item.JUMLAH_STOK}</td>
-                                        <input type="hidden" class="form-control UUID_STOK" name="UUID_STOK[${index}]" value="${item.UUID_STOK || ''}">
-                                        <input type="hidden" class="form-control KODE_ITEM" name="KODE_ITEM[${index}]" value="${item.KODE_ITEM || ''}">
-                                        <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PENGHAPUSAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
-                                        <td class="text-center col-3"><input type="text" class="form-control" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
-                                        <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_KONDISI_AWAL[${index}]"></td>
-                                    </tr>
-                                `);
-            });
-        }
-
         // Perbarui listener input setelah render ulang
         attachInputListeners();
     }
@@ -466,6 +436,5 @@ $(document).ready(function() {
             </body>
 
 
-            <!-- index.html  21 Nov 2019 03:47:04 GMT -->
 
             </html>
