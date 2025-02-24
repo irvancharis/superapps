@@ -468,7 +468,7 @@ html.with-fancybox body.hide-scrollbar {
 .fancybox__container {
     --fancybox-color: #dbdbdb;
     --fancybox-hover-color: #fff;
-    --fancybox-bg: rgba(24, 24, 27, 0.98);
+    --fancybox-bg: rgb(255 255 255 / 98%);
     --fancybox-slide-gap: 10px;
     --f-spinner-width: 50px;
     --f-spinner-height: 50px;

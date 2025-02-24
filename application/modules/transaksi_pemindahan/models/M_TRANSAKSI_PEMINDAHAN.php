@@ -95,6 +95,24 @@ class M_TRANSAKSI_PEMINDAHAN extends CI_Model
         return $this->db->update('PRODUK_STOK');
     }
 
+    public function list_produk_maping($area, $ruangan, $lokasi, $departemen)
+    {
+        if (!empty($area)) {
+            $this->db->where('KODE_AREA', $area);
+        }
+        if (!empty($ruangan)) {
+            $this->db->where('KODE_RUANGAN', $ruangan);
+        }
+        if (!empty($lokasi)) {
+            $this->db->where('KODE_LOKASI', $lokasi);
+        }
+        if (!empty($departemen)) {
+            $this->db->where('KODE_DEPARTEMEN', $departemen);
+        }
+        $result = $this->db->get('VIEW_PRODUK_STOK');
+        return $result->result_object();
+    }
+
     public function penambahan_real_stok($KODE, $data)
     {
         $this->db->where('UUID_STOK',$KODE);

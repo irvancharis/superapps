@@ -58,6 +58,19 @@ class Transaksi_pemindahan extends CI_Controller
         echo json_encode($result);
     }
 
+    public function get_produk_maping()
+    {
+        $this->load->library('session');
+
+        $area = $this->uri->segment(3);
+        $ruangan = $this->uri->segment(4);
+        $lokasi = $this->uri->segment(5);
+        $departemen = $this->uri->segment(6);
+        $data['produk'] = $this->M_TRANSAKSI_PEMINDAHAN->list_produk_maping($area, $ruangan, $lokasi, $departemen);
+        $this->load->view('list_produk', $data);
+
+    }
+
     public function get_produk()
     {
         $search = $this->input->post('search')['value'];
