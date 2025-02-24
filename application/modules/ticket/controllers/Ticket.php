@@ -7,6 +7,7 @@ class Ticket extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_TICKET');
+        $this->load->model('WHATSAPP');
         $this->load->helper('url_helper');
     }
 
@@ -146,6 +147,8 @@ class Ticket extends CI_Controller
             ];
             $this->M_TICKET->insert_detail($data_detail);
         }
+
+        $this->WHATSAPP->send_wa('081259456586', 'Tes Pesan WA !!!');
 
         if ($result) {
             echo json_encode(['success' => true]);

@@ -26,10 +26,10 @@ class M_DEPARTEMENT extends CI_Model
     public function get_departemen_single($KODE)
     {
         $this->db->select('*');
-		$this->db->from('DEPARTEMEN');
-		$this->db->where('KODE_DEPARTEMEN', $KODE);
-		$query = $this->db->get();
-        return $query;
+        $this->db->from('DEPARTEMEN');
+        $this->db->where('KODE_DEPARTEMEN', $KODE);
+        $query = $this->db->get();
+        return $query->row();
     }
 
     public function get_latest_data()

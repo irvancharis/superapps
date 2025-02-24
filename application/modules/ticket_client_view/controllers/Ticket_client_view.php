@@ -7,6 +7,9 @@ class Ticket_client_view extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_TICKET');
+        $this->load->model('WHATSAPP');
+        $this->load->model('TELEGRAM');
+        $this->load->model('departement/M_DEPARTEMENT');
         $this->load->helper('url_helper');
     }
 
@@ -123,6 +126,46 @@ class Ticket_client_view extends CI_Controller
 
         // Selesaikan transaksi
         $this->db->trans_complete();
+
+        // Membuat format pesan sesuai permintaan
+        $get_nama_departement = $this->M_DEPARTEMENT->get_departemen_single($id_departement);
+        $nama_departemen = $get_nama_departement->NAMA_DEPARTEMEN;
+        $url = "http://192.168.3.105/superapps/ticket";
+
+        $message =
+            "📢 REQUEST TICKETING \n\n" .
+
+            "📌 Informasi Pengguna: \n\n" .
+            "\t👤 Nama: `$requestby` \n" .
+            "\t🏢 Departemen: `$nama_departemen` \n\n" .
+
+            "📌 Detail Keluhan: \n\n" .
+            "\t📂 Tipe Keluhan: `$type_ticket_str` \n" .
+            "\t📝 Deskripsi: \n" .
+            "```$description_ticket``` \n\n\n" .
+
+            "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
+            "🔗 ($url)";
+        // Kirim pesan WA untuk memberitahu teknisi siapa yang request dan apa keluhannya
+        $this->WHATSAPP->send_wa('081216126123', $message);
+
+
+        // Kirim Pesan ke Telegram
+        $ms_telegram =
+            "📢 REQUEST TICKETING \n\n" .
+
+            "📌 Informasi Pengguna: \n\n" .
+            "\t👤 Nama: `$requestby` \n" .
+            "\t🏢 Departemen: `$nama_departemen` \n\n" .
+
+            "📌 Detail Keluhan: \n\n" .
+            "\t📂 Tipe Keluhan: `$type_ticket_str` \n" .
+            "\t📝 Deskripsi: \n" .
+            "```$description_ticket``` \n\n\n" .
+
+            "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
+            "🔗 ($url)";
+        $this->TELEGRAM->send_message('8007581238', $ms_telegram);
 
         if ($result) {
             echo json_encode(['success' => true]);
