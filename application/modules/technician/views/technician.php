@@ -169,7 +169,7 @@
                     </div>
                 </div>
             </div>
-            
+
             </div>
             </div>
 
@@ -187,13 +187,22 @@
                         <form id="formTechnician">
                             <div class="modal-body">
                                 <div class="form-group">
+                                    <label>Karyawan</label>
+                                    <select class="form-control" name="id_karyawan" id="id_karyawan">
+                                        <option value="" class="text-center" selected disabled>-- Pilih Karyawan --</option>
+                                        <?php foreach ($get_karyawan as $row) : ?>
+                                            <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->NAMA_KARYAWAN; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label>Nama Teknisi</label>
-                                    <input type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician">
+                                    <input type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician" id="nama_technician" readonly>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
                                         <label>Departemen</label>
-                                        <select class="form-control" name="id_departement">
+                                        <select class="form-control" name="id_departement" id="id_departement" readonly>
                                             <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
                                             <?php foreach ($get_departement as $row) : ?>
                                                 <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
@@ -202,21 +211,12 @@
                                     </div>
                                     <div class="form-group col-md-6 col-12">
                                         <label>Status</label>
-                                        <select class="form-control" name="status">
+                                        <select class="form-control" name="status" id="status" readonly>
                                             <option value="" class="text-center" selected disabled>-- Pilih Status --</option>
-                                            <option value="0">PASIF</option>
-                                            <option value="1">AKTIF</option>
+                                            <option value="PASIF">PASIF</option>
+                                            <option value="AKTIF">AKTIF</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>ID Karyawan</label>
-                                    <select class="form-control" name="id_karyawan">
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --</option>
-                                        <?php foreach ($get_karyawan as $row) : ?>
-                                            <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> - <?= $row->NAMA_KARYAWAN; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Deskripsi Teknisi</label>
@@ -500,6 +500,26 @@
                             },
                             error: function() {
                                 alert('Gagal melakukan proses.');
+                            }
+                        });
+                    });
+
+                    // Set Nama, Departemen, Status Karyawan Teknisi By id_karyawan
+                    $('#id_karyawan').on('change', function() {
+                        const id_karyawan = $(this).val();
+                        $.ajax({
+                            url: "<?php echo base_url(); ?>technician/get_karyawan_by_id/" + id_karyawan,
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function(response) {
+                                console.log(response);
+
+                                $('#nama_technician').val(response.NAMA_KARYAWAN);
+                                $('#id_departement').val(response.ID_DEPARTEMENT).change();
+                                $('#status').val(response.STATUS_KARYAWAN).change();
+                            },
+                            error: function() {
+                                alert('Gagal mengambil data.');
                             }
                         });
                     });

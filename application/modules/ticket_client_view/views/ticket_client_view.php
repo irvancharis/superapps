@@ -280,6 +280,71 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-12 col-md-10 offset-md-1 col-lg-10 offset-lg-1 mt-5">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="judul-ticketing mx-auto"><i class="fas fa-list"></i> LIST ANTRIAN TICKETING</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="table-2">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>TICKET ID</th>
+                                                <th>ORDER BY</th>
+                                                <th>SITE</th>
+                                                <th>APPROVAL</th>
+                                                <th>TECHNICIAN</th>
+                                                <th>STATUS</th>
+                                                <th>CLEAR AT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($M_TICKET as $index => $d) : ?>
+                                                <tr>
+                                                    <td><?php echo $index + 1; ?></td>
+                                                    <td><?php echo $d->IDTICKET; ?></td>
+                                                    <td><?php echo $d->REQUESTBY; ?></td>
+                                                    <td><?php echo $d->NAMA_AREA; ?></td>
+                                                    <td>
+                                                        <?php
+                                                        if ($d->APPROVAL_TICKET == 0) {
+                                                            echo '<span class="badge badge-warning">Dalam Antrian</span>';
+                                                        } elseif ($d->APPROVAL_TICKET == 1) {
+                                                            echo '<span class="badge badge-success">Disetujui</span>';
+                                                        } else {
+                                                            echo '<span class="badge badge-danger">Ditolak</span>';
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td><?php echo $d->NAME_TECHNICIAN; ?></td>
+                                                    <td>
+                                                        <div class="progress">
+                                                            <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
+                                                        </div>
+                                                    </td>
+                                                    <td> <?php
+                                                            if (!empty($d->DATE_TICKET_DONE)) {
+                                                                $date_done = new DateTime($d->DATE_TICKET_DONE);
+                                                                $now = new DateTime($d->DATE_TICKET);
+                                                                $diff = $now->diff($date_done);
+
+                                                                // Format hasil: "X hari, Y jam, Z menit"
+                                                                echo "{$diff->d} hari, {$diff->h} jam, {$diff->i} menit";
+                                                            } else {
+                                                                echo "-"; // Jika tidak ada tanggal, tampilkan tanda "-"
+                                                            }
+                                                            ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                         <div class="simple-footer">
                             Copyright &copy; SA GROUP <?php echo date('Y'); ?>
                         </div>
@@ -398,6 +463,23 @@
                     }
                 });
             });
+
+            // 🚀 1. Inisialisasi Semua Progress Bar Saat Halaman Dimuat
+            $(".progress-bar").each(function() {
+                const id = $(this).data("id");
+                const progressValue = $(this).data("status");
+                if (progressValue !== undefined) {
+                    updateProgressBar(id, progressValue);
+                }
+            });
+
+            // Fungsi untuk update tampilan progress bar
+            function updateProgressBar(id, progressValue) {
+                $(`.progress-bar[data-id='${id}']`)
+                    .css("width", progressValue + "%")
+                    .attr("aria-valuenow", progressValue)
+                    .text(progressValue + "%");
+            }
         });
     </script>
 </body>
