@@ -521,39 +521,6 @@ $(document).ready(function() {
         loadSelectedItems();
     });
 
-
-    // Fungsi untuk menampilkan data dalam tabel
-    function renderTable(data) {
-        let storedItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
-        let tbody = $("#selected-items-body");
-        tbody.empty(); // Kosongkan isi tabel sebelum diisi ulang
-
-        if (data.length === 0) {
-            tbody.append('<tr><td colspan="4" class="text-center">Tidak ada data ditemukan</td></tr>');
-        } else {
-            data.forEach((item, index) => {
-                tbody.append(`
-                                    <tr data-index="${index}">
-                                        <td class="text-center col-1"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/') ?>${item.FOTO_ITEM}" alt=""></center></td>    
-                                        <td>${item.NAMA_PRODUK}</td>
-                                        <td class="text-center col-1">${item.JUMLAH_STOK}</td>
-                                        <input type="hidden" class="form-control UUID_STOK" name="UUID_STOK[${index}]" value="${item.UUID_STOK || ''}">
-                                        <input type="hidden" class="form-control KODE_ITEM" name="KODE_ITEM[${index}]" value="${item.KODE_ITEM || ''}">
-                                        <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PEMINDAHAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
-                                        <td class="text-center col-3"><input type="text" class="form-control" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
-                                        <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_AWAL[${index}]"></td>
-                                        <td class="text-center col-1">
-                                        <button class="btn btn-danger remove-item" data-index="${index}">Hapus</button>
-                                    </td>
-                                    </tr>
-                                `);
-            });
-        }
-
-        // Perbarui listener input setelah render ulang
-        attachInputListeners();
-    }
-
     function attachInputListeners() {
         $('#selected-items-body').on('input', '.JUMLAH_PEMINDAHAN', function() {
             let rowIndex = $(this).closest('tr').data('index');
