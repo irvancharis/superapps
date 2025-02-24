@@ -16,6 +16,7 @@ class Transaksi_penghapusan extends CI_Controller
         $this->load->model('maping_lokasi/M_MAPING_LOKASI');
         $this->load->model('karyawan/M_KARYAWAN');
         $this->load->model('produk_item/M_PRODUK_ITEM');
+        $this->load->model('produk_stok/M_PRODUK_STOK');
         $this->load->helper('url_helper');
         $this->load->library('Uuid');
         $this->load->library('TanggalIndo');
@@ -60,12 +61,17 @@ class Transaksi_penghapusan extends CI_Controller
 
     public function get_produk()
     {
-        $search = $this->input->post('search')['value'];
-        $search = strtoupper($search);
+        $search = strtoupper($this->input->post('search')['value']);
+        $area = $this->input->post('area');
+        $departemen = $this->input->post('departemen');
+        $ruangan = $this->input->post('ruangan');
+        $lokasi = $this->input->post('lokasi');
 
-        log_message('error', 'Search query: ' . $search); // Tambahkan log ini
+        log_message('error', 'Search query: ' . $search);
+        log_message('error', 'Filter area: ' . $area . ', departemen: ' . $departemen . ', ruangan: ' . $ruangan . ', lokasi: ' . $lokasi);
 
-        if (empty($search)) {
+        // Cek jika filter tersedia meski tanpa pencarian
+        if (empty($search) && (!$area || !$departemen || !$ruangan || !$lokasi)) {
             echo json_encode([
                 "draw" => intval($this->input->post('draw')),
                 "recordsTotal" => 0,
@@ -75,9 +81,8 @@ class Transaksi_penghapusan extends CI_Controller
             return;
         }
 
-        $data = $this->M_PRODUK_ITEM->getFilteredProdukStok($search);
-
-        log_message('error', 'Data returned: ' . json_encode($data)); // Tambahkan log ini
+        // Mengambil data produk dengan filter pencarian dan filter tambahan
+        $data = $this->M_PRODUK_STOK->getFilteredProdukStok($search, $area, $departemen, $ruangan, $lokasi);
 
         echo json_encode([
             "draw" => intval($this->input->post('draw')),
@@ -272,8 +277,8 @@ class Transaksi_penghapusan extends CI_Controller
     {
 
         $inputan = $this->input->post(null, TRUE);
-        $uuid = $this->input->post('UUID_TRANSAKSI_PENGHAPUSAN');      
-        
+        $uuid = $this->input->post('UUID_TRANSAKSI_PENGHAPUSAN');
+
         // Ambil data items dan ubah dari JSON string ke array PHP
         $items_json = $this->input->post('items');
         $items = json_decode($items_json, true); // Decode JSON ke array
@@ -285,9 +290,9 @@ class Transaksi_penghapusan extends CI_Controller
             'STATUS_PENGHAPUSAN' => 'SELESAI',
         ];
 
-        $update = $this->M_TRANSAKSI_PENGHAPUSAN->update_transaksi($uuid, $data_update);        
+        $update = $this->M_TRANSAKSI_PENGHAPUSAN->update_transaksi($uuid, $data_update);
 
-        if (!$update) {            
+        if (!$update) {
             echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
             return;
         }
@@ -317,16 +322,14 @@ class Transaksi_penghapusan extends CI_Controller
                     exit;
                 } else {
                     $data = $this->upload->data();
-                    
-                        $UUID_STOK = $item['UUID_STOK'];
-                        $data_produk = $item['JUMLAH_PENGHAPUSAN'];
-                        $this->M_TRANSAKSI_PENGHAPUSAN->update_real_stok($UUID_STOK, $data_produk);
-                    
+
+                    $UUID_STOK = $item['UUID_STOK'];
+                    $data_produk = $item['JUMLAH_PENGHAPUSAN'];
+                    $this->M_TRANSAKSI_PENGHAPUSAN->update_real_stok($UUID_STOK, $data_produk);
                 }
             }
             echo json_encode(['success' => true]);
         }
-        
     }
 
 
@@ -564,7 +567,7 @@ class Transaksi_penghapusan extends CI_Controller
             return;
         }
 
-        
+
 
         echo json_encode(['success' => true]);
     }

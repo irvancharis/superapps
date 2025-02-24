@@ -43,6 +43,39 @@ class M_PRODUK_STOK extends CI_Model
         return $result->result();
     }
 
+    // Get Produk Stok By Filter AREA, RUANGAN, LOKASI
+    public function getFilteredProdukStok($search, $area = null, $departemen = null, $ruangan = null, $lokasi = null)
+    {
+        $this->db->select('*');
+        $this->db->from('VIEW_PRODUK_STOK');
+
+        // Filter berdasarkan pencarian (jika ada)
+        if (!empty($search)) {
+            $this->db->group_start(); // Untuk grup kondisi OR
+            $this->db->like('UPPER(KODE_ITEM)', $search);
+            $this->db->or_like('UPPER(NAMA_PRODUK)', $search);
+            $this->db->or_like('UPPER(NAMA_PRODUK_KATEGORI)', $search);
+            $this->db->group_end();
+        }
+
+        // Filter tambahan jika tersedia
+        if ($area) {
+            $this->db->where('KODE_AREA', $area);
+        }
+        if ($departemen) {
+            $this->db->where('KODE_DEPARTEMEN', $departemen);
+        }
+        if ($ruangan) {
+            $this->db->where('KODE_RUANGAN', $ruangan);
+        }
+        if ($lokasi) {
+            $this->db->where('KODE_LOKASI', $lokasi);
+        }
+
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     public function get_produk_stok_single($KODE_ITEM)
     {
         $this->db->select('*');

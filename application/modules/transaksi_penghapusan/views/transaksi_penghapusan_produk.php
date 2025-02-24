@@ -81,6 +81,21 @@
     $(document).ready(function() {
 
         var storedProdukItems = JSON.parse(localStorage.getItem("storedProdukItems")) || [];
+        var filterData = {}; // Variabel untuk menyimpan data filter
+
+        // Menerima data filter dari parent window
+        // window.addEventListener("message", function(event) {
+        //     console.log('Menerima pesan dari parent window:', event.data);
+
+        //     if (event.data.action === 'applyFilter') {
+        //         filterData = event.data.data;
+        //         console.log('Filter diterima:', filterData);
+        //         alert('Filter diterima!');
+
+        //         // Reload DataTables dengan data filter baru
+        //         $('#table-produk').DataTable().ajax.reload();
+        //     }
+        // }, false);
 
         var table = $('#table-produk').DataTable({
             processing: true,
@@ -91,9 +106,19 @@
                 url: "<?php echo base_url() . 'transaksi_penghapusan/get_produk'; ?>",
                 type: "POST",
                 data: function(d) {
-                    if (d.search.value == "") {
-                        return false; // Jangan load data jika tidak ada pencarian
+                    // Ambil data filter dari localStorage
+                    var filter = JSON.parse(localStorage.getItem('filterProdukItems')) || {};
+
+                    // Hanya load data jika ada pencarian atau filter tersedia
+                    if (d.search.value === "" && (!filter.AREA || !filter.DEPARTEMEN || !filter.RUANGAN || !filter.LOKASI)) {
+                        return false;
                     }
+
+                    // Tambahkan data filter ke parameter ajax
+                    d.area = filter.AREA || "";
+                    d.departemen = filter.DEPARTEMEN || "";
+                    d.ruangan = filter.RUANGAN || "";
+                    d.lokasi = filter.LOKASI || "";
                     return d;
                 }
             },
@@ -147,6 +172,11 @@
                     }
                 }
             ]
+        });
+
+        // Trigger reload DataTables jika filter di localStorage berubah
+        window.addEventListener("storage", function() {
+            table.ajax.reload();
         });
 
         // Event ketika user mengetik di kolom pencarian
