@@ -29,8 +29,20 @@ class M_TECHNICIAN extends CI_Model
 
     public function get_karyawan()
     {
-        $query = $this->db->get('KARYAWAN');
+        $this->db->select('VIEW_KARYAWAN.*');
+        $this->db->from('VIEW_KARYAWAN');
+        $this->db->where('VIEW_KARYAWAN.NAMA_DEPARTEMEN', 'IT');
+        $query = $this->db->get();
         return $query->result_object();
+    }
+
+    public function get_karyawan_by_id($kode)
+    {
+        $this->db->select('VIEW_KARYAWAN.*');
+        $this->db->from('VIEW_KARYAWAN');
+        $this->db->where('VIEW_KARYAWAN.ID_KARYAWAN', $kode);
+        $query = $this->db->get();
+        return $query->row();
     }
 
     public function get_latest_data()

@@ -20,9 +20,15 @@ class Technician extends CI_Controller
         $data['get_departement'] = $this->M_TECHNICIAN->get_departement();
         $data['get_karyawan'] = $this->M_TECHNICIAN->get_karyawan();
 
-        $this->load->view('layout/navbar');
-        $this->load->view('layout/sidebar', $data);
-        $this->load->view('technician', $data);
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('technician', $data);
+    }
+
+    public function get_karyawan_by_id($kode)
+    {
+        $data = $this->M_TECHNICIAN->get_karyawan_by_id($kode);
+        echo json_encode($data);
     }
 
     public function insert()
@@ -60,8 +66,6 @@ class Technician extends CI_Controller
 
         if (empty($id_karyawan)) {
             $errors[] = 'ID Karyawan tidak boleh kosong.';
-        } elseif (!is_numeric($id_karyawan)) {
-            $errors[] = 'ID Karyawan harus berupa angka.';
         }
 
         if (strlen($description) > 255) {
@@ -74,12 +78,14 @@ class Technician extends CI_Controller
             return;
         }
 
+        $status_karyawan = $status == 'AKTIF' ? '1' : '0';
+
         // Jika validasi lolos, lanjutkan proses penyimpanan
         $data = [
             'IDTECH' => $id_technician,
             'NAME_TECHNICIAN' => $nama_technician,
             'DEPARTEMENT' => $id_departement,
-            'STATUS' => $status,
+            'STATUS' => $status_karyawan,
             'IDKARYAWAN' => $id_karyawan,
             'DESCRIPTION_TECHNICIAN' => $description,
         ];
