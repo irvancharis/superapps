@@ -8,7 +8,7 @@
                                     <h4>DATA TRANSAKSI OPNAME</h4>
                                     <div class="card-header-action">
                                         <a href="<?php echo base_url('transaksi_opname/tambah') ?>"
-                                            class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
+                                            class="btn btn-outline-primary"><i class="fas fa-plus"></i> Tambah Data</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -82,7 +82,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_opname/aproval_kabag/'.$d->UUID_TRANSAKSI_OPNAME);?>"
-                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
                                                         </a>
 
                                                         <?php
@@ -91,7 +91,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_opname/aproval_gm/'.$d->UUID_TRANSAKSI_OPNAME);?>"
-                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
                                                         </a>
 
                                                         <?php
@@ -100,7 +100,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_opname/aproval_head/'.$d->UUID_TRANSAKSI_OPNAME);?>"
-                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
                                                         </a>
 
                                                         <?php

@@ -70,19 +70,19 @@
                                                     <td class="text-center">
                                                         <?php
                                                             if ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL KABAG") {
-                                                                echo '<a href="' . base_url("transaksi_pengadaan/approval_kabag/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/approval_kabag/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL GM") {
-                                                                echo '<a href="' . base_url("transaksi_pengadaan/approval_gm/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/approval_gm/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL HEAD") {
-                                                                echo '<a href="' . base_url("transaksi_pengadaan/approval_head/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/approval_head/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "PROSES PENGADAAN") {
-                                                                echo '<a href="' . base_url("transaksi_pengadaan/proses_pengadaan/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/proses_pengadaan/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU KIRIMAN BARANG") {
-                                                                echo '<a href="' . base_url("transaksi_pengadaan/m_kiriman_barang/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/m_kiriman_barang/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU PENYERAHAN") {
-                                                                echo '<a href="' . base_url("transaksi_pengadaan/penyerahan_barang/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/penyerahan_barang/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "PROSES PENYERAHAN") {
-                                                                echo '<a href="' . base_url("transaksi_pengadaan/penyerahan_barang_user/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/penyerahan_barang_user/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             }
                                                             ?>
                                                         <a class="btn btn-outline-secondary"><i

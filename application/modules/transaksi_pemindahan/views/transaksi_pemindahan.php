@@ -8,7 +8,7 @@
                                     <h4>DATA TRANSAKSI PEMINDAHAN</h4>
                                     <div class="card-header-action">
                                         <a href="<?php echo base_url('transaksi_pemindahan/tambah') ?>"
-                                            class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
+                                            class="btn btn-outline-primary"><i class="fas fa-plus"></i> Tambah Data</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -96,7 +96,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_pemindahan/aproval_kabag/'.$d->UUID_TRANSAKSI_PEMINDAHAN);?>"
-                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
                                                         </a>
 
                                                         <?php
@@ -105,7 +105,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_pemindahan/aproval_gm/'.$d->UUID_TRANSAKSI_PEMINDAHAN);?>"
-                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
                                                         </a>
 
                                                         <?php
@@ -114,7 +114,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_pemindahan/aproval_head/'.$d->UUID_TRANSAKSI_PEMINDAHAN);?>"
-                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
                                                         </a>
 
                                                         <?php
@@ -123,7 +123,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_pemindahan/proses_pemindahan/'.$d->UUID_TRANSAKSI_PEMINDAHAN);?>"
-                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
                                                         </a>
                                                         <?php
                                                             }
