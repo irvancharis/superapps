@@ -57,6 +57,7 @@ class Produk_stok extends CI_Controller
     {
         $this->load->library('session');
 
+        $data['detail_aset'] = $this->M_PRODUK_STOK->cek_detail_produk($kode);
         $data['aset'] = $this->M_PRODUK_STOK->cek_aset($kode);
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');

@@ -17,7 +17,9 @@
 
     <div class="col-12 col-md-12 col-lg-12">
         <div class="card-body">
-
+            <h4 class="text-center" style="border-bottom:1px solid rgb(228, 228, 228)">
+                DATA PRODUK</h4>
+            <br>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered" id="tabel">
                     <thead>
