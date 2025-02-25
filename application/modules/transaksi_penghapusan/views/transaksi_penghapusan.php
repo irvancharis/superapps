@@ -16,33 +16,35 @@
                                         <table class="table table-striped" id="TABEL">
                                             <thead>
                                                 <tr>
-                                                    <th>TANGGAL PENGAJUAN</th>
-                                                    <th>DEPARTEMEN</th>
-                                                    <th>USER PENGAJUAN</th>
-                                                    <th>APROVAL</th>
-                                                    <th>STATUS</th>
+                                                    <th class="text-center col-2">TANGGAL PENGAJUAN</th>
+                                                    <th class="text-center">DEPARTEMEN</th>
+                                                    <th class="text-center col-2">USER PENGAJUAN</th>
+                                                    <th class="text-center col-2">APROVAL</th>
+                                                    <th class="text-center col-2">STATUS</th>
+                                                    <th class="text-center col-1"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php foreach ($M_TRANSAKSI_PENGHAPUSAN as $index => $d) : ?>
                                                 <tr>
-                                                    
-                                                    <td><?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGAJUAN, 'l, d F Y'); ?>
+
+                                                    <td class="text-center"><?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGAJUAN, 'l, d F Y'); ?>
                                                     </td>
-                                                    <td><i class="fa fa-map-marker"></i> <?php echo $d->NAMA_AREA; ?><br><i class="fa fa-building"></i> <?php echo $d->NAMA_RUANGAN; ?><br> <i class="fa fa-users"></i> <?php echo $d->NAMA_DEPARTEMEN; ?><br><i class="fa fa-box"></i> <?php echo $d->NAMA_LOKASI; ?></td>
-                                                    <td><?php echo $d->NAMA_USER_PENGAJUAN; ?></td>
-                                                    <td>
+                                                    <td><i class="fa fa-map-marker"></i>
+                                                        <?php echo $d->NAMA_AREA; ?><br><i class="fa fa-building"></i>
+                                                        <?php echo $d->NAMA_RUANGAN; ?><br> <i class="fa fa-users"></i>
+                                                        <?php echo $d->NAMA_DEPARTEMEN; ?><br><i class="fa fa-box"></i>
+                                                        <?php echo $d->NAMA_LOKASI; ?></td>
+                                                    <td class="text-center"><?php echo $d->NAMA_USER_PENGAJUAN; ?></td>
+                                                    <td >
                                                         <?php echo 'KABAG - ( ' . (($d->KODE_APROVAL_KABAG != null) ? $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
                                                         <?php echo 'GM - ( ' . (($d->KODE_APROVAL_GM != null) ? $d->NAMA_APROVAL_GM . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_GM . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
                                                         <?php echo 'HEAD - ( ' . (($d->KODE_APROVAL_HEAD != null) ? $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?>
-                                                    <td>
+                                                    <td class="text-center">
                                                         <?php if($d->STATUS_PENGHAPUSAN == 'MENUNGGU APROVAL KABAG')
                                                             {
                                                         ?>
                                                         <span class="badge badge-warning">MENUNGGU APROVAL KABAG</span>
-                                                        <a href="<?=site_url('transaksi_penghapusan/aproval_kabag/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
-                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
-                                                        </a>
 
                                                         <?php
                                                             }
@@ -50,9 +52,7 @@
                                                             {
                                                         ?>
                                                         <span class="badge badge-warning">MENUNGGU APROVAL GM</span>
-                                                        <a href="<?=site_url('transaksi_penghapusan/aproval_gm/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
-                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
-                                                        </a>
+
 
                                                         <?php
                                                             }
@@ -60,19 +60,16 @@
                                                             {
                                                         ?>
                                                         <span class="badge badge-warning">MENUNGGU APROVAL HEAD</span>
-                                                        <a href="<?=site_url('transaksi_penghapusan/aproval_head/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
-                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
-                                                        </a>
+
 
                                                         <?php
                                                             }
                                                             elseif($d->STATUS_PENGHAPUSAN == 'MENUNGGU JADWAL PENGHAPUSAN')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-warning">MENUNGGU JADWAL PENGHAPUSAN</span>
-                                                        <a href="<?=site_url('transaksi_penghapusan/jadwal_penghapusan/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
-                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
-                                                        </a>
+                                                        <span class="badge badge-warning">MENUNGGU JADWAL
+                                                            PENGHAPUSAN</span>
+
 
                                                         <?php
                                                             }
@@ -80,9 +77,7 @@
                                                             {
                                                         ?>
                                                         <span class="badge badge-warning">PROSES PENGHAPUSAN</span>
-                                                        <a href="<?=site_url('transaksi_penghapusan/proses_penghapusan/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
-                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
-                                                        </a>
+
 
                                                         <?php
                                                         }
@@ -98,6 +93,57 @@
                                                         <?php
                                                             }
                                                         ?>
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        <?php if($d->STATUS_PENGHAPUSAN == 'MENUNGGU APROVAL KABAG')
+                                                            {
+                                                        ?>
+                                                        <a href="<?=site_url('transaksi_penghapusan/aproval_kabag/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
+                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
+                                                        </a>
+
+                                                        <?php
+                                                            }
+                                                            elseif($d->STATUS_PENGHAPUSAN == 'MENUNGGU APROVAL GM')
+                                                            {
+                                                        ?>
+                                                        <a href="<?=site_url('transaksi_penghapusan/aproval_gm/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
+                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
+                                                        </a>
+
+                                                        <?php
+                                                            }
+                                                            elseif($d->STATUS_PENGHAPUSAN == 'MENUNGGU APROVAL HEAD')
+                                                            {
+                                                        ?>
+                                                        <a href="<?=site_url('transaksi_penghapusan/aproval_head/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
+                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
+                                                        </a>
+
+                                                        <?php
+                                                            }
+                                                            elseif($d->STATUS_PENGHAPUSAN == 'MENUNGGU JADWAL PENGHAPUSAN')
+                                                            {
+                                                        ?>
+                                                        <a href="<?=site_url('transaksi_penghapusan/jadwal_penghapusan/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
+                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
+                                                        </a>
+
+                                                        <?php
+                                                            }
+                                                            elseif($d->STATUS_PENGHAPUSAN == 'PROSES PENGHAPUSAN')
+                                                            {
+                                                        ?>
+                                                        <a href="<?=site_url('transaksi_penghapusan/proses_penghapusan/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
+                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
+                                                        </a>
+
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                        <a class="btn btn-outline-secondary"><i
+                                                                class="fas fa-print"></i></a>
                                                     </td>
 
                                                 </tr>

@@ -294,8 +294,6 @@ $(document).ready(function() {
         });
     });
 
-
-
 });
 
 function generate_aset(uuid) {
@@ -327,7 +325,7 @@ function detail_stok(uuid) {
             if (res.length > 0) {
                 window.location.href = "<?php echo base_url(); ?>produk_stok/detail_stok/" + uuid;
             } else {
-                swal('Data aset tidak ada', 'Lakukan generate aset terlebih dahulu', 'error');
+                swal('Data aset tidak ditemukan', 'Lakukan generate aset terlebih dahulu', 'warning');
             }
         }
     });
