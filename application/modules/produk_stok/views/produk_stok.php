@@ -260,7 +260,7 @@ $(document).ready(function() {
                     $.each(response, function(index, data) {
 
                         let options = "";
-                        if (data.cek_aset == 0) {
+                        if (data.jumlah_aset < data.jumlah_stok) {
                             options += `
                                     <label onclick="generate_aset('${data.UUID_STOK}')" class="btn btn-outline-warning">
                                         <i class="fa fa-eye"></i> GENERATE ASSET
@@ -318,7 +318,19 @@ function generate_aset(uuid) {
 
 
 function detail_stok(uuid) {
-    window.location.href = "<?php echo base_url(); ?>produk_stok/detail_stok/" + uuid;
+
+    $.ajax({
+        url: "<?php echo base_url(); ?>" + "produk_stok/cek_aset/" + uuid,
+        type: "POST",
+        success: function(response) {
+            let res = JSON.parse(response);
+            if (res.length > 0) {
+                window.location.href = "<?php echo base_url(); ?>produk_stok/detail_stok/" + uuid;
+            } else {
+                swal('Data aset tidak ada', 'Lakukan generate aset terlebih dahulu', 'error');
+            }
+        }
+    });
 }
             </script>
 

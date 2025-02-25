@@ -69,7 +69,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="text-center col-2">QR</th>
-                                                    <th class="text-center col-2">KODE</th>
+                                                    <th class="text-center col-3">KODE</th>
                                                     <th>NAMA PRODUK</th>
                                                     <th class="text-center col-2">PIC</th>
                                                     <th class="text-center col-2"><button
@@ -86,9 +86,9 @@
                                                                 src="<?php echo base_url('produk_stok/qr_link/'.$d->UUID_STOK.'/'.$d->UUID_ASET)?>"
                                                                 alt=""></center>
                                                     </td>
-                                                    <td><?php echo $d->UUID_ASET; ?></td>
+                                                    <td class="text-center"><?php echo $d->UUID_ASET; ?></td>
                                                     <td><?php echo $d->NAMA_PRODUK; ?></td>
-                                                    <td><?php echo $d->NAMA_PIC; ?></td>                                                    
+                                                    <td class="text-center"><?php echo $d->NAMA_PIC; ?></td>                                                    
                                                     <td class="text-center col-2">
                                                         <label
                                                             onclick="detail_stok('<?php echo $d->UUID_STOK; ?>','<?php echo $d->UUID_ASET; ?>')"
