@@ -260,7 +260,7 @@ $(document).ready(function() {
                     $.each(response, function(index, data) {
 
                         let options = "";
-                        if (data.cek_aset == 0) {
+                        if (data.jumlah_aset < data.jumlah_stok) {
                             options += `
                                     <label onclick="generate_aset('${data.UUID_STOK}')" class="btn btn-outline-warning">
                                         <i class="fa fa-eye"></i> GENERATE ASSET
@@ -270,7 +270,7 @@ $(document).ready(function() {
 
                         rows += `<tr>
                             <td class="text-center col-1"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${data.FOTO_ITEM}" alt=""></center></td>
-                            <td >${data.KODE_ITEM}</td>
+                            <td class="text-center">${data.KODE_ITEM}</td>
                             <td>${data.NAMA_PRODUK}</td>
                             <td class="text-center">${data.NAMA_PRODUK_KATEGORI}</td>
                             <td><i class="fa fa-map-marker"></i> ${data.NAMA_AREA}<br><i class="fa fa-building"></i> ${data.NAMA_RUANGAN}<br> <i class="fa fa-users"></i> ${data.NAMA_DEPARTEMEN}<br><i class="fa fa-box"></i> ${data.NAMA_LOKASI}</td>
@@ -294,8 +294,6 @@ $(document).ready(function() {
         });
     });
 
-
-
 });
 
 function generate_aset(uuid) {
@@ -318,7 +316,19 @@ function generate_aset(uuid) {
 
 
 function detail_stok(uuid) {
-    window.location.href = "<?php echo base_url(); ?>produk_stok/detail_stok/" + uuid;
+
+    $.ajax({
+        url: "<?php echo base_url(); ?>" + "produk_stok/cek_aset/" + uuid,
+        type: "POST",
+        success: function(response) {
+            let res = JSON.parse(response);
+            if (res.length > 0) {
+                window.location.href = "<?php echo base_url(); ?>produk_stok/detail_stok/" + uuid;
+            } else {
+                swal('Data aset tidak ditemukan', 'Lakukan generate aset terlebih dahulu', 'warning');
+            }
+        }
+    });
 }
             </script>
 

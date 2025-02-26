@@ -215,7 +215,7 @@ class Transaksi_opname extends CI_Controller
         $data_update = [
             'TANGGAL_APROVAL_KABAG' => date('Y-m-d'),
             'KODE_APROVAL_KABAG' => $this->session->userdata('ID_KARYAWAN'),
-            'STATUS_OPNAME' => 'CANCEL',
+            'STATUS_OPNAME' => 'DITOLAK KABAG',
             'KETERANGAN_CANCEL_KABAG' => $form,
         ];
 
@@ -277,7 +277,7 @@ class Transaksi_opname extends CI_Controller
         $data_update = [
             'TANGGAL_APROVAL_GM' => date('Y-m-d'),
             'KODE_APROVAL_GM' => $this->session->userdata('ID_KARYAWAN'),
-            'STATUS_OPNAME' => 'CANCEL',
+            'STATUS_OPNAME' => 'DITOLAK GM',
             'KETERANGAN_CANCEL_GM' => $form,
         ];
 
@@ -326,7 +326,7 @@ class Transaksi_opname extends CI_Controller
         $data_update = [
             'TANGGAL_APROVAL_HEAD' => date('Y-m-d'),
             'KODE_APROVAL_HEAD' => $this->session->userdata('ID_KARYAWAN'),
-            'STATUS_OPNAME' => 'CANCEL',
+            'STATUS_OPNAME' => 'DITOLAK HEAD',
             'KETERANGAN_CANCEL_HEAD' => $form,
         ];
 

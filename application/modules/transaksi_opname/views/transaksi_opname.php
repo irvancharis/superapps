@@ -8,7 +8,7 @@
                                     <h4>DATA TRANSAKSI OPNAME</h4>
                                     <div class="card-header-action">
                                         <a href="<?php echo base_url('transaksi_opname/tambah') ?>"
-                                            class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
+                                            class="btn btn-outline-primary"><i class="fas fa-plus"></i> Tambah Data</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -16,33 +16,36 @@
                                         <table class="table table-striped" id="TABEL">
                                             <thead>
                                                 <tr>
-                                                    <th>TANGGAL OPNAME</th>
-                                                    <th>DEPARTEMEN</th>
-                                                    <th>PELAKSANA</th>
-                                                    <th>APROVAL</th>
-                                                    <th>STATUS</th>
+                                                    <th class="text-center col-2">TANGGAL OPNAME</th>
+                                                    <th class="text-center">DEPARTEMEN</th>
+                                                    <th class="text-center col-2">PELAKSANA</th>
+                                                    <th class="text-center col-2">APROVAL</th>
+                                                    <th class="text-center col-1">STATUS</th>
+                                                    <th class="text-center col-1"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php foreach ($M_TRANSAKSI_OPNAME as $index => $d) : ?>
                                                 <tr>
-                                                    
-                                                    <td><?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_OPNAME, 'l, d F Y'); ?>
+
+                                                    <td class="text-center">
+                                                        <?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_OPNAME, 'l, d F Y'); ?>
                                                     </td>
-                                                    <td><i class="fa fa-map-marker"></i> <?php echo $d->NAMA_AREA; ?><br><i class="fa fa-building"></i> <?php echo $d->NAMA_RUANGAN; ?><br> <i class="fa fa-users"></i> <?php echo $d->NAMA_DEPARTEMEN; ?><br><i class="fa fa-box"></i> <?php echo $d->NAMA_LOKASI; ?></td>
-                                                    <td><?php echo $d->NAMA_USER_PELAKSANA; ?></td>
-                                                    <td>
+                                                    <td><i class="fa fa-map-marker"></i>
+                                                        <?php echo $d->NAMA_AREA; ?><br><i class="fa fa-building"></i>
+                                                        <?php echo $d->NAMA_RUANGAN; ?><br> <i class="fa fa-users"></i>
+                                                        <?php echo $d->NAMA_DEPARTEMEN; ?><br><i class="fa fa-box"></i>
+                                                        <?php echo $d->NAMA_LOKASI; ?></td>
+                                                    <td class="text-center"><?php echo $d->NAMA_USER_PELAKSANA; ?></td>
+                                                    <td class="text-center">
                                                         <?php echo 'KABAG - ( ' . (($d->KODE_APROVAL_KABAG != null) ? $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
                                                         <?php echo 'GM - ( ' . (($d->KODE_APROVAL_GM != null) ? $d->NAMA_APROVAL_GM . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_GM . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
                                                         <?php echo 'HEAD - ( ' . (($d->KODE_APROVAL_HEAD != null) ? $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?>
-                                                    <td>
+                                                    <td class="text-center">
                                                         <?php if($d->STATUS_OPNAME == 'MENUNGGU APROVAL KABAG')
                                                             {
                                                         ?>
                                                         <span class="badge badge-warning">MENUNGGU APROVAL KABAG</span>
-                                                        <a href="<?=site_url('transaksi_opname/aproval_kabag/'.$d->UUID_TRANSAKSI_OPNAME);?>"
-                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
-                                                        </a>
 
                                                         <?php
                                                             }
@@ -50,9 +53,7 @@
                                                             {
                                                         ?>
                                                         <span class="badge badge-warning">MENUNGGU APROVAL GM</span>
-                                                        <a href="<?=site_url('transaksi_opname/aproval_gm/'.$d->UUID_TRANSAKSI_OPNAME);?>"
-                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
-                                                        </a>
+
 
                                                         <?php
                                                             }
@@ -60,26 +61,58 @@
                                                             {
                                                         ?>
                                                         <span class="badge badge-warning">MENUNGGU APROVAL HEAD</span>
-                                                        <a href="<?=site_url('transaksi_opname/aproval_head/'.$d->UUID_TRANSAKSI_OPNAME);?>"
-                                                            class="btn btn-primary"><i class="fas fa-eye"></i>
-                                                        </a>
 
                                                         <?php
                                                         }
-                                                            elseif($d->STATUS_OPNAME == 'SELESAI')
+                                                            elseif($d->STATUS_OPNAME == 'DITOLAK KABAG')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-success">SELESAI</span>
+                                                        <span class="badge badge-danger">DITOLAK KABAG</span>
                                                         <?php
-                                                            }elseif($d->STATUS_OPNAME == 'CANCEL')
+                                                            }elseif($d->STATUS_OPNAME == 'DITOLAK GM')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-danger">CANCEL</span>
+                                                        <span class="badge badge-danger">DITOLAK GM</span>                                                      
+                                                        <?php
+                                                            }elseif($d->STATUS_OPNAME == 'DITOLAK HEAD')
+                                                            {
+                                                        ?>
+                                                        <span class="badge badge-danger">DITOLAK HEAD</span>
                                                         <?php
                                                             }
                                                         ?>
                                                     </td>
+                                                    <td>
+                                                        <?php if($d->STATUS_OPNAME == 'MENUNGGU APROVAL KABAG')
+                                                            {
+                                                        ?>
+                                                        <a href="<?=site_url('transaksi_opname/aproval_kabag/'.$d->UUID_TRANSAKSI_OPNAME);?>"
+                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                        </a>
+                                                        <?php
+                                                            }
+                                                            elseif($d->STATUS_OPNAME == 'MENUNGGU APROVAL GM')
+                                                            {
+                                                        ?>
+                                                        <a href="<?=site_url('transaksi_opname/aproval_gm/'.$d->UUID_TRANSAKSI_OPNAME);?>"
+                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                        </a>
 
+                                                        <?php
+                                                            }
+                                                            elseif($d->STATUS_OPNAME == 'MENUNGGU APROVAL HEAD')
+                                                            {
+                                                        ?>
+                                                        <a href="<?=site_url('transaksi_opname/aproval_head/'.$d->UUID_TRANSAKSI_OPNAME);?>"
+                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                        </a>
+
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                        <a class="btn btn-outline-secondary"><i
+                                                                class="fas fa-print"></i></a>
+                                                    </td>
                                                 </tr>
                                                 <?php endforeach; ?>
                                             </tbody>

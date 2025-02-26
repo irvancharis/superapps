@@ -57,6 +57,7 @@ class Produk_stok extends CI_Controller
     {
         $this->load->library('session');
 
+        $data['detail_aset'] = $this->M_PRODUK_STOK->cek_detail_produk($kode);
         $data['aset'] = $this->M_PRODUK_STOK->cek_aset($kode);
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
@@ -69,6 +70,13 @@ class Produk_stok extends CI_Controller
     public function get_single($KODE_ITEM)
     {
         $result = $this->M_PRODUK_STOK->get_produk_stok_single($KODE_ITEM);
+        echo json_encode($result);
+    }
+
+
+    public function cek_aset($KODE)
+    {
+        $result = $this->M_PRODUK_STOK->cek_aset($KODE);
         echo json_encode($result);
     }
 
@@ -87,6 +95,8 @@ class Produk_stok extends CI_Controller
 
     foreach ($result as &$row) {
         $row['cek_aset'] = $this->M_PRODUK_STOK->cek_aset($row['UUID_STOK']);
+        $row['jumlah_aset'] = count($row['cek_aset']);
+        $row['jumlah_stok'] = $row['JUMLAH_STOK'];
     }
     echo json_encode($result);
     exit;
@@ -96,8 +106,12 @@ class Produk_stok extends CI_Controller
     public function generate_aset($kode)
     {
         $stok = $this->M_PRODUK_STOK->get_jumlah_stok($kode);
+        $jumlah_aset = $this->M_PRODUK_STOK->cek_aset($kode);
+        $jumlah_aset = count($jumlah_aset);
 
-        for($i = 0; $i < $stok->JUMLAH_STOK; $i++) {
+        $jumlah_aset = $stok->JUMLAH_STOK - $jumlah_aset;
+
+        for($i = 0; $i < $jumlah_aset; $i++) {
             $data['UUID_STOK'] = $stok->UUID_STOK;
             $data['UUID_ASET'] = $this->uuid->v4();
             $this->M_PRODUK_STOK->insert_aset($data);

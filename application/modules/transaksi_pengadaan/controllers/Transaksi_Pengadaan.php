@@ -49,6 +49,13 @@ class Transaksi_pengadaan extends CI_Controller
         echo json_encode($result);
     }
 
+    public function print($kode)
+    {
+        $data['transaksi'] = $this->M_TRANSAKSI_PENGADAAN->get_single($kode);
+        $data['detail'] = $this->M_TRANSAKSI_PENGADAAN->get_detail($kode);
+        $this->load->view('print', $data);
+    }
+
     public function transaksi_pengadaan_produk()
     {
         $this->load->library('session');

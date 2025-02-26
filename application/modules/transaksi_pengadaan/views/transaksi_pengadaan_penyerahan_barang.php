@@ -151,21 +151,13 @@
                                                 </div>
                                             </div>
                                         </div> -->
-                                        <div class="row">
-                                            <div class="form-group col-12 col-md-6 col-lg-6 about accelerator">
-                                                <label>USER PENYERAHAN BARANG</label>
-                                                <select class="form-control" name="KODE_USER_PENYERAHAN_BARANG" id="KODE_USER_PENYERAHAN_BARANG" disabled>
-                                                    <option value="" class="text-center" selected disabled>---- Pilih User ----</option>
-                                                    <?php foreach ($karyawan as $row) : ?>
-                                                        <option value="<?= $row->ID_KARYAWAN; ?>" <?= $row->ID_KARYAWAN == $this->session->userdata('ID_KARYAWAN') ? "selected" : ""; ?>><?= $row->NAMA_KARYAWAN; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Masukkan USER PENYERAHAN BARANG !
-                                                </div>
-                                            </div>
+                                        <div class="row justify-content-center">
+                                            
                                             <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <br>
+                                                <br>
                                                 <label>USER PENERIMA BARANG</label>
+                                                <input type="hidden" class="form-control" id="KODE_USER_PENYERAHAN_BARANG" name="KODE_USER_PENYERAHAN_BARANG" value="<?= $this->session->userdata('ID_KARYAWAN'); ?>">
                                                 <select class="form-control" name="KODE_USER_PENERIMA_BARANG" id="KODE_USER_PENERIMA_BARANG" required>
                                                     <option value="" class="text-center" selected disabled>---- Pilih User ----</option>
                                                     <?php foreach ($karyawan_departemen as $row) : ?>

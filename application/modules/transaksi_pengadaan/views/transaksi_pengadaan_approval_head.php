@@ -298,7 +298,7 @@
                                 type: "POST",
                                 data: {
                                     id_transaksi: idTransaksi,
-                                    KETERANGAN_CANCEL_GM: $('#KETERANGAN_CANCEL_HEAD').val(),
+                                    KETERANGAN_CANCEL_HEAD: $('#KETERANGAN_CANCEL_HEAD').val(),
                                     items: selectedItems
                                 },
                                 success: function(response) {

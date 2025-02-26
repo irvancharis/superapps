@@ -10,14 +10,68 @@
                                 </div>
                                 <div class="card-body">
 
+                                    <div class="row" style="margin:0 20px 0 20px;">
+
+
+                                        <div class="form-group col-12 col-md-12 col-lg-4">
+                                            <table class="table table-striped table-sm">
+                                                <tbody>
+                                                    <tr>
+                                                        <img width="100%"
+                                                            src="<?php echo base_url('assets/uploads/item/') . $detail_aset->FOTO_ITEM; ?>"
+                                                            alt="">
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="form-group col-12 col-md-12 col-lg-8">
+                                            <table class="table table-striped table-sm">
+                                                <tbody>
+                                                    <tr>
+                                                        <th class="col-2">AREA</th>
+                                                        <td><?= $detail_aset->NAMA_AREA; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-2">DEPARTEMEN</th>
+                                                        <td><?= $detail_aset->NAMA_DEPARTEMEN; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-2">RUANGAN</th>
+                                                        <td><?= $detail_aset->NAMA_RUANGAN; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-2">LOKASI</th>
+                                                        <td><?= $detail_aset->NAMA_LOKASI; ?></td>
+                                                    </tr>                                                    
+                                                    <tr>
+                                                        <th class="col-2">KODE ASET</th>
+                                                        <td><?= $detail_aset->UUID_ASET; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-2">NAMA PRODUK</th>
+                                                        <td><?= $detail_aset->NAMA_PRODUK; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-2">KATEGORI</th>
+                                                        <td><?= $detail_aset->NAMA_PRODUK_KATEGORI; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-2">SATUAN</th>
+                                                        <td><?= $detail_aset->SATUAN; ?></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
                                     <div class="table-responsive">
                                         <table class="table table-striped" id="tabel">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center col-2">QR</th>
+                                                    <th class="text-center col-3">KODE</th>
                                                     <th>NAMA PRODUK</th>
                                                     <th class="text-center col-2">PIC</th>
-                                                    <th class="text-center col-2">FOTO ITEM</th>
                                                     <th class="text-center col-2"><button
                                                             class="btn btn-outline-secondary"
                                                             onclick="window.open('<?php echo base_url('produk_stok/print_qr_aset/'.$this->uri->segment(3)) ?>','_blank')"><i
@@ -32,44 +86,9 @@
                                                                 src="<?php echo base_url('produk_stok/qr_link/'.$d->UUID_STOK.'/'.$d->UUID_ASET)?>"
                                                                 alt=""></center>
                                                     </td>
+                                                    <td class="text-center"><?php echo $d->UUID_ASET; ?></td>
                                                     <td><?php echo $d->NAMA_PRODUK; ?></td>
-                                                    <td><?php echo $d->NAMA_PIC; ?></td>
-                                                    <td class="text-center col-2">
-                                                        <img width="150px" style="cursor: pointer;"
-                                                            src="<?php echo base_url('assets/uploads/item/') . $d->FOTO_ITEM; ?>"
-                                                            alt="Thumbnail" class="thumbnail" onclick="showPopup(this)">
-
-                                                        <script>
-                                                        function showPopup(img) {
-                                                            let popupDiv = document.createElement("div");
-                                                            popupDiv.style.position = "fixed";
-                                                            popupDiv.style.top = "0";
-                                                            popupDiv.style.left = "0";
-                                                            popupDiv.style.width = "100%";
-                                                            popupDiv.style.height = "100%";
-                                                            popupDiv.style.background = "rgba(0, 0, 0, 0.8)";
-                                                            popupDiv.style.display = "flex";
-                                                            popupDiv.style.justifyContent = "center";
-                                                            popupDiv.style.alignItems = "center";
-                                                            popupDiv.style.cursor = "pointer";
-                                                            popupDiv.style.zIndex = "9999";
-
-                                                            let popupImg = document.createElement("img");
-                                                            popupImg.src = img.src;
-                                                            popupImg.style.maxWidth = "80%";
-                                                            popupImg.style.maxHeight = "80%";
-                                                            popupImg.style.borderRadius = "10px";
-                                                            popupImg.style.zIndex = "10000";
-
-                                                            popupDiv.appendChild(popupImg);
-                                                            popupDiv.onclick = function() {
-                                                                document.body.removeChild(popupDiv);
-                                                            };
-
-                                                            document.body.appendChild(popupDiv);
-                                                        }
-                                                        </script>
-                                                    </td>
+                                                    <td class="text-center"><?php echo $d->NAMA_PIC; ?></td>                                                    
                                                     <td class="text-center col-2">
                                                         <label
                                                             onclick="detail_stok('<?php echo $d->UUID_STOK; ?>','<?php echo $d->UUID_ASET; ?>')"

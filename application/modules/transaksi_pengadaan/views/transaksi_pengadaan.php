@@ -7,7 +7,8 @@
                                 <div class="card-header">
                                     <h4>DATA TRANSAKSI PENGADAAN</h4>
                                     <div class="card-header-action">
-                                        <a href="<?php echo base_url('transaksi_pengadaan/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
+                                        <a href="<?php echo base_url('transaksi_pengadaan/tambah') ?>"
+                                            class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -15,54 +16,46 @@
                                         <table class="table table-striped" id="table-2">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center pt-3">
-                                                        <div class="custom-checkbox custom-checkbox-table custom-control">
-                                                            <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
-                                                                class="custom-control-input" id="checkbox-all">
-                                                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                                                        </div>
-                                                    </th>
-                                                    <th>TANGGAL PENGAJUAN</th>
-                                                    <th>USER PENGAJUAN</th>
-                                                    <th>DEPARTEMEN</th>
-                                                    <th>APPROVAL</th>
-                                                    <th>STATUS</th>
+                                                    <th class="text-center col-2">TANGGAL PENGAJUAN</th>
+                                                    <th class="text-center col-2">USER PENGAJUAN</th>
+                                                    <th class="text-center">DEPARTEMEN</th>
+                                                    <th class="text-center col-2">APPROVAL</th>
+                                                    <th class="text-center col-1">STATUS</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php foreach ($M_TRANSAKSI_PENGADAAN as $index => $d) : ?>
-                                                    <tr>
-                                                        <td class="text-center pt-2">
-                                                            <div class="custom-checkbox custom-control">
-                                                                <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
-                                                                    id="checkbox-1">
-                                                                <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td><?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGAJUAN, 'l, d F Y'); ?>
-                                                        <td><?php echo $d->NAMA_USER_PENGAJUAN; ?></td>
-                                                        <td><i class="fa fa-map-marker"></i> <?php echo $d->NAMA_AREA; ?><br><i class="fa fa-building"></i> <?php echo $d->NAMA_RUANGAN; ?><br> <i class="fa fa-users"></i> <?php echo $d->NAMA_DEPARTEMEN; ?><br><i class="fa fa-box"></i> <?php echo $d->NAMA_LOKASI; ?></td>
-                                                        <td>
-                                                            <?php echo 'KABAG - ( ' . (($d->KODE_APROVAL_KABAG != null) ? $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
-                                                            <?php echo 'GM - ( ' . (($d->KODE_APROVAL_GM != null) ? $d->NAMA_APROVAL_GM . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_GM . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
-                                                            <?php echo 'HEAD - ( ' . (($d->KODE_APROVAL_HEAD != null) ? $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGAJUAN, 'l, d F Y'); ?>
+                                                    <td class="text-center"><?php echo $d->NAMA_USER_PENGAJUAN; ?></td>
+                                                    <td><i class="fa fa-map-marker"></i>
+                                                        <?php echo $d->NAMA_AREA; ?><br><i class="fa fa-building"></i>
+                                                        <?php echo $d->NAMA_RUANGAN; ?><br> <i class="fa fa-users"></i>
+                                                        <?php echo $d->NAMA_DEPARTEMEN; ?><br><i class="fa fa-box"></i>
+                                                        <?php echo $d->NAMA_LOKASI; ?></td>
+                                                    <td>
+                                                        <?php echo 'KABAG - ( ' . (($d->KODE_APROVAL_KABAG != null) ? $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
+                                                        <?php echo 'GM - ( ' . (($d->KODE_APROVAL_GM != null) ? $d->NAMA_APROVAL_GM . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_GM . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
+                                                        <?php echo 'HEAD - ( ' . (($d->KODE_APROVAL_HEAD != null) ? $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <?php
                                                             if ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL KABAG") {
-                                                                echo '<span class="badge badge-primary">MENUNGGU APROVAL KABAG</span> <a href="' . base_url("transaksi_pengadaan/approval_kabag/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<span class="badge badge-primary">MENUNGGU APROVAL KABAG</span> ';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL GM") {
-                                                                echo '<span class="badge badge-primary">MENUNGGU APROVAL GM</span> <a href="' . base_url("transaksi_pengadaan/approval_gm/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<span class="badge badge-primary">MENUNGGU APROVAL GM</span> ';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL HEAD") {
-                                                                echo '<span class="badge badge-primary">MENUNGGU APROVAL HEAD</span> <a href="' . base_url("transaksi_pengadaan/approval_head/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<span class="badge badge-primary">MENUNGGU APROVAL HEAD</span> ';
                                                             } elseif ($d->STATUS_PENGADAAN == "PROSES PENGADAAN") {
-                                                                echo '<span class="badge badge-primary">PROSES PENGADAAN</span> <a href="' . base_url("transaksi_pengadaan/proses_pengadaan/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<span class="badge badge-primary">PROSES PENGADAAN</span> ';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU KIRIMAN BARANG") {
-                                                                echo '<span class="badge badge-primary">MENUNGGU KIRIMAN BARANG</span> <a href="' . base_url("transaksi_pengadaan/m_kiriman_barang/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<span class="badge badge-primary">MENUNGGU KIRIMAN BARANG</span> ';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU PENYERAHAN") {
-                                                                echo '<span class="badge badge-primary">MENUNGGU PENYERAHAN</span> <a href="' . base_url("transaksi_pengadaan/penyerahan_barang/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<span class="badge badge-primary">MENUNGGU PENYERAHAN</span> ';
                                                             } elseif ($d->STATUS_PENGADAAN == "PROSES PENYERAHAN") {
-                                                                echo '<span class="badge badge-primary">PROSES PENYERAHAN</span> <a href="' . base_url("transaksi_pengadaan/penyerahan_barang_user/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<span class="badge badge-primary">PROSES PENYERAHAN</span> ';
                                                             } elseif ($d->STATUS_PENGADAAN == "DITOLAK KABAG") {
                                                                 echo '<span class="badge badge-danger">DITOLAK KABAG</span>';
                                                             } elseif ($d->STATUS_PENGADAAN == "DITOLAK GM") {
@@ -73,8 +66,30 @@
                                                                 echo '<span class="badge badge-success">SELESAI</span>';
                                                             }
                                                             ?>
-                                                        </td>
-                                                    </tr>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <?php
+                                                            if ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL KABAG") {
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/approval_kabag/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                            } elseif ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL GM") {
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/approval_gm/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                            } elseif ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL HEAD") {
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/approval_head/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                            } elseif ($d->STATUS_PENGADAAN == "PROSES PENGADAAN") {
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/proses_pengadaan/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                            } elseif ($d->STATUS_PENGADAAN == "MENUNGGU KIRIMAN BARANG") {
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/m_kiriman_barang/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                            } elseif ($d->STATUS_PENGADAAN == "MENUNGGU PENYERAHAN") {
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/penyerahan_barang/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                            } elseif ($d->STATUS_PENGADAAN == "PROSES PENYERAHAN") {
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/penyerahan_barang_user/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                            }
+                                                            ?>
+                                                        <a href="<?php echo base_url(); ?>transaksi_pengadaan/print/<?php echo $d->UUID_TRANSAKSI_PENGADAAN; ?>" target="_blank" class="btn btn-outline-secondary"><i
+                                                                class="fas fa-print"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
                                         </table>
@@ -95,11 +110,13 @@
                                 <h6 class="font-medium m-b-10">Select Layout</h6>
                                 <div class="selectgroup layout-color w-50">
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="value" value="1" class="selectgroup-input-radio select-layout" checked>
+                                        <input type="radio" name="value" value="1"
+                                            class="selectgroup-input-radio select-layout" checked>
                                         <span class="selectgroup-button">Light</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="value" value="2" class="selectgroup-input-radio select-layout">
+                                        <input type="radio" name="value" value="2"
+                                            class="selectgroup-input-radio select-layout">
                                         <span class="selectgroup-button">Dark</span>
                                     </label>
                                 </div>
@@ -108,12 +125,14 @@
                                 <h6 class="font-medium m-b-10">Sidebar Color</h6>
                                 <div class="selectgroup selectgroup-pills sidebar-color">
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="icon-input" value="1" class="selectgroup-input select-sidebar">
+                                        <input type="radio" name="icon-input" value="1"
+                                            class="selectgroup-input select-sidebar">
                                         <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
                                             data-original-title="Light Sidebar"><i class="fas fa-sun"></i></span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="icon-input" value="2" class="selectgroup-input select-sidebar" checked>
+                                        <input type="radio" name="icon-input" value="2"
+                                            class="selectgroup-input select-sidebar" checked>
                                         <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
                                             data-original-title="Dark Sidebar"><i class="fas fa-moon"></i></span>
                                     </label>
@@ -176,7 +195,7 @@
                     </div>
                 </div>
             </div>
-            
+
             </div>
             </div>
 
@@ -195,22 +214,26 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
-                                    <input required type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician">
+                                    <input required type="text" class="form-control" placeholder="Nama Teknisi"
+                                        name="nama_technician">
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
                                         <label>Departemen</label>
                                         <select class="form-control" name="id_departement">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
+                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen
+                                                --</option>
                                             <?php foreach ($get_departement as $row) : ?>
-                                                <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
+                                            <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?>
+                                            </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6 col-12">
                                         <label>Status</label>
                                         <select class="form-control" name="status">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Status --</option>
+                                            <option value="" class="text-center" selected disabled>-- Pilih Status --
+                                            </option>
                                             <option value="0">PASIF</option>
                                             <option value="1">AKTIF</option>
                                         </select>
@@ -219,15 +242,19 @@
                                 <div class="form-group">
                                     <label>ID Transaksi_pengadaan</label>
                                     <select class="form-control" name="id_transaksi_pengadaan">
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID Transaksi_pengadaan --</option>
+                                        <option value="" class="text-center" selected disabled>-- Pilih ID
+                                            Transaksi_pengadaan --</option>
                                         <?php foreach ($get_transaksi_pengadaan as $row) : ?>
-                                            <option value="<?= $row->ID_TRANSAKSI_PENGADAAN; ?>"><?= $row->ID_TRANSAKSI_PENGADAAN; ?> - <?= $row->NAMA_TRANSAKSI_PENGADAAN; ?></option>
+                                        <option value="<?= $row->ID_TRANSAKSI_PENGADAAN; ?>">
+                                            <?= $row->ID_TRANSAKSI_PENGADAAN; ?> -
+                                            <?= $row->NAMA_TRANSAKSI_PENGADAAN; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Deskripsi Teknisi</label>
-                                    <textarea class="form-control" placeholder="Deskripsi" name="description_technician"></textarea>
+                                    <textarea class="form-control" placeholder="Deskripsi"
+                                        name="description_technician"></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
@@ -254,22 +281,27 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
-                                    <input required type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician" id="nama_technician_view" disabled>
+                                    <input required type="text" class="form-control" placeholder="Nama Teknisi"
+                                        name="nama_technician" id="nama_technician_view" disabled>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
                                         <label>Departemen</label>
-                                        <select class="form-control" name="id_departement" id="id_departement_view" disabled>
-                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
+                                        <select class="form-control" name="id_departement" id="id_departement_view"
+                                            disabled>
+                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen
+                                                --</option>
                                             <?php foreach ($get_departement as $row) : ?>
-                                                <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
+                                            <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?>
+                                            </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6 col-12">
                                         <label>Status</label>
                                         <select class="form-control" name="status" id="status_view" disabled>
-                                            <option value="" class="text-center" selected disabled>-- Pilih Status --</option>
+                                            <option value="" class="text-center" selected disabled>-- Pilih Status --
+                                            </option>
                                             <option value="0">PASIF</option>
                                             <option value="1">AKTIF</option>
                                         </select>
@@ -277,16 +309,21 @@
                                 </div>
                                 <div class="form-group">
                                     <label>ID Transaksi_pengadaan</label>
-                                    <select class="form-control" name="id_transaksi_pengadaan" id="id_transaksi_pengadaan_view" disabled>
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID Transaksi_pengadaan --</option>
+                                    <select class="form-control" name="id_transaksi_pengadaan"
+                                        id="id_transaksi_pengadaan_view" disabled>
+                                        <option value="" class="text-center" selected disabled>-- Pilih ID
+                                            Transaksi_pengadaan --</option>
                                         <?php foreach ($get_transaksi_pengadaan as $row) : ?>
-                                            <option value="<?= $row->ID_TRANSAKSI_PENGADAAN; ?>"><?= $row->ID_TRANSAKSI_PENGADAAN; ?> - <?= $row->NAMA_TRANSAKSI_PENGADAAN; ?></option>
+                                        <option value="<?= $row->ID_TRANSAKSI_PENGADAAN; ?>">
+                                            <?= $row->ID_TRANSAKSI_PENGADAAN; ?> -
+                                            <?= $row->NAMA_TRANSAKSI_PENGADAAN; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Deskripsi Teknisi</label>
-                                    <textarea class="form-control" placeholder="Deskripsi" name="description_technician" id="description_technician_view" disabled></textarea>
+                                    <textarea class="form-control" placeholder="Deskripsi" name="description_technician"
+                                        id="description_technician_view" disabled></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
@@ -312,23 +349,29 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
-                                    <input type="hidden" id="id_technician_edit" class="form-control" placeholder="ID" name="id_technician_edit">
-                                    <input required type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician_edit" id="nama_technician_edit">
+                                    <input type="hidden" id="id_technician_edit" class="form-control" placeholder="ID"
+                                        name="id_technician_edit">
+                                    <input required type="text" class="form-control" placeholder="Nama Teknisi"
+                                        name="nama_technician_edit" id="nama_technician_edit">
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
                                         <label>Departemen</label>
-                                        <select class="form-control" name="id_departement_edit" id="id_departement_edit">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
+                                        <select class="form-control" name="id_departement_edit"
+                                            id="id_departement_edit">
+                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen
+                                                --</option>
                                             <?php foreach ($get_departement as $row) : ?>
-                                                <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
+                                            <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?>
+                                            </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6 col-12">
                                         <label>Status</label>
                                         <select class="form-control" name="status_edit" id="status_edit">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Status --</option>
+                                            <option value="" class="text-center" selected disabled>-- Pilih Status --
+                                            </option>
                                             <option value="0">PASIF</option>
                                             <option value="1">AKTIF</option>
                                         </select>
@@ -336,16 +379,21 @@
                                 </div>
                                 <div class="form-group">
                                     <label>ID Transaksi_pengadaan</label>
-                                    <select class="form-control" name="id_transaksi_pengadaan_edit" id="id_transaksi_pengadaan_edit">
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID Transaksi_pengadaan --</option>
+                                    <select class="form-control" name="id_transaksi_pengadaan_edit"
+                                        id="id_transaksi_pengadaan_edit">
+                                        <option value="" class="text-center" selected disabled>-- Pilih ID
+                                            Transaksi_pengadaan --</option>
                                         <?php foreach ($get_transaksi_pengadaan as $row) : ?>
-                                            <option value="<?= $row->ID_TRANSAKSI_PENGADAAN; ?>"><?= $row->ID_TRANSAKSI_PENGADAAN; ?> - <?= $row->NAMA_TRANSAKSI_PENGADAAN; ?></option>
+                                        <option value="<?= $row->ID_TRANSAKSI_PENGADAAN; ?>">
+                                            <?= $row->ID_TRANSAKSI_PENGADAAN; ?> -
+                                            <?= $row->NAMA_TRANSAKSI_PENGADAAN; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Deskripsi Teknisi</label>
-                                    <textarea class="form-control" placeholder="Deskripsi" name="description_technician_edit" id="description_technician_edit"></textarea>
+                                    <textarea class="form-control" placeholder="Deskripsi"
+                                        name="description_technician_edit" id="description_technician_edit"></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
@@ -371,7 +419,8 @@
                         <form id="formHapusproduk">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <input type="hidden" id="id_technician_hapus" class="form-control" placeholder="ID" name="KODE_ITEM">
+                                    <input type="hidden" id="id_technician_hapus" class="form-control" placeholder="ID"
+                                        name="KODE_ITEM">
                                     <p class="text-center">Apakah anda yakin ingin menghapus data ini?</p>
                                 </div>
                             </div>
@@ -389,36 +438,37 @@
             </body>
 
             <script>
-                $(document).ready(function() {
+$(document).ready(function() {
 
-                    $('#formHapusproduk').on('submit', function(e) {
-                        e.preventDefault();
+    $('#formHapusproduk').on('submit', function(e) {
+        e.preventDefault();
 
-                        // Ambil data dari form
-                        let formData = $(this).serialize();
+        // Ambil data dari form
+        let formData = $(this).serialize();
 
-                        // Kirim data ke server melalui AJAX
-                        $.ajax({
-                            url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/hapus", // Endpoint untuk proses input
-                            type: 'POST',
-                            data: formData,
-                            success: function(response) {
-                                let res = JSON.parse(response);
-                                if (res.success) {
-                                    swal('Sukses', 'Hapus Data Berhasil!', 'success').then(function() {
-                                        $('#hapusModal').modal('hide');
-                                        location.reload();
-                                    });
-                                } else {
-                                    alert('Gagal menghapus data: ' + response.error);
-                                }
-                            },
-                            error: function() {
-                                alert('Gagal melakukan proses.');
-                            }
-                        });
+        // Kirim data ke server melalui AJAX
+        $.ajax({
+            url: "<?php echo base_url(); ?>" +
+                "transaksi_pengadaan/hapus", // Endpoint untuk proses input
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                let res = JSON.parse(response);
+                if (res.success) {
+                    swal('Sukses', 'Hapus Data Berhasil!', 'success').then(function() {
+                        $('#hapusModal').modal('hide');
+                        location.reload();
                     });
-                });
+                } else {
+                    alert('Gagal menghapus data: ' + response.error);
+                }
+            },
+            error: function() {
+                alert('Gagal melakukan proses.');
+            }
+        });
+    });
+});
             </script>
 
             </html>
