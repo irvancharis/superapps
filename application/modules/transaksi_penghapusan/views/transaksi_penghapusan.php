@@ -86,10 +86,21 @@
                                                         ?>
                                                         <span class="badge badge-success">SELESAI</span>
                                                         <?php
-                                                            }elseif($d->STATUS_PENGHAPUSAN == 'CANCEL')
+                                                        }
+                                                            elseif($d->STATUS_PENGHAPUSAN == 'DITOLAK KABAG')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-danger">CANCEL</span>
+                                                        <span class="badge badge-danger">DITOLAK KABAG</span>
+                                                        <?php
+                                                            }elseif($d->STATUS_PENGHAPUSAN == 'DITOLAK GM')
+                                                            {
+                                                        ?>
+                                                        <span class="badge badge-danger">DITOLAK GM</span>                                                      
+                                                        <?php
+                                                            }elseif($d->STATUS_PENGHAPUSAN == 'DITOLAK HEAD')
+                                                            {
+                                                        ?>
+                                                        <span class="badge badge-danger">DITOLAK HEAD</span>
                                                         <?php
                                                             }
                                                         ?>

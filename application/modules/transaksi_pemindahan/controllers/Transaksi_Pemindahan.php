@@ -349,7 +349,7 @@ class Transaksi_pemindahan extends CI_Controller
         $data_update = [
             'TANGGAL_APROVAL_KABAG' => date('Y-m-d'),
             'KODE_APROVAL_KABAG' => $this->session->userdata('ID_KARYAWAN'),
-            'STATUS_PEMINDAHAN' => 'CANCEL',
+            'STATUS_PEMINDAHAN' => 'DITOLAK KABAG',
             'KETERANGAN_CANCEL_KABAG' => $form,
         ];
 
@@ -398,7 +398,7 @@ class Transaksi_pemindahan extends CI_Controller
         $data_update = [
             'TANGGAL_APROVAL_GM' => date('Y-m-d'),
             'KODE_APROVAL_GM' => $this->session->userdata('ID_KARYAWAN'),
-            'STATUS_PEMINDAHAN' => 'CANCEL',
+            'STATUS_PEMINDAHAN' => 'DITOLAK GM',
             'KETERANGAN_CANCEL_GM' => $form,
         ];
 
@@ -447,7 +447,7 @@ class Transaksi_pemindahan extends CI_Controller
         $data_update = [
             'TANGGAL_APROVAL_HEAD' => date('Y-m-d'),
             'KODE_APROVAL_HEAD' => $this->session->userdata('ID_KARYAWAN'),
-            'STATUS_PEMINDAHAN' => 'CANCEL',
+            'STATUS_PEMINDAHAN' => 'DITOLAK HEAD',
             'KETERANGAN_CANCEL_HEAD' => $form,
         ];
 

@@ -64,15 +64,20 @@
 
                                                         <?php
                                                         }
-                                                            elseif($d->STATUS_OPNAME == 'SELESAI')
+                                                            elseif($d->STATUS_OPNAME == 'DITOLAK KABAG')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-success">SELESAI</span>
+                                                        <span class="badge badge-danger">DITOLAK KABAG</span>
                                                         <?php
-                                                            }elseif($d->STATUS_OPNAME == 'CANCEL')
+                                                            }elseif($d->STATUS_OPNAME == 'DITOLAK GM')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-danger">CANCEL</span>
+                                                        <span class="badge badge-danger">DITOLAK GM</span>                                                      
+                                                        <?php
+                                                            }elseif($d->STATUS_OPNAME == 'DITOLAK HEAD')
+                                                            {
+                                                        ?>
+                                                        <span class="badge badge-danger">DITOLAK HEAD</span>
                                                         <?php
                                                             }
                                                         ?>
@@ -84,7 +89,6 @@
                                                         <a href="<?=site_url('transaksi_opname/aproval_kabag/'.$d->UUID_TRANSAKSI_OPNAME);?>"
                                                             class="btn btn-outline-primary"><i class="fas fa-eye"></i>
                                                         </a>
-
                                                         <?php
                                                             }
                                                             elseif($d->STATUS_OPNAME == 'MENUNGGU APROVAL GM')
