@@ -71,6 +71,15 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
         return $query->row();
     }
 
+    public function get_detail($KODE)
+    {
+        $this->db->select('*');
+        $this->db->from('VIEW_TRANSAKSI_PENGADAAN_DETAIL');
+        $this->db->where('UUID_TRANSAKSI_PENGADAAN', $KODE);
+        $query = $this->db->get();
+        return $query->result_object();
+    }
+
     public function get_area()
     {
         $query = $this->db->get('MAPING_AREA');

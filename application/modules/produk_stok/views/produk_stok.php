@@ -270,7 +270,7 @@ $(document).ready(function() {
 
                         rows += `<tr>
                             <td class="text-center col-1"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${data.FOTO_ITEM}" alt=""></center></td>
-                            <td >${data.KODE_ITEM}</td>
+                            <td class="text-center">${data.KODE_ITEM}</td>
                             <td>${data.NAMA_PRODUK}</td>
                             <td class="text-center">${data.NAMA_PRODUK_KATEGORI}</td>
                             <td><i class="fa fa-map-marker"></i> ${data.NAMA_AREA}<br><i class="fa fa-building"></i> ${data.NAMA_RUANGAN}<br> <i class="fa fa-users"></i> ${data.NAMA_DEPARTEMEN}<br><i class="fa fa-box"></i> ${data.NAMA_LOKASI}</td>

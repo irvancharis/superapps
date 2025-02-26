@@ -85,7 +85,7 @@
                                                                 echo '<a href="' . base_url("transaksi_pengadaan/penyerahan_barang_user/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             }
                                                             ?>
-                                                        <a class="btn btn-outline-secondary"><i
+                                                        <a href="<?php echo base_url(); ?>transaksi_pengadaan/print/<?php echo $d->UUID_TRANSAKSI_PENGADAAN; ?>" target="_blank" class="btn btn-outline-secondary"><i
                                                                 class="fas fa-print"></i>
                                                         </a>
                                                     </td>
