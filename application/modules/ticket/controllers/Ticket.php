@@ -7,8 +7,19 @@ class Ticket extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_TICKET');
+        $this->load->model('role/M_ROLE');
+        $this->load->model('technician/M_TECHNICIAN');
+        $this->load->model('karyawan/M_KARYAWAN');
+        $this->load->model('maping_area/M_MAPING_AREA');
+        $this->load->model('maping_ruangan/M_MAPING_RUANGAN');
+        $this->load->model('maping_lokasi/M_MAPING_LOKASI');
+        $this->load->model('departement/M_DEPARTEMENT');
+        $this->load->model('jabatan/M_JABATAN');
         $this->load->model('WHATSAPP');
+        $this->load->model('TELEGRAM');
         $this->load->helper('url_helper');
+        $this->load->library('session');
+        $this->load->library('Uuid');
     }
 
     public function index($page = 'ticket')
@@ -24,6 +35,41 @@ class Ticket extends CI_Controller
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('ticket', $data);
+    }
+
+    public function ticket_card($kode)
+    {
+        // get ticket by id
+        $ticket['ticket'] = $this->M_TICKET->get_ticket($kode);
+        // get nama technician by id
+        $ticket['technician'] = $this->M_TECHNICIAN->get_karyawan_by_id($ticket->TECHNICIAN);
+        $this->load->view('ticket_card', $ticket);
+    }
+
+    public function ticket_technician($kode, $page = 'ticket')
+    {
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TICKET', 'PROSES TICKET');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
+
+        $this->load->library('session');
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $data['ticket'] = $this->M_TICKET->get_ticket($kode);
+        $data['ticket_detail'] = $this->M_TICKET->get_selected_tickets($kode);
+        $data['get_karyawan'] = $this->M_KARYAWAN->get_karyawan();
+        $data['get_area'] = $this->M_MAPING_AREA->get_area();
+        $data['get_ruangan'] = $this->M_MAPING_RUANGAN->get_maping_ruangan();
+        $data['get_lokasi'] = $this->M_MAPING_LOKASI->get_maping_lokasi();
+        $data['get_departemen'] = $this->M_DEPARTEMENT->get_departemen_single($data['ticket']->DEPARTEMENT);
+        $data['get_departemen_request'] = $this->M_DEPARTEMENT->get_departemen_single($data['ticket']->DEPARTEMENT_DIREQUEST);
+        $data['get_jabatan'] = $this->M_JABATAN->get_news();
+        $data['get_technician'] = $this->M_TECHNICIAN->get_teknisi_by_id($data['ticket']->TECHNICIAN);
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('ticket_technician', $data);
     }
 
     public function get_departement()
@@ -188,6 +234,13 @@ class Ticket extends CI_Controller
 
     public function edit_view($id)
     {
+        // Cek apakah user memiliki hak akses
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TICKET', 'PROSES TICKET');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
+
         $this->load->library('session');
         $this->session->set_userdata('page', 'ticket');
         $data['page'] = $this->session->userdata('page');
@@ -246,6 +299,19 @@ class Ticket extends CI_Controller
 
         $result = $this->M_TICKET->update($id_ticket, $data);
 
+        // Membuat format pesan sesuai permintaan
+        $url = "http://192.168.3.105/superapps/ticket_client_view/ticket_card/$id_ticket";
+
+        // Kirim Pesan ke Telegram
+        $ms_telegram =
+            "📢 REQUEST TICKETING \n\n" .
+
+            "📌 Ticket Sudah Di Proses \n\n" .
+
+            "🚨 Lihat Ticket anda dengan membuka URL di bawah ini:\n" .
+            "🔗 ($url)";
+        $this->TELEGRAM->send_message('8007581238', $ms_telegram);
+
         if ($result) {
             echo json_encode(['success' => true]);
         } else {
@@ -259,6 +325,9 @@ class Ticket extends CI_Controller
         $id_ticket = $this->input->post('id_ticket', true);
         $status_ticket = $this->input->post('status_ticket', true);
         $prosentase = $this->input->post('prosentase', true);
+        $objek_ditangani = $this->input->post('objek_ditangani', true);
+        $keterangan = $this->input->post('keterangan', true);
+        $foto = $this->input->post('foto', true);
 
         // Validasi input
         if (empty($id_ticket) || $status_ticket == null) {
@@ -271,17 +340,30 @@ class Ticket extends CI_Controller
             $data = [
                 'STATUS_TICKET' => $status_ticket,
                 'DATE_TICKET_DONE' => date('Y-m-d H:i:s'),
-                'PROSENTASE' => $prosentase
+                'PROSENTASE' => $prosentase,
             ];
         } else {
             $data = [
                 'STATUS_TICKET' => $status_ticket,
-                'PROSENTASE' => $prosentase
+                'PROSENTASE' => $prosentase,
             ];
         }
 
         // Pastikan model memiliki metode update yang benar
         $result = $this->M_TICKET->update($id_ticket, $data);
+
+        // ke tabel Ticket_Detail
+        if ($result) {
+            $data_detail = [
+                'IDTICKET_DETAIL' => $this->uuid->v4(),
+                'IDTICKET' => $id_ticket,
+                'TECHNICIAN' => $this->session->userdata('ID_KARYAWAN'),
+                'OBJEK_DITANGANI' => $objek_ditangani,
+                'KETERANGAN' => $keterangan,
+                'FOTO' => null
+            ];
+            $this->M_TICKET->insert_detail($data_detail);
+        }
 
         // Cek hasil update
         if ($result) {

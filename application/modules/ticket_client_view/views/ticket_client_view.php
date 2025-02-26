@@ -247,12 +247,13 @@
                                                 </div>
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label>DEPARTEMEN DIREQUEST</label>
-                                                    <select name="id_departemen_request" id="id_departemen_request" class="form-control">
+                                                    <select id="id_departemen_request" class="form-control" disabled>
                                                         <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
                                                         <?php foreach ($get_departement as $row) : ?>
                                                             <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
                                                         <?php endforeach; ?>
                                                     </select>
+                                                    <input type="hidden" name="id_departemen_request" id="select_id_departemen_request">
                                                     <div class="invalid-feedback">
                                                         Silahkan masukkan departemen!
                                                     </div>
@@ -284,7 +285,7 @@
                     <div class="col-12 col-md-10 offset-md-1 col-lg-10 offset-lg-1 mt-5">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="judul-ticketing mx-auto"><i class="fas fa-list"></i> LIST ANTRIAN TICKETING</h4>
+                                <h4 class="judul-ticketing mx-auto"><i class="fas fa-list"></i> DAFTAR ANTRIAN TICKETING</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -397,6 +398,11 @@
 
     <script>
         $(document).ready(function() {
+            // Set Departemen Direquest langsung ke IT (ganti value sesuai database)
+            let defaultDepartemen = '1'; // Ganti dengan KODE_DEPARTEMEN sebenarnya untuk IT
+            $('#id_departemen_request').val(defaultDepartemen);
+            $('#select_id_departemen_request').val(defaultDepartemen);
+
             $('.chat-icon').click(function() {
                 $(this).toggleClass('active');
                 $(this).toggleClass('btnblickanim');
@@ -449,7 +455,7 @@
                             res.data.forEach(function(item) {
                                 $(".type-ticket").append(`
                                             <label class="selectgroup-item">
-                                                <input type="checkbox" name="type_ticket[]" value="${item.NAMA_JOBLIST}" class="selectgroup-input">
+                                                <input type="radio" name="type_ticket" value="${item.NAMA_JOBLIST}" class="selectgroup-input">
                                                 <span class="selectgroup-button">${item.NAMA_JOBLIST}</span>
                                             </label>
                                         `);
@@ -463,6 +469,9 @@
                     }
                 });
             });
+
+            // Trigger event change saat halaman pertama kali dimuat
+            $('#id_departemen_request').trigger('change');
 
             // 🚀 1. Inisialisasi Semua Progress Bar Saat Halaman Dimuat
             $(".progress-bar").each(function() {
