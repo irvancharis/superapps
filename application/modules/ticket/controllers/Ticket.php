@@ -299,18 +299,40 @@ class Ticket extends CI_Controller
 
         $result = $this->M_TICKET->update($id_ticket, $data);
 
-        // Membuat format pesan sesuai permintaan
+        // Ambil data teknisi dan departemen dari database
+        $get_ticket = $this->M_TICKET->get_ticket($id_ticket);
+        $get_departemen = $this->M_DEPARTEMENT->get_departemen_single($get_ticket->DEPARTEMENT);
+        $get_teknisi = $this->M_TECHNICIAN->get_teknisi_by_id($id_technician);
+        $get_karyawan = $this->M_KARYAWAN->get_karyawan_by_id($get_teknisi->IDKARYAWAN);
+        $TEKNISI = $get_karyawan->TELEPON;
         $url = "http://192.168.3.105/superapps/ticket_client_view/ticket_card/$id_ticket";
 
-        // Kirim Pesan ke Telegram
-        $ms_telegram =
+        // Membuat format pesan sesuai permintaan
+        $message =
             "📢 REQUEST TICKETING \n\n" .
 
-            "📌 Ticket Sudah Di Proses \n\n" .
+            "📌 Informasi Pengguna: \n\n" .
+            "\t👤 Nama: `$get_ticket->REQUESTBY` \n" .
+            "\t🏢 Departemen: `$get_departemen->NAMA_DEPARTEMEN` \n\n" .
 
-            "🚨 Lihat Ticket anda dengan membuka URL di bawah ini:\n" .
+            "📌 Detail Keluhan: \n\n" .
+            "\t📂 Tipe Keluhan: `$get_ticket->TYPE_TICKET` \n" .
+            "\t📝 Deskripsi: \n" .
+            "```$get_ticket->DESCRIPTION_TICKET``` \n\n\n" .
+
+            "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
             "🔗 ($url)";
-        $this->TELEGRAM->send_message('8007581238', $ms_telegram);
+        $this->WHATSAPP->send_wa($TEKNISI, $message);
+
+        // // Kirim Pesan ke Telegram
+        // $ms_telegram =
+        //     "📢 REQUEST TICKETING \n\n" .
+
+        //     "📌 Ticket Sudah Di Proses \n\n" .
+
+        //     "🚨 Lihat Ticket anda dengan membuka URL di bawah ini:\n" .
+        //     "🔗 ($url)";
+        // $this->TELEGRAM->send_message('8007581238', $ms_telegram);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -327,13 +349,20 @@ class Ticket extends CI_Controller
         $prosentase = $this->input->post('prosentase', true);
         $objek_ditangani = $this->input->post('objek_ditangani', true);
         $keterangan = $this->input->post('keterangan', true);
-        $foto = $this->input->post('foto', true);
 
         // Validasi input
         if (empty($id_ticket) || $status_ticket == null) {
             echo json_encode(['success' => false, 'error' => 'ID Ticket dan Status Ticket tidak boleh kosong.']);
             return;
         }
+
+        $IDTICKET_DETAIL = $this->uuid->v4();
+
+        // Konfigurasi upload Gambar
+        $config['upload_path'] = APPPATH . '../assets/uploads/ticket/';
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['max_size'] = 2048; // 2MB
+        $config['file_name'] = $IDTICKET_DETAIL;
 
         // Data yang akan diupdate
         if ($prosentase == 100) {
@@ -354,14 +383,36 @@ class Ticket extends CI_Controller
 
         // ke tabel Ticket_Detail
         if ($result) {
-            $data_detail = [
-                'IDTICKET_DETAIL' => $this->uuid->v4(),
-                'IDTICKET' => $id_ticket,
-                'TECHNICIAN' => $this->session->userdata('ID_KARYAWAN'),
-                'OBJEK_DITANGANI' => $objek_ditangani,
-                'KETERANGAN' => $keterangan,
-                'FOTO' => null
-            ];
+            // Cek apakah ada file yang diupload
+            if (!empty($_FILES['FOTO']['name'])) {
+                $this->load->library('upload', $config);
+                if (!$this->upload->do_upload('FOTO')) {
+                    echo json_encode(['success' => false, 'error' => $this->upload->display_errors()]);
+                    return;
+                }
+                // Ambil data file yang diupload
+                $data = $this->upload->data();
+                $extension = $data['file_ext'];
+                $foto = $IDTICKET_DETAIL . $extension;
+
+                $data_detail = [
+                    'IDTICKET_DETAIL' => $IDTICKET_DETAIL,
+                    'IDTICKET' => $id_ticket,
+                    'TECHNICIAN' => $this->session->userdata('ID_KARYAWAN'),
+                    'OBJEK_DITANGANI' => $objek_ditangani,
+                    'KETERANGAN' => $keterangan,
+                    'FOTO' => $foto
+                ];
+            } else {
+                $data_detail = [
+                    'IDTICKET_DETAIL' => $IDTICKET_DETAIL,
+                    'IDTICKET' => $id_ticket,
+                    'TECHNICIAN' => $this->session->userdata('ID_KARYAWAN'),
+                    'OBJEK_DITANGANI' => $objek_ditangani,
+                    'KETERANGAN' => $keterangan,
+                    'FOTO' => null
+                ];
+            }
             $this->M_TICKET->insert_detail($data_detail);
         }
 

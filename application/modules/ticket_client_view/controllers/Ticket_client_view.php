@@ -11,6 +11,7 @@ class Ticket_client_view extends CI_Controller
         $this->load->model('TELEGRAM');
         $this->load->model('departement/M_DEPARTEMENT');
         $this->load->model('technician/M_TECHNICIAN');
+        $this->load->model('karyawan/M_KARYAWAN');
         $this->load->helper('url_helper');
     }
 
@@ -142,8 +143,10 @@ class Ticket_client_view extends CI_Controller
         $get_nama_departement = $this->M_DEPARTEMENT->get_departemen_single($id_departement);
         $nama_departemen = $get_nama_departement->NAMA_DEPARTEMEN;
         $url = "http://192.168.3.105/superapps/ticket";
+        $get_kabag = $this->M_KARYAWAN->get_karyawan_by_departemen($id_departement);
+        $KABAG = $get_kabag->TELEPON;
 
-        // Kirim pesan WA untuk memberitahu teknisi siapa yang request dan apa keluhannya
+        // Kirim pesan WA ke Tim IT
         // $message =
         //     "📢 REQUEST TICKETING \n\n" .
 
@@ -152,17 +155,29 @@ class Ticket_client_view extends CI_Controller
         //     "\t🏢 Departemen: `$nama_departemen` \n\n" .
 
         //     "📌 Detail Keluhan: \n\n" .
-        //     "\t📂 Tipe Keluhan: `$type_ticket_str` \n" .
+        //     "\t📂 Tipe Keluhan: `$type_ticket` \n" .
         //     "\t📝 Deskripsi: \n" .
         //     "```$description_ticket``` \n\n\n" .
 
         //     "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
         //     "🔗 ($url)";
-
         // $this->WHATSAPP->send_wa('081216126123', $message);
 
+        // Kirim pesan WA ke KABAG bersangkutan
+        // $message =
+        //     "📢 REQUEST TICKETING \n\n" .
 
-        // Kirim Pesan ke Telegram
+        //     "📌 Informasi Perequest: \n\n" .
+        //     "\t👤 Nama: `$requestby` \n" .
+        //     "\t🏢 Departemen: `$nama_departemen` \n\n" .
+
+        //     "📌 Detail Keluhan: \n\n" .
+        //     "\t📂 Tipe Keluhan: `$type_ticket` \n" .
+        //     "\t📝 Deskripsi: \n" .
+        //     "```$description_ticket``` \n\n\n";
+        // $this->WHATSAPP->send_wa($KABAG, $message);
+
+        // Kirim Pesan ke Telegram Tim IT
         $ms_telegram =
             "📢 REQUEST TICKETING \n\n" .
 

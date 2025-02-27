@@ -88,7 +88,7 @@
                                                                             Delete</a>
                                                                     </div>
                                                                 <?php else : ?>
-                                                                    <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Proses</a>
+                                                                    <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Lihat</a>
                                                                 <?php endif; ?>
                                                             </div>
                                                         </td>
