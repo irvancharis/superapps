@@ -91,10 +91,15 @@
                                                     <td class="text-center"><?php echo $d->NAMA_PIC; ?></td>                                                    
                                                     <td class="text-center col-2">
                                                         <label
+                                                            onclick="input_histori('<?php echo $d->UUID_STOK; ?>','<?php echo $d->UUID_ASET; ?>')"
+                                                            class="btn btn-outline-primary" id="btn-show-produk"> <i
+                                                                class="fa fa-edit"></i>
+                                                        </label>
+                                                        <label
                                                             onclick="detail_stok('<?php echo $d->UUID_STOK; ?>','<?php echo $d->UUID_ASET; ?>')"
                                                             class="btn btn-outline-primary" id="btn-show-produk"> <i
-                                                                class="fa fa-eye"></i> CEK HISTORI
-                                                        </label>
+                                                                class="fa fa-eye"></i>
+                                                        </label>                                                        
                                                         <label class="btn btn-outline-secondary"
                                                             onclick="window.open('<?php echo base_url('produk_stok/print_qr_single/'.$d->UUID_ASET) ?>','_blank')"><i
                                                                 class="fas fa-print"></i>
@@ -127,6 +132,10 @@ $('#tabel').dataTable({
 
 function detail_stok(UUID_STOK, UUID_ASET) {
     window.open("<?php echo base_url('produk_stok/produk_aset_histori/') ?>" + UUID_STOK + "/" + UUID_ASET, '_blank');
+}
+
+function input_histori(UUID_STOK, UUID_ASET) {
+    window.location.href = ("<?php echo base_url('produk_stok/input_histori/') ?>" + UUID_STOK + "/" + UUID_ASET);
 }
             </script>
 

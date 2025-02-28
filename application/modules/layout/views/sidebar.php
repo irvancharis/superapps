@@ -8,7 +8,7 @@
         <ul class="sidebar-menu">
             <li class="menu-header">MASTER</li>
             <li class="dropdown">
-                <a href="index.html" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+                <a href="<?php echo base_url('dashboard'); ?>" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
             </li>
             <li class="dropdown <?php (isset($page) && $page == 'maping_area') || (isset($page) && $page == 'maping_lokasi') || (isset($page) && $page == 'maping_ruangan') ? print 'active' : ''; ?>">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i

@@ -29,6 +29,13 @@ class M_TRANSAKSI_PEMINDAHAN extends CI_Model
         return $query->row();
     }
 
+    public function get_produk_by_aset($KODE)
+    {
+        $this->db->where('UUID_ASET', $KODE);
+        $query = $this->db->get('VIEW_ASET');
+        return $query->row();
+    }
+
     public function get_detail_single($KODE)
     {
         $this->db->select('*');
