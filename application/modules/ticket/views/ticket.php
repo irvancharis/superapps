@@ -76,16 +76,20 @@
                                                                 ?></td>
                                                         <td>
                                                             <div class="dropdown">
-                                                                <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
-                                                                <div class="dropdown-menu">
-                                                                    <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
-                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Proses</a>
-                                                                    <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
-                                                                    <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Status</a>
-                                                                    <div class="dropdown-divider"></div>
-                                                                    <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTICKET; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
-                                                                        Delete</a>
-                                                                </div>
+                                                                <?php if ($this->session->userdata('NAMA_ROLE') == 'IT') : ?>
+                                                                    <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
+                                                                    <div class="dropdown-menu">
+                                                                        <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
+                                                                        <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek</a>
+                                                                        <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
+                                                                        <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                        <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTICKET; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
+                                                                            Delete</a>
+                                                                    </div>
+                                                                <?php else : ?>
+                                                                    <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Lihat</a>
+                                                                <?php endif; ?>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -190,7 +194,7 @@
                     </div>
                 </div>
             </div>
-            
+
             </div>
             </div>
 
@@ -273,33 +277,37 @@
                     // Update Status Ticket
                     $(".update-status").click(function() {
                         let id_ticket = $(this).data("id");
-
-                        // Ambil status tiket dari atribut data
                         let currentStatus = $(this).data("status");
 
                         swal({
-                            title: "Update Status Ticket",
+                            title: "Proses Ticket",
                             content: {
                                 element: "div",
                                 attributes: {
                                     innerHTML: `
-                                        <div class="selectgroup selectgroup-pills">
-                                            <label class="selectgroup-item">
-                                                <input type="radio" name="status_ticket" value="0" class="selectgroup-input-radio" id="status0">
-                                                <span class="selectgroup-button status" id="label-status0">DALAM ANTRIAN</span>
-                                            </label>
-                                            <label class="selectgroup-item">
-                                                <input type="radio" name="status_ticket" value="25" class="selectgroup-input-radio" id="status1">
-                                                <span class="selectgroup-button status" id="label-status1">SEDANG DIKERJAKAN</span>
-                                            </label>
-                                            <label class="selectgroup-item">
-                                                <input type="radio" name="status_ticket" value="50" class="selectgroup-input-radio" id="status2">
-                                                <span class="selectgroup-button status" id="label-status2">MENUNGGU VALIDASI</span>
-                                            </label>
-                                            <label class="selectgroup-item">
-                                                <input type="radio" name="status_ticket" value="100" class="selectgroup-input-radio" id="status3">
-                                                <span class="selectgroup-button status" id="label-status3">SELESAI</span>
-                                            </label>
+                                        <div class="form-group">
+                                            <div class="selectgroup selectgroup-pills">
+                                                <label class="selectgroup-item">
+                                                    <input type="radio" name="status_ticket" value="0" class="selectgroup-input-radio" id="status0" disabled>
+                                                    <span class="selectgroup-button status" id="label-status0">DALAM ANTRIAN</span>
+                                                </label>
+                                                <label class="selectgroup-item">
+                                                    <input type="radio" name="status_ticket" value="25" class="selectgroup-input-radio" id="status1" disabled>
+                                                    <span class="selectgroup-button status" id="label-status1">SEDANG DIKERJAKAN</span>
+                                                </label>
+                                                <label class="selectgroup-item">
+                                                    <input type="radio" name="status_ticket" value="50" class="selectgroup-input-radio" id="status2" disabled>
+                                                    <span class="selectgroup-button status" id="label-status2">MENUNGGU VALIDASI</span>
+                                                </label>
+                                                <label class="selectgroup-item">
+                                                    <input type="radio" name="status_ticket" value="100" class="selectgroup-input-radio" id="status3" disabled>
+                                                    <span class="selectgroup-button status" id="label-status3">SELESAI</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="KETERANGAN">KETERANGAN</label>
+                                            <input type="text" class="form-control" id="KETERANGAN" name="KETERANGAN" required>
                                         </div>
                                     `
                                 }
@@ -308,15 +316,29 @@
                                 cancel: "Batal",
                                 confirm: {
                                     text: "Update",
-                                    closeModal: false
+                                    closeModal: false,
+                                    className: "btn-update-status",
+                                    value: true,
+                                    attributes: {
+                                        disabled: "disabled" // Awalnya tombol Update dinonaktifkan
+                                    }
                                 }
                             },
                             closeOnClickOutside: false
                         }).then((confirm) => {
                             if (confirm) {
                                 let selectedStatus = $("input[name='status_ticket']:checked").val();
+                                let keterangan = $("#KETERANGAN").val();
+
                                 if (!selectedStatus) {
                                     swal("Pilih status terlebih dahulu!", {
+                                        icon: "warning"
+                                    });
+                                    return;
+                                }
+
+                                if (!keterangan) {
+                                    swal("Masukkan keterangan!", {
                                         icon: "warning"
                                     });
                                     return;
@@ -330,15 +352,14 @@
                                     data: {
                                         status_ticket: selectedStatus,
                                         id_ticket: id_ticket,
-                                        prosentase: selectedStatus // Progress sama dengan status
+                                        prosentase: selectedStatus, // Progress sama dengan status
+                                        keterangan: keterangan
                                     },
                                     success: function(response) {
                                         if (response.success) {
                                             swal("Berhasil!", "Status tiket berhasil diperbarui.", "success")
                                                 .then(() => {
-                                                    // Update progress bar hanya pada baris yang relevan
                                                     updateProgressBar(id_ticket, selectedStatus);
-                                                    // Reload halaman setelah update sukses
                                                     location.reload();
                                                 });
                                         } else {
@@ -352,11 +373,36 @@
                             }
                         });
 
-                        // Tunggu SweetAlert selesai render, lalu set radio button sesuai status dari database
+                        // Set radio button sesuai status dari database setelah SweetAlert selesai render
                         setTimeout(() => {
                             $(`input[name='status_ticket'][value='${currentStatus}']`).prop("checked", true).trigger("change");
+
+                            // Pastikan tombol Update tetap disabled saat pertama kali terbuka
+                            $(".btn-update-status").prop("disabled", true);
                         }, 500);
+
+                        // Event listener untuk input KETERANGAN
+                        $(document).on("input", "#KETERANGAN", function() {
+                            let isFilled = $(this).val().trim() !== "";
+                            $(".btn-update-status").prop("disabled", !isFilled);
+
+                            if (isFilled) {
+                                if ($(this).val().toLowerCase().includes("validasi")) {
+                                    // CEK JIKA ISI INPUTAN MENGANDUNG KATA "VALIDASI" MAKA SET status_ticket = 50
+                                    $(`input[name='status_ticket'][value='50']`).prop("checked", true).trigger("change");
+                                    return;
+                                } else if ($(this).val().toLowerCase().includes("selesai")) {
+                                    // CEK JIKA ISI INPUTAN MENGANDUNG KATA "SELESAI" MAKA SET status_ticket = 100
+                                    $(`input[name='status_ticket'][value='100']`).prop("checked", true).trigger("change");
+                                    return;
+                                } else {
+                                    // CEK JIKA ISI INPUT KETERANGAN TIDAK KOSONG AUTO SET status_ticket = 25
+                                    $(`input[name='status_ticket'][value='25']`).prop("checked", true).trigger("change");
+                                }
+                            }
+                        });
                     });
+
 
                     // Fungsi untuk update tampilan progress bar
                     function updateProgressBar(id, progressValue) {

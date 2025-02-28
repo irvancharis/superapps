@@ -42,7 +42,7 @@ class M_KARYAWAN extends CI_Model
         $this->db->from('VIEW_KARYAWAN');
         $this->db->where('ID_DEPARTEMENT', $KODE);
         $query = $this->db->get();
-        return $query->result();
+        return $query->row();
     }
 
     public function get_karyawan_by_jabatan($KODE)
@@ -52,6 +52,15 @@ class M_KARYAWAN extends CI_Model
         $this->db->where('ID_JABATAN', $KODE);
         $query = $this->db->get();
         return $query;
+    }
+
+    public function get_karyawan_by_id($KODE)
+    {
+        $this->db->select('*');
+        $this->db->from('VIEW_KARYAWAN');
+        $this->db->where('ID_KARYAWAN', $KODE);
+        $query = $this->db->get();
+        return $query->row();
     }
 
     public function get_area()

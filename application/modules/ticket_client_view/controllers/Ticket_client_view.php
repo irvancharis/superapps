@@ -10,6 +10,8 @@ class Ticket_client_view extends CI_Controller
         $this->load->model('WHATSAPP');
         $this->load->model('TELEGRAM');
         $this->load->model('departement/M_DEPARTEMENT');
+        $this->load->model('technician/M_TECHNICIAN');
+        $this->load->model('karyawan/M_KARYAWAN');
         $this->load->helper('url_helper');
     }
 
@@ -24,6 +26,15 @@ class Ticket_client_view extends CI_Controller
         $data['get_area'] = $this->M_TICKET->get_area();
 
         $this->load->view('ticket_client_view', $data);
+    }
+
+    public function ticket_card($kode)
+    {
+        // get ticket by id
+        $ticket['ticket'] = $this->M_TICKET->get_ticket($kode);
+        // get nama technician by id
+        $ticket['technician'] = $this->M_TECHNICIAN->get_teknisi_by_id($ticket['ticket']->TECHNICIAN);
+        $this->load->view('ticket_card', $ticket);
     }
 
     public function get_departement()
@@ -84,13 +95,13 @@ class Ticket_client_view extends CI_Controller
         $type_ticket = $this->input->post('type_ticket');
         $description_ticket = $this->input->post('description_ticket');
 
-        if (empty($type_ticket) || !is_array($type_ticket)) {
-            echo json_encode(['success' => false, 'error' => 'Pilih setidaknya satu jenis keluhan.']);
-            return;
-        }
+        // if (empty($type_ticket) || !is_array($type_ticket)) {
+        //     echo json_encode(['success' => false, 'error' => 'Pilih setidaknya satu jenis keluhan.']);
+        //     return;
+        // }
 
-        // Gabungkan array type_ticket menjadi string untuk penyimpanan di tabel Ticket
-        $type_ticket_str = implode(',', $type_ticket);
+        // // Gabungkan array type_ticket menjadi string untuk penyimpanan di tabel Ticket
+        // $type_ticket_str = implode(',', $type_ticket);
 
         // Jika validasi lolos, lanjutkan proses penyimpanan
         $data = [
@@ -100,7 +111,7 @@ class Ticket_client_view extends CI_Controller
             'EMAIL_TICKET' => $email_ticket,
             'SITE_TICKET' => $site_ticket,
             'DEPARTEMENT_DIREQUEST' => $id_departement_request,
-            'TYPE_TICKET' => $type_ticket_str,
+            'TYPE_TICKET' => $type_ticket,
             'DESCRIPTION_TICKET' => $description_ticket,
             'DATE_TICKET' => date('Y-m-d H:i:s'),
             'DATE_TICKET_DONE' => null,
@@ -109,48 +120,64 @@ class Ticket_client_view extends CI_Controller
             'PROSENTASE' => null
         ];
 
-        $this->db->trans_start();
+        // $this->db->trans_start();
         $result = $this->M_TICKET->insert($data);
 
         // ke tabel Ticket_Detail
-        if ($result) {
-            foreach ($type_ticket as $value) {
-                $data_detail = [
-                    'IDTICKET' => $id_ticket,
-                    'TYPE_TICKET' => $value,
-                    'STATUS' => 0
-                ];
-                $this->M_TICKET->insert_detail($data_detail);
-            }
-        }
+        // if ($result) {
+        //     foreach ($type_ticket as $value) {
+        //         $data_detail = [
+        //             'IDTICKET' => $id_ticket,
+        //             'TECHNICIAN' => $value,
+        //             'KETERANGAN' => null,
+        //             'FOTO' => null
+        //         ];
+        //         $this->M_TICKET->insert_detail($data_detail);
+        //     }
+        // }
 
         // Selesaikan transaksi
-        $this->db->trans_complete();
+        // $this->db->trans_complete();
 
         // Membuat format pesan sesuai permintaan
         $get_nama_departement = $this->M_DEPARTEMENT->get_departemen_single($id_departement);
         $nama_departemen = $get_nama_departement->NAMA_DEPARTEMEN;
         $url = "http://192.168.3.105/superapps/ticket";
+        $get_kabag = $this->M_KARYAWAN->get_karyawan_by_departemen($id_departement);
+        $KABAG = $get_kabag->TELEPON;
 
-        $message =
-            "📢 REQUEST TICKETING \n\n" .
+        // Kirim pesan WA ke Tim IT
+        // $message =
+        //     "📢 REQUEST TICKETING \n\n" .
 
-            "📌 Informasi Pengguna: \n\n" .
-            "\t👤 Nama: `$requestby` \n" .
-            "\t🏢 Departemen: `$nama_departemen` \n\n" .
+        //     "📌 Informasi Pengguna: \n\n" .
+        //     "\t👤 Nama: `$requestby` \n" .
+        //     "\t🏢 Departemen: `$nama_departemen` \n\n" .
 
-            "📌 Detail Keluhan: \n\n" .
-            "\t📂 Tipe Keluhan: `$type_ticket_str` \n" .
-            "\t📝 Deskripsi: \n" .
-            "```$description_ticket``` \n\n\n" .
+        //     "📌 Detail Keluhan: \n\n" .
+        //     "\t📂 Tipe Keluhan: `$type_ticket` \n" .
+        //     "\t📝 Deskripsi: \n" .
+        //     "```$description_ticket``` \n\n\n" .
 
-            "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
-            "🔗 ($url)";
-        // Kirim pesan WA untuk memberitahu teknisi siapa yang request dan apa keluhannya
-        $this->WHATSAPP->send_wa('081216126123', $message);
+        //     "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
+        //     "🔗 ($url)";
+        // $this->WHATSAPP->send_wa('081216126123', $message);
 
+        // Kirim pesan WA ke KABAG bersangkutan
+        // $message =
+        //     "📢 REQUEST TICKETING \n\n" .
 
-        // Kirim Pesan ke Telegram
+        //     "📌 Informasi Perequest: \n\n" .
+        //     "\t👤 Nama: `$requestby` \n" .
+        //     "\t🏢 Departemen: `$nama_departemen` \n\n" .
+
+        //     "📌 Detail Keluhan: \n\n" .
+        //     "\t📂 Tipe Keluhan: `$type_ticket` \n" .
+        //     "\t📝 Deskripsi: \n" .
+        //     "```$description_ticket``` \n\n\n";
+        // $this->WHATSAPP->send_wa($KABAG, $message);
+
+        // Kirim Pesan ke Telegram Tim IT
         $ms_telegram =
             "📢 REQUEST TICKETING \n\n" .
 
@@ -159,7 +186,7 @@ class Ticket_client_view extends CI_Controller
             "\t🏢 Departemen: `$nama_departemen` \n\n" .
 
             "📌 Detail Keluhan: \n\n" .
-            "\t📂 Tipe Keluhan: `$type_ticket_str` \n" .
+            "\t📂 Tipe Keluhan: `$type_ticket` \n" .
             "\t📝 Deskripsi: \n" .
             "```$description_ticket``` \n\n\n" .
 

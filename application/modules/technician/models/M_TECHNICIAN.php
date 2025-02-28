@@ -45,6 +45,15 @@ class M_TECHNICIAN extends CI_Model
         return $query->row();
     }
 
+    public function get_teknisi_by_id($kode)
+    {
+        $this->db->select('TECHNICIAN.*');
+        $this->db->from('TECHNICIAN');
+        $this->db->where('TECHNICIAN.IDTECH', $kode);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
     public function get_latest_data()
     {
         $this->db->order_by('IDTECH', 'DESC');

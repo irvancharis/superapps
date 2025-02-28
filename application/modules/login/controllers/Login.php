@@ -39,6 +39,7 @@ class Login extends CI_Controller
                 $this->session->set_userdata('ID_DEPARTEMEN', $user->ID_DEPARTEMENT);
                 $this->session->set_userdata('NAMA_DEPARTEMEN', $user->NAMA_DEPARTEMEN);
                 $this->session->set_userdata('ROLE', $user->KODE_ROLE);
+                $this->session->set_userdata('NAMA_ROLE', $user->NAMA_ROLE);
 
                 return redirect()->to('/dashboard');
             } else {
