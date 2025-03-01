@@ -58,6 +58,14 @@ class Transaksi_pemindahan extends CI_Controller
         echo json_encode($result);
     }
 
+    public function get_produk_by_aset()
+    {
+        $kode = $this->input->post('kode_aset');
+        $result = $this->M_TRANSAKSI_PEMINDAHAN->get_produk_by_aset($kode);
+        echo json_encode($result);
+
+    }
+
     public function get_produk_maping()
     {
         $this->load->library('session');
@@ -153,6 +161,28 @@ class Transaksi_pemindahan extends CI_Controller
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('transaksi_pemindahan_tambah', $data);
+    }
+
+    public function tambah_by_aset($page = 'transaksi_pemindahan')
+    {
+
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PEMINDAHAN', 'PENGAJUAN');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
+
+        $this->load->library('session');
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $data['get_karyawan'] = $this->M_KARYAWAN->get_karyawan();
+        $data['get_area'] = $this->M_MAPING_AREA->get_area();
+        $data['get_departemen'] = $this->M_DEPARTEMENT->get_departemen();
+        $data['get_ruangan'] = $this->M_MAPING_RUANGAN->get_maping_ruangan();
+        $data['get_lokasi'] = $this->M_MAPING_LOKASI->get_maping_lokasi();
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('transaksi_pemindahan_by_aset', $data);
     }
 
     public function aproval_kabag($KODE, $page = 'transaksi_pemindahan')

@@ -49,6 +49,7 @@ class M_PRODUK_STOK extends CI_Model
     public function cek_histori_aset($kode)
     {
         $this->db->where('UUID_ASET', $kode);
+        $this->db->order_by('TANGGAL_TINDAKAN', 'DESC');
         $query = $this->db->get('VIEW_ASET_DETAIL');
         return $query->result_object();
     }
@@ -138,6 +139,11 @@ class M_PRODUK_STOK extends CI_Model
     public function insert_aset($data)
     {
         return $this->db->insert('ASET', $data);
+    }
+
+    public function insert_histori($data)
+    {
+        return $this->db->insert('ASET_DETAIL', $data);
     }
 
     public function insert($data)

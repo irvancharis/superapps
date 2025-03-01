@@ -128,6 +128,36 @@ class Produk_stok extends CI_Controller
     }
 
 
+    public function input_histori($kode_stok,$kode_aset,$page = 'produk_stok')
+    {
+        $this->load->library('session');
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $data['aset'] = $this->M_PRODUK_STOK->cek_aset_single($kode_aset);
+        $data['histori_aset'] = $this->M_PRODUK_STOK->cek_histori_aset($kode_aset);
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('input_histori', $data);
+    }
+
+    public function simpan_histori()
+    {
+        $data['UUID_ASET'] = $this->input->post('UUID_ASET');        
+        $data['UUID_ASET_DETAIL'] = $this->uuid->v4();
+        $data['TANGGAL_TINDAKAN'] = date('Y-m-d H:i:s');
+        $data['USER_TINDAKAN'] = $this->session->userdata('ID_KARYAWAN');
+        $data['KETERANGAN_TINDAKAN'] = $this->input->post('KETERANGAN_TINDAKAN');        
+
+        $result = $this->M_PRODUK_STOK->insert_histori($data);
+
+        if ($result) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Gagal menyimpan data.']);
+        }
+    }
+
+
     public function tambah($page = 'produk_stok')
     {
         $this->load->library('session');

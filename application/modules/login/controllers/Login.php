@@ -41,7 +41,7 @@ class Login extends CI_Controller
                 $this->session->set_userdata('ROLE', $user->KODE_ROLE);
                 $this->session->set_userdata('NAMA_ROLE', $user->NAMA_ROLE);
 
-                return redirect()->to('/transaksi_opname');
+                return redirect()->to('/dashboard');
             } else {
                 echo json_encode(['success' => false, 'error' => 'password salah.']);
             }
