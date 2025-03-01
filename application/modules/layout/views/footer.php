@@ -22,5 +22,11 @@
     <script src="<?php echo base_url('assets/bundles/izitoast/js/iziToast.min.js') ?>"></script>
     <!-- JS Libraies -->
     <script src="<?php echo base_url('assets/bundles/chocolat/dist/js/jquery.chocolat.min.js') ?>"></script>
+    <!-- Preview Gambar -->
+    <!-- <script src="<?php echo base_url('assets/bundles/summernote/summernote-bs4.js') ?>"></script>
+    <script src="<?php echo base_url('assets/bundles/jquery-selectric/jquery.selectric.min.js') ?>"></script> -->
+    <script src="<?php echo base_url('assets/bundles/upload-preview/assets/js/jquery.uploadPreview.min.js') ?>"></script>
+    <!-- <script src="<?php echo base_url('assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') ?>"></script> -->
+    <script src="<?php echo base_url('assets/js/page/create-post.js') ?>"></script>
     <!-- Page Specific JS File -->
     <!-- <script src="<?php echo base_url('assets/js/page/gallery1.js') ?>"></script> -->

@@ -94,6 +94,7 @@ class Ticket_client_view extends CI_Controller
         $id_departement_request = $this->input->post('id_departemen_request');
         $type_ticket = $this->input->post('type_ticket');
         $description_ticket = $this->input->post('description_ticket');
+        $result = null;
 
         // if (empty($type_ticket) || !is_array($type_ticket)) {
         //     echo json_encode(['success' => false, 'error' => 'Pilih setidaknya satu jenis keluhan.']);
@@ -103,25 +104,65 @@ class Ticket_client_view extends CI_Controller
         // // Gabungkan array type_ticket menjadi string untuk penyimpanan di tabel Ticket
         // $type_ticket_str = implode(',', $type_ticket);
 
-        // Jika validasi lolos, lanjutkan proses penyimpanan
-        $data = [
-            'IDTICKET' => $id_ticket,
-            'REQUESTBY' => $requestby,
-            'DEPARTEMENT' => $id_departement,
-            'EMAIL_TICKET' => $email_ticket,
-            'SITE_TICKET' => $site_ticket,
-            'DEPARTEMENT_DIREQUEST' => $id_departement_request,
-            'TYPE_TICKET' => $type_ticket,
-            'DESCRIPTION_TICKET' => $description_ticket,
-            'DATE_TICKET' => date('Y-m-d H:i:s'),
-            'DATE_TICKET_DONE' => null,
-            'STATUS_TICKET' => 0,
-            'APPROVAL_TICKET' => 0,
-            'PROSENTASE' => null
-        ];
+        // Konfigurasi upload Gambar
+        $config['upload_path'] = APPPATH . '../assets/uploads/ticket/';
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['max_size'] = 2048; // 2MB
+        $config['file_name'] = $id_ticket . $requestby;
+
+        // Cek Apakah ada gambar yang diupload
+        if (!empty($_FILES['image']['name'])) {
+            $this->load->library('upload', $config);
+            if (!$this->upload->do_upload('image')) {
+                echo json_encode(['success' => false, 'error' => $this->upload->display_errors()]);
+                return;
+            }
+            // Ambil data file yang diupload
+            $data_gambar = $this->upload->data();
+            $extension = $data_gambar['file_ext'];
+            $foto = $id_ticket . '_' . $requestby . $extension;
+
+            // Jika validasi lolos, lanjutkan proses penyimpanan
+            $data = [
+                'IDTICKET' => $id_ticket,
+                'REQUESTBY' => $requestby,
+                'DEPARTEMENT' => $id_departement,
+                'EMAIL_TICKET' => $email_ticket,
+                'SITE_TICKET' => $site_ticket,
+                'DEPARTEMENT_DIREQUEST' => $id_departement_request,
+                'TYPE_TICKET' => $type_ticket,
+                'DESCRIPTION_TICKET' => $description_ticket,
+                'DATE_TICKET' => date('Y-m-d H:i:s'),
+                'DATE_TICKET_DONE' => null,
+                'STATUS_TICKET' => 0,
+                'APPROVAL_TICKET' => 0,
+                'PROSENTASE' => null,
+                'FOTO' => $foto
+            ];
+
+            $result = $this->M_TICKET->insert($data);
+        } else {
+            $data = [
+                'IDTICKET' => $id_ticket,
+                'REQUESTBY' => $requestby,
+                'DEPARTEMENT' => $id_departement,
+                'EMAIL_TICKET' => $email_ticket,
+                'SITE_TICKET' => $site_ticket,
+                'DEPARTEMENT_DIREQUEST' => $id_departement_request,
+                'TYPE_TICKET' => $type_ticket,
+                'DESCRIPTION_TICKET' => $description_ticket,
+                'DATE_TICKET' => date('Y-m-d H:i:s'),
+                'DATE_TICKET_DONE' => null,
+                'STATUS_TICKET' => 0,
+                'APPROVAL_TICKET' => 0,
+                'PROSENTASE' => null,
+                'FOTO' => null
+            ];
+
+            $result = $this->M_TICKET->insert($data);
+        }
 
         // $this->db->trans_start();
-        $result = $this->M_TICKET->insert($data);
 
         // ke tabel Ticket_Detail
         // if ($result) {
