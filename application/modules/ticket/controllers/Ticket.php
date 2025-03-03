@@ -46,7 +46,7 @@ class Ticket extends CI_Controller
         $this->load->view('ticket_card', $ticket);
     }
 
-    public function ticket_technician($kode, $page = 'ticket')
+    public function ticket_admin($kode, $page = 'ticket')
     {
         $SESSION_ROLE = $this->session->userdata('ROLE');
         $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TICKET', 'PROSES TICKET');
@@ -69,7 +69,33 @@ class Ticket extends CI_Controller
         $data['get_technician'] = $this->M_TECHNICIAN->get_teknisi_by_id($data['ticket']->TECHNICIAN);
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
-            $this->load->view('ticket_technician', $data);
+            $this->load->view('ticket_admin', $data);
+    }
+
+    public function ticket_technician($kode, $page = 'ticket')
+    {
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TICKET', 'PROSES TICKET');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
+
+        $this->load->library('session');
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $data['ticket'] = $this->M_TICKET->get_ticket($kode);
+        $data['ticket_detail'] = $this->M_TICKET->get_selected_tickets($kode);
+        $data['get_karyawan'] = $this->M_KARYAWAN->get_karyawan();
+        $data['get_area'] = $this->M_MAPING_AREA->get_area();
+        $data['get_ruangan'] = $this->M_MAPING_RUANGAN->get_maping_ruangan();
+        $data['get_lokasi'] = $this->M_MAPING_LOKASI->get_maping_lokasi();
+        $data['get_departemen'] = $this->M_DEPARTEMENT->get_departemen_single($data['ticket']->DEPARTEMENT);
+        $data['get_departemen_request'] = $this->M_DEPARTEMENT->get_departemen_single($data['ticket']->DEPARTEMENT_DIREQUEST);
+        $data['get_jabatan'] = $this->M_JABATAN->get_news();
+        $data['get_technician'] = $this->M_TECHNICIAN->get_teknisi_by_id($data['ticket']->TECHNICIAN);
+        // $this->load->view('layout/navbar') .
+        // $this->load->view('layout/sidebar', $data) .
+        $this->load->view('ticket_technician', $data);
     }
 
     public function get_departement()
