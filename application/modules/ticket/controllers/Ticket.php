@@ -305,10 +305,28 @@ class Ticket extends CI_Controller
         $get_teknisi = $this->M_TECHNICIAN->get_teknisi_by_id($id_technician);
         $get_karyawan = $this->M_KARYAWAN->get_karyawan_by_id($get_teknisi->IDKARYAWAN);
         $TEKNISI = $get_karyawan->TELEPON;
-        $url = "http://192.168.3.105/superapps/ticket_client_view/ticket_card/$id_ticket";
+        $get_IP = $this->get_lan_ip();
+        $url = "http://" . $get_IP . "/superapps/ticket_client_view/ticket_card/$id_ticket";
 
         // Membuat format pesan sesuai permintaan
-        $message =
+        // $message =
+        //     "📢 REQUEST TICKETING \n\n" .
+
+        //     "📌 Informasi Pengguna: \n\n" .
+        //     "\t👤 Nama: `$get_ticket->REQUESTBY` \n" .
+        //     "\t🏢 Departemen: `$get_departemen->NAMA_DEPARTEMEN` \n\n" .
+
+        //     "📌 Detail Keluhan: \n\n" .
+        //     "\t📂 Tipe Keluhan: `$get_ticket->TYPE_TICKET` \n" .
+        //     "\t📝 Deskripsi: \n" .
+        //     "```$get_ticket->DESCRIPTION_TICKET``` \n\n\n" .
+
+        //     "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
+        //     "🔗 ($url)";
+        // $this->WHATSAPP->send_wa($TEKNISI, $message);
+
+        // // Kirim Pesan ke Telegram (Teknisi)
+        $ms_telegram_teknisi =
             "📢 REQUEST TICKETING \n\n" .
 
             "📌 Informasi Pengguna: \n\n" .
@@ -322,17 +340,17 @@ class Ticket extends CI_Controller
 
             "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
             "🔗 ($url)";
-        $this->WHATSAPP->send_wa($TEKNISI, $message);
+        $this->TELEGRAM->send_message('8007581238', $ms_telegram_teknisi);
 
-        // // Kirim Pesan ke Telegram
-        // $ms_telegram =
-        //     "📢 REQUEST TICKETING \n\n" .
+        // // Kirim Pesan ke Telegram (Client)
+        $ms_telegram_client =
+            "📢 REQUEST TICKETING \n\n" .
 
-        //     "📌 Ticket Sudah Di Proses \n\n" .
+            "📌 Ticket Sudah Di Proses \n\n" .
 
-        //     "🚨 Lihat Ticket anda dengan membuka URL di bawah ini:\n" .
-        //     "🔗 ($url)";
-        // $this->TELEGRAM->send_message('8007581238', $ms_telegram);
+            "🚨 Lihat Ticket anda dengan membuka URL di bawah ini:\n" .
+            "🔗 ($url)";
+        $this->TELEGRAM->send_message('8007581238', $ms_telegram_client);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -464,5 +482,22 @@ class Ticket extends CI_Controller
         } else {
             echo json_encode(['success' => false, 'error' => 'Gagal menghapus data.']);
         }
+    }
+
+    // Get lan ip
+    private function get_lan_ip()
+    {
+        // Jalankan perintah ipconfig
+        $output = shell_exec('ipconfig | findstr IPv4');
+
+        // Cari alamat IPv4 menggunakan regex
+        preg_match('/IPv4 Address[\.\s]+:\s+([\d\.]+)/', $output, $matches);
+
+        // Jika ditemukan, kembalikan alamat IP
+        if (isset($matches[1])) {
+            return $matches[1];
+        }
+
+        return null; // Jika tidak ditemukan
     }
 }

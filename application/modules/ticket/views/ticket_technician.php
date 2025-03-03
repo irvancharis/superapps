@@ -12,89 +12,98 @@
                                         </div>
                                         <hr>
                                         <div class="row">
-                                            <div class="col-md-3">
-                                                <address>
-                                                    <strong>Request Oleh:</strong><br>
-                                                    <?php echo strtoupper($ticket->REQUESTBY); ?><br>
-                                                    <?php echo strtoupper($ticket->EMAIL_TICKET); ?><br>
-                                                </address>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <address>
-                                                    <strong>Departemen:</strong><br>
-                                                    <?php echo strtoupper($get_departemen->NAMA_DEPARTEMEN); ?>
-                                                </address>
-                                            </div>
-                                            <div class="col-md-3 text-md-right">
-                                                <address>
-                                                    <strong>Type Keluhan:</strong><br>
-                                                    <?php echo strtoupper($ticket->TYPE_TICKET); ?><br>
-                                                </address>
-                                            </div>
-                                            <div class="col-md-3 text-md-right">
-                                                <address>
-                                                    <strong>Deskripsi Keluhan:</strong><br>
-                                                    <?php echo strtoupper($ticket->DESCRIPTION_TICKET); ?><br>
-                                                </address>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <address>
-                                                    <strong>Departemen Diminta:</strong><br>
-                                                    <?php echo strtoupper($get_departemen_request->NAMA_DEPARTEMEN); ?><br>
-                                                </address>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <address>
-                                                    <strong>Ditangani Oleh (Teknisi):</strong><br>
-                                                    <?php echo strtoupper($get_technician->NAME_TECHNICIAN); ?>
-                                                </address>
-                                            </div>
-                                            <div class="col-md-3 text-md-right">
-                                                <address>
-                                                    <strong>Tanggal Request:</strong><br>
-                                                    <?php echo date('d M Y H:i', strtotime($ticket->DATE_TICKET)); ?><br>
-                                                </address>
-                                            </div>
-                                            <div class="col-md-3 text-md-right">
-                                                <address>
-                                                    <strong>Selesai Pada:</strong><br>
-                                                    <?php
-                                                    if (!empty($ticket->DATE_TICKET_DONE)) {
-                                                        $date_done = new DateTime($ticket->DATE_TICKET_DONE);
-                                                        $now = new DateTime($ticket->DATE_TICKET);
-                                                        $diff = $now->diff($date_done);
+                                            <div class="col-12 col-md-8 col-lg-8">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <address>
+                                                            <strong>Request Oleh:</strong><br>
+                                                            <?php echo strtoupper($ticket->REQUESTBY); ?><br>
+                                                            <?php echo strtoupper($ticket->EMAIL_TICKET); ?><br>
+                                                        </address>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <address>
+                                                            <strong>Departemen:</strong><br>
+                                                            <?php echo strtoupper($get_departemen->NAMA_DEPARTEMEN); ?>
+                                                        </address>
+                                                    </div>
+                                                    <div class="col-md-3 text-md-right">
+                                                        <address>
+                                                            <strong>Type Keluhan:</strong><br>
+                                                            <?php echo strtoupper($ticket->TYPE_TICKET); ?><br>
+                                                        </address>
+                                                    </div>
+                                                    <div class="col-md-3 text-md-right">
+                                                        <address>
+                                                            <strong>Deskripsi Keluhan:</strong><br>
+                                                            <?php echo strtoupper($ticket->DESCRIPTION_TICKET); ?><br>
+                                                        </address>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <address>
+                                                            <strong>Departemen Diminta:</strong><br>
+                                                            <?php echo strtoupper($get_departemen_request->NAMA_DEPARTEMEN); ?><br>
+                                                        </address>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <address>
+                                                            <strong>Ditangani Oleh (Teknisi):</strong><br>
+                                                            <?php echo strtoupper($get_technician->NAME_TECHNICIAN); ?>
+                                                        </address>
+                                                    </div>
+                                                    <div class="col-md-3 text-md-right">
+                                                        <address>
+                                                            <strong>Tanggal Request:</strong><br>
+                                                            <?php echo date('d M Y H:i', strtotime($ticket->DATE_TICKET)); ?><br>
+                                                        </address>
+                                                    </div>
+                                                    <div class="col-md-3 text-md-right">
+                                                        <address>
+                                                            <strong>Selesai Pada:</strong><br>
+                                                            <?php
+                                                            if (!empty($ticket->DATE_TICKET_DONE)) {
+                                                                $date_done = new DateTime($ticket->DATE_TICKET_DONE);
+                                                                $now = new DateTime($ticket->DATE_TICKET);
+                                                                $diff = $now->diff($date_done);
 
-                                                        // Format hasil: "X hari, Y jam, Z menit"
-                                                        echo "{$diff->d} hari, {$diff->h} jam, {$diff->i} menit";
-                                                    } else {
-                                                        echo "-"; // Jika tidak ada tanggal, tampilkan tanda "-"
-                                                    }
-                                                    ?>
-                                                </address>
+                                                                // Format hasil: "X hari, Y jam, Z menit"
+                                                                echo "{$diff->d} hari, {$diff->h} jam, {$diff->i} menit";
+                                                            } else {
+                                                                echo "-"; // Jika tidak ada tanggal, tampilkan tanda "-"
+                                                            }
+                                                            ?>
+                                                        </address>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <address>
+                                                            <strong>Status Ticket:</strong><br>
+                                                            <?php if ($ticket->STATUS_TICKET == 0) {
+                                                                echo "<span class='badge badge-warning' style='font-size: small;'>DALAM ANTRIAN</span><br>";
+                                                            } elseif ($ticket->STATUS_TICKET == 25) {
+                                                                echo "<span class='badge badge-primary' style='font-size: small;'>SEDANG DIKERJAKAN</span><br>";
+                                                            } elseif ($ticket->STATUS_TICKET == 50) {
+                                                                echo "<span class='badge badge-danger' style='font-size: small;'>MENUNGGU VALIDASI</span><br>";
+                                                            } else {
+                                                                echo "<span class='badge badge-success' style='font-size: small;'>SELESAI</span><br>";
+                                                            }
+                                                            ?>
+                                                        </address>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <address><strong>Progress (%):</strong></address>
+                                                        <div class="progress">
+                                                            <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $ticket->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $ticket->IDTICKET; ?>" data-status="<?php echo $ticket->STATUS_TICKET; ?>"><?php echo $ticket->STATUS_TICKET; ?>%</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <address>
-                                                    <strong>Status Ticket:</strong><br>
-                                                    <?php if ($ticket->STATUS_TICKET == 0) {
-                                                        echo "<span class='badge badge-warning' style='font-size: small;'>DALAM ANTRIAN</span><br>";
-                                                    } elseif ($ticket->STATUS_TICKET == 25) {
-                                                        echo "<span class='badge badge-primary' style='font-size: small;'>SEDANG DIKERJAKAN</span><br>";
-                                                    } elseif ($ticket->STATUS_TICKET == 50) {
-                                                        echo "<span class='badge badge-danger' style='font-size: small;'>MENUNGGU VALIDASI</span><br>";
-                                                    } else {
-                                                        echo "<span class='badge badge-success' style='font-size: small;'>SELESAI</span><br>";
-                                                    }
-                                                    ?>
-                                                </address>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <address><strong>Progress (%):</strong></address>
-                                                <div class="progress">
-                                                    <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $ticket->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $ticket->IDTICKET; ?>" data-status="<?php echo $ticket->STATUS_TICKET; ?>"><?php echo $ticket->STATUS_TICKET; ?>%</div>
+                                            <div class="col-12 col-md-4 col-lg-4">
+                                                <div class="d-flex justify-content-center my-5 my-md-0 my-lg-0">
+                                                    <img class="img-thumbnail" style="filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.3));" width="150px" src="<?php echo base_url('assets/uploads/ticket/' . $ticket->FOTO); ?>" alt="">
                                                 </div>
                                             </div>
                                         </div>
@@ -151,7 +160,7 @@
                                     if ($ticket->STATUS_TICKET == 100) {
                                         echo '<button type="button" class="btn btn-primary btn-icon icon-left update-status d-none" data-id="' . $ticket->IDTICKET . '" data-status="' . $ticket->STATUS_TICKET . '"><i class="fas fa-sync-alt"></i> Update Pengerjaan</button>';
                                     } else {
-                                        echo '<button type="button" class="btn btn-primary btn-icon icon-left update-status" data-id="' . $ticket->IDTICKET . '" data-status="' . $ticket->STATUS_TICKET . '"><i class="fas fa-sync-alt"></i> Update Pengerjaan</button>';
+                                        echo '<button type="button" class="btn btn-primary btn-icon icon-left update-status d-none" data-id="' . $ticket->IDTICKET . '" data-status="' . $ticket->STATUS_TICKET . '"><i class="fas fa-sync-alt"></i> Update Pengerjaan</button>';
                                     }
                                     ?>
                                     <button type="button" onclick="history.go(-1)" class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i> Batal</button>

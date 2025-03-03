@@ -108,7 +108,7 @@ class Ticket_client_view extends CI_Controller
         $config['upload_path'] = APPPATH . '../assets/uploads/ticket/';
         $config['allowed_types'] = 'jpg|jpeg|png';
         $config['max_size'] = 2048; // 2MB
-        $config['file_name'] = $id_ticket . $requestby;
+        $config['file_name'] = $id_ticket . '_' . $requestby;
 
         // Cek Apakah ada gambar yang diupload
         if (!empty($_FILES['image']['name'])) {
