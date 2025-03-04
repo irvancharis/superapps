@@ -48,19 +48,19 @@
                                                         <?php if($d->STATUS_PEMINDAHAN == 'MENUNGGU APROVAL KABAG')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-warning">MENUNGGU APROVAL KABAG</span>
+                                                        <span class="badge badge-primary">MENUNGGU APROVAL KABAG</span>
                                                         <?php
                                                             }
                                                             elseif($d->STATUS_PEMINDAHAN == 'MENUNGGU APROVAL GM')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-warning">MENUNGGU APROVAL GM</span>
+                                                        <span class="badge badge-primary">MENUNGGU APROVAL GM</span>
                                                         <?php
                                                             }
                                                             elseif($d->STATUS_PEMINDAHAN == 'MENUNGGU APROVAL HEAD')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-warning">MENUNGGU APROVAL HEAD</span>
+                                                        <span class="badge badge-primary">MENUNGGU APROVAL HEAD</span>
                                                         <?php
                                                             }
                                                             elseif($d->STATUS_PEMINDAHAN == 'PROSES PEMINDAHAN')
@@ -99,7 +99,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_pemindahan/aproval_kabag/'.$d->UUID_TRANSAKSI_PEMINDAHAN);?>"
-                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-edit"></i>
                                                         </a>
                                                         <?php
                                                             }
@@ -107,7 +107,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_pemindahan/aproval_gm/'.$d->UUID_TRANSAKSI_PEMINDAHAN);?>"
-                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-edit"></i>
                                                         </a>
                                                         <?php
                                                             }
@@ -115,7 +115,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_pemindahan/aproval_head/'.$d->UUID_TRANSAKSI_PEMINDAHAN);?>"
-                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-edit"></i>
                                                         </a>
                                                         <?php
                                                             }
@@ -123,7 +123,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_pemindahan/proses_pemindahan/'.$d->UUID_TRANSAKSI_PEMINDAHAN);?>"
-                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-edit"></i>
                                                         </a>
                                                         <?php
                                                             }

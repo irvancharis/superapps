@@ -41,14 +41,14 @@
                                                         <?php if($d->STATUS_OPNAME == 'MENUNGGU APROVAL KABAG')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-warning">MENUNGGU APROVAL KABAG</span>
+                                                        <span class="badge badge-primary">MENUNGGU APROVAL KABAG</span>
 
                                                         <?php
                                                             }
                                                             elseif($d->STATUS_OPNAME == 'MENUNGGU APROVAL GM')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-warning">MENUNGGU APROVAL GM</span>
+                                                        <span class="badge badge-primary">MENUNGGU APROVAL GM</span>
 
 
                                                         <?php
@@ -56,7 +56,7 @@
                                                             elseif($d->STATUS_OPNAME == 'MENUNGGU APROVAL HEAD')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-warning">MENUNGGU APROVAL HEAD</span>
+                                                        <span class="badge badge-primary">MENUNGGU APROVAL HEAD</span>
 
                                                         <?php
                                                         }

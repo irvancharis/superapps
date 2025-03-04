@@ -18,11 +18,9 @@ class Transaksi_pengadaan extends CI_Controller
         $this->load->library('Uuid');
         $this->load->library('TanggalIndo');
         $this->load->database();
-
-        
     }
 
-    public function index($page = 'transaksi_pengadaan')
+    public function index($page = 'transaksi')
     {
         if (!$this->session->userdata('isLoggedIn')) {
             redirect('login');
@@ -723,6 +721,10 @@ class Transaksi_pengadaan extends CI_Controller
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
 
+        $token = $this->input->post('token');
+        $this->db->where('UUID_TOKEN', $token);
+        $this->db->delete('TOKEN');
+
         if (!$update) {
             echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
             return;
@@ -770,6 +772,10 @@ class Transaksi_pengadaan extends CI_Controller
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
 
+        $token = $this->input->post('token');
+        $this->db->where('UUID_TOKEN', $token);
+        $this->db->delete('TOKEN');
+
         if (!$update) {
             echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
             return;
@@ -816,6 +822,10 @@ class Transaksi_pengadaan extends CI_Controller
         ];
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
+
+        $token = $this->input->post('token');
+        $this->db->where('UUID_TOKEN', $token);
+        $this->db->delete('TOKEN');
 
         if (!$update) {
             echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);

@@ -252,7 +252,8 @@
                     data: {
                         id_transaksi: idTransaksi,
                         KETERANGAN_CANCEL_HEAD: $('#KETERANGAN_CANCEL_HEAD').val(),
-                        items: selectedItems
+                        items: selectedItems.
+                        token: '<?php echo $this->uri->segment(3); ?>'
                     },
                     success: function(response) {
                         let res = JSON.parse(response);

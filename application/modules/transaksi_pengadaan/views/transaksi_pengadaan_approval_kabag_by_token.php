@@ -314,7 +314,8 @@
                     data: {
                         id_transaksi: idTransaksi,
                         KETERANGAN_CANCEL_KABAG: data,
-                        items: selectedItems
+                        items: selectedItems,
+                        token: '<?php echo $this->uri->segment(3); ?>'
                     },
                     success: function(response) {
                         let res = JSON.parse(response);

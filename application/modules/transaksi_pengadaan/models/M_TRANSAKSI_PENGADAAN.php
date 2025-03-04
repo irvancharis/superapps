@@ -19,9 +19,9 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
     public function get_data_view()
     {
         $this->db->where('STATUS_PENGADAAN !=' ,'SELESAI');
-        // $this->db->where('STATUS_PENGADAAN !=' ,'DITOLAK KABAG');
-        // $this->db->where('STATUS_PENGADAAN !=' ,'DITOLAK GM');
-        // $this->db->where('STATUS_PENGADAAN !=' ,'DITOLAK HEAD');
+        $this->db->where('STATUS_PENGADAAN !=' ,'DITOLAK KABAG');
+        $this->db->where('STATUS_PENGADAAN !=' ,'DITOLAK GM');
+        $this->db->where('STATUS_PENGADAAN !=' ,'DITOLAK HEAD');
         $this->db->order_by('TANGGAL_PENGAJUAN', 'DESC');        
         $query = $this->db->get('VIEW_TRANSAKSI_PENGADAAN');
         return $query->result_object();

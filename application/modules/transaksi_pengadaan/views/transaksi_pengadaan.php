@@ -43,13 +43,13 @@
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL HEAD") {
                                                                 echo '<span class="badge badge-primary">MENUNGGU APROVAL HEAD</span> ';
                                                             } elseif ($d->STATUS_PENGADAAN == "PROSES PENGADAAN") {
-                                                                echo '<span class="badge badge-primary">PROSES PENGADAAN</span> ';
+                                                                echo '<span class="badge badge-warning">PROSES PENGADAAN</span> ';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU KIRIMAN BARANG") {
-                                                                echo '<span class="badge badge-primary">MENUNGGU KIRIMAN BARANG</span> ';
+                                                                echo '<span class="badge badge-warning">MENUNGGU KIRIMAN BARANG</span> ';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU PENYERAHAN") {
-                                                                echo '<span class="badge badge-primary">MENUNGGU PENYERAHAN</span> ';
+                                                                echo '<span class="badge badge-warning">MENUNGGU PENYERAHAN</span> ';
                                                             } elseif ($d->STATUS_PENGADAAN == "PROSES PENYERAHAN") {
-                                                                echo '<span class="badge badge-primary">PROSES PENYERAHAN</span> ';
+                                                                echo '<span class="badge badge-warning">PROSES PENYERAHAN</span> ';
                                                             } elseif ($d->STATUS_PENGADAAN == "DITOLAK KABAG") {
                                                                 echo '<span class="badge badge-danger">DITOLAK KABAG</span>';
                                                             } elseif ($d->STATUS_PENGADAAN == "DITOLAK GM") {

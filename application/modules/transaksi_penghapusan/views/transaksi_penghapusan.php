@@ -39,14 +39,14 @@
                                                         <?php if($d->STATUS_PENGHAPUSAN == 'MENUNGGU APROVAL KABAG')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-warning">MENUNGGU APROVAL KABAG</span>
+                                                        <span class="badge badge-primary">MENUNGGU APROVAL KABAG</span>
 
                                                         <?php
                                                             }
                                                             elseif($d->STATUS_PENGHAPUSAN == 'MENUNGGU APROVAL GM')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-warning">MENUNGGU APROVAL GM</span>
+                                                        <span class="badge badge-primary">MENUNGGU APROVAL GM</span>
 
 
                                                         <?php
@@ -54,7 +54,7 @@
                                                             elseif($d->STATUS_PENGHAPUSAN == 'MENUNGGU APROVAL HEAD')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-warning">MENUNGGU APROVAL HEAD</span>
+                                                        <span class="badge badge-primary">MENUNGGU APROVAL HEAD</span>
 
 
                                                         <?php
@@ -106,7 +106,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_penghapusan/aproval_kabag/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
-                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-edit"></i>
                                                         </a>
 
                                                         <?php
@@ -115,7 +115,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_penghapusan/aproval_gm/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
-                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-edit"></i>
                                                         </a>
 
                                                         <?php
@@ -124,7 +124,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_penghapusan/aproval_head/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
-                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-edit"></i>
                                                         </a>
 
                                                         <?php
@@ -133,7 +133,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_penghapusan/jadwal_penghapusan/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
-                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-edit"></i>
                                                         </a>
 
                                                         <?php
@@ -142,7 +142,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_penghapusan/proses_penghapusan/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
-                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-edit"></i>
                                                         </a>
 
                                                         <?php
