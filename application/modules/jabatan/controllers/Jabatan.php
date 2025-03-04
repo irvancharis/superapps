@@ -7,12 +7,16 @@ class Jabatan extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_JABATAN');
+        $this->load->model('role/M_ROLE');
         $this->load->helper('url_helper');
     }
 
     public function index($page = 'jabatan')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'JABATAN','LIST JABATAN');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $data['M_JABATAN'] = $this->M_JABATAN->get_news();
         $this->session->set_userdata('page', $page);
@@ -25,6 +29,11 @@ class Jabatan extends CI_Controller
 
     public function insert()
     {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'JABATAN','TAMBAH JABATAN');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
 
         // Ambil data dari POST
         $get_last_jabatan = $this->M_JABATAN->get_latest_data();
@@ -56,6 +65,13 @@ class Jabatan extends CI_Controller
 
     public function update()
     {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'JABATAN','EDIT JABATAN');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         // Ambil data dari POST
         $id_jabatan = $this->input->post('id_jabatan_edit');
         $nama_jabatan = $this->input->post('nama_jabatan_edit');
@@ -84,6 +100,13 @@ class Jabatan extends CI_Controller
 
     public function hapus()
     {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'JABATAN','HAPUS JABATAN');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         // Ambil data dari POST
         $id_jabatan = $this->input->post('id_jabatan_hapus');
 

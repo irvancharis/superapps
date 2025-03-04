@@ -8,11 +8,15 @@ class Produk_kategori extends CI_Controller
         parent::__construct();
         $this->load->model('M_PRODUK_KATEGORI');
         $this->load->helper('url_helper');
+        $this->load->model('role/M_ROLE');
     }
 
     public function index($page = 'produk_kategori')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_KATEGORI','LIST');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $data['M_PRODUK_KATEGORI'] = $this->M_PRODUK_KATEGORI->get_produk_kategori();
         $this->session->set_userdata('page', $page);
@@ -40,7 +44,12 @@ class Produk_kategori extends CI_Controller
 
     public function tambah($page = 'produk_kategori')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_KATEGORI','TAMBAH');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $data['get_kategori_produk'] = $this->M_PRODUK_KATEGORI->get_kategori_produk();
@@ -51,7 +60,12 @@ class Produk_kategori extends CI_Controller
 
     public function edit($KODE_PRODUK_KATEGORI, $page = 'produk_kategori')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_KATEGORI','EDIT');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_PRODUK_KATEGORI->get_produk_kategori_single($KODE_PRODUK_KATEGORI);
@@ -64,7 +78,12 @@ class Produk_kategori extends CI_Controller
 
     public function detail($KODE_PRODUK_KATEGORI, $page = 'produk_kategori')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_KATEGORI','DETAIL');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_PRODUK_KATEGORI->get_produk_kategori_single($KODE_PRODUK_KATEGORI);
@@ -77,6 +96,13 @@ class Produk_kategori extends CI_Controller
 
     public function insert()
     {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_KATEGORI','TAMBAH');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $KODE_PRODUK_KATEGORI = $this->input->post('KODE_PRODUK_KATEGORI');
         $NAMA_PRODUK_KATEGORI = $this->input->post('NAMA_PRODUK_KATEGORI');
         $KODE_PRODUK_KATEGORI = $this->input->post('KODE_PRODUK_KATEGORI');
@@ -109,6 +135,13 @@ class Produk_kategori extends CI_Controller
 
     public function update()
     {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_KATEGORI','EDIT');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $KODE_PRODUK_KATEGORI = $this->input->post('KODE_PRODUK_KATEGORI');
         $NAMA_PRODUK_KATEGORI = $this->input->post('NAMA_PRODUK_KATEGORI');
         $KODE_PRODUK_KATEGORI = $this->input->post('KODE_PRODUK_KATEGORI');
@@ -140,6 +173,13 @@ class Produk_kategori extends CI_Controller
 
     public function hapus($KODE_PRODUK_KATEGORI)
     {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_KATEGORI','HAPUS');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         // Proses hapus data
         $result = $this->M_PRODUK_KATEGORI->hapus($KODE_PRODUK_KATEGORI);
         redirect('produk_kategori');

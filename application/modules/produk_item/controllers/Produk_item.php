@@ -8,11 +8,15 @@ class Produk_item extends CI_Controller
         parent::__construct();
         $this->load->model('M_PRODUK_ITEM');
         $this->load->helper('url_helper');
+        $this->load->model('role/M_ROLE');
     }
 
     public function index($page = 'produk_item')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_ITEM','LIST');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $data['M_PRODUK_ITEM'] = $this->M_PRODUK_ITEM->get_produk_item();
         $this->session->set_userdata('page', $page);
@@ -40,7 +44,12 @@ class Produk_item extends CI_Controller
 
     public function tambah($page = 'produk_item')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_ITEM','TAMBAH');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $data['get_kategori_produk'] = $this->M_PRODUK_ITEM->get_kategori_produk();
@@ -51,7 +60,12 @@ class Produk_item extends CI_Controller
 
     public function edit($KODE_ITEM, $page = 'produk_item')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_ITEM','EDIT');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_PRODUK_ITEM->get_produk_item_single($KODE_ITEM);
@@ -64,7 +78,12 @@ class Produk_item extends CI_Controller
 
     public function detail($KODE_ITEM, $page = 'produk_item')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_ITEM','DETAIL');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_PRODUK_ITEM->get_produk_item_single($KODE_ITEM);
@@ -77,6 +96,12 @@ class Produk_item extends CI_Controller
 
     public function insert()
     {
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_ITEM','TAMBAH');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         // Ambil data dari POST
         $inputan = $this->input->post(null, TRUE);
         $KODE_ITEM = $this->input->post('KODE_ITEM');
@@ -109,6 +134,12 @@ class Produk_item extends CI_Controller
 
     public function update($KODE)
     {
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_ITEM','EDIT');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $KODE_ITEM = $KODE;
         $NAMA_ITEM = $this->input->post('NAMA_ITEM');
         $KODE_KATEGORI = $this->input->post('KODE_KATEGORI');
@@ -181,6 +212,13 @@ class Produk_item extends CI_Controller
 
     public function hapus($KODE_ITEM)
     {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_ITEM','HAPUS');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         // Proses hapus data
         $result = $this->M_PRODUK_ITEM->hapus($KODE_ITEM);
         redirect('produk_item');

@@ -17,15 +17,20 @@ class Transaksi_pengadaan extends CI_Controller
         $this->load->model('role/M_ROLE');
         $this->load->library('Uuid');
         $this->load->library('TanggalIndo');
+        $this->load->database();
 
-        if (!$this->session->userdata('isLoggedIn')) {
-            redirect('login');
-        }
+        
     }
 
     public function index($page = 'transaksi_pengadaan')
     {
-        $this->load->library('session');
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI PENGADAAN','LIST');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
         // echo $this->uuid->v4();
 
         $data['M_TRANSAKSI_PENGADAAN'] = $this->M_TRANSAKSI_PENGADAAN->get_data_view();
@@ -36,21 +41,34 @@ class Transaksi_pengadaan extends CI_Controller
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('transaksi_pengadaan', $data);
     }
+       
 
     public function get_single($KODE)
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $result = $this->M_TRANSAKSI_PENGADAAN->get_single($KODE);
         echo json_encode($result);
     }
 
     public function get_kategori_produk()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $result = $this->M_TRANSAKSI_PENGADAAN->get_kategori_produk();
         echo json_encode($result);
     }
 
     public function print($kode)
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $data['transaksi'] = $this->M_TRANSAKSI_PENGADAAN->get_single($kode);
         $data['detail'] = $this->M_TRANSAKSI_PENGADAAN->get_detail($kode);
         $this->load->view('print', $data);
@@ -58,6 +76,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function transaksi_pengadaan_produk()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $this->load->library('session');
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
@@ -67,6 +89,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function transaksi_pengadaan_tambah_produk()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $this->load->library('session');
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
@@ -77,6 +103,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function get_produk()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $search = $this->input->post('search')['value'];
         $search = strtoupper($search);
 
@@ -106,6 +136,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function get_lokasi_by_ruangan()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $KODE_RUANGAN = $this->input->post('RUANGAN_PENEMPATAN');
 
         $result = $this->M_TRANSAKSI_PENGADAAN->get_lokasi_by_ruangan($KODE_RUANGAN);
@@ -118,6 +152,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function get_ruangan_by_area()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $KODE_AREA = $this->input->post('AREA_PENEMPATAN');
 
         $result = $this->M_TRANSAKSI_PENGADAAN->get_ruangan_by_area($KODE_AREA);
@@ -128,10 +166,27 @@ class Transaksi_pengadaan extends CI_Controller
         }
     }
 
+    // APPROVAL
+    public function approval_kabag_by_token($token)
+    {        
+        $data_token = $this->M_TRANSAKSI_PENGADAAN->get_detail_token($token);
+        if($data_token){
+            $data['approval_kabag'] = $this->M_TRANSAKSI_PENGADAAN->get_single($data_token->UUID_TRANSAKSI);        
+            $data['id_transaksi_pengadaan'] = $data_token->UUID_TRANSAKSI;     
+            $this->load->view('transaksi_pengadaan_approval_kabag_by_token', $data);
+        }else{
+            echo "Data Tidak Ditemukan";
+        }    
+
+    }
 
     // APPROVAL
     public function approval_kabag($id_transaksi_pengadaan)
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $SESSION_ROLE = $this->session->userdata('ROLE');
         $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGADAAN', 'APROVAL KABAG');
         if (!$CEK_ROLE) {
@@ -149,12 +204,29 @@ class Transaksi_pengadaan extends CI_Controller
         $data['id_transaksi_pengadaan'] = $id_transaksi_pengadaan;
         log_message('error', 'Data returned: ' . json_encode($data['approval_kabag']));
         $this->load->view('layout/navbar') .
-            $this->load->view('layout/sidebar', $data) .
-            $this->load->view('transaksi_pengadaan_approval_kabag', $data);
+        $this->load->view('layout/sidebar', $data) .
+        $this->load->view('transaksi_pengadaan_approval_kabag', $data);
+    }
+
+    public function approval_gm_by_token($token)
+    {        
+        $data_token = $this->M_TRANSAKSI_PENGADAAN->get_detail_token($token);
+        if($data_token){
+            $data['approval_gm'] = $this->M_TRANSAKSI_PENGADAAN->get_single($data_token->UUID_TRANSAKSI);        
+            $data['item'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi_detail($data_token->UUID_TRANSAKSI);        
+            $data['id_transaksi_pengadaan'] = $data_token->UUID_TRANSAKSI;       
+            $this->load->view('transaksi_pengadaan_approval_gm_by_token', $data);
+        }else{
+            echo "Data Tidak Ditemukan";
+        }
     }
 
     public function approval_gm($id_transaksi_pengadaan)
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $SESSION_ROLE = $this->session->userdata('ROLE');
         $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGADAAN', 'APROVAL GM');
         if (!$CEK_ROLE) {
@@ -178,6 +250,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function approval_head($id_transaksi_pengadaan)
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $SESSION_ROLE = $this->session->userdata('ROLE');
         $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGADAAN', 'APROVAL HEAD');
         if (!$CEK_ROLE) {
@@ -199,10 +275,27 @@ class Transaksi_pengadaan extends CI_Controller
             $this->load->view('transaksi_pengadaan_approval_head', $data);
     }
 
+    public function approval_head_by_token($token)
+    {        
+        $data_token = $this->M_TRANSAKSI_PENGADAAN->get_detail_token($token);
+        if($data_token){
+            $data['approval_head'] = $this->M_TRANSAKSI_PENGADAAN->get_single($data_token->UUID_TRANSAKSI);  
+            $data['item'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi_detail($data_token->UUID_TRANSAKSI);              
+            $data['id_transaksi_pengadaan'] = $data_token->UUID_TRANSAKSI;        
+            $this->load->view('transaksi_pengadaan_approval_head_by_token', $data);
+        }else{
+            echo "Data Tidak Ditemukan";
+        }
+    }
+
 
     // PROSES PENGADAAN
     public function proses_pengadaan($id_transaksi_pengadaan)
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $SESSION_ROLE = $this->session->userdata('ROLE');
         $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGADAAN', 'PROSES PENGADAAN');
         if (!$CEK_ROLE) {
@@ -227,6 +320,10 @@ class Transaksi_pengadaan extends CI_Controller
     // MENUNGGU KIRIMAN BARANG
     public function m_kiriman_barang($id_transaksi_pengadaan)
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $this->load->library('session');
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
@@ -246,6 +343,10 @@ class Transaksi_pengadaan extends CI_Controller
     // PENYERAHAN BARANG
     public function penyerahan_barang($id_transaksi_pengadaan)
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $this->load->library('session');
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
@@ -266,6 +367,10 @@ class Transaksi_pengadaan extends CI_Controller
     // PENYERAHAN BARANG USER
     public function penyerahan_barang_user($id_transaksi_pengadaan)
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $this->load->library('session');
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
@@ -283,7 +388,8 @@ class Transaksi_pengadaan extends CI_Controller
     }
 
     public function get_data_transaksi_detail($id_transaksi_pengadaan)
-    {
+    {       
+
         $produk = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi_detail($id_transaksi_pengadaan);
 
         if (empty($produk)) {
@@ -303,6 +409,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function tambah($page = 'transaksi_pengadaan')
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $SESSION_ROLE = $this->session->userdata('ROLE');
         $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGADAAN', 'PENGAJUAN');
         if (!$CEK_ROLE) {
@@ -326,6 +436,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function detail($KODE, $page = 'transaksi_pengadaan')
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
@@ -341,9 +455,14 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function insert()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $items = $this->input->post('items');
         $formData = $this->input->post('form');
         $uuid_transaksi = $this->uuid->v4();
+        $uuid_token = $this->uuid->v4();
 
         if (!empty($formData) && !empty($items)) {
             // Simpan data transaksi utama
@@ -370,6 +489,18 @@ class Transaksi_pengadaan extends CI_Controller
                 $this->db->insert('TRANSAKSI_PENGADAAN_DETAIL', $data_produk);
             }
 
+            $data_token = [
+                'UUID_TOKEN' => $uuid_token,
+                'TOKEN' => rand(100000, 999999),
+                'CREATE' => date('Y-m-d H:i:s'),                
+                'MASA_BERLAKU' => date('Y-m-d H:i:s', strtotime('+1 days')),
+                'USER_AKSES' => '8b045f06-cef0-4611-a086-cde108614c8d',
+                'KETERANGAN_TRANSAKSI' => 'TRANSAKSI PENGADAAN - APROVAL KABAG',
+                'LINK' => base_url('transaksi_pengadaan/approval_kabag_by_token/' . $uuid_token),
+                'UUID_TRANSAKSI' => $uuid_transaksi,
+            ];
+            $this->db->insert('TOKEN', $data_token);
+
             echo json_encode(['success' => true]);
         } else {
             echo json_encode(['success' => false]);
@@ -378,6 +509,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function update()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $KODE_ITEM = $this->input->post('NIK');
 
         // Validasi
@@ -400,6 +535,8 @@ class Transaksi_pengadaan extends CI_Controller
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $form = $this->input->post('form');
         $items = $this->input->post('items');
+        $token = $this->input->post('token');
+        $uuid_token = $this->uuid->v4();
 
         if (!$id_transaksi || empty($form) || empty($items)) {
             echo json_encode(['success' => false, 'error' => 'Harap isi Keterangan Pengajuan Pengadaan
@@ -415,9 +552,25 @@ class Transaksi_pengadaan extends CI_Controller
             'STATUS_PENGADAAN' => 'MENUNGGU APROVAL GM',
         ];
 
-        $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
+        $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);  
+        
+        $this->db->where('UUID_TOKEN', $token);
+        $this->db->delete('TOKEN');
 
-        if (!$update) {
+        $data_token = [
+                'UUID_TOKEN' => $uuid_token,
+                'TOKEN' => rand(100000, 999999),
+                'CREATE' => date('Y-m-d H:i:s'),   
+                'MASA_BERLAKU' => date('Y-m-d H:i:s', strtotime('+1 days')),
+                'USER_AKSES' => '8b045f06-cef0-4611-a086-cde108614c8d',
+                'KETERANGAN_TRANSAKSI' => 'TRANSAKSI PENGADAAN - APROVAL GM',
+                'LINK' => base_url('transaksi_pengadaan/approval_gm_by_token/'. $uuid_token),
+                'UUID_TRANSAKSI' => $id_transaksi,
+            ];
+            $this->db->insert('TOKEN', $data_token);
+
+
+            if (!$update) {
             echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
             return;
         }
@@ -439,8 +592,14 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function update_approval_gm()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $items = $this->input->post('items');
+        $token = $this->input->post('token');
+        $uuid_token = $this->uuid->v4();
 
         if (!$id_transaksi || empty($items)) {
             echo json_encode(['success' => false, 'error' => 'Data tidak lengkap!']);
@@ -455,6 +614,22 @@ class Transaksi_pengadaan extends CI_Controller
         ];
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
+
+
+        $this->db->where('UUID_TOKEN', $token);
+        $this->db->delete('TOKEN');
+
+        $data_token = [
+                'UUID_TOKEN' => $uuid_token,
+                'TOKEN' => rand(100000, 999999),
+                'CREATE' => date('Y-m-d H:i:s'),   
+                'MASA_BERLAKU' => date('Y-m-d H:i:s', strtotime('+1 days')),
+                'USER_AKSES' => '8b045f06-cef0-4611-a086-cde108614c8d',
+                'KETERANGAN_TRANSAKSI' => 'TRANSAKSI PENGADAAN - APROVAL HEAD',
+                'LINK' => base_url('transaksi_pengadaan/approval_head_by_token/'. $uuid_token),
+                'UUID_TRANSAKSI' => $id_transaksi,
+            ];
+            $this->db->insert('TOKEN', $data_token);
 
         if (!$update) {
             echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
@@ -478,8 +653,13 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function update_approval_head()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $items = $this->input->post('items');
+        $token = $this->input->post('token');        
 
         if (!$id_transaksi || empty($items)) {
             echo json_encode(['success' => false, 'error' => 'Data tidak lengkap!']);
@@ -494,6 +674,9 @@ class Transaksi_pengadaan extends CI_Controller
         ];
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
+
+        $this->db->where('UUID_TOKEN', $token);
+        $this->db->delete('TOKEN');
 
         if (!$update) {
             echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
@@ -517,6 +700,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function disapprove_kabag()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $form = $this->input->post('KETERANGAN_CANCEL_KABAG');
         $items = $this->input->post('items');
@@ -560,6 +747,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function disapprove_gm()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $form = $this->input->post('KETERANGAN_CANCEL_GM');
         $items = $this->input->post('items');
@@ -603,6 +794,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function disapprove_head()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $form = $this->input->post('KETERANGAN_CANCEL_HEAD');
         $items = $this->input->post('items');
@@ -646,6 +841,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function update_proses_pengadaan()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $items = $this->input->post('items');
         $form = $this->input->post('form');
@@ -687,6 +886,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function update_m_kiriman_barang()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $items = $this->input->post('items');
         $form = $this->input->post('form');
@@ -728,6 +931,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function update_penyerahan_barang()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $items = $this->input->post('items');
         $form = $this->input->post('form');
@@ -789,6 +996,10 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function update_penyerahan_barang_user()
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $items = $this->input->post('items');
         $form = $this->input->post('form');
@@ -829,6 +1040,9 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function hapus($KODE_ITEM)
     {
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
         // Proses hapus data
         $result = $this->M_TRANSAKSI_PENGADAAN->hapus($KODE_ITEM);
         redirect('karyawan');

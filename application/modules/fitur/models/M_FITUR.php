@@ -37,10 +37,8 @@ class M_FITUR extends CI_Model
 
     public function get_fitur_single($KODE)
     {
-        $this->db->select('*');
-        $this->db->from('VIEW_FITUR');
         $this->db->where('KODE_FITUR', $KODE);
-        $query = $this->db->get();
+        $query = $this->db->get('FITUR_');
         return $query->row();
     }
 
