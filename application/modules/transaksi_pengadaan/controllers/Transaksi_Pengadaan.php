@@ -237,6 +237,7 @@ class Transaksi_pengadaan extends CI_Controller
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
         $data['approval_gm'] = $this->M_TRANSAKSI_PENGADAAN->get_single($id_transaksi_pengadaan);
+        $data['item'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi_detail($id_transaksi_pengadaan);
         $data['get_area'] = $this->M_TRANSAKSI_PENGADAAN->get_area();
         $data['get_ruangan'] = $this->M_TRANSAKSI_PENGADAAN->get_ruangan();
         $data['get_lokasi'] = $this->M_TRANSAKSI_PENGADAAN->get_lokasi();
@@ -264,6 +265,7 @@ class Transaksi_pengadaan extends CI_Controller
         $this->session->set_userdata('page', 'transaksi_pengadaan');
         $data['page'] = $this->session->userdata('page');
         $data['approval_head'] = $this->M_TRANSAKSI_PENGADAAN->get_single($id_transaksi_pengadaan);
+        $data['item'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi_detail($id_transaksi_pengadaan);
         $data['get_area'] = $this->M_TRANSAKSI_PENGADAAN->get_area();
         $data['get_ruangan'] = $this->M_TRANSAKSI_PENGADAAN->get_ruangan();
         $data['get_lokasi'] = $this->M_TRANSAKSI_PENGADAAN->get_lokasi();

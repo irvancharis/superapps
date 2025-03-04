@@ -13,7 +13,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped" id="table-pengadaan" >
+                                        <table class="table table-striped table-hover table-sm" id="table-pengadaan">
                                             <thead>
                                                 <tr>
                                                     <th class="col-1">TANGGAL PENGAJUAN</th>
@@ -27,13 +27,13 @@
                                                 <?php foreach ($M_TRANSAKSI_PENGADAAN as $index => $d) : ?>
                                                 <tr>
                                                     <td>
-                                                        <?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGAJUAN, 'd F Y'); ?>
+                                                        <?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGAJUAN, 'l, d F Y'); ?>
                                                     <td class="text-center"><?php echo $d->NAMA_USER_PENGAJUAN; ?></td>
                                                     <td><i class="fa fa-map-marker"></i>
                                                         <?php echo $d->NAMA_AREA; ?><br><i class="fa fa-building"></i>
                                                         <?php echo $d->NAMA_RUANGAN; ?><br> <i class="fa fa-users"></i>
                                                         <?php echo $d->NAMA_DEPARTEMEN; ?><br><i class="fa fa-box"></i>
-                                                        <?php echo $d->NAMA_LOKASI; ?></td>                                                    
+                                                        <?php echo $d->NAMA_LOKASI; ?></td>
                                                     <td class="text-center">
                                                         <?php
                                                             if ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL KABAG") {
@@ -62,23 +62,23 @@
                                                             ?>
                                                     </td>
                                                     <td class="text-center">
-                                                        <?php
-                                                            if ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL KABAG") {
-                                                                echo '<a href="' . base_url("transaksi_pengadaan/approval_kabag/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                        <?php                                                                                                                    
+                                                        if ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL KABAG") {
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/approval_kabag/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-edit"></i></a>';                                                                
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL GM") {
-                                                                echo '<a href="' . base_url("transaksi_pengadaan/approval_gm/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/approval_gm/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-edit"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL HEAD") {
-                                                                echo '<a href="' . base_url("transaksi_pengadaan/approval_head/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/approval_head/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-edit"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "PROSES PENGADAAN") {
-                                                                echo '<a href="' . base_url("transaksi_pengadaan/proses_pengadaan/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/proses_pengadaan/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-edit"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU KIRIMAN BARANG") {
-                                                                echo '<a href="' . base_url("transaksi_pengadaan/m_kiriman_barang/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/m_kiriman_barang/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-edit"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "MENUNGGU PENYERAHAN") {
-                                                                echo '<a href="' . base_url("transaksi_pengadaan/penyerahan_barang/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/penyerahan_barang/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-edit"></i></a>';
                                                             } elseif ($d->STATUS_PENGADAAN == "PROSES PENYERAHAN") {
-                                                                echo '<a href="' . base_url("transaksi_pengadaan/penyerahan_barang_user/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
+                                                                echo '<a href="' . base_url("transaksi_pengadaan/penyerahan_barang_user/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-edit"></i></a>';
                                                             }
-                                                            ?>
+                                                        ?>
                                                         <a href="<?php echo base_url(); ?>transaksi_pengadaan/print/<?php echo $d->UUID_TRANSAKSI_PENGADAAN; ?>"
                                                             target="_blank" class="btn btn-outline-secondary"><i
                                                                 class="fas fa-print"></i>
@@ -438,18 +438,19 @@ $(document).ready(function() {
     $('#table-pengadaan').DataTable({
         paging: false,
         searching: true,
-        sorting: false,   
-        ordering: false,     
+        sorting: false,
+        ordering: false,
         info: false,
         responsive: {
             details: {
                 type: 'column',
-                display: $.fn.dataTable.Responsive.display.childRowImmediate, // Menampilkan detail langsung                
+                display: $.fn.dataTable.Responsive.display
+                    .childRowImmediate, // Menampilkan detail langsung                
             }
         }
     });
-    
-    
+
+
     $('#formHapusproduk').on('submit', function(e) {
         e.preventDefault();
 

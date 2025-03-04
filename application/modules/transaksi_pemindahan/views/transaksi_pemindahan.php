@@ -12,18 +12,18 @@
                                     </div>
                                     <div class="card-header-action">
                                         <a href="<?php echo base_url('transaksi_pemindahan/tambah_by_aset') ?>"
-                                            class="btn btn-outline-primary"><i class="fas fa-plus"></i> Tambah Data by aset</a>
+                                            class="btn btn-outline-primary"><i class="fas fa-plus"></i> Tambah Data by
+                                            aset</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped" id="TABEL">
+                                        <table class="table table-striped table-hover table-sm" id="TABEL">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center col-2">TANGGAL PENGAJUAN</th>
+                                                    <th class="col-2">TANGGAL PENGAJUAN</th>
                                                     <th class="text-center">DEPARTEMEN</th>
                                                     <th class="text-center col-2">USER PENGAJUAN</th>
-                                                    <th class="text-center col-2">APROVAL</th>
                                                     <th class="text-center col-1">STATUS</th>
                                                     <th class="text-center col-1"></th>
                                                 </tr>
@@ -32,7 +32,7 @@
                                                 <?php foreach ($M_TRANSAKSI_PEMINDAHAN as $index => $d) : ?>
                                                 <tr>
 
-                                                    <td class="text-center">
+                                                    <td>
                                                         <?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGAJUAN, 'l, d F Y'); ?>
                                                     </td>
                                                     <td><i class="fa fa-map-marker"></i>
@@ -44,10 +44,6 @@
                                                             class="fa fa-box"></i> <?php echo $d->NAMA_LOKASI_AWAL; ?>
                                                     </td>
                                                     <td class="text-center"><?php echo $d->NAMA_PENGAJUAN; ?></td>
-                                                    <td>
-                                                        <?php echo 'KABAG - ( ' . (($d->KODE_APROVAL_KABAG != null) ? $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
-                                                        <?php echo 'GM - ( ' . (($d->KODE_APROVAL_GM != null) ? $d->NAMA_APROVAL_GM . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_GM . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
-                                                        <?php echo 'HEAD - ( ' . (($d->KODE_APROVAL_HEAD != null) ? $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?>
                                                     <td class="text-center">
                                                         <?php if($d->STATUS_PEMINDAHAN == 'MENUNGGU APROVAL KABAG')
                                                             {
@@ -87,7 +83,7 @@
                                                             }elseif($d->STATUS_PEMINDAHAN == 'DITOLAK GM')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-danger">DITOLAK GM</span>                                                      
+                                                        <span class="badge badge-danger">DITOLAK GM</span>
                                                         <?php
                                                             }elseif($d->STATUS_PEMINDAHAN == 'DITOLAK HEAD')
                                                             {
@@ -156,42 +152,53 @@
             </body>
 
             <script>
-                $(document).ready(function() {
+$(document).ready(function() {
 
 
-                    $('#TABEL').dataTable({
-                        paging: false
+    $('#TABEL').dataTable({
+        paging: false,
+        searching: true,
+        sorting: false,
+        ordering: false,
+        info: false,
+        responsive: {
+            details: {
+                type: 'column',
+                display: $.fn.dataTable.Responsive.display
+                .childRowImmediate, // Menampilkan detail langsung                
+            }
+        }
+    });
+
+    $('#formHapusproduk').on('submit', function(e) {
+        e.preventDefault();
+
+        // Ambil data dari form
+        let formData = $(this).serialize();
+
+        // Kirim data ke server melalui AJAX
+        $.ajax({
+            url: "<?php echo base_url(); ?>" +
+                "transaksi_pengadaan/hapus", // Endpoint untuk proses input
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                let res = JSON.parse(response);
+                if (res.success) {
+                    swal('Sukses', 'Hapus Data Berhasil!', 'success').then(function() {
+                        $('#hapusModal').modal('hide');
+                        location.reload();
                     });
-
-                    $('#formHapusproduk').on('submit', function(e) {
-                        e.preventDefault();
-
-                        // Ambil data dari form
-                        let formData = $(this).serialize();
-
-                        // Kirim data ke server melalui AJAX
-                        $.ajax({
-                            url: "<?php echo base_url(); ?>" +
-                                "transaksi_pengadaan/hapus", // Endpoint untuk proses input
-                            type: 'POST',
-                            data: formData,
-                            success: function(response) {
-                                let res = JSON.parse(response);
-                                if (res.success) {
-                                    swal('Sukses', 'Hapus Data Berhasil!', 'success').then(function() {
-                                        $('#hapusModal').modal('hide');
-                                        location.reload();
-                                    });
-                                } else {
-                                    alert('Gagal menghapus data: ' + response.error);
-                                }
-                            },
-                            error: function() {
-                                alert('Gagal melakukan proses.');
-                            }
-                        });
-                    });
-                });
+                } else {
+                    alert('Gagal menghapus data: ' + response.error);
+                }
+            },
+            error: function() {
+                alert('Gagal melakukan proses.');
+            }
+        });
+    });
+});
             </script>
 
             </html>

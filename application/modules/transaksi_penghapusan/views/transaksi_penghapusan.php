@@ -13,13 +13,12 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped" id="TABEL">
+                                        <table class="table table-striped table-hover table-sm" id="TABEL">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center col-2">TANGGAL PENGAJUAN</th>
+                                                    <th class="col-2">TANGGAL PENGAJUAN</th>
                                                     <th class="text-center">DEPARTEMEN</th>
                                                     <th class="text-center col-2">USER PENGAJUAN</th>
-                                                    <th class="text-center col-2">APROVAL</th>
                                                     <th class="text-center col-2">STATUS</th>
                                                     <th class="text-center col-1"></th>
                                                 </tr>
@@ -28,18 +27,14 @@
                                                 <?php foreach ($M_TRANSAKSI_PENGHAPUSAN as $index => $d) : ?>
                                                 <tr>
 
-                                                    <td class="text-center"><?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGAJUAN, 'l, d F Y'); ?>
+                                                    <td><?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGAJUAN, 'l, d F Y'); ?>
                                                     </td>
                                                     <td><i class="fa fa-map-marker"></i>
                                                         <?php echo $d->NAMA_AREA; ?><br><i class="fa fa-building"></i>
                                                         <?php echo $d->NAMA_RUANGAN; ?><br> <i class="fa fa-users"></i>
                                                         <?php echo $d->NAMA_DEPARTEMEN; ?><br><i class="fa fa-box"></i>
                                                         <?php echo $d->NAMA_LOKASI; ?></td>
-                                                    <td class="text-center"><?php echo $d->NAMA_USER_PENGAJUAN; ?></td>
-                                                    <td >
-                                                        <?php echo 'KABAG - ( ' . (($d->KODE_APROVAL_KABAG != null) ? $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
-                                                        <?php echo 'GM - ( ' . (($d->KODE_APROVAL_GM != null) ? $d->NAMA_APROVAL_GM . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_GM . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
-                                                        <?php echo 'HEAD - ( ' . (($d->KODE_APROVAL_HEAD != null) ? $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?>
+                                                    <td class="text-center"><?php echo $d->NAMA_USER_PENGAJUAN; ?></td>                                                    
                                                     <td class="text-center">
                                                         <?php if($d->STATUS_PENGHAPUSAN == 'MENUNGGU APROVAL KABAG')
                                                             {
@@ -182,7 +177,17 @@ $(document).ready(function() {
 
 
     $('#TABEL').dataTable({
-        paging: false
+        paging: false,
+        searching: true,
+        sorting: false,   
+        ordering: false,     
+        info: false,
+        responsive: {
+            details: {
+                type: 'column',
+                display: $.fn.dataTable.Responsive.display.childRowImmediate, // Menampilkan detail langsung                
+            }
+        }
     });
 
     $('#formHapusproduk').on('submit', function(e) {

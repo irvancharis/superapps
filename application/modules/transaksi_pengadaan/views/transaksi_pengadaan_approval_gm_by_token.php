@@ -65,7 +65,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover " id="table-approval-produk">
+                        <table class="table table-striped table-hover table-sm " id="table-approval-produk">
                             <thead>
                                 <tr>
                                     <th>FOTO PRODUK</th>

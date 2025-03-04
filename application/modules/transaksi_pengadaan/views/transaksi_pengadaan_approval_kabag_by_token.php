@@ -39,7 +39,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-md">
+                            <table class="table table-striped table-hover table-sm">
                                 <tr>
                                     <th class="col-2" style="width: 20%">AREA</th>
                                     <td><?= $approval_kabag->NAMA_AREA; ?></td>
