@@ -8,11 +8,15 @@ class MAPING_ruangan extends CI_Controller
         parent::__construct();
         $this->load->model('M_MAPING_RUANGAN');
         $this->load->helper('url_helper');
+        $this->load->model('role/M_ROLE');
     }
 
     public function index($page = 'maping_ruangan')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_RUANGAN','LIST');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $data['M_MAPING_RUANGAN'] = $this->M_MAPING_RUANGAN->get_maping_ruangan();
         $this->session->set_userdata('page', $page);
@@ -40,7 +44,12 @@ class MAPING_ruangan extends CI_Controller
 
     public function tambah($page = 'maping_ruangan')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_RUANGAN','TAMBAH');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $data['get_area'] = $this->M_MAPING_RUANGAN->get_area();
@@ -51,7 +60,12 @@ class MAPING_ruangan extends CI_Controller
 
     public function edit($KODE_RUANGAN, $page = 'maping_ruangan')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_RUANGAN','EDIT');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_MAPING_RUANGAN->get_maping_ruangan_single($KODE_RUANGAN);
@@ -64,7 +78,12 @@ class MAPING_ruangan extends CI_Controller
 
     public function detail($KODE_RUANGAN, $page = 'maping_ruangan')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_RUANGAN','DETAIL');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_MAPING_RUANGAN->get_maping_ruangan_single($KODE_RUANGAN);
@@ -77,6 +96,13 @@ class MAPING_ruangan extends CI_Controller
 
     public function insert()
     {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_RUANGAN','TAMBAH');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $KODE_RUANGAN = $this->input->post('KODE_RUANGAN');
         $NAMA_RUANGAN = $this->input->post('NAMA_RUANGAN');
         $KODE_RUANGAN = $this->input->post('KODE_RUANGAN');
@@ -109,6 +135,12 @@ class MAPING_ruangan extends CI_Controller
 
     public function update()
     {
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_RUANGAN','UBAH');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $KODE_RUANGAN = $this->input->post('KODE_RUANGAN');
         $NAMA_RUANGAN = $this->input->post('NAMA_RUANGAN');
         $KODE_RUANGAN = $this->input->post('KODE_RUANGAN');
@@ -140,6 +172,13 @@ class MAPING_ruangan extends CI_Controller
 
     public function hapus($KODE_RUANGAN)
     {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_RUANGAN','HAPUS');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         // Proses hapus data
         $result = $this->M_MAPING_RUANGAN->hapus($KODE_RUANGAN);
         redirect('maping_ruangan');

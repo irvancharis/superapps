@@ -7,10 +7,19 @@ class Dashboard extends CI_Controller
     {
         parent::__construct();
         $this->load->helper('url_helper');
+        $this->load->library('session');
+        $this->load->model('role/M_ROLE');
     }
 
     public function index($page = 'dashboard')
     {
+
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'DASHBOARD', 'DASHBOARD');
+        if (!$CEK_ROLE) {
+            redirect('login');
+        }
+        
         $this->load->library('session');
 
         $this->session->set_userdata('page', $page);

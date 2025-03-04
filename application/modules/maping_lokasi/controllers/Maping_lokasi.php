@@ -8,11 +8,15 @@ class Maping_lokasi extends CI_Controller
         parent::__construct();
         $this->load->model('M_MAPING_LOKASI');
         $this->load->helper('url_helper');
+        $this->load->model('role/M_ROLE');
     }
 
     public function index($page = 'maping_lokasi')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_LOKASI','LIST');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $data['M_MAPING_LOKASI'] = $this->M_MAPING_LOKASI->get_maping_lokasi();
         $this->session->set_userdata('page', $page);
@@ -40,7 +44,13 @@ class Maping_lokasi extends CI_Controller
 
     public function tambah($page = 'maping_lokasi')
     {
-        $this->load->library('session');
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_LOKASI','TAMBAH');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $data['get_area'] = $this->M_MAPING_LOKASI->get_area();
@@ -52,6 +62,13 @@ class Maping_lokasi extends CI_Controller
 
     public function edit($KODE_LOKASI, $page = 'maping_lokasi')
     {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_LOKASI','EDIT');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
@@ -66,7 +83,12 @@ class Maping_lokasi extends CI_Controller
 
     public function detail($KODE_LOKASI, $page = 'maping_lokasi')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_LOKASI','DETAIL');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_MAPING_LOKASI->get_maping_lokasi_single($KODE_LOKASI);
@@ -79,6 +101,13 @@ class Maping_lokasi extends CI_Controller
 
     public function insert()
     {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_LOKASI','TAMBAH');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $KODE_LOKASI = $this->input->post('KODE_LOKASI');
         $NAMA_LOKASI = $this->input->post('NAMA_LOKASI');
         $KODE_LOKASI = $this->input->post('KODE_LOKASI');
@@ -111,6 +140,12 @@ class Maping_lokasi extends CI_Controller
 
     public function update()
     {
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_LOKASI','EDIT');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $KODE_LOKASI = $this->input->post('KODE_LOKASI');
         $NAMA_LOKASI = $this->input->post('NAMA_LOKASI');
         $KODE_LOKASI = $this->input->post('KODE_LOKASI');
@@ -142,6 +177,12 @@ class Maping_lokasi extends CI_Controller
 
     public function hapus($KODE_LOKASI)
     {
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_LOKASI','HAPUS');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         // Proses hapus data
         $result = $this->M_MAPING_LOKASI->hapus($KODE_LOKASI);
         redirect('maping_lokasi');

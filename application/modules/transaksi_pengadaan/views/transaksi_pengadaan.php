@@ -13,33 +13,27 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped" id="table-2">
+                                        <table class="table table-striped" id="table-pengadaan" >
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center col-2">TANGGAL PENGAJUAN</th>
-                                                    <th class="text-center col-2">USER PENGAJUAN</th>
-                                                    <th class="text-center">DEPARTEMEN</th>
-                                                    <th class="text-center col-2">APPROVAL</th>
+                                                    <th class="col-1">TANGGAL PENGAJUAN</th>
+                                                    <th class="text-center col-1">USER PENGAJUAN</th>
+                                                    <th class="text-center col-3">DEPARTEMEN</th>
                                                     <th class="text-center col-1">STATUS</th>
-                                                    <th></th>
+                                                    <th class="text-center col-1"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php foreach ($M_TRANSAKSI_PENGADAAN as $index => $d) : ?>
                                                 <tr>
-                                                    <td class="text-center">
-                                                        <?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGAJUAN, 'l, d F Y'); ?>
+                                                    <td>
+                                                        <?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGAJUAN, 'd F Y'); ?>
                                                     <td class="text-center"><?php echo $d->NAMA_USER_PENGAJUAN; ?></td>
                                                     <td><i class="fa fa-map-marker"></i>
                                                         <?php echo $d->NAMA_AREA; ?><br><i class="fa fa-building"></i>
                                                         <?php echo $d->NAMA_RUANGAN; ?><br> <i class="fa fa-users"></i>
                                                         <?php echo $d->NAMA_DEPARTEMEN; ?><br><i class="fa fa-box"></i>
-                                                        <?php echo $d->NAMA_LOKASI; ?></td>
-                                                    <td>
-                                                        <?php echo 'KABAG - ( ' . (($d->KODE_APROVAL_KABAG != null) ? $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_KABAG . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
-                                                        <?php echo 'GM - ( ' . (($d->KODE_APROVAL_GM != null) ? $d->NAMA_APROVAL_GM . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_GM . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?><br>
-                                                        <?php echo 'HEAD - ( ' . (($d->KODE_APROVAL_HEAD != null) ? $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-check text-success"></i>' : $d->NAMA_APROVAL_HEAD . ' <i class="fas fa-times text-danger"></i>') . ' )'; ?>
-                                                    </td>
+                                                        <?php echo $d->NAMA_LOKASI; ?></td>                                                    
                                                     <td class="text-center">
                                                         <?php
                                                             if ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL KABAG") {
@@ -85,7 +79,8 @@
                                                                 echo '<a href="' . base_url("transaksi_pengadaan/penyerahan_barang_user/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-eye"></i></a>';
                                                             }
                                                             ?>
-                                                        <a href="<?php echo base_url(); ?>transaksi_pengadaan/print/<?php echo $d->UUID_TRANSAKSI_PENGADAAN; ?>" target="_blank" class="btn btn-outline-secondary"><i
+                                                        <a href="<?php echo base_url(); ?>transaksi_pengadaan/print/<?php echo $d->UUID_TRANSAKSI_PENGADAAN; ?>"
+                                                            target="_blank" class="btn btn-outline-secondary"><i
                                                                 class="fas fa-print"></i>
                                                         </a>
                                                     </td>
@@ -440,6 +435,21 @@
             <script>
 $(document).ready(function() {
 
+    $('#table-pengadaan').DataTable({
+        paging: false,
+        searching: true,
+        sorting: false,   
+        ordering: false,     
+        info: false,
+        responsive: {
+            details: {
+                type: 'column',
+                display: $.fn.dataTable.Responsive.display.childRowImmediate, // Menampilkan detail langsung                
+            }
+        }
+    });
+    
+    
     $('#formHapusproduk').on('submit', function(e) {
         e.preventDefault();
 
@@ -455,10 +465,11 @@ $(document).ready(function() {
             success: function(response) {
                 let res = JSON.parse(response);
                 if (res.success) {
-                    swal('Sukses', 'Hapus Data Berhasil!', 'success').then(function() {
-                        $('#hapusModal').modal('hide');
-                        location.reload();
-                    });
+                    swal('Sukses', 'Hapus Data Berhasil!', 'success').then(
+                        function() {
+                            $('#hapusModal').modal('hide');
+                            location.reload();
+                        });
                 } else {
                     alert('Gagal menghapus data: ' + response.error);
                 }

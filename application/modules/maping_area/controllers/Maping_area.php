@@ -9,11 +9,15 @@ class Maping_area extends CI_Controller
         parent::__construct();
         $this->load->model('M_MAPING_AREA');
         $this->load->helper('url_helper');
+        $this->load->model('role/M_ROLE');
     }
 
     public function index($page = 'maping_area')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_AREA','LIST');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $data['sfa_maping_area'] = $this->M_MAPING_AREA->get_news();
         $this->session->set_userdata('page', $page);
@@ -26,6 +30,10 @@ class Maping_area extends CI_Controller
 
     public function insert()
     {
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_AREA','TAMBAH');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
 
         // Ambil data dari POST
         $get_last_area = $this->M_MAPING_AREA->get_latest_data();
@@ -57,6 +65,13 @@ class Maping_area extends CI_Controller
 
     public function update()
     {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_AREA','EDIT');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         // Ambil data dari POST
         $id_area = $this->input->post('id_area_edit');
         $nama_area = $this->input->post('nama_area_edit');
@@ -85,6 +100,13 @@ class Maping_area extends CI_Controller
 
     public function hapus()
     {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_AREA','HAPUS');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         // Ambil data dari POST
         $id_area = $this->input->post('id_area_hapus');
 

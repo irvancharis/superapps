@@ -52,7 +52,7 @@ class Login extends CI_Controller
 
     public function logout()
     {
-        $this->session->unset_userdata(array('isLoggedIn', 'UUID_USER'));
+        $this->session->unset_userdata(array('isLoggedIn', 'UUID_USER','ID_AREA','NAMA_AREA','ID_JABATAN','NAMA_JABATAN','ID_KARYAWAN','NAMA_KARYAWAN','ID_DEPARTEMEN','NAMA_DEPARTEMEN','ROLE','NAMA_ROLE'));
         return redirect()->to('/login');
     }
 

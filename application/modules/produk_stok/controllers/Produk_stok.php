@@ -15,11 +15,15 @@ class Produk_stok extends CI_Controller
         $this->load->library('TanggalIndo');
         $this->load->library('ciqrcode');
         $this->load->library('Uuid');
+        $this->load->model('role/M_ROLE');
     }
 
     public function index($page = 'produk_stok')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_STOK','LIST');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $data['M_PRODUK_STOK'] = $this->M_PRODUK_STOK->get_produk_stok();
         $data['get_area'] = $this->M_MAPING_AREA->get_area();
@@ -42,7 +46,10 @@ class Produk_stok extends CI_Controller
 
     public function produk_aset_histori($kode_stok,$kode_aset,$page = 'produk_stok')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_STOK','LIST');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $data['aset'] = $this->M_PRODUK_STOK->cek_detail_produk($kode_stok);
         $data['histori_aset'] = $this->M_PRODUK_STOK->cek_histori_aset($kode_aset);
@@ -55,7 +62,10 @@ class Produk_stok extends CI_Controller
 
     public function detail_stok($kode,$page = 'produk_stok')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_STOK','DETAIL');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $data['detail_aset'] = $this->M_PRODUK_STOK->cek_detail_produk($kode);
         $data['aset'] = $this->M_PRODUK_STOK->cek_aset($kode);
@@ -105,6 +115,11 @@ class Produk_stok extends CI_Controller
 
     public function generate_aset($kode)
     {
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_STOK','GENERATE');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
         $stok = $this->M_PRODUK_STOK->get_jumlah_stok($kode);
         $jumlah_aset = $this->M_PRODUK_STOK->cek_aset($kode);
         $jumlah_aset = count($jumlah_aset);
@@ -130,6 +145,11 @@ class Produk_stok extends CI_Controller
 
     public function input_histori($kode_stok,$kode_aset,$page = 'produk_stok')
     {
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_STOK','TAMBAH');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
@@ -142,6 +162,11 @@ class Produk_stok extends CI_Controller
 
     public function simpan_histori()
     {
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_STOK','TAMBAH');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
         $data['UUID_ASET'] = $this->input->post('UUID_ASET');        
         $data['UUID_ASET_DETAIL'] = $this->uuid->v4();
         $data['TANGGAL_TINDAKAN'] = date('Y-m-d H:i:s');
@@ -160,7 +185,12 @@ class Produk_stok extends CI_Controller
 
     public function tambah($page = 'produk_stok')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_STOK','TAMBAH');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $data['get_kategori_produk'] = $this->M_PRODUK_STOK->get_kategori_produk();
@@ -171,7 +201,12 @@ class Produk_stok extends CI_Controller
 
     public function edit($KODE_ITEM, $page = 'produk_stok')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_STOK','EDIT');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_PRODUK_STOK->get_produk_stok_single($KODE_ITEM);
@@ -184,7 +219,11 @@ class Produk_stok extends CI_Controller
 
     public function detail($KODE_ITEM, $page = 'produk_stok')
     {
-        $this->load->library('session');
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_STOK','DETAIL');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_PRODUK_STOK->get_produk_stok_single($KODE_ITEM);
@@ -255,6 +294,12 @@ class Produk_stok extends CI_Controller
 
     public function insert()
     {
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_STOK','TAMBAH');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         // Ambil data dari POST
         $get_last_produk = $this->M_PRODUK_STOK->get_latest_data();
         $KODE_ITEM = isset($get_last_produk[0]->KODE_ITEM) ? $get_last_produk[0]->KODE_ITEM + 1 : 1;
@@ -283,6 +328,13 @@ class Produk_stok extends CI_Controller
 
     public function update()
     {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_STOK','EDIT');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         $KODE_ITEM = $this->input->post('KODE_ITEM');
         $NAMA_ITEM = $this->input->post('NAMA_ITEM');
         $KODE_KATEGORI = $this->input->post('KODE_KATEGORI');
@@ -314,6 +366,13 @@ class Produk_stok extends CI_Controller
 
     public function hapus($KODE_ITEM)
     {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'PRODUK_STOK','HAPUS');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         // Proses hapus data
         $result = $this->M_PRODUK_STOK->hapus($KODE_ITEM);
         redirect('produk_stok');

@@ -10,6 +10,7 @@ class Departement extends CI_Controller
         parent::__construct();
         $this->load->model( 'M_DEPARTEMENT' );
         $this->load->helper( 'url_helper' );
+        $this->load->model('role/M_ROLE');
 
         if ( !$this->session->userdata( 'isLoggedIn' ) ) {
             redirect('login');
@@ -19,6 +20,10 @@ class Departement extends CI_Controller
     public function index( $page = 'departement' )
  {
         $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'DEPARTEMEN','LIST DEPARTEMEN');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+        
 
         $data[ 'M_DEPARTEMENT' ] = $this->M_DEPARTEMENT->get_news();
         $this->session->set_userdata( 'page', $page );
@@ -31,6 +36,11 @@ class Departement extends CI_Controller
 
     public function insert()
  {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'DEPARTEMEN','TAMBAH DEPARTEMEN');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
 
         // Ambil data dari POST
         $get_last_departement = $this->M_DEPARTEMENT->get_latest_data();
@@ -62,6 +72,13 @@ class Departement extends CI_Controller
 
     public function update()
  {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'DEPARTEMEN','EDIT DEPARTEMEN');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         // Ambil data dari POST
         $id_departement = $this->input->post( 'id_departement_edit' );
         $nama_departement = $this->input->post( 'nama_departement_edit' );
@@ -90,6 +107,13 @@ class Departement extends CI_Controller
 
     public function hapus()
  {
+
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'DEPARTEMEN','HAPUS DEPARTEMEN');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
+
+
         // Ambil data dari POST
         $id_departement = $this->input->post( 'id_departement_hapus' );
 
