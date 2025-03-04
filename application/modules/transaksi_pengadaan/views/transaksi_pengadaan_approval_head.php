@@ -130,15 +130,7 @@
                                             <button type="button" class="btn btn-danger mx-1" id="btn-disapprove">
                                                 <i class="fa fa-times"></i> DISAPPROVE
                                             </button>
-                                        </div>
-
-                                        <!-- Tombol KEMBALI di kanan -->
-                                        <div class="col-12 col-md-4 col-lg-5 col-xl-5 text-md-right">
-                                            <a href="<?php echo base_url(); ?>transaksi_pengadaan"
-                                                class="btn btn-secondary">
-                                                <i class="fa fa-arrow-left"></i> KEMBALI
-                                            </a>
-                                        </div>
+                                        </div>                                        
                                     </div>
                                 </form>
                             </div>
@@ -173,7 +165,7 @@ $(document).ready(function() {
         // Cek apakah sudah ada flag bahwa data sudah di-load dari DB
         if (sessionStorage.getItem("dbDataLoaded")) {
             console.log("Data dari database sudah dimuat sebelumnya. Skip pengambilan ulang.");
-            loadSelectedItems();
+            
             return;
         }
 
@@ -206,7 +198,7 @@ $(document).ready(function() {
                     // Tandai bahwa data dari database sudah dimasukkan ke localStorage
                     sessionStorage.setItem("dbDataLoaded", "true");
 
-                    loadSelectedItems();
+                    
                 }
             }
         });

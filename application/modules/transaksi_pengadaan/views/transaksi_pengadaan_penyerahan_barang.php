@@ -113,44 +113,7 @@
                                                 <tbody id="selected-items-body">
                                                 </tbody>
                                             </table>
-                                        </div>
-                                        <!-- <div class="row mt-3">
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>KETERANGAN PENGAJUAN</label>
-                                                <textarea disabled name="KETERANGAN_PENGAJUAN" id="KETERANGAN_PENGAJUAN" placeholder="Masukkan keterangan pengajuan" class="form-control" rows="3"><?= $penyerahan_barang->KETERANGAN_PENGAJUAN; ?></textarea>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan KETERANGAN!
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>NO.REGISTER</label>
-                                                <input disabled type="text" class="form-control" id="NO_REGISTER" name="NO_REGISTER" value="<?= $penyerahan_barang->NO_REGISTER; ?>">
-                                                <div class="invalid-feedback">
-                                                    Masukkan NO. REGISTER !
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-12 col-md-6 col-lg-6 about accelerator">
-                                                <label>NO.RESI</label>
-                                                <input disabled type="text" class="form-control" id="NO_RESI" name="NO_RESI" value="<?= $penyerahan_barang->NO_RESI; ?>">
-                                                <div class="invalid-feedback">
-                                                    Masukkan NO. RESI !
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>USER PENERIMA KIRIMAN</label>
-                                                <select class="form-control" name="KODE_USER_PENERIMA_KIRIMAN" id="KODE_USER_PENERIMA_KIRIMAN" disabled>
-                                                    <option value="" class="text-center" selected disabled>---- Pilih User ----</option>
-                                                    <?php foreach ($karyawan as $row) : ?>
-                                                        <option value="<?= $row->ID_KARYAWAN; ?>" <?= $row->ID_KARYAWAN == $penyerahan_barang->KODE_USER_PENERIMA_KIRIMAN ? "selected" : ""; ?>><?= $row->NAMA_KARYAWAN; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Masukkan USER PENERIMA KIRIMAN !
-                                                </div>
-                                            </div>
-                                        </div> -->
+                                        </div>                                        
                                         <div class="row justify-content-center">
                                             
                                             <div class="form-group col-12 col-md-6 col-lg-6">
@@ -174,12 +137,7 @@
                                         <!-- Tombol PROSES PENGADAAN di tengah -->
                                         <div class="col-12 col-md-8 col-lg-7 col-xl-7 mb-2 mb-md-0 text-md-right">
                                             <button type="submit" class="btn btn-success" id="btn-approve"><i class="fa fa-check"></i> PROSES PENYERAHAN BARANG</button>
-                                        </div>
-
-                                        <!-- Tombol KEMBALI di kanan -->
-                                        <div class="col-12 col-md-4 col-lg-5 col-xl-5 text-md-right">
-                                            <a href="<?php echo base_url(); ?>transaksi_pengadaan" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> KEMBALI</a>
-                                        </div>
+                                        </div>                                        
                                     </div>
                                 </form>
                             </div>

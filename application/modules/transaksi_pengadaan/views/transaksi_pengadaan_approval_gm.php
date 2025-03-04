@@ -87,7 +87,7 @@
                                         </div>
 
                                         <div class="table-responsive">
-                                            <table class="table table-hover table-striped table-sm " id="table-approval-produk">
+                                            <table class="table table-striped table-sm " id="table-approval-produk">
                                                 <thead>
                                                     <tr>
                                                         <th class="col-2">FOTO PRODUK</th>
@@ -167,8 +167,7 @@ $(document).ready(function() {
     function loadDataFromDB() {
         // Cek apakah sudah ada flag bahwa data sudah di-load dari DB
         if (sessionStorage.getItem("dbDataLoaded")) {
-            console.log("Data dari database sudah dimuat sebelumnya. Skip pengambilan ulang.");
-            loadSelectedItems();
+            console.log("Data dari database sudah dimuat sebelumnya. Skip pengambilan ulang.");            
             return;
         }
 
@@ -200,8 +199,6 @@ $(document).ready(function() {
 
                     // Tandai bahwa data dari database sudah dimasukkan ke localStorage
                     sessionStorage.setItem("dbDataLoaded", "true");
-
-                    loadSelectedItems();
                 }
             }
         });
