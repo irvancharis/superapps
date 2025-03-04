@@ -58,7 +58,7 @@ class Ticket extends CI_Controller
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $data['ticket'] = $this->M_TICKET->get_ticket($kode);
-        $data['ticket_detail'] = $this->M_TICKET->get_selected_tickets($kode);
+        $data['ticket_detail'] = $this->M_TICKET->get_ticket_detail_view($kode);
         $data['get_karyawan'] = $this->M_KARYAWAN->get_karyawan();
         $data['get_area'] = $this->M_MAPING_AREA->get_area();
         $data['get_ruangan'] = $this->M_MAPING_RUANGAN->get_maping_ruangan();

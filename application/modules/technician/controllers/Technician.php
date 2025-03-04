@@ -35,13 +35,14 @@ class Technician extends CI_Controller
     {
 
         // Ambil data dari POST
-        $get_last_technician = $this->M_TECHNICIAN->get_latest_data();
-        $id_technician = isset($get_last_technician[0]->IDTECH) ? $get_last_technician[0]->IDTECH + 1 : 1; // Default ke 1 jika data kosong
+        // $get_last_technician = $this->M_TECHNICIAN->get_latest_data();
+        // $id_technician = isset($get_last_technician[0]->IDTECH) ? $get_last_technician[0]->IDTECH + 1 : 1; // Default ke 1 jika data kosong
         $nama_technician = $this->input->post('nama_technician');
         $id_departement = $this->input->post('id_departement');
         $status = $this->input->post('status');
         $id_karyawan = $this->input->post('id_karyawan');
         $description = $this->input->post('description_technician');
+        $id_technician = $id_karyawan;
 
         // Validasi data
         $errors = [];

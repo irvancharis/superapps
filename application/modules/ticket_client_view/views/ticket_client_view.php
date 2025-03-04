@@ -277,9 +277,11 @@
                                                 </div>
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label>FOTO</label>
-                                                    <div id="image-preview" class="image-preview">
-                                                        <label for="image-upload" id="image-label">Upload Gambar</label>
-                                                        <input type="file" name="image" id="image-upload" accept="image/gif, image/jpeg, image/png" />
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <div id="image-preview" class="image-preview">
+                                                            <label for="image-upload" id="image-label">Upload Gambar</label>
+                                                            <input type="file" name="image" id="image-upload" accept="image/gif, image/jpeg, image/png, image/jpg, image/webp, application/pdf" />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

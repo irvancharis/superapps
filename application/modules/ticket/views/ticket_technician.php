@@ -281,10 +281,23 @@
                                                                         }
                                                                         ?>
                                                                     </address>
-                                                                    <!-- <div id="image-preview" class="image-preview">
-                                                                        <label for="image-upload" id="image-label">Upload Gambar</label>
-                                                                        <input type="file" name="image" id="image-upload" accept="image/gif, image/jpeg, image/png" />
-                                                                    </div> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <address>
+                                                                        <strong>Status Ticket:</strong><br>
+                                                                        <?php if ($ticket->STATUS_TICKET == 0) {
+                                                                            echo "<span class='badge badge-warning' style='font-size: small;'>DALAM ANTRIAN</span><br>";
+                                                                        } elseif ($ticket->STATUS_TICKET == 25) {
+                                                                            echo "<span class='badge badge-primary' style='font-size: small;'>SEDANG DIKERJAKAN</span><br>";
+                                                                        } elseif ($ticket->STATUS_TICKET == 50) {
+                                                                            echo "<span class='badge badge-danger' style='font-size: small;'>MENUNGGU VALIDASI</span><br>";
+                                                                        } else {
+                                                                            echo "<span class='badge badge-success' style='font-size: small;'>SELESAI</span><br>";
+                                                                        }
+                                                                        ?>
+                                                                    </address>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -300,8 +313,16 @@
                                             </div>
                                         </div>
                                         <div class="card-footer text-right">
-                                            <button type="button" class="btn btn-primary btn-icon icon-left update-status" data-id="<?php echo $ticket->IDTICKET; ?>" data-status="<?php echo $ticket->STATUS_TICKET; ?>"><i class="fas fa-sync-alt"></i> Update Pengerjaan</button>
-                                            <button type="reset" class="btn btn-secondary"><i class="fas fa-redo"></i> Reset</button>
+                                            <?php if ($ticket->STATUS_TICKET == 100) : ?>
+                                                <button type="button" class="btn btn-primary btn-icon icon-left update-status d-none" data-id="<?= $ticket->IDTICKET; ?>" data-status="<?= $ticket->STATUS_TICKET; ?>">
+                                                    <i class="fas fa-sync-alt"></i> Update Pengerjaan
+                                                </button>
+                                            <?php else : ?>
+                                                <button type="button" class="btn btn-primary btn-icon icon-left update-status" data-id="<?= $ticket->IDTICKET; ?>" data-status="<?= $ticket->STATUS_TICKET; ?>">
+                                                    <i class="fas fa-sync-alt"></i> Update Pengerjaan
+                                                </button>
+                                            <?php endif; ?>
+                                            <button type="button" onclick="history.go(-1)" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</button>
                                         </div>
                                     </form>
                                 </div>
@@ -353,19 +374,6 @@
                 info: false
             });
 
-            // Image Preview
-            // $.uploadPreview({
-            //     input_field: "#image-upload",
-            //     preview_box: "#image-preview",
-            //     label_field: "#image-label",
-            //     label_default: "Choose File",
-            //     label_selected: "Change File",
-            //     no_label: false,
-            //     success_callback: function() {
-            //         console.log("Preview berhasil diinisialisasi");
-            //     }
-            // });
-
             // 🚀 1. Inisialisasi Progress Bar Saat Halaman Dimuat
             $(".progress-bar").each(function() {
                 const id = $(this).data("id");
@@ -410,10 +418,11 @@
                                         <div class="form-group">
                                             <label for="OBJEK_DITANGANI">OBJEKTIF PENGERJAAN</label>
                                             <input type="text" class="form-control" id="OBJEK_DITANGANI" name="OBJEK_DITANGANI" placeholder="Komputer, Printer, Kabel, dll" required>
+                                            <small class="form-text text-muted mt-2 text-left hint-message" style="display: none;"></small>
                                         </div>
                                         <div class="form-group">
-                                            <label for="KETERANGAN">KETERANGAN</label>
-                                            <input type="text" class="form-control" id="KETERANGAN" name="KETERANGAN" placeholder="Analisa Komputer, Penggantian HDD, dll" required>
+                                            <label for="KETERANGAN">KETERANGAN PENGERJAAN</label>
+                                            <input type="text" class="form-control" id="KETERANGAN" name="KETERANGAN" placeholder="Analisa Komputer, Penggantian HDD, dll" required>   
                                         </div>
                                         <div class="form-group d-flex justify-content-center align-items-center flex-column">
                                             <label for="image-upload">FOTO BUKTI PENGERJAAN</label>
@@ -524,7 +533,7 @@
                 }, 500);
 
                 // Event listener untuk input KETERANGAN
-                $(document).on("input", "#KETERANGAN", function() {
+                $(document).on("input", "#OBJEK_DITANGANI", function() {
                     let isFilled = $(this).val().trim() !== "";
                     $(".btn-update-status").prop("disabled", !isFilled);
 
@@ -555,14 +564,21 @@
 
             // Fungsi untuk mengatur kelas warna ketika radio button dipilih
             $(document).on("change", "input[name='status_ticket']", function() {
+                let hintMessage = $(".hint-message"); // Target elemen hint
+
+                // Reset pesan hint
+                hintMessage.html("").hide();
+
                 $('.status').removeClass('bg-warning bg-info bg-danger bg-success text-white');
 
                 if ($('#status0').is(':checked')) {
                     $('#label-status0').addClass('bg-warning text-white');
                 } else if ($('#status1').is(':checked')) {
                     $('#label-status1').addClass('bg-info text-white');
+                    hintMessage.html("*). Ketik <span class='text-danger'>VALIDASI</span> untuk mengubah status ke <span class='badge badge-danger' style='font-size: small;'>MENUNGGU VALIDASI</span>.").show();
                 } else if ($('#status2').is(':checked')) {
                     $('#label-status2').addClass('bg-danger text-white');
+                    hintMessage.html("*). Ketik <span class='text-success'>SELESAI</span> untuk mengubah status ke <span class='badge badge-success' style='font-size: small;'>SELESAI</span>.").show();
                 } else if ($('#status3').is(':checked')) {
                     $('#label-status3').addClass('bg-success text-white');
                 }
