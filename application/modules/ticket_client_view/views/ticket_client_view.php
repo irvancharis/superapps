@@ -9,13 +9,17 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>SAGROUP TICKETING</title>
     <!-- General CSS Files -->
-    <link rel="stylesheet" href="assets/css/app.min.css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/app.min.css'); ?>">
     <!-- Template CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/components.css'); ?>">
     <!-- Custom style CSS -->
-    <link rel="stylesheet" href="assets/css/custom.css">
-    <link rel='shortcut icon' type='image/x-icon' href='assets/img/Logo SA X7.ico' />
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/custom.css'); ?>">
+    <!-- Preview Image -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/bundles/summernote/summernote-bs4.css'); ?>">
+    <!-- <link rel="stylesheet" href="<?php echo base_url('assets/bundles/jquery-selectric/selectric.css'); ?>"> -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.css'); ?>">
+    <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url('assets/img/Logo SA X7.ico'); ?>' />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -193,7 +197,7 @@
                         <div class="card card-danger">
                             <div class="row m-0">
                                 <div class="col-12 col-md-12 col-lg-12 p-0">
-                                    <form class="needs-validation" novalidate="" id="formTicketClient">
+                                    <form class="needs-validation" novalidate="" id="formTicketClient" enctype="multipart/form-data">
                                         <div class="card-header">
                                             <h4 class="judul-ticketing">TICKETING</h4>
                                             <div class="card-header-action">
@@ -264,11 +268,18 @@
                                                         <p style="color:red;font-style: italic;">*). Muncul setelah memilih DEPARTEMEN DIREQUEST</p>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-12 col-md-12 col-lg-12">
+                                                <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label>DESCRIPTION</label>
                                                     <textarea name="description_ticket" placeholder="Masukkan deskripsi keluhan" class="form-control" id="description_ticket"></textarea>
                                                     <div class="invalid-feedback">
                                                         Silahkan masukkan deskripsi keluhan anda!
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-12 col-md-6 col-lg-6">
+                                                    <label>FOTO</label>
+                                                    <div id="image-preview" class="image-preview">
+                                                        <label for="image-upload" id="image-label">Upload Gambar</label>
+                                                        <input type="file" name="image" id="image-upload" accept="image/gif, image/jpeg, image/png" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -385,13 +396,19 @@
         </ul>
     </div>
     <!-- General JS Scripts -->
-    <script src="assets/js/app.min.js"></script>
+    <script src="<?php echo base_url('assets/js/app.min.js') ?>"></script>
+    <!-- Preview Gambar -->
+    <script src="<?php echo base_url('assets/bundles/summernote/summernote-bs4.js') ?>"></script>
+    <!-- <script src="<?php echo base_url('assets/bundles/jquery-selectric/jquery.selectric.min.js') ?>"></script> -->
+    <script src="<?php echo base_url('assets/bundles/upload-preview/assets/js/jquery.uploadPreview.min.js') ?>"></script>
+    <!-- <script src="<?php echo base_url('assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') ?>"></script> -->
+    <!-- <script src="<?php echo base_url('assets/js/page/create-post.js') ?>"></script> -->
     <!-- Page Specific JS File -->
-    <script src="assets/js/page/contact.js"></script>
+    <script src="<?php echo base_url('assets/js/page/contact.js') ?>"></script>
     <!-- Template JS File -->
-    <script src="assets/js/scripts.js"></script>
+    <script src="<?php echo base_url('assets/js/scripts.js') ?>"></script>
     <!-- Custom JS File -->
-    <script src="assets/js/custom.js"></script>
+    <script src="<?php echo base_url('assets/js/custom.js') ?>"></script>
     <!-- Sweetalert -->
     <script src="<?php echo base_url('assets/bundles/sweetalert/sweetalert.min.js'); ?>"></script>
     <script src="<?php echo base_url('assets/js/page/sweetalert.js'); ?>"></script>
@@ -413,13 +430,21 @@
                 e.preventDefault();
 
                 // Ambil data dari form
-                let formData = $(this).serialize();
+                let formData = new FormData(this);
+
+                // Cek isi FormData
+                // for (let pair of formData.entries()) {
+                //     console.log(pair[0] + ': ' + pair[1]);
+                // }
+                // exit;
 
                 // Kirim data ke server melalui AJAX
                 $.ajax({
                     url: "<?php echo base_url(); ?>" + "ticket_client_view/insert", // Endpoint untuk proses input
                     type: 'POST',
                     data: formData,
+                    contentType: false,
+                    processData: false,
                     success: function(response) {
                         let res = JSON.parse(response);
                         if (res.success) {
@@ -489,6 +514,18 @@
                     .attr("aria-valuenow", progressValue)
                     .text(progressValue + "%");
             }
+
+            // File Preview
+            $.uploadPreview({
+                input_field: "#image-upload", // Default: .image-upload
+                preview_box: "#image-preview", // Default: .image-preview
+                label_field: "#image-label", // Default: .image-label
+                label_default: "Choose File", // Default: Choose File
+                label_selected: "Change File", // Default: Change File
+                no_label: false, // Default: false
+                success_callback: null // Default: null
+            });
+
         });
     </script>
 </body>

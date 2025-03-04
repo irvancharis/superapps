@@ -81,11 +81,12 @@
                                                                     <div class="dropdown-menu">
                                                                         <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
                                                                         <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek</a>
+                                                                        <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Lihat</a>
                                                                         <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
-                                                                        <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
+                                                                        <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
                                                                         <div class="dropdown-divider"></div>
                                                                         <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTICKET; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
-                                                                            Delete</a>
+                                                                            Delete</a> -->
                                                                     </div>
                                                                 <?php else : ?>
                                                                     <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Lihat</a>
