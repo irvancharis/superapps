@@ -120,18 +120,19 @@
                                                     <tr>
                                                         <th data-width="40">#</th>
                                                         <!-- <th>Teknisi</th> -->
-                                                        <th>Objek Ditangani</th>
-                                                        <th>Keterangan</th>
-                                                        <th class="text-center">Foto</th>
+                                                        <th>Objektif Pengerjaan</th>
+                                                        <th>Keterangan Pengerjaan</th>
+                                                        <th>Dikerjakan Oleh</th>
+                                                        <th class="text-center">Foto Bukti Pengerjaan</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php foreach ($ticket_detail as $index => $d) : ?>
                                                         <tr height="150">
                                                             <td><?php echo $index + 1; ?></td>
-                                                            <!-- <td><?php echo $d->TECHNICIAN; ?></td> -->
                                                             <td><?php echo $d->OBJEK_DITANGANI; ?></td>
                                                             <td><?php echo $d->KETERANGAN; ?></td>
+                                                            <td><?php echo $d->NAME_TECHNICIAN; ?></td>
                                                             <td class="text-center">
                                                                 <?php
                                                                 if ($d->FOTO == null) {
@@ -165,7 +166,7 @@
                                         echo '<button type="button" class="btn btn-primary btn-icon icon-left update-status d-none" data-id="' . $ticket->IDTICKET . '" data-status="' . $ticket->STATUS_TICKET . '"><i class="fas fa-sync-alt"></i> Update Pengerjaan</button>';
                                     }
                                     ?>
-                                    <button type="button" onclick="history.go(-1)" class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i> Batal</button>
+                                    <button type="button" onclick="history.go(-1)" class="btn btn-secondary btn-icon icon-left"><i class="fas fa-arrow-left"></i> Kembali</button>
                                 </div>
                                 <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
                             </div>

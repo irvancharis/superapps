@@ -4,6 +4,7 @@ class M_TICKET extends CI_Model
 
     // Nama tabel
     protected $table = 'TICKET';
+    protected $view = 'VIEW_TICKET_DETAIL';
 
     public function __construct()
     {
@@ -32,6 +33,15 @@ class M_TICKET extends CI_Model
         $this->db->where('TICKET.IDTICKET', $id_ticket);
         $query = $this->db->get();
         return $query->row_object();
+    }
+
+    public function get_ticket_detail_view($id_ticket)
+    {
+        $this->db->select('*');
+        $this->db->from('VIEW_TICKET_DETAIL');
+        $this->db->where('IDTICKET', $id_ticket);
+        $query = $this->db->get();
+        return $query->result_object();
     }
 
     public function get_departement()
@@ -79,7 +89,7 @@ class M_TICKET extends CI_Model
     public function get_selected_tickets($id_ticket)
     {
         $this->db->select('*');
-        $this->db->from('TICKETDETAIL');
+        $this->db->from('TICKET');
         $this->db->where('IDTICKET', $id_ticket);
         $query = $this->db->get();
 

@@ -479,14 +479,14 @@
                                     $(".type-ticket").empty();
 
                                     // Ambil data yang sudah dipilih sebelumnya
-                                    let selectedTickets = res.selected_tickets || []; // Pastikan server mengembalikan daftar yang dipilih
+                                    let selectedTickets = res.selected_tickets || []; // Pastikan server mengembalikan daftar yang dipilih                                    
 
                                     // Tambahkan opsi baru dari database
                                     res.data.forEach(function(item) {
                                         let isChecked = selectedTickets.some(ticket => ticket.TYPE_TICKET === item.NAMA_JOBLIST) ? 'checked' : '';
                                         $(".type-ticket").append(`
                                             <label class="selectgroup-item">
-                                                <input type="checkbox" name="type_ticket[]" value="${item.NAMA_JOBLIST}" class="selectgroup-input" ${isChecked} disabled>
+                                                <input type="checkbox" name="type_ticket" value="${item.NAMA_JOBLIST}" class="selectgroup-input" ${isChecked} disabled>
                                                 <span class="selectgroup-button">${item.NAMA_JOBLIST}</span>
                                             </label>
                                         `);
