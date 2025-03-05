@@ -458,7 +458,8 @@ class Transaksi_pengadaan extends CI_Controller
 
     public function kirim_wa($data)
 {
-    $token_wa = 'iuQe2njqZ5ExGMrEFtSe';
+    $setting = $this->db->get('SETTING')->row();
+    $token_wa = $setting->TOKEN_WA;
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
@@ -543,10 +544,10 @@ class Transaksi_pengadaan extends CI_Controller
             $this->db->insert('TOKEN', $data_token);
 
 
-            
+            $get_kontak_kabag = $this->M_TRANSAKSI_PENGADAAN->get_karyawan_by_departemen($formData['DEPARTEMEN_PENGAJUAN'],'KABAG');
             //kirim notif WA
             $data = [
-                "target" => '081357501196',
+                "target" => $get_kontak_kabag->TELEPON,
                 "message" => '📢 Pemberitahuan Transaksi Pengadaan!
 Telah terjadi transaksi pengadaan dengan detail berikut:
 
@@ -604,6 +605,8 @@ Sejahtera Abadi Group'
         $token = $this->input->post('token');
         $uuid_token = $this->uuid->v4();
 
+        $jumlah_item = count($items);
+
         if (!$id_transaksi || empty($form) || empty($items)) {
             echo json_encode(['success' => false, 'error' => 'Harap isi Keterangan Pengajuan Pengadaan
             !']);
@@ -619,6 +622,7 @@ Sejahtera Abadi Group'
         ];
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);  
+
         
         $this->db->where('UUID_TOKEN', $token);
         $this->db->delete('TOKEN');
@@ -635,8 +639,12 @@ Sejahtera Abadi Group'
             ];
             $this->db->insert('TOKEN', $data_token);
 
+            $get_setting = $this->db->get('SETTING')->row();            
+            $this->db->where('ID_KARYAWAN',$get_setting->GM);
+            $get_kabag = $this->db->get('VIEW_KARYAWAN')->row();
+            
             $data = [
-                "target" => '081357501196',
+                "target" => $get_kabag->TELEPON,
                 "message" => '📢 Pemberitahuan Transaksi Pengadaan!
 Telah terjadi transaksi pengadaan dengan detail berikut:
 
@@ -687,6 +695,8 @@ Sejahtera Abadi Group'
         $token = $this->input->post('token');
         $uuid_token = $this->uuid->v4();
 
+        $jumlah_item = count($items);
+
         if (!$id_transaksi || empty($items)) {
             echo json_encode(['success' => false, 'error' => 'Data tidak lengkap!']);
             return;
@@ -716,8 +726,12 @@ Sejahtera Abadi Group'
             ];
             $this->db->insert('TOKEN', $data_token);
 
-        $data = [
-                "target" => '081357501196',
+            $get_setting = $this->db->get('SETTING')->row();            
+            $this->db->where('ID_KARYAWAN',$get_setting->HEAD);
+            $get_head = $this->db->get('VIEW_KARYAWAN')->row();
+            
+            $data = [
+                "target" => $get_head->TELEPON,
                 "message" => '📢 Pemberitahuan Transaksi Pengadaan!
 Telah terjadi transaksi pengadaan dengan detail berikut:
 
@@ -764,7 +778,7 @@ Sejahtera Abadi Group'
 
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $items = $this->input->post('items');
-        $token = $this->input->post('token');        
+        $token = $this->input->post('token');                 
 
         if (!$id_transaksi || empty($items)) {
             echo json_encode(['success' => false, 'error' => 'Data tidak lengkap!']);

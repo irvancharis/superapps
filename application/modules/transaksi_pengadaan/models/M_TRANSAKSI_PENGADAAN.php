@@ -27,6 +27,14 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
         return $query->result_object();
     }
 
+    public function get_karyawan_by_departemen($kode,$key)
+    {
+        $this->db->where('ID_DEPARTEMENT', $kode);
+        $this->db->where('NAMA_JABATAN', $key);
+        $query = $this->db->get('VIEW_KARYAWAN');
+        return $query->row();
+    }
+
     public function getuser($KODE)
     {
         $this->db->select('*');
