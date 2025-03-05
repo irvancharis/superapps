@@ -38,8 +38,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>FOTO</th>
-                                                        <th>PRODUK/ITEM</th>
-                                                        <th class="text-center col-2">JUMLAH</th>
+                                                        <th>PRODUK/ITEM</th>                                                        
                                                         <th class="text-center col-2">KETERANGAN</th>
                                                         <th class="text-center col-4">FOTO KONDISI</th>
                                                         <th class="text-center col-1"></th>
@@ -169,6 +168,7 @@ $(document).ready(function() {
                         dataItem.push({
                             UUID_STOK: response.UUID_STOK,
                             KODE_ITEM: response.KODE_ITEM,
+                            UUID_ASET: response.UUID_ASET,
                             NAMA_PRODUK: response.NAMA_PRODUK,
                             FOTO_ITEM: response.FOTO_ITEM,
                             SATUAN: response.SATUAN,
@@ -179,6 +179,8 @@ $(document).ready(function() {
                         $('#RUANGAN_AWAL').val(response.KODE_RUANGAN);
                         $('#LOKASI_AWAL').val(response.KODE_LOKASI);
                         $('#DEPARTEMEN_AWAL').val(response.KODE_DEPARTEMEN);
+                        $('#KODE_ASET').val('');
+                        $('#KODE_ASET').focus();
                     } else {
                         swal('Error', 'Produk tidak ditemukan.', 'error').then(() => {
                             $('#KODE_ASET').val('');
@@ -450,7 +452,8 @@ $(document).ready(function() {
                                     <td>${item.NAMA_PRODUK}</td>
                                     <input type="hidden" class="form-control UUID_STOK" name="UUID_STOK[${index}]" value="${item.UUID_STOK || ''}">
                                     <input type="hidden" class="form-control KODE_ITEM" name="KODE_ITEM[${index}]" value="${item.KODE_ITEM || ''}">
-                                    <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PEMINDAHAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
+                                    <input type="hidden" class="form-control UUID_ASET" name="UUID_ASET[${index}]" value="${item.UUID_ASET || ''}">
+                                    <input type="hidden" class="form-control" name="JUMLAH_PEMINDAHAN[${index}]" value="1">
                                     <td class="text-center col-3"><input type="text" class="form-control" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
                                     <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_AWAL[${index}]"></td>
                                     <td class="text-center col-1">

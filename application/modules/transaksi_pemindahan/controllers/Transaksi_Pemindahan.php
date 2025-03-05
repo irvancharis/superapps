@@ -256,7 +256,7 @@ class Transaksi_pemindahan extends CI_Controller
         $query = $this->M_TRANSAKSI_PEMINDAHAN->get_single($KODE);
         $data['get_single'] = $query;
         
-        $KODE_DEPARTEMEN = $query->DEPARTEMEN_AKHIR;        
+        $KODE_DEPARTEMEN = $query->DEPARTEMEN_AKHIR;     
         $karyawan = $this->M_KARYAWAN->get_karyawan_by_departemen($KODE_DEPARTEMEN);        
         $data['karyawan'] = $karyawan;
         $this->load->view('layout/navbar') .
@@ -354,6 +354,7 @@ class Transaksi_pemindahan extends CI_Controller
                     $data_produk = [
                         'UUID_TRANSAKSI_PEMINDAHAN' => $uuid_transaksi,
                         'UUID_PRODUK_STOK' => $inputan['UUID_STOK'][$i],
+                        'UUID_ASET' => $inputan['UUID_ASET'][$i],
                         'JUMLAH_PEMINDAHAN' => $inputan['JUMLAH_PEMINDAHAN'][$i],
                         'FOTO_AWAL' => $data['file_name'],
                         'KEPERLUAN' => $inputan['KETERANGAN_ITEM'][$i],
@@ -553,12 +554,23 @@ class Transaksi_pemindahan extends CI_Controller
             $RUANGAN = $list_maping['RUANGAN_AKHIR'];
             $JUMLAH_PEMINDAHAN = $item['JUMLAH_PEMINDAHAN'];
 
+            $UUID_ASET = $item['UUID_ASET'];
+
+            
+
             $cek_stok = $this->M_TRANSAKSI_PEMINDAHAN->cek_stok($KODE_ITEM,$AREA,$RUANGAN,$LOKASI,$DEPARTEMEN);
             if ($cek_stok) {
                 $this->M_TRANSAKSI_PEMINDAHAN->penambahan_real_stok($cek_stok->UUID_STOK,$JUMLAH_PEMINDAHAN);
-            } else {
+                if($UUID_ASET != null){
                 $data = [
-                    'UUID_STOK' => $this->uuid->v4(),
+                    'UUID_STOK' => $cek_stok->UUID_STOK
+                ];
+                $this->M_TRANSAKSI_PEMINDAHAN->update_aset($UUID_ASET,$data);
+            }
+            } else {
+                $uuid_stok_baru = $this->uuid->v4();
+                $data = [
+                    'UUID_STOK' => $uuid_stok_baru,
                     'KODE_ITEM' => $KODE_ITEM,
                     'KODE_DEPARTEMEN' => $DEPARTEMEN,
                     'KODE_AREA' => $AREA,
@@ -567,6 +579,13 @@ class Transaksi_pemindahan extends CI_Controller
                     'JUMLAH_STOK' => $JUMLAH_PEMINDAHAN
                 ];
                 $this->M_TRANSAKSI_PEMINDAHAN->insert_stok($data);
+
+                if($UUID_ASET != null){
+                $data = [
+                    'UUID_STOK' => $uuid_stok_baru
+                ];
+                $this->M_TRANSAKSI_PEMINDAHAN->update_aset($UUID_ASET,$data);
+            }
             }
             
         }

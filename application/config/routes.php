@@ -55,6 +55,10 @@ $route['default_controller'] = 'dashboard';
 $route['logout'] = 'login/logout';
 $route['non_akses'] = 'login/non_akses';
 
+$route['appinkabag/(:any)'] = 'transaksi_pengadaan/approval_kabag_by_token/$1';
+$route['appingm/(:any)'] = 'transaksi_pengadaan/approval_gm_by_token/$1';
+$route['appinhead/(:any)'] = 'transaksi_pengadaan/approval_head_by_token/$1';
+
 
 
 

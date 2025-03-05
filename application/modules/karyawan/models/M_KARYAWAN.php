@@ -42,7 +42,7 @@ class M_KARYAWAN extends CI_Model
         $this->db->from('VIEW_KARYAWAN');
         $this->db->where('ID_DEPARTEMENT', $KODE);
         $query = $this->db->get();
-        return $query->row();
+        return $query->result_object();
     }
 
     public function get_karyawan_by_jabatan($KODE)
