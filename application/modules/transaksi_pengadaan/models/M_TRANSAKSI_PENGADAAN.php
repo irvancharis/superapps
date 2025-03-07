@@ -15,16 +15,40 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
     }
 
 
+    public function total_transaksi_pengadaan()
+    {
+        $query = $this->db->count_all('VIEW_TRANSAKSI_PENGADAAN');
+        return $query;
+    }
+
+    public function total_proses_transaksi_pengadaan()
+    {
+        $this->db->where('STATUS_PENGADAAN !=', 'SELESAI');
+        $this->db->where('STATUS_PENGADAAN !=', 'DITOLAK KABAG');
+        $this->db->where('STATUS_PENGADAAN !=', 'DITOLAK GM');
+        $this->db->where('STATUS_PENGADAAN !=', 'DITOLAK HEAD');
+        $query = $this->db->count_all_results('VIEW_TRANSAKSI_PENGADAAN');
+        return $query;
+    }
+
     // Read
     public function get_data_view()
     {
         $this->db->where('STATUS_PENGADAAN !=' ,'SELESAI');
-        // $this->db->where('STATUS_PENGADAAN !=' ,'DITOLAK KABAG');
-        // $this->db->where('STATUS_PENGADAAN !=' ,'DITOLAK GM');
-        // $this->db->where('STATUS_PENGADAAN !=' ,'DITOLAK HEAD');
+        $this->db->where('STATUS_PENGADAAN !=' ,'DITOLAK KABAG');
+        $this->db->where('STATUS_PENGADAAN !=' ,'DITOLAK GM');
+        $this->db->where('STATUS_PENGADAAN !=' ,'DITOLAK HEAD');
         $this->db->order_by('TANGGAL_PENGAJUAN', 'DESC');        
         $query = $this->db->get('VIEW_TRANSAKSI_PENGADAAN');
         return $query->result_object();
+    }
+
+    public function get_karyawan_by_departemen($kode,$key)
+    {
+        $this->db->where('ID_DEPARTEMENT', $kode);
+        $this->db->where('NAMA_JABATAN', $key);
+        $query = $this->db->get('VIEW_KARYAWAN');
+        return $query->row();
     }
 
     public function getuser($KODE)

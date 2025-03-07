@@ -26,7 +26,7 @@ class Transaksi_penghapusan extends CI_Controller
         }
     }
 
-    public function index($page = 'transaksi_penghapusan')
+    public function index($page = 'transaksi')
     {
 
         $SESSION_ROLE = $this->session->userdata('ROLE');

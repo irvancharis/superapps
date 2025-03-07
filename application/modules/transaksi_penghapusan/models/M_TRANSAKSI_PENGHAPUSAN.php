@@ -14,6 +14,22 @@ class M_TRANSAKSI_PENGHAPUSAN extends CI_Model
         $this->load->database();
     }
 
+    public function total_transaksi_penghapusan()
+    {
+        $query = $this->db->count_all('VIEW_TRANSAKSI_PENGHAPUSAN');
+        return $query;
+    }
+
+    public function total_proses_transaksi_penghapusan()
+    {
+        $this->db->where('STATUS_PENGHAPUSAN !=', 'SELESAI');
+        $this->db->where('STATUS_PENGHAPUSAN !=', 'DITOLAK KABAG');
+        $this->db->where('STATUS_PENGHAPUSAN !=', 'DITOLAK GM');
+        $this->db->where('STATUS_PENGHAPUSAN !=', 'DITOLAK HEAD');
+        $query = $this->db->count_all_results('VIEW_TRANSAKSI_PENGHAPUSAN');
+        return $query;
+    }
+
     public function get_data()
     {
         $query = $this->db->get('VIEW_TRANSAKSI_PENGHAPUSAN');

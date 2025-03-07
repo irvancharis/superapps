@@ -14,6 +14,22 @@ class M_TRANSAKSI_OPNAME extends CI_Model
         $this->load->database();
     }
 
+    public function total_transaksi_opname()
+    {
+        $query = $this->db->count_all('VIEW_TRANSAKSI_OPNAME');
+        return $query;
+    }
+
+    public function total_proses_transaksi_opname()
+    {
+        $this->db->where('STATUS_OPNAME !=', 'SELESAI');
+        $this->db->where('STATUS_OPNAME !=', 'DITOLAK KABAG');
+        $this->db->where('STATUS_OPNAME !=', 'DITOLAK GM');
+        $this->db->where('STATUS_OPNAME !=', 'DITOLAK HEAD');
+        $query = $this->db->count_all_results('VIEW_TRANSAKSI_OPNAME');
+        return $query;
+    }
+
     public function get_data()
     {
         $query = $this->db->get('VIEW_TRANSAKSI_OPNAME');

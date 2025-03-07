@@ -87,7 +87,7 @@
                 <a href="<?php echo base_url('ticket'); ?>" class="nav-link"><i data-feather="mail"></i><span>Ticket</span></a>
             </li>
             <li class="menu-header">INVENTORY</li>
-            <li class="dropdown <?php (isset($page) && $page == 'transaksi_pengadaan') ? print 'active' : ''; ?>">
+            <li class="dropdown <?php (isset($page) && $page == 'transaksi') ? print 'active' : ''; ?>">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i
                         data-feather="dollar-sign"></i><span>Transaksi</span></a>
                 <ul class="dropdown-menu">

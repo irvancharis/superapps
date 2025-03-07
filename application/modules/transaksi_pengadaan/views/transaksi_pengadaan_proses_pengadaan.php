@@ -4,92 +4,39 @@
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PENGADAAN_PROSES_PENGADAAN">
+                                <form class="needs-validation" novalidate=""
+                                    id="FORM_TRANSAKSI_PENGADAAN_PROSES_PENGADAAN">
                                     <div class="card-header">
                                         <h4>TRANSAKSI PENGADAAN - PENGADAAN</h4>
                                     </div>
                                     <div class="card-body">
-                                        <!-- <div class="row mt-2">
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>AREA</label>
-                                                <select disabled name="AREA_PENEMPATAN" id="AREA_PENEMPATAN" class="form-control">
-                                                    <option value="" class="text-center" disabled>-- Pilih Area --</option>
-                                                    <?php foreach ($get_area as $row) : ?>
-                                                        <option value="<?= $row->KODE_AREA; ?>" <?= $row->KODE_AREA == $proses_pengadaan->KODE_AREA_DEFAULT ? "selected" : ""; ?>><?= $row->NAMA_AREA; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan AREA!
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>DEPARTEMEN</label>
-                                                <select disabled name="DEPARTEMEN_PENGAJUAN" id="DEPARTEMEN_PENGAJUAN" class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih Departement --</option>
-                                                    <?php foreach ($get_departemen as $row) : ?>
-                                                        <option value="<?= $row->KODE_DEPARTEMEN; ?>" <?= $row->KODE_DEPARTEMEN == $proses_pengadaan->KODE_DEPARTEMEN_PENGAJUAN ? "selected" : ""; ?>><?= $row->NAMA_DEPARTEMEN; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan DEPARTEMENT!
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>RUANGAN</label>
-                                                <select disabled name="RUANGAN_PENEMPATAN" id="RUANGAN_PENEMPATAN" class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih Ruangan --</option>
-                                                    <?php foreach ($get_ruangan as $row) : ?>
-                                                        <option value="<?= $row->KODE_RUANGAN; ?>" <?= $row->KODE_RUANGAN == $proses_pengadaan->KODE_RUANGAN_DEFAULT ? "selected" : ""; ?>><?= $row->NAMA_RUANGAN; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan RUANGAN!
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>LOKASI</label>
-                                                <select disabled name="LOKASI_PENEMPATAN" id="LOKASI_PENEMPATAN" class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih Lokasi --</option>
-                                                    <?php foreach ($get_lokasi as $row) : ?>
-                                                        <option value="<?= $row->KODE_LOKASI; ?>" <?= $row->KODE_LOKASI == $proses_pengadaan->KODE_LOKASI_DEFAULT ? "selected" : ""; ?>><?= $row->NAMA_LOKASI; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan LOKASI!
-                                                </div>
-                                            </div>
-                                        </div> -->
                                         <div class="table-responsive">
-                                            <h6 class="font-medium text-center"> <i class="fa fa-map-marker"></i> PENEMPATAN PRODUK/ITEM</h6>
-                                            <table class="table table-striped table-hover table-md">
+                                            <table class="table table-striped table-sm">
                                                 <tr>
-                                                    <th width="50%">AREA</th>
+                                                    <th class="col-2" style="width: 20%">AREA</th>
                                                     <td><?= $proses_pengadaan->NAMA_AREA; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th width="50%">DEPARTEMEN</th>
+                                                    <th>DEPARTEMEN</th>
                                                     <td><?= $proses_pengadaan->NAMA_DEPARTEMEN; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th width="50%">RUANGAN</th>
+                                                    <th>RUANGAN</th>
                                                     <td><?= $proses_pengadaan->NAMA_RUANGAN; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th width="50%">LOKASI</th>
+                                                    <th>LOKASI</th>
                                                     <td><?= $proses_pengadaan->NAMA_LOKASI; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th width="50%">KETERANGAN PENGAJUAN</th>
+                                                    <th>KETERANGAN PENGAJUAN</th>
                                                     <td><?= $proses_pengadaan->KETERANGAN_PENGAJUAN; ?></td>
                                                 </tr>
                                             </table>
                                         </div>
 
                                         <div class="table-responsive">
-                                            <h6 class="font-medium mt-5 text-center">DATA PRODUK</h6>
-                                            <table class="table table-striped" id="table-approval-produk">
+                                            <table class="table table-striped table-sm" id="table-approval-produk">
                                                 <thead>
                                                     <tr>
                                                         <th>FOTO PRODUK</th>
@@ -102,17 +49,13 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="row mt-3">
-                                            <!-- <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>KETERANGAN PENGAJUAN</label>
-                                                <textarea disabled name="KETERANGAN_PENGAJUAN" id="KETERANGAN_PENGAJUAN" placeholder="Masukkan keterangan pengajuan" class="form-control" rows="3"><?= $proses_pengadaan->KETERANGAN_PENGAJUAN; ?></textarea>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan KETERANGAN!
-                                                </div>
-                                            </div> -->
+                                        <div class="row mt-3" style="justify-content: center">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>NO.REGISTER</label><span class="text-danger float-right font-italic font-weight-600">*). Wajib Di Isi</span>
-                                                <input required type="text" class="form-control" id="NO_REGISTER" name="NO_REGISTER" value="<?= $proses_pengadaan->NO_REGISTER; ?>">
+                                                <label>NO.REGISTER</label><span
+                                                    class="text-danger float-right font-italic font-weight-600">*).
+                                                    Wajib Di Isi</span>
+                                                <input required type="text" autofocus class="form-control" id="NO_REGISTER"
+                                                    name="NO_REGISTER" value="<?= $proses_pengadaan->NO_REGISTER; ?>">
                                                 <div class="invalid-feedback">
                                                     Masukkan NO. REGISTER !
                                                 </div>
@@ -122,13 +65,9 @@
                                     <div class="card-footer text-center row">
                                         <!-- Tombol PROSES PENGADAAN di tengah -->
                                         <div class="col-12 col-md-8 col-lg-7 col-xl-7 mb-2 mb-md-0 text-md-right">
-                                            <button type="submit" class="btn btn-success" id="btn-approve"><i class="fa fa-check"></i> PROSES PENGADAAN</button>
-                                        </div>
-
-                                        <!-- Tombol KEMBALI di kanan -->
-                                        <div class="col-12 col-md-4 col-lg-5 col-xl-5 text-md-right">
-                                            <a href="<?php echo base_url(); ?>transaksi_pengadaan" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> KEMBALI</a>
-                                        </div>
+                                            <button type="submit" class="btn btn-success" id="btn-approve"><i
+                                                    class="fa fa-check"></i> PROSES PENGADAAN</button>
+                                        </div>                                        
                                     </div>
                                 </form>
                             </div>
@@ -141,171 +80,182 @@
             <?php $this->load->view('layout/footer'); ?>
 
             <script>
-                $(document).ready(function() {
-                    $('#table-approval-produk').DataTable({
-                        paging: false,
-                        searching: false,
-                        info: false
-                    });
+$(document).ready(function() {
+    $('#table-approval-produk').DataTable({
+        paging: false,
+        searching: false,
+        sorting: false,
+        ordering: false,
+        info: false,
+        responsive: {
+            details: {
+                type: 'column',
+                display: $.fn.dataTable.Responsive.display
+                    .childRowImmediate, // Menampilkan detail langsung                
+            }
+        }
+    });
 
-                    let idTransaksi = "<?php echo $id_transaksi_pengadaan; ?>"; // ID transaksi dari PHP
+    let idTransaksi = "<?php echo $id_transaksi_pengadaan; ?>"; // ID transaksi dari PHP
 
-                    $('#NO_REGISTER').on('change', function() {
-                        saveFormData();
-                    })
+    $('#NO_REGISTER').on('change', function() {
+        saveFormData();
+    })
 
-                    function loadSelectedItems() {
-                        let selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
-                        let tbody = $("#selected-items-body");
-                        tbody.empty();
+    function loadSelectedItems() {
+        let selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
+        let tbody = $("#selected-items-body");
+        tbody.empty();
 
-                        selectedItems.forEach(function(item, index) {
-                            tbody.append(`
+        selectedItems.forEach(function(item, index) {
+            tbody.append(`
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.id}">
                                     <td class="text-center">
-                                        <div class="gallery d-flex justify-content-center">
-                                            <a class="gallery-item w-25" href="<?php echo base_url('assets/uploads/item/') ?>${item.foto}" data-image="<?php echo base_url('assets/uploads/item/') ?>${item.foto}" data-title="${item.nama}">
-                                                <img style="width: 100px;" src="<?php echo base_url('assets/uploads/item/'); ?>${item.foto}" alt="">
-                                            </a>
-                                        </div>
+                                    <img style="width: 100px;" src="<?php echo base_url('assets/uploads/item/'); ?>${item.foto}" alt="">                                        
                                     </td>
                                     <td>${item.nama}</td>
                                     <td><input type="number" class="form-control jumlah" name="JUMLAH_PENGADAAN[${index}]" value="${item.jumlah || ''}" disabled></td>
                                     <td><input type="text" class="form-control keperluan" name="KEPERLUAN[${index}]" value="${item.keperluan || ''}" disabled></td>
                                 </tr>
                             `);
-                        });
-                        attachInputListeners();
+        });
+        attachInputListeners();
 
-                        // Initialize Chocolate JS
-                        if (jQuery().Chocolat) {
-                            $(".gallery").Chocolat({
-                                className: 'gallery',
-                                imageSelector: '.gallery-item',
-                                imageSize: 'contain', // Menyesuaikan gambar agar pas dalam layar
-                                fullScreen: false, // Tidak otomatis fullscreen
-                                backgroundColor: 'rgba(0,0,0,0.9)', // Background gelap
-                            });
+        // Initialize Chocolate JS
+        if (jQuery().Chocolat) {
+            $(".gallery").Chocolat({
+                className: 'gallery',
+                imageSelector: '.gallery-item',
+                imageSize: 'contain', // Menyesuaikan gambar agar pas dalam layar
+                fullScreen: false, // Tidak otomatis fullscreen
+                backgroundColor: 'rgba(0,0,0,0.9)', // Background gelap
+            });
+        }
+    }
+
+    function loadDataFromDB() {
+        // Cek apakah sudah ada flag bahwa data sudah di-load dari DB
+        if (sessionStorage.getItem("dbDataLoaded")) {
+            console.log("Data dari database sudah dimuat sebelumnya. Skip pengambilan ulang.");
+            loadSelectedItems();
+            return;
+        }
+
+        $.ajax({
+            url: "<?php echo base_url(); ?>transaksi_pengadaan/get_data_transaksi_detail/" +
+                idTransaksi,
+            type: "GET",
+            success: function(response) {
+                let res = JSON.parse(response);
+                if (res.success) {
+                    let storedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
+                    let dbItems = res.data.map(item => ({
+                        id: item.KODE_PRODUK_ITEM,
+                        nama: item.NAMA_ITEM,
+                        jumlah: item.JUMLAH_PENGADAAN,
+                        keperluan: item.KEPERLUAN,
+                        foto: item.FOTO_ITEM
+                    }));
+
+                    // Gabungkan data, tetapi hanya simpan yang tidak duplikat
+                    let mergedItems = [...dbItems, ...storedItems].reduce((acc, curr) => {
+                        if (!acc.some(item => item.id === curr.id)) {
+                            acc.push(curr);
                         }
-                    }
+                        return acc;
+                    }, []);
 
-                    function loadDataFromDB() {
-                        // Cek apakah sudah ada flag bahwa data sudah di-load dari DB
-                        if (sessionStorage.getItem("dbDataLoaded")) {
-                            console.log("Data dari database sudah dimuat sebelumnya. Skip pengambilan ulang.");
-                            loadSelectedItems();
-                            return;
-                        }
+                    localStorage.setItem("selectedItems", JSON.stringify(mergedItems));
 
-                        $.ajax({
-                            url: "<?php echo base_url(); ?>transaksi_pengadaan/get_data_transaksi_detail/" + idTransaksi,
-                            type: "GET",
-                            success: function(response) {
-                                let res = JSON.parse(response);
-                                if (res.success) {
-                                    let storedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
-                                    let dbItems = res.data.map(item => ({
-                                        id: item.KODE_PRODUK_ITEM,
-                                        nama: item.NAMA_ITEM,
-                                        jumlah: item.JUMLAH_PENGADAAN,
-                                        keperluan: item.KEPERLUAN,
-                                        foto: item.FOTO_ITEM
-                                    }));
+                    // Tandai bahwa data dari database sudah dimasukkan ke localStorage
+                    sessionStorage.setItem("dbDataLoaded", "true");
 
-                                    // Gabungkan data, tetapi hanya simpan yang tidak duplikat
-                                    let mergedItems = [...dbItems, ...storedItems].reduce((acc, curr) => {
-                                        if (!acc.some(item => item.id === curr.id)) {
-                                            acc.push(curr);
-                                        }
-                                        return acc;
-                                    }, []);
+                    loadSelectedItems();
+                }
+            }
+        });
+    }
 
-                                    localStorage.setItem("selectedItems", JSON.stringify(mergedItems));
+    loadDataFromDB();
 
-                                    // Tandai bahwa data dari database sudah dimasukkan ke localStorage
-                                    sessionStorage.setItem("dbDataLoaded", "true");
+    // Fungsi untuk menangani input perubahan data
+    function attachInputListeners() {
+        $('.jumlah, .keperluan').on('input', function() {
+            let rowIndex = $(this).closest('tr').data('index');
+            let fieldName = $(this).hasClass('jumlah') ? 'jumlah' : 'keperluan';
 
-                                    loadSelectedItems();
-                                }
-                            }
+            let selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
+            selectedItems[rowIndex][fieldName] = $(this).val();
+            localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+        });
+    }
+
+    // Form Data Save to Local Storage
+    function saveFormData() {
+        let formData = {
+            NO_REGISTER: $('#NO_REGISTER').val(),
+        };
+
+        localStorage.setItem('formPengadaan', JSON.stringify(formData));
+    }
+
+    // Update data ke database
+    $('#FORM_TRANSAKSI_PENGADAAN_PROSES_PENGADAAN').on('submit', function(e) {
+        e.preventDefault();
+
+        let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
+        let formData = JSON.parse(localStorage.getItem('formPengadaan')) || [];
+
+        if (selectedItems.length == 0) {
+            swal('Error', 'Tidak ada produk yang dipilih.', 'error');
+            return;
+        }
+
+        if (!formData.NO_REGISTER) {
+            swal('Error', 'Lengkapi semua data.', 'error');
+            return;
+        }
+
+        // Kirim data untuk update
+        $.ajax({
+            url: "<?php echo base_url(); ?>transaksi_pengadaan/update_proses_pengadaan", // Ubah menjadi update
+            type: "POST",
+            data: {
+                id_transaksi: idTransaksi, // Kirim ID transaksi agar dapat diupdate
+                items: selectedItems,
+                form: formData
+            },
+            success: function(response) {
+                let res = JSON.parse(response);
+                if (res.success) {
+                    swal('Sukses', 'Pengajuan Pengadaan Berhasil Di Proses!', 'success')
+                        .then(function() {
+                            localStorage.removeItem(
+                            'selectedItems'); // Hapus localStorage setelah disimpan
+                            localStorage.removeItem(
+                            'formPengadaan'); // Hapus localStorage setelah disimpan
+                            sessionStorage.removeItem(
+                            "dbDataLoaded"); // Hapus localStorage setelah disimpan
+                            location.href = "<?php echo base_url(); ?>" +
+                                "transaksi_pengadaan";
                         });
-                    }
+                } else {
+                    swal('Gagal', res.error, 'error');
+                }
+            },
+            error: function() {
+                swal('Error', 'Terjadi kesalahan pada server.', 'error');
+            }
+        });
+    });
+});
 
-                    loadDataFromDB();
-
-                    // Fungsi untuk menangani input perubahan data
-                    function attachInputListeners() {
-                        $('.jumlah, .keperluan').on('input', function() {
-                            let rowIndex = $(this).closest('tr').data('index');
-                            let fieldName = $(this).hasClass('jumlah') ? 'jumlah' : 'keperluan';
-
-                            let selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
-                            selectedItems[rowIndex][fieldName] = $(this).val();
-                            localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
-                        });
-                    }
-
-                    // Form Data Save to Local Storage
-                    function saveFormData() {
-                        let formData = {
-                            NO_REGISTER: $('#NO_REGISTER').val(),
-                        };
-
-                        localStorage.setItem('formPengadaan', JSON.stringify(formData));
-                    }
-
-                    // Update data ke database
-                    $('#FORM_TRANSAKSI_PENGADAAN_PROSES_PENGADAAN').on('submit', function(e) {
-                        e.preventDefault();
-
-                        let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
-                        let formData = JSON.parse(localStorage.getItem('formPengadaan')) || [];
-
-                        if (selectedItems.length == 0) {
-                            swal('Error', 'Tidak ada produk yang dipilih.', 'error');
-                            return;
-                        }
-
-                        if (!formData.NO_REGISTER) {
-                            swal('Error', 'Lengkapi semua data.', 'error');
-                            return;
-                        }
-
-                        // Kirim data untuk update
-                        $.ajax({
-                            url: "<?php echo base_url(); ?>transaksi_pengadaan/update_proses_pengadaan", // Ubah menjadi update
-                            type: "POST",
-                            data: {
-                                id_transaksi: idTransaksi, // Kirim ID transaksi agar dapat diupdate
-                                items: selectedItems,
-                                form: formData
-                            },
-                            success: function(response) {
-                                let res = JSON.parse(response);
-                                if (res.success) {
-                                    swal('Sukses', 'Pengajuan Pengadaan Berhasil Di Proses!', 'success').then(function() {
-                                        localStorage.removeItem('selectedItems'); // Hapus localStorage setelah disimpan
-                                        localStorage.removeItem('formPengadaan'); // Hapus localStorage setelah disimpan
-                                        sessionStorage.removeItem("dbDataLoaded"); // Hapus localStorage setelah disimpan
-                                        location.href = "<?php echo base_url(); ?>" + "transaksi_pengadaan";
-                                    });
-                                } else {
-                                    swal('Gagal', res.error, 'error');
-                                }
-                            },
-                            error: function() {
-                                swal('Error', 'Terjadi kesalahan pada server.', 'error');
-                            }
-                        });
-                    });
-                });
-
-                // Hapus semua data localStorage & sessionStorage ketika user meninggalkan halaman
-                $(window).on('beforeunload', function() {
-                    localStorage.clear(); // Hapus semua data localStorage
-                    sessionStorage.clear(); // Hapus semua data sessionStorage
-                });
+// Hapus semua data localStorage & sessionStorage ketika user meninggalkan halaman
+$(window).on('beforeunload', function() {
+    localStorage.clear(); // Hapus semua data localStorage
+    sessionStorage.clear(); // Hapus semua data sessionStorage
+});
             </script>
             </body>
 

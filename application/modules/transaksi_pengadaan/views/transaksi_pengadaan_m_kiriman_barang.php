@@ -10,92 +10,38 @@
                                         <h4>TRANSAKSI PENGADAAN - PENERIMAAN KIRIMAN BARANG</h4>
                                     </div>
                                     <div class="card-body">
-                                        <!-- <div class="row">
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>AREA</label>
-                                                <select disabled name="AREA_PENEMPATAN" id="AREA_PENEMPATAN" class="form-control">
-                                                    <option value="" class="text-center" disabled>-- Pilih Area --</option>
-                                                    <?php foreach ($get_area as $row) : ?>
-                                                        <option value="<?= $row->KODE_AREA; ?>" <?= $row->KODE_AREA == $m_kiriman_barang->KODE_AREA_DEFAULT ? "selected" : ""; ?>><?= $row->NAMA_AREA; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan AREA!
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>DEPARTEMEN</label>
-                                                <select disabled name="DEPARTEMEN_PENGAJUAN" id="DEPARTEMEN_PENGAJUAN" class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih Departement --</option>
-                                                    <?php foreach ($get_departemen as $row) : ?>
-                                                        <option value="<?= $row->KODE_DEPARTEMEN; ?>" <?= $row->KODE_DEPARTEMEN == $m_kiriman_barang->KODE_DEPARTEMEN_PENGAJUAN ? "selected" : ""; ?>><?= $row->NAMA_DEPARTEMEN; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan DEPARTEMENT!
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>RUANGAN</label>
-                                                <select disabled name="RUANGAN_PENEMPATAN" id="RUANGAN_PENEMPATAN" class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih Ruangan --</option>
-                                                    <?php foreach ($get_ruangan as $row) : ?>
-                                                        <option value="<?= $row->KODE_RUANGAN; ?>" <?= $row->KODE_RUANGAN == $m_kiriman_barang->KODE_RUANGAN_DEFAULT ? "selected" : ""; ?>><?= $row->NAMA_RUANGAN; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan RUANGAN!
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>LOKASI</label>
-                                                <select disabled name="LOKASI_PENEMPATAN" id="LOKASI_PENEMPATAN" class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih Lokasi --</option>
-                                                    <?php foreach ($get_lokasi as $row) : ?>
-                                                        <option value="<?= $row->KODE_LOKASI; ?>" <?= $row->KODE_LOKASI == $m_kiriman_barang->KODE_LOKASI_DEFAULT ? "selected" : ""; ?>><?= $row->NAMA_LOKASI; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan LOKASI!
-                                                </div>
-                                            </div>
-                                        </div> -->
+                                        
                                         <div class="table-responsive">
-                                            <h6 class="font-medium text-center"> <i class="fa fa-map-marker"></i>
-                                                PENEMPATAN PRODUK/ITEM</h6>
-                                            <table class="table table-striped table-hover table-md">
+                                            <table class="table table-striped table-sm">
                                                 <tr>
                                                     <th class="col-2">AREA</th>
                                                     <td><?= $m_kiriman_barang->NAMA_AREA; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th >DEPARTEMEN</th>
+                                                    <th>DEPARTEMEN</th>
                                                     <td><?= $m_kiriman_barang->NAMA_DEPARTEMEN; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th >RUANGAN</th>
+                                                    <th>RUANGAN</th>
                                                     <td><?= $m_kiriman_barang->NAMA_RUANGAN; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th >LOKASI</th>
+                                                    <th>LOKASI</th>
                                                     <td><?= $m_kiriman_barang->NAMA_LOKASI; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th >KETERANGAN PENGAJUAN</th>
+                                                    <th>KETERANGAN PENGAJUAN</th>
                                                     <td><?= $m_kiriman_barang->KETERANGAN_PENGAJUAN; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th >NO. REGISTER</th>
+                                                    <th>NO. REGISTER</th>
                                                     <td><?= $m_kiriman_barang->NO_REGISTER; ?></td>
                                                 </tr>
                                             </table>
                                         </div>
 
                                         <div class="table-responsive">
-                                            <h6 class="font-medium mt-5 text-center">DATA PRODUK</h6>
-                                            <table class="table table-striped" id="table-approval-produk">
+                                            <table class="table table-striped table-sm" id="table-approval-produk">
                                                 <thead>
                                                     <tr>
                                                         <th class="col-2">FOTO PRODUK</th>
@@ -108,32 +54,16 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <!-- <div class="row mt-3">
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>KETERANGAN PENGAJUAN</label>
-                                                <textarea disabled name="KETERANGAN_PENGAJUAN" id="KETERANGAN_PENGAJUAN" placeholder="Masukkan keterangan pengajuan" class="form-control" rows="3"><?= $m_kiriman_barang->KETERANGAN_PENGAJUAN; ?></textarea>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan KETERANGAN!
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>NO.REGISTER</label>
-                                                <input disabled type="text" class="form-control" id="NO_REGISTER" name="NO_REGISTER" value="<?= $m_kiriman_barang->NO_REGISTER; ?>">
-                                                <div class="invalid-feedback">
-                                                    Masukkan NO. REGISTER !
-                                                </div>
-                                            </div>
-                                        </div> -->
                                         <div class="row justify-content-center">
-                                            <div
-                                                class="form-group col-12 col-md-12 col-lg-6 text-center ">
+                                            <div class="form-group col-12 col-md-12 col-lg-6 text-center ">
                                                 <br>
                                                 <br>
                                                 <center>
                                                     <label>NO.RESI / KODE PENGIRIMAN</label><span
                                                         class="text-danger float-right font-italic font-weight-600"></span>
-                                                    <input autofocus required type="text" class="form-control" id="NO_RESI"
-                                                        name="NO_RESI" value="<?= $m_kiriman_barang->NO_RESI; ?>">
+                                                    <input autofocus required type="text" class="form-control"
+                                                        id="NO_RESI" name="NO_RESI"
+                                                        value="<?= $m_kiriman_barang->NO_RESI; ?>">
                                                     <input type="hidden" class="form-control" id="NO_RESI"
                                                         name="KODE_USER_PENERIMA_KIRIMAN"
                                                         value="<?= $this->session->userdata('ID_KARYAWAN') ?>">
@@ -174,7 +104,16 @@ $(document).ready(function() {
     $('#table-approval-produk').DataTable({
         paging: false,
         searching: false,
-        info: false
+        sorting: false,
+        ordering: false,
+        info: false,
+        responsive: {
+            details: {
+                type: 'column',
+                display: $.fn.dataTable.Responsive.display
+                    .childRowImmediate, // Menampilkan detail langsung                
+            }
+        }
     });
 
     let idTransaksi = "<?php echo $id_transaksi_pengadaan; ?>"; // ID transaksi dari PHP
@@ -193,11 +132,7 @@ $(document).ready(function() {
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.id}">
                                     <td class="text-center">
-                                        <div class="gallery d-flex justify-content-center">
-                                            <a class="gallery-item w-25" href="<?php echo base_url('assets/uploads/item/') ?>${item.foto}" data-image="<?php echo base_url('assets/uploads/item/') ?>${item.foto}" data-title="${item.nama}">
-                                                <img style="width: 100px;" src="<?php echo base_url('assets/uploads/item/'); ?>${item.foto}" alt="">
-                                            </a>
-                                        </div>
+                                    <img style="width: 100px;" src="<?php echo base_url('assets/uploads/item/'); ?>${item.foto}" alt="">
                                     </td>
                                     <td>${item.nama}</td>
                                     <td class="text-center col-1"><input type="number" class="form-control jumlah" name="JUMLAH_PENGADAAN[${index}]" value="${item.jumlah || ''}" disabled></td>

@@ -26,7 +26,7 @@ class Transaksi_opname extends CI_Controller
         }
     }
 
-    public function index($page = 'transaksi_opname')
+    public function index($page = 'transaksi')
     {
 
         $SESSION_ROLE = $this->session->userdata( 'ROLE' );

@@ -63,7 +63,7 @@
                                         </div> -->
                                         <div class="table-responsive">
                                             <h6 class="font-medium text-center"> <i class="fa fa-map-marker"></i> PENEMPATAN PRODUK/ITEM</h6>
-                                            <table class="table table-striped table-md">
+                                            <table class="table table-striped table-hover table-sm">
                                                 <tr>
                                                     <th class="col-2">AREA</th>
                                                     <td><?= $approval_kabag->NAMA_AREA; ?></td>

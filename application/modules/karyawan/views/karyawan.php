@@ -12,7 +12,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped" id="table-2">
+                                        <table class="table table-striped table-hover table-sm" id="table-2">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center pt-3">
@@ -46,7 +46,7 @@
                                                         <td><?php echo $d->NAMA_AREA; ?></td>                                                       
                                                         <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>    
                                                         <td><?php echo $d->NAMA_JABATAN; ?></td> 
-                                                        <td><?php if($d->STATUS == 'AKTIF'){echo '<span class="badge badge-success">AKTIF</span>';}else{echo '<span class="badge badge-error">NON AKTIF</span>';}?></td>   
+                                                        <td><?php if($d->STATUS == '1'){echo '<span class="badge badge-success">AKTIF</span>';}else{echo '<span class="badge badge-error">NON AKTIF</span>';}?></td>   
                                                         <td>
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
