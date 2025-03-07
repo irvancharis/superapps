@@ -15,6 +15,22 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
     }
 
 
+    public function total_transaksi_pengadaan()
+    {
+        $query = $this->db->count_all('VIEW_TRANSAKSI_PENGADAAN');
+        return $query;
+    }
+
+    public function total_proses_transaksi_pengadaan()
+    {
+        $this->db->where('STATUS_PENGADAAN !=', 'SELESAI');
+        $this->db->where('STATUS_PENGADAAN !=', 'DITOLAK KABAG');
+        $this->db->where('STATUS_PENGADAAN !=', 'DITOLAK GM');
+        $this->db->where('STATUS_PENGADAAN !=', 'DITOLAK HEAD');
+        $query = $this->db->count_all_results('VIEW_TRANSAKSI_PENGADAAN');
+        return $query;
+    }
+
     // Read
     public function get_data_view()
     {

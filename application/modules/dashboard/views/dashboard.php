@@ -8,9 +8,9 @@
                                <div class="row ">
                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                                        <div class="card-content">
-                                           <h5 class="font-15">New Booking</h5>
-                                           <h2 class="mb-3 font-18">258</h2>
-                                           <p class="mb-0"><span class="col-green">10%</span> Increase</p>
+                                           <h5 class="font-18">Total Transaksi Pengadaan</h5>
+                                           <h2 class="mb-3 font-18"><?= $transaksi_pengadaan_total;  ?></h2>
+                                           <p class="mb-0"><span class="col-orange"><?= $transaksi_pengadaan_proses;  ?></span> Dalam Proses</p>
                                        </div>
                                    </div>
                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
@@ -30,9 +30,9 @@
                                <div class="row ">
                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                                        <div class="card-content">
-                                           <h5 class="font-15"> Customers</h5>
-                                           <h2 class="mb-3 font-18">1,287</h2>
-                                           <p class="mb-0"><span class="col-orange">09%</span> Decrease</p>
+                                           <h5 class="font-18"> Total Transaksi Pemindahan</h5>
+                                           <h2 class="mb-3 font-18"><?= $transaksi_pemindahan_total;  ?></h2>
+                                           <p class="mb-0"><span class="col-orange"><?= $transaksi_pemindahan_proses;  ?></span> Dalam Proses</p>
                                        </div>
                                    </div>
                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
@@ -52,10 +52,9 @@
                                <div class="row ">
                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                                        <div class="card-content">
-                                           <h5 class="font-15">New Project</h5>
-                                           <h2 class="mb-3 font-18">128</h2>
-                                           <p class="mb-0"><span class="col-green">18%</span>
-                                               Increase</p>
+                                           <h5 class="font-18">Total Transaksi Penghapusan</h5>
+                                           <h2 class="mb-3 font-18"><?= $transaksi_penghapusan_total;  ?></h2>
+                                           <p class="mb-0"><span class="col-orange"><?= $transaksi_penghapusan_proses;  ?></span> Dalam Proses</p>
                                        </div>
                                    </div>
                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
@@ -75,9 +74,9 @@
                                <div class="row ">
                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                                        <div class="card-content">
-                                           <h5 class="font-15">Revenue</h5>
-                                           <h2 class="mb-3 font-18">$48,697</h2>
-                                           <p class="mb-0"><span class="col-green">42%</span> Increase</p>
+                                           <h5 class="font-18">Total Transaksi Opname</h5>
+                                           <h2 class="mb-3 font-18"><?= $transaksi_opname_total;  ?></h2>
+                                           <p class="mb-0"><span class="col-orange"><?= $transaksi_opname_proses;  ?></span> Dalam Proses</p>
                                        </div>
                                    </div>
                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">

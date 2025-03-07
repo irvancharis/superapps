@@ -14,6 +14,22 @@ class M_TRANSAKSI_PEMINDAHAN extends CI_Model
         $this->load->database();
     }
 
+    public function total_transaksi_pemindahan()
+    {
+        $query = $this->db->count_all('VIEW_TRANSAKSI_PEMINDAHAN');
+        return $query;
+    }
+
+    public function total_proses_transaksi_pemindahan()
+    {
+        $this->db->where('STATUS_PEMINDAHAN !=', 'SELESAI');
+        $this->db->where('STATUS_PEMINDAHAN !=', 'DITOLAK KABAG');
+        $this->db->where('STATUS_PEMINDAHAN !=', 'DITOLAK GM');
+        $this->db->where('STATUS_PEMINDAHAN !=', 'DITOLAK HEAD');
+        $query = $this->db->count_all_results('VIEW_TRANSAKSI_PEMINDAHAN');
+        return $query;
+    }
+
     public function get_data()
     {
         $this->db->where('STATUS_PEMINDAHAN !=' ,'SELESAI');

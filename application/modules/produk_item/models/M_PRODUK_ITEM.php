@@ -12,6 +12,8 @@ class M_PRODUK_ITEM extends CI_Model
         $this->load->database();
     }
 
+    
+
     public function get_produk_item()
     {
         $query = $this->db->get('VIEW_PRODUK_ITEM');
