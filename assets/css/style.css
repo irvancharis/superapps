@@ -8878,7 +8878,10 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 }
 
 .theme-purple .activities .activity:before {
-    background-color: #5864bd
+    /* Pengaturan CSS bawaan Template */
+    /* background-color: #5864bd */
+    /* Pengaturan CSS Custom Septian */
+    background-color: #f85550;
 }
 
 .theme-purple .settingSidebar .settingPanelToggle {
@@ -10371,7 +10374,10 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 }
 
 .theme-white .activities .activity:before {
-    background-color: #6777ef
+    /* Pengaturan CSS bawaan Template */
+    /* background-color: #6777ef */
+    /* Pengaturan CSS Custom Septian */
+    background-color: #f85550;
 }
 
 .theme-white .settingSidebar .settingPanelToggle {

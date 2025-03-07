@@ -37,6 +37,16 @@ class Ticket_client_view extends CI_Controller
         $this->load->view('ticket_card', $ticket);
     }
 
+    public function ticket_history($kode)
+    {
+        // get ticket by id
+        $ticket['ticket_detail'] = $this->M_TICKET->get_ticket_detail_view($kode);
+        // get nama technician by id
+        // $ticket['technician'] = $this->M_TECHNICIAN->get_teknisi_by_id($ticket['ticket_detail']->TECHNICIAN);
+        $this->load->view('ticket_history', $ticket);
+    }
+
+
     public function get_departement()
     {
         $result = $this->M_TICKET->get_departement();

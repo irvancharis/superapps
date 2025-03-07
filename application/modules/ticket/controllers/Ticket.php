@@ -332,7 +332,10 @@ class Ticket extends CI_Controller
         $get_karyawan = $this->M_KARYAWAN->get_karyawan_by_id($get_teknisi->IDKARYAWAN);
         $TEKNISI = $get_karyawan->TELEPON;
         $get_IP = $this->get_lan_ip();
-        $url = "http://" . $get_IP . "/superapps/ticket_client_view/ticket_card/$id_ticket";
+        // Ticket Card
+        // $url = "http://" . $get_IP . "/superapps/ticket_client_view/ticket_card/$id_ticket";
+        // Ticket History
+        $url = "http://" . $get_IP . "/superapps/ticket_client_view/ticket_history/$id_ticket";
 
         // Membuat format pesan sesuai permintaan
         // $message =
@@ -442,19 +445,23 @@ class Ticket extends CI_Controller
                 $data_detail = [
                     'IDTICKET_DETAIL' => $IDTICKET_DETAIL,
                     'IDTICKET' => $id_ticket,
+                    'TGL_PENGERJAAN' => date('Y-m-d H:i:s'),
                     'TECHNICIAN' => $this->session->userdata('ID_KARYAWAN'),
                     'OBJEK_DITANGANI' => $objek_ditangani,
                     'KETERANGAN' => $keterangan,
-                    'FOTO' => $foto
+                    'FOTO' => $foto,
+                    'STATUS_PROGRESS' => $status_ticket
                 ];
             } else {
                 $data_detail = [
                     'IDTICKET_DETAIL' => $IDTICKET_DETAIL,
                     'IDTICKET' => $id_ticket,
+                    'TGL_PENGERJAAN' => date('Y-m-d H:i:s'),
                     'TECHNICIAN' => $this->session->userdata('ID_KARYAWAN'),
                     'OBJEK_DITANGANI' => $objek_ditangani,
                     'KETERANGAN' => $keterangan,
-                    'FOTO' => null
+                    'FOTO' => null,
+                    'STATUS_PROGRESS' => $status_ticket
                 ];
             }
             $this->M_TICKET->insert_detail($data_detail);

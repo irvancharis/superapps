@@ -67,6 +67,16 @@ class M_TICKET extends CI_Model
         return $query->result_object();
     }
 
+    public function get_ticket_detail_view($id_ticket)
+    {
+        $this->db->select('*');
+        $this->db->from('VIEW_TICKET_DETAIL');
+        $this->db->where('IDTICKET', $id_ticket);
+        $this->db->order_by('TGL_PENGERJAAN', 'DESC');
+        $query = $this->db->get();
+        return $query->result_object();
+    }
+
     public function insert($data)
     {
         return $this->db->insert($this->table, $data);

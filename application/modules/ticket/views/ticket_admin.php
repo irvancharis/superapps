@@ -50,7 +50,13 @@
                                                     <div class="col-md-3">
                                                         <address>
                                                             <strong>Ditangani Oleh (Teknisi):</strong><br>
-                                                            <?php echo strtoupper($get_technician->NAME_TECHNICIAN); ?>
+                                                            <?php
+                                                            if (empty($get_technician->NAME_TECHNICIAN)) {
+                                                                echo "-";
+                                                            } else {
+                                                                echo strtoupper($get_technician->NAME_TECHNICIAN);
+                                                            }
+                                                            ?>
                                                         </address>
                                                     </div>
                                                     <div class="col-md-3 text-md-right">
@@ -119,7 +125,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th data-width="40">#</th>
-                                                        <!-- <th>Teknisi</th> -->
+                                                        <th>Tgl & Waktu Pengerjaan</th>
                                                         <th>Objektif Pengerjaan</th>
                                                         <th>Keterangan Pengerjaan</th>
                                                         <th>Dikerjakan Oleh</th>
@@ -130,6 +136,7 @@
                                                     <?php foreach ($ticket_detail as $index => $d) : ?>
                                                         <tr height="150">
                                                             <td><?php echo $index + 1; ?></td>
+                                                            <td><?php echo date('d-m-Y H:i', strtotime($d->TGL_PENGERJAAN)); ?></td>
                                                             <td><?php echo $d->OBJEK_DITANGANI; ?></td>
                                                             <td><?php echo $d->KETERANGAN; ?></td>
                                                             <td><?php echo $d->NAME_TECHNICIAN; ?></td>
