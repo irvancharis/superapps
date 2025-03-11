@@ -353,21 +353,21 @@ class Ticket extends CI_Controller
 
         // Membuat format pesan sesuai permintaan
         // // Kirim Pesan ke WA (Teknisi)
-        $message =
-            "📢 *REQUEST TICKETING* \n\n" .
+        // $message =
+        //     "📢 *REQUEST TICKETING* \n\n" .
 
-            "📌 *Informasi Pengguna:* \n" .
-            "   👤 Nama: `$get_ticket->REQUESTBY` \n" .
-            "   🏢 Departemen: `$get_departemen->NAMA_DEPARTEMEN` \n\n" .
+        //     "📌 *Informasi Pengguna:* \n" .
+        //     "   👤 Nama: `$get_ticket->REQUESTBY` \n" .
+        //     "   🏢 Departemen: `$get_departemen->NAMA_DEPARTEMEN` \n\n" .
 
-            "📌 *Detail Keluhan:* \n" .
-            "   📂 Tipe Keluhan: `$get_ticket->TYPE_TICKET` \n" .
-            "   📝 Deskripsi Keluhan: \n" .
-            "   ```$get_ticket->DESCRIPTION_TICKET``` \n\n" .
+        //     "📌 *Detail Keluhan:* \n" .
+        //     "   📂 Tipe Keluhan: `$get_ticket->TYPE_TICKET` \n" .
+        //     "   📝 Deskripsi Keluhan: \n" .
+        //     "   ```$get_ticket->DESCRIPTION_TICKET``` \n\n" .
 
-            "🚨 *Harap segera proses ticket dengan membuka URL di bawah ini:* \n" .
-            "🔗 [ $url ]";
-        $this->WHATSAPP->send_wa($TEKNISI, $message);
+        //     "🚨 *Harap segera proses ticket dengan membuka URL di bawah ini:* \n" .
+        //     "🔗 [ $url ]";
+        // $this->WHATSAPP->send_wa($TEKNISI, $message);
 
         // // Kirim Pesan ke Telegram (Teknisi)
         // $ms_telegram_teknisi =
@@ -397,15 +397,15 @@ class Ticket extends CI_Controller
         $this->TELEGRAM->send_message('8007581238', $ms_telegram_client);
 
         // // Kirim Pesan ke WA (Client)
-        $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
-        $ms_telegram_client =
-            "📢 TICKETING PROGRESS \n\n" .
+        // $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
+        // $ms_telegram_client =
+        //     "📢 TICKETING PROGRESS \n\n" .
 
-            "📌 Ticket Sudah DIPROSES \n\n" .
+        //     "📌 Ticket Sudah DIPROSES \n\n" .
 
-            "🚨 Lihat Progress Ticket anda dengan membuka URL di bawah ini:\n" .
-            "🔗 [ $url ]";
-        $this->WHATSAPP->send_wa($telp_client, $ms_telegram_client);
+        //     "🚨 Lihat Progress Ticket anda dengan membuka URL di bawah ini:\n" .
+        //     "🔗 [ $url ]";
+        // $this->WHATSAPP->send_wa($telp_client, $ms_telegram_client);
 
         if ($result) {
             echo json_encode(['success' => true]);

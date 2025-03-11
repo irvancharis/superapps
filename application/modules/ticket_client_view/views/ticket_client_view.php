@@ -339,7 +339,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-10 offset-md-1 col-lg-10 offset-lg-1 mt-5">
-                        <div class="card">
+                        <!-- <div class="card">
                             <div class="card-header">
                                 <h4 class="judul-ticketing mx-auto"><i class="fas fa-list"></i> DAFTAR ANTRIAN TICKETING</h4>
                             </div>
@@ -401,7 +401,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="simple-footer">
                             Copyright &copy; SA GROUP <?php echo date('Y'); ?>
                         </div>
@@ -494,7 +494,7 @@
                         let res = JSON.parse(response);
                         if (res.success) {
                             swal('Sukses', 'Request Ticket Berhasil Dikirim!', 'success').then(function() {
-                                location.href = "<?php echo base_url(); ?>" + "ticket_client_view";
+                                location.href = "<?php echo base_url(); ?>" + "ticket_client_view/ticket_queue";
                             });
                         } else {
                             alert('Gagal menyimpan data: ' + response.error);

@@ -123,13 +123,13 @@
                                                     if (in_array(strtolower($fileExtension), $photoExtensions)) {
                                                         // Jika file adalah foto, tampilkan gambar dengan Fancybox
                                                         echo '<a href="' . base_url('assets/uploads/ticket/') . $ticket->FOTO . '" data-fancybox data-caption="Single image" data-image="' . base_url('assets/uploads/ticket/') . $ticket->FOTO . '" data-title="' . $ticket->KETERANGAN . '">
-                                                                    <img class="img-thumbnail" style="filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.3));" width="150px" src="' . base_url('assets/uploads/ticket/' . $ticket->FOTO) . '" alt="">
-                                                                </a>';
+                                                                        <img class="img-thumbnail" style="filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.3));" width="150px" src="' . base_url('assets/uploads/ticket/' . $ticket->FOTO) . '" alt="">
+                                                                    </a>';
                                                     } else if (in_array(strtolower($fileExtension), $documentExtensions)) {
                                                         // Jika file adalah dokumen, tampilkan tautan untuk mengunduh
                                                         echo '<a href="' . base_url('assets/uploads/ticket/') . $ticket->FOTO . '" download>
-                                                                    <i class="fas fa-file-download"></i> Download ' . $ticket->FOTO . '
-                                                                </a>';
+                                                                        <i class="fas fa-file-download"></i> Download ' . $ticket->FOTO . '
+                                                                    </a>';
                                                     }
                                                     ?>
                                                 </div>

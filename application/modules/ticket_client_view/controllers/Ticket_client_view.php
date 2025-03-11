@@ -46,6 +46,18 @@ class Ticket_client_view extends CI_Controller
         $this->load->view('ticket_history', $ticket);
     }
 
+    public function ticket_queue($page = 'ticket')
+    {
+        $this->load->library('session');
+
+        $data['M_TICKET'] = $this->M_TICKET->get_news();
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $data['get_departement'] = $this->M_TICKET->get_departement();
+        $data['get_area'] = $this->M_TICKET->get_area();
+
+        $this->load->view('ticket_queue', $data);
+    }
 
     public function get_departement()
     {
@@ -238,7 +250,7 @@ class Ticket_client_view extends CI_Controller
         $get_IP = $this->get_lan_ip();
         $url = "http://" . $get_IP . "/superapps/ticket";
         $get_kabag = $this->M_KARYAWAN->get_kabag_by_departemen($id_departement);
-        $KABAG = $get_kabag->TELEPON;
+        // $KABAG = $get_kabag->TELEPON;
 
         // Kirim pesan WA ke Tim IT
         // $message =
