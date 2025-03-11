@@ -180,6 +180,29 @@
                 opacity: 0.25;
             }
         }
+
+        .image-preview {
+            width: 100%;
+            min-height: 100px;
+            border: 2px dashed #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .image-preview iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+        }
+
+        .image-preview i {
+            font-size: 50px;
+            color: #007bff;
+        }
     </style>
 </head>
 
@@ -230,11 +253,20 @@
                                                         Silahkan masukkan departemen!
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <!-- E-MAIL -->
+                                                <!-- <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label>E-MAIL</label>
                                                     <input type="email" class="form-control" id="email_ticket" name="email_ticket">
                                                     <div class="invalid-feedback">
                                                         Masukkan Email dengan benar!
+                                                    </div>
+                                                </div> -->
+                                                <!-- TELP -->
+                                                <div class="form-group col-12 col-md-6 col-lg-6">
+                                                    <label>NO. WA</label>
+                                                    <input type="text" class="form-control" id="telp" name="telp">
+                                                    <div class="invalid-feedback">
+                                                        Masukkan NO. TELEPON dengan benar!
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
@@ -275,12 +307,23 @@
                                                         Silahkan masukkan deskripsi keluhan anda!
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <div class="form-group col-12 col-md-6 col-lg-6" id="image-container">
                                                     <label>FOTO</label>
                                                     <div class="d-flex justify-content-center align-items-center">
                                                         <div id="image-preview" class="image-preview">
                                                             <label for="image-upload" id="image-label">Upload Gambar</label>
-                                                            <input type="file" name="image" id="image-upload" accept="image/gif, image/jpeg, image/png, image/jpg, image/webp, application/pdf" />
+                                                            <input type="file" name="image" id="image-upload"
+                                                                accept="image/gif, image/jpeg, image/png, image/webp, application/pdf" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-12 col-md-6 col-lg-6" id="dokumen-container" style="display: none;">
+                                                    <label>UPLOAD DOKUMEN</label>
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <div id="dokumen-preview" class="image-preview">
+                                                            <label for="dokumen-upload" id="dokumen-label">Upload Dokumen</label>
+                                                            <input type="file" name="dokumen" id="dokumen-upload"
+                                                                accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -481,11 +524,27 @@
                             // Tambahkan opsi baru dari database
                             res.data.forEach(function(item) {
                                 $(".type-ticket").append(`
-                                            <label class="selectgroup-item">
-                                                <input type="radio" name="type_ticket" value="${item.NAMA_JOBLIST}" class="selectgroup-input">
-                                                <span class="selectgroup-button">${item.NAMA_JOBLIST}</span>
-                                            </label>
-                                        `);
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="type_ticket" value="${item.NAMA_JOBLIST}" class="selectgroup-input">
+                                        <span class="selectgroup-button">${item.NAMA_JOBLIST}</span>
+                                    </label>
+                                `);
+                            });
+
+                            // Tambahkan event listener untuk radio button type keluhan
+                            $('input[name="type_ticket"]').change(function() {
+                                let selectedType = $(this).val();
+
+                                // Cek jika kategori keluhan adalah "Register OB Sales" atau "Pindah Rute Sales"
+                                if (selectedType === "REGISTER OB SALES" || selectedType === "PINDAH RUTE SALES") {
+                                    // Tampilkan input file dokumen
+                                    $("#image-container").hide();
+                                    $("#dokumen-container").show();
+                                } else {
+                                    // Sembunyikan input file dokumen
+                                    $("#dokumen-container").hide();
+                                    $("#image-container").show();
+                                }
                             });
                         } else {
                             swal('Failed', res.error, 'error');
@@ -526,6 +585,50 @@
                 label_selected: "Change File", // Default: Change File
                 no_label: false, // Default: false
                 success_callback: null // Default: null
+            });
+
+            // 2. Preview Dokumen (Custom Script)
+            $("#dokumen-upload").change(function(event) {
+                let file = event.target.files[0];
+                let previewBox = $("#dokumen-preview");
+                let label = $("#dokumen-label");
+
+                if (file) {
+                    let fileType = file.type;
+                    let fileURL = URL.createObjectURL(file);
+
+                    // Hapus preview sebelumnya (jika ada), tapi JANGAN hapus input file
+                    previewBox.find(".file-preview").remove();
+
+                    if (fileType === "application/pdf") {
+                        // Preview PDF dalam iframe
+                        previewBox.append(`
+                    <div class="file-preview mt-2">
+                        <iframe src="${fileURL}" width="100%" height="200px"></iframe>
+                    </div>
+                `);
+                    } else if (
+                        fileType.includes("word") ||
+                        fileType.includes("spreadsheet")
+                    ) {
+                        // Preview untuk Word / Excel (hanya ikon + nama file)
+                        previewBox.append(`
+                    <div class="file-preview d-flex flex-column align-items-center mt-2">
+                        <i class="fas fa-file-alt fa-3x text-primary"></i>
+                        <p class="mt-5">${file.name}</p>
+                    </div>
+                `);
+                    } else {
+                        // Jika format tidak didukung
+                        previewBox.append(`<p class="file-preview text-danger mt-5">Format file tidak didukung</p>`);
+                    }
+
+                    label.text("Change File"); // Ubah label setelah file dipilih
+                } else {
+                    // Jika tidak ada file yang dipilih
+                    previewBox.find(".file-preview").remove();
+                    label.text("Upload Dokumen");
+                }
             });
 
         });

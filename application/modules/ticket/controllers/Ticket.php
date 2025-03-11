@@ -325,6 +325,20 @@ class Ticket extends CI_Controller
 
         $result = $this->M_TICKET->update($id_ticket, $data);
 
+        // Simpan data detail ticket
+        $IDTICKET_DETAIL = $this->uuid->v4();
+        $data_detail = [
+            'IDTICKET_DETAIL' => $IDTICKET_DETAIL,
+            'IDTICKET' => $id_ticket,
+            'TGL_PENGERJAAN' => date('Y-m-d H:i:s'),
+            'TECHNICIAN' => $id_technician,
+            'OBJEK_DITANGANI' => "Approval Ticket",
+            'KETERANGAN' => "Ticket Diproses Oleh Teknisi",
+            'FOTO' => null,
+            'STATUS_PROGRESS' => $status_ticket
+        ];
+        $this->M_TICKET->insert_detail($data_detail);
+
         // Ambil data teknisi dan departemen dari database
         $get_ticket = $this->M_TICKET->get_ticket($id_ticket);
         $get_departemen = $this->M_DEPARTEMENT->get_departemen_single($get_ticket->DEPARTEMENT);
@@ -338,7 +352,25 @@ class Ticket extends CI_Controller
         $url = "http://" . $get_IP . "/superapps/ticket_client_view/ticket_history/$id_ticket";
 
         // Membuat format pesan sesuai permintaan
-        // $message =
+        // // Kirim Pesan ke WA (Teknisi)
+        $message =
+            "📢 *REQUEST TICKETING* \n\n" .
+
+            "📌 *Informasi Pengguna:* \n" .
+            "   👤 Nama: `$get_ticket->REQUESTBY` \n" .
+            "   🏢 Departemen: `$get_departemen->NAMA_DEPARTEMEN` \n\n" .
+
+            "📌 *Detail Keluhan:* \n" .
+            "   📂 Tipe Keluhan: `$get_ticket->TYPE_TICKET` \n" .
+            "   📝 Deskripsi Keluhan: \n" .
+            "   ```$get_ticket->DESCRIPTION_TICKET``` \n\n" .
+
+            "🚨 *Harap segera proses ticket dengan membuka URL di bawah ini:* \n" .
+            "🔗 [ $url ]";
+        $this->WHATSAPP->send_wa($TEKNISI, $message);
+
+        // // Kirim Pesan ke Telegram (Teknisi)
+        // $ms_telegram_teknisi =
         //     "📢 REQUEST TICKETING \n\n" .
 
         //     "📌 Informasi Pengguna: \n\n" .
@@ -352,34 +384,28 @@ class Ticket extends CI_Controller
 
         //     "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
         //     "🔗 ($url)";
-        // $this->WHATSAPP->send_wa($TEKNISI, $message);
-
-        // // Kirim Pesan ke Telegram (Teknisi)
-        $ms_telegram_teknisi =
-            "📢 REQUEST TICKETING \n\n" .
-
-            "📌 Informasi Pengguna: \n\n" .
-            "\t👤 Nama: `$get_ticket->REQUESTBY` \n" .
-            "\t🏢 Departemen: `$get_departemen->NAMA_DEPARTEMEN` \n\n" .
-
-            "📌 Detail Keluhan: \n\n" .
-            "\t📂 Tipe Keluhan: `$get_ticket->TYPE_TICKET` \n" .
-            "\t📝 Deskripsi: \n" .
-            "```$get_ticket->DESCRIPTION_TICKET``` \n\n\n" .
-
-            "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
-            "🔗 ($url)";
-        $this->TELEGRAM->send_message('8007581238', $ms_telegram_teknisi);
+        // $this->TELEGRAM->send_message('8007581238', $ms_telegram_teknisi);
 
         // // Kirim Pesan ke Telegram (Client)
         $ms_telegram_client =
-            "📢 REQUEST TICKETING \n\n" .
+            "📢 TICKETING PROGRESS \n\n" .
 
-            "📌 Ticket Sudah Di Proses \n\n" .
+            "📌 Ticket Sudah DIPROSES \n\n" .
 
-            "🚨 Lihat Ticket anda dengan membuka URL di bawah ini:\n" .
-            "🔗 ($url)";
+            "🚨 Lihat Progress Ticket anda dengan membuka URL di bawah ini:\n" .
+            "🔗 [ $url ]";
         $this->TELEGRAM->send_message('8007581238', $ms_telegram_client);
+
+        // // Kirim Pesan ke WA (Client)
+        $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
+        $ms_telegram_client =
+            "📢 TICKETING PROGRESS \n\n" .
+
+            "📌 Ticket Sudah DIPROSES \n\n" .
+
+            "🚨 Lihat Progress Ticket anda dengan membuka URL di bawah ini:\n" .
+            "🔗 [ $url ]";
+        $this->WHATSAPP->send_wa($telp_client, $ms_telegram_client);
 
         if ($result) {
             echo json_encode(['success' => true]);

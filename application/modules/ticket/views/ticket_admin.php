@@ -109,9 +109,29 @@
                                             </div>
                                             <div class="col-12 col-md-4 col-lg-4">
                                                 <div class="d-flex justify-content-center my-5 my-md-0 my-lg-0">
-                                                    <a href="<?php echo base_url('assets/uploads/ticket/') . $ticket->FOTO; ?>" data-fancybox data-caption="Single image" data-image="<?php echo base_url('assets/uploads/ticket/') . $ticket->FOTO; ?>" data-title="<?= $ticket->KETERANGAN; ?>">
-                                                        <img class="img-thumbnail" style="filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.3));" width="150px" src="<?php echo base_url('assets/uploads/ticket/' . $ticket->FOTO); ?>" alt="">
-                                                    </a>
+                                                    <?php
+                                                    // Ambil ekstensi file
+                                                    $fileExtension = pathinfo($ticket->FOTO, PATHINFO_EXTENSION);
+
+                                                    // Daftar ekstensi foto
+                                                    $photoExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+                                                    // Daftar ekstensi dokumen
+                                                    $documentExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+                                                    // Cek apakah file adalah foto
+                                                    if (in_array(strtolower($fileExtension), $photoExtensions)) {
+                                                        // Jika file adalah foto, tampilkan gambar dengan Fancybox
+                                                        echo '<a href="' . base_url('assets/uploads/ticket/') . $ticket->FOTO . '" data-fancybox data-caption="Single image" data-image="' . base_url('assets/uploads/ticket/') . $ticket->FOTO . '" data-title="' . $ticket->KETERANGAN . '">
+                                                                    <img class="img-thumbnail" style="filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.3));" width="150px" src="' . base_url('assets/uploads/ticket/' . $ticket->FOTO) . '" alt="">
+                                                                </a>';
+                                                    } else if (in_array(strtolower($fileExtension), $documentExtensions)) {
+                                                        // Jika file adalah dokumen, tampilkan tautan untuk mengunduh
+                                                        echo '<a href="' . base_url('assets/uploads/ticket/') . $ticket->FOTO . '" download>
+                                                                    <i class="fas fa-file-download"></i> Download ' . $ticket->FOTO . '
+                                                                </a>';
+                                                    }
+                                                    ?>
                                                 </div>
                                             </div>
                                         </div>

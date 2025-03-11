@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Otika - Admin Dashboard Template</title>
+    <title>SAGROUP</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/app.min.css'); ?>">
     <!-- Template CSS -->
@@ -39,57 +39,72 @@
             <!-- Main Content -->
             <div class="main-content">
                 <section class="section px-4 px-md-0 px-lg-0">
-                    <h2 class="judul-ticketing"> <img src="<?php echo base_url('assets/img/Logo SA X7.png'); ?>" width="60px" alt=""> Ticket Progress</h2>
+                    <h3 class="judul-ticketing"> <img src="<?php echo base_url('assets/img/Logo SA X7.png'); ?>" width="60px" alt=""> Ticket Progress</h3>
                     <div class="section-body">
-                        <h2 class="section-title">September 2018</h2>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="activities">
-                                    <?php foreach ($ticket_detail as $index => $d) : ?>
-                                        <div class="activity">
-                                            <div class="activity-icon bg-danger text-white">
-                                                <?php if ($d->STATUS_PROGRESS == 100) : ?>
-                                                    <i class="fas fa-check"></i>
-                                                <?php elseif ($d->STATUS_PROGRESS == 50) : ?>
-                                                    <i class="fas fa-clock"></i>
-                                                <?php else : ?>
-                                                    <i class="fas fa-cog"></i>
-                                                <?php endif; ?>
-                                            </div>
-                                            <div class="activity-detail" data-aos="zoom-in-right" data-aos-duration="1000">
-                                                <div class="mb-2">
-                                                    <span class="text-job"><?php echo date('d/m/Y H:i', strtotime($d->TGL_PENGERJAAN)); ?></span>
-                                                    <span class="bullet"></span>
-                                                    <a class="text-job" href="javascript:void(0);">
-                                                        <?php if ($d->STATUS_PROGRESS == 0) {
-                                                            echo "<span class='badge badge-warning' style='font-size: extra-small;'>DALAM ANTRIAN</span><br>";
-                                                        } elseif ($d->STATUS_PROGRESS == 25) {
-                                                            echo "<span class='badge badge-primary' style='font-size: extra-small;'>SEDANG DIKERJAKAN</span><br>";
-                                                        } elseif ($d->STATUS_PROGRESS == 50) {
-                                                            echo "<span class='badge badge-danger' style='font-size: extra-small;'>MENUNGGU VALIDASI</span><br>";
-                                                        } else {
-                                                            echo "<span class='badge badge-success' style='font-size: extra-small;'>SELESAI</span><br>";
-                                                        }
-                                                        ?>
-                                                    </a>
+                        <?php
+                        // Kelompokkan data berdasarkan tanggal
+                        $groupedData = [];
+                        foreach ($ticket_detail as $d) {
+                            $date = date('d F Y', strtotime($d->TGL_PENGERJAAN)); // Format tanggal: "01 October 2023"
+                            if (!isset($groupedData[$date])) {
+                                $groupedData[$date] = [];
+                            }
+                            $groupedData[$date][] = $d;
+                        }
+                        ?>
+
+                        <?php foreach ($groupedData as $date => $activities) : ?>
+                            <h2 class="section-title"><?php echo $date; ?></h2> <!-- Judul tanggal -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="activities">
+                                        <?php foreach ($activities as $index => $d) : ?>
+                                            <div class="activity">
+                                                <div class="activity-icon bg-danger text-white">
+                                                    <?php if ($d->STATUS_PROGRESS == 100) : ?>
+                                                        <i class="fas fa-check"></i>
+                                                    <?php elseif ($d->STATUS_PROGRESS == 50) : ?>
+                                                        <i class="fas fa-clock"></i>
+                                                    <?php elseif ($d->STATUS_PROGRESS == 25) : ?>
+                                                        <i class="fas fa-cog"></i>
+                                                    <?php else : ?>
+                                                        <i class="fas fa-file-signature"></i>
+                                                    <?php endif; ?>
                                                 </div>
-                                                <p class="font-weight-bold"><?php echo $d->KETERANGAN; ?></p>
-                                                <p class="mt-2">Dikerjakan Oleh : <a href="javascript:void(0);"><?php echo $d->NAME_TECHNICIAN; ?></a></p>
-                                                <?php if ($d->FOTO !== null) : ?>
-                                                    <hr>
-                                                    <div class="d-flex justify-content-center align-items-center">
-                                                        <a href="<?php echo base_url('assets/uploads/ticket/') . $d->FOTO; ?>" data-fancybox data-caption="<?= $d->KETERANGAN; ?>" data-image="<?php echo base_url('assets/uploads/ticket/') . $d->FOTO; ?>" data-title="<?= $d->KETERANGAN; ?>">
-                                                            <img src="<?php echo base_url('assets/uploads/ticket/') . $d->FOTO; ?>" class="img-thumbnail" style="filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.3));" width="60px" alt="<?= $d->KETERANGAN; ?>">
+                                                <div class="activity-detail" data-aos="zoom-in-right" data-aos-duration="1000">
+                                                    <div class="mb-2">
+                                                        <span class="text-job"><?php echo date('H:i', strtotime($d->TGL_PENGERJAAN)); ?></span>
+                                                        <span class="bullet"></span>
+                                                        <a class="text-job" href="javascript:void(0);">
+                                                            <?php if ($d->STATUS_PROGRESS == 0) {
+                                                                echo "<span class='badge badge-warning' style='font-size: 10px;'>DALAM ANTRIAN</span><br>";
+                                                            } elseif ($d->STATUS_PROGRESS == 25) {
+                                                                echo "<span class='badge badge-primary' style='font-size: 10px;'>SEDANG DIKERJAKAN</span><br>";
+                                                            } elseif ($d->STATUS_PROGRESS == 50) {
+                                                                echo "<span class='badge badge-danger' style='font-size: 10px;'>MENUNGGU VALIDASI</span><br>";
+                                                            } else {
+                                                                echo "<span class='badge badge-success' style='font-size: 10px;'>SELESAI</span><br>";
+                                                            }
+                                                            ?>
                                                         </a>
                                                     </div>
-                                                <?php endif; ?>
-                                                <!-- <p>Have commented on the task of "<a href="#">Responsive design</a>".</p> -->
+                                                    <p class="font-weight-bold"><?php echo $d->KETERANGAN; ?></p>
+                                                    <p class="mt-2">Dikerjakan Oleh : <a href="javascript:void(0);"><?php echo $d->NAME_TECHNICIAN; ?></a></p>
+                                                    <?php if ($d->FOTO !== null) : ?>
+                                                        <hr>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <a href="<?php echo base_url('assets/uploads/ticket/') . $d->FOTO; ?>" data-fancybox data-caption="<?= $d->KETERANGAN; ?>" data-image="<?php echo base_url('assets/uploads/ticket/') . $d->FOTO; ?>" data-title="<?= $d->KETERANGAN; ?>">
+                                                                <img src="<?php echo base_url('assets/uploads/ticket/') . $d->FOTO; ?>" class="img-thumbnail" style="filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.3));" width="60px" alt="<?= $d->KETERANGAN; ?>">
+                                                            </a>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
                                             </div>
-                                        </div>
-                                    <?php endforeach; ?>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </section>
             </div>

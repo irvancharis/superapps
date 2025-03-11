@@ -93,7 +93,7 @@ class M_TICKET extends CI_Model
         $this->db->where('IDTICKET', $id_ticket);
         $query = $this->db->get();
 
-        return $query->result_object(); // Mengembalikan daftar nama joblist yang dipilih
+        return $query->row_object(); // Mengembalikan daftar nama joblist yang dipilih
     }
 
     public function insert($data)

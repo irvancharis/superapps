@@ -18,8 +18,6 @@ class Transaksi_pengadaan extends CI_Controller
         $this->load->library('Uuid');
         $this->load->library('TanggalIndo');
         $this->load->database();
-
-        
     }
 
     public function index($page = 'transaksi')
@@ -28,9 +26,11 @@ class Transaksi_pengadaan extends CI_Controller
             redirect('login');
         }
 
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI PENGADAAN','LIST');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGADAAN', 'LIST');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
         // echo $this->uuid->v4();
 
         $data['M_TRANSAKSI_PENGADAAN'] = $this->M_TRANSAKSI_PENGADAAN->get_data_view();
@@ -41,7 +41,7 @@ class Transaksi_pengadaan extends CI_Controller
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('transaksi_pengadaan', $data);
     }
-       
+
 
     public function get_single($KODE)
     {
@@ -168,17 +168,16 @@ class Transaksi_pengadaan extends CI_Controller
 
     // APPROVAL
     public function approval_kabag_by_token($token)
-    {        
+    {
 
         $data_token = $this->M_TRANSAKSI_PENGADAAN->get_detail_token($token);
-        if($data_token){
-            $data['approval_kabag'] = $this->M_TRANSAKSI_PENGADAAN->get_single($data_token->UUID_TRANSAKSI);        
-            $data['id_transaksi_pengadaan'] = $data_token->UUID_TRANSAKSI;     
+        if ($data_token) {
+            $data['approval_kabag'] = $this->M_TRANSAKSI_PENGADAAN->get_single($data_token->UUID_TRANSAKSI);
+            $data['id_transaksi_pengadaan'] = $data_token->UUID_TRANSAKSI;
             $this->load->view('transaksi_pengadaan_approval_kabag_by_token', $data);
-        }else{
+        } else {
             echo "Data Tidak Ditemukan";
-        }    
-
+        }
     }
 
     // APPROVAL
@@ -205,19 +204,19 @@ class Transaksi_pengadaan extends CI_Controller
         $data['id_transaksi_pengadaan'] = $id_transaksi_pengadaan;
         log_message('error', 'Data returned: ' . json_encode($data['approval_kabag']));
         $this->load->view('layout/navbar') .
-        $this->load->view('layout/sidebar', $data) .
-        $this->load->view('transaksi_pengadaan_approval_kabag', $data);
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('transaksi_pengadaan_approval_kabag', $data);
     }
 
     public function approval_gm_by_token($token)
-    {        
+    {
         $data_token = $this->M_TRANSAKSI_PENGADAAN->get_detail_token($token);
-        if($data_token){
-            $data['approval_gm'] = $this->M_TRANSAKSI_PENGADAAN->get_single($data_token->UUID_TRANSAKSI);        
-            $data['item'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi_detail($data_token->UUID_TRANSAKSI);        
-            $data['id_transaksi_pengadaan'] = $data_token->UUID_TRANSAKSI;       
+        if ($data_token) {
+            $data['approval_gm'] = $this->M_TRANSAKSI_PENGADAAN->get_single($data_token->UUID_TRANSAKSI);
+            $data['item'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi_detail($data_token->UUID_TRANSAKSI);
+            $data['id_transaksi_pengadaan'] = $data_token->UUID_TRANSAKSI;
             $this->load->view('transaksi_pengadaan_approval_gm_by_token', $data);
-        }else{
+        } else {
             echo "Data Tidak Ditemukan";
         }
     }
@@ -279,14 +278,14 @@ class Transaksi_pengadaan extends CI_Controller
     }
 
     public function approval_head_by_token($token)
-    {        
+    {
         $data_token = $this->M_TRANSAKSI_PENGADAAN->get_detail_token($token);
-        if($data_token){
-            $data['approval_head'] = $this->M_TRANSAKSI_PENGADAAN->get_single($data_token->UUID_TRANSAKSI);  
-            $data['item'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi_detail($data_token->UUID_TRANSAKSI);              
-            $data['id_transaksi_pengadaan'] = $data_token->UUID_TRANSAKSI;        
+        if ($data_token) {
+            $data['approval_head'] = $this->M_TRANSAKSI_PENGADAAN->get_single($data_token->UUID_TRANSAKSI);
+            $data['item'] = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi_detail($data_token->UUID_TRANSAKSI);
+            $data['id_transaksi_pengadaan'] = $data_token->UUID_TRANSAKSI;
             $this->load->view('transaksi_pengadaan_approval_head_by_token', $data);
-        }else{
+        } else {
             echo "Data Tidak Ditemukan";
         }
     }
@@ -391,7 +390,7 @@ class Transaksi_pengadaan extends CI_Controller
     }
 
     public function get_data_transaksi_detail($id_transaksi_pengadaan)
-    {       
+    {
 
         $produk = $this->M_TRANSAKSI_PENGADAAN->get_data_transaksi_detail($id_transaksi_pengadaan);
 
@@ -457,42 +456,42 @@ class Transaksi_pengadaan extends CI_Controller
     }
 
     public function kirim_wa($data)
-{
-    $setting = $this->db->get('SETTING')->row();
-    $token_wa = $setting->TOKEN_WA;
-    $curl = curl_init();
+    {
+        $setting = $this->db->get('SETTING')->row();
+        $token_wa = $setting->TOKEN_WA;
+        $curl = curl_init();
 
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://api.fonnte.com/send',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => array(
-            'target' => $data['target'],
-            'message' => $data['message'],
-            'countryCode' => '62', //optional
-        ),
-        CURLOPT_HTTPHEADER => array(
-            'Authorization: ' . $token_wa
-        ),
-        CURLOPT_SSL_VERIFYHOST => false,
-        CURLOPT_SSL_VERIFYPEER => false,
-    ));
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'target' => $data['target'],
+                'message' => $data['message'],
+                'countryCode' => '62', //optional
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: ' . $token_wa
+            ),
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false,
+        ));
 
-    $response = curl_exec($curl);
-    if (curl_errno($curl)) {
-        $error_msg = curl_error($curl);
+        $response = curl_exec($curl);
+        if (curl_errno($curl)) {
+            $error_msg = curl_error($curl);
+        }
+        curl_close($curl);
+
+        if (isset($error_msg)) {
+            echo $error_msg;
+        }
     }
-    curl_close($curl);
-
-    if (isset($error_msg)) {
-        echo $error_msg;
-    }    
-}
 
 
     public function insert()
@@ -534,7 +533,7 @@ class Transaksi_pengadaan extends CI_Controller
             $data_token = [
                 'UUID_TOKEN' => $uuid_token,
                 'TOKEN' => rand(100000, 999999),
-                'CREATE' => date('Y-m-d H:i:s'),                
+                'CREATE' => date('Y-m-d H:i:s'),
                 'MASA_BERLAKU' => date('Y-m-d H:i:s', strtotime('+1 days')),
                 'USER_AKSES' => '8b045f06-cef0-4611-a086-cde108614c8d',
                 'KETERANGAN_TRANSAKSI' => 'TRANSAKSI PENGADAAN - APROVAL KABAG',
@@ -544,18 +543,18 @@ class Transaksi_pengadaan extends CI_Controller
             $this->db->insert('TOKEN', $data_token);
 
 
-            $get_kontak_kabag = $this->M_TRANSAKSI_PENGADAAN->get_karyawan_by_departemen($formData['DEPARTEMEN_PENGAJUAN'],'KABAG');
+            $get_kontak_kabag = $this->M_TRANSAKSI_PENGADAAN->get_karyawan_by_departemen($formData['DEPARTEMEN_PENGAJUAN'], 'KABAG');
             //kirim notif WA
             $data = [
                 "target" => $get_kontak_kabag->TELEPON,
                 "message" => '📢 Pemberitahuan Transaksi Pengadaan!
 Telah terjadi transaksi pengadaan dengan detail berikut:
 
-📌 Nomor Transaksi: '.$data_token['UUID_TRANSAKSI'].'
-🛍️ Total Item: '.$jumlah_item.'
+📌 Nomor Transaksi: ' . $data_token['UUID_TRANSAKSI'] . '
+🛍️ Total Item: ' . $jumlah_item . '
 
 Silakan lakukan pengecekan dan approval melalui link berikut:
-🔗 '.$data_token['LINK'].'
+🔗 ' . $data_token['LINK'] . '
 
 Mohon segera ditindaklanjuti untuk kelancaran proses pengadaan. Terima kasih!
 
@@ -572,7 +571,7 @@ Sejahtera Abadi Group'
         }
     }
 
-    
+
 
     public function update()
     {
@@ -621,50 +620,50 @@ Sejahtera Abadi Group'
             'STATUS_PENGADAAN' => 'MENUNGGU APROVAL GM',
         ];
 
-        $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);  
+        $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
 
-        
+
         $this->db->where('UUID_TOKEN', $token);
         $this->db->delete('TOKEN');
 
         $data_token = [
-                'UUID_TOKEN' => $uuid_token,
-                'TOKEN' => rand(100000, 999999),
-                'CREATE' => date('Y-m-d H:i:s'),   
-                'MASA_BERLAKU' => date('Y-m-d H:i:s', strtotime('+1 days')),
-                'USER_AKSES' => '8b045f06-cef0-4611-a086-cde108614c8d',
-                'KETERANGAN_TRANSAKSI' => 'TRANSAKSI PENGADAAN - APROVAL GM',
-                'LINK' => base_url('appingm/'. $uuid_token),
-                'UUID_TRANSAKSI' => $id_transaksi,
-            ];
-            $this->db->insert('TOKEN', $data_token);
+            'UUID_TOKEN' => $uuid_token,
+            'TOKEN' => rand(100000, 999999),
+            'CREATE' => date('Y-m-d H:i:s'),
+            'MASA_BERLAKU' => date('Y-m-d H:i:s', strtotime('+1 days')),
+            'USER_AKSES' => '8b045f06-cef0-4611-a086-cde108614c8d',
+            'KETERANGAN_TRANSAKSI' => 'TRANSAKSI PENGADAAN - APROVAL GM',
+            'LINK' => base_url('appingm/' . $uuid_token),
+            'UUID_TRANSAKSI' => $id_transaksi,
+        ];
+        $this->db->insert('TOKEN', $data_token);
 
-            $get_setting = $this->db->get('SETTING')->row();            
-            $this->db->where('ID_KARYAWAN',$get_setting->GM);
-            $get_kabag = $this->db->get('VIEW_KARYAWAN')->row();
-            
-            $data = [
-                "target" => $get_kabag->TELEPON,
-                "message" => '📢 Pemberitahuan Transaksi Pengadaan!
+        $get_setting = $this->db->get('SETTING')->row();
+        $this->db->where('ID_KARYAWAN', $get_setting->GM);
+        $get_kabag = $this->db->get('VIEW_KARYAWAN')->row();
+
+        $data = [
+            "target" => $get_kabag->TELEPON,
+            "message" => '📢 Pemberitahuan Transaksi Pengadaan!
 Telah terjadi transaksi pengadaan dengan detail berikut:
 
-📌 Nomor Transaksi: '.$data_token['UUID_TRANSAKSI'].'
-🛍️ Total Item: '.$jumlah_item.'
+📌 Nomor Transaksi: ' . $data_token['UUID_TRANSAKSI'] . '
+🛍️ Total Item: ' . $jumlah_item . '
 
 Silakan lakukan pengecekan dan approval melalui link berikut:
-🔗 '.$data_token['LINK'].'
+🔗 ' . $data_token['LINK'] . '
 
 Mohon segera ditindaklanjuti untuk kelancaran proses pengadaan. Terima kasih!
 
 Salam,
 Sejahtera Abadi Group'
-            ];
+        ];
 
-            //send message
-            $this->kirim_wa($data);
+        //send message
+        $this->kirim_wa($data);
 
 
-            if (!$update) {
+        if (!$update) {
             echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
             return;
         }
@@ -715,40 +714,40 @@ Sejahtera Abadi Group'
         $this->db->delete('TOKEN');
 
         $data_token = [
-                'UUID_TOKEN' => $uuid_token,
-                'TOKEN' => rand(100000, 999999),
-                'CREATE' => date('Y-m-d H:i:s'),   
-                'MASA_BERLAKU' => date('Y-m-d H:i:s', strtotime('+1 days')),
-                'USER_AKSES' => '8b045f06-cef0-4611-a086-cde108614c8d',
-                'KETERANGAN_TRANSAKSI' => 'TRANSAKSI PENGADAAN - APROVAL HEAD',
-                'LINK' => base_url('appinhead/'. $uuid_token),
-                'UUID_TRANSAKSI' => $id_transaksi,
-            ];
-            $this->db->insert('TOKEN', $data_token);
+            'UUID_TOKEN' => $uuid_token,
+            'TOKEN' => rand(100000, 999999),
+            'CREATE' => date('Y-m-d H:i:s'),
+            'MASA_BERLAKU' => date('Y-m-d H:i:s', strtotime('+1 days')),
+            'USER_AKSES' => '8b045f06-cef0-4611-a086-cde108614c8d',
+            'KETERANGAN_TRANSAKSI' => 'TRANSAKSI PENGADAAN - APROVAL HEAD',
+            'LINK' => base_url('appinhead/' . $uuid_token),
+            'UUID_TRANSAKSI' => $id_transaksi,
+        ];
+        $this->db->insert('TOKEN', $data_token);
 
-            $get_setting = $this->db->get('SETTING')->row();            
-            $this->db->where('ID_KARYAWAN',$get_setting->HEAD);
-            $get_head = $this->db->get('VIEW_KARYAWAN')->row();
-            
-            $data = [
-                "target" => $get_head->TELEPON,
-                "message" => '📢 Pemberitahuan Transaksi Pengadaan!
+        $get_setting = $this->db->get('SETTING')->row();
+        $this->db->where('ID_KARYAWAN', $get_setting->HEAD);
+        $get_head = $this->db->get('VIEW_KARYAWAN')->row();
+
+        $data = [
+            "target" => $get_head->TELEPON,
+            "message" => '📢 Pemberitahuan Transaksi Pengadaan!
 Telah terjadi transaksi pengadaan dengan detail berikut:
 
-📌 Nomor Transaksi: '.$data_token['UUID_TRANSAKSI'].'
-🛍️ Total Item: '.$jumlah_item.'
+📌 Nomor Transaksi: ' . $data_token['UUID_TRANSAKSI'] . '
+🛍️ Total Item: ' . $jumlah_item . '
 
 Silakan lakukan pengecekan dan approval melalui link berikut:
-🔗 '.$data_token['LINK'].'
+🔗 ' . $data_token['LINK'] . '
 
 Mohon segera ditindaklanjuti untuk kelancaran proses pengadaan. Terima kasih!
 
 Salam,
 Sejahtera Abadi Group'
-            ];
+        ];
 
-            //send message
-            $this->kirim_wa($data);
+        //send message
+        $this->kirim_wa($data);
 
         if (!$update) {
             echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
@@ -778,7 +777,7 @@ Sejahtera Abadi Group'
 
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $items = $this->input->post('items');
-        $token = $this->input->post('token');                 
+        $token = $this->input->post('token');
 
         if (!$id_transaksi || empty($items)) {
             echo json_encode(['success' => false, 'error' => 'Data tidak lengkap!']);
@@ -795,7 +794,7 @@ Sejahtera Abadi Group'
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
 
         $this->db->where('UUID_TOKEN', $token);
-        $this->db->delete('TOKEN');        
+        $this->db->delete('TOKEN');
 
         if (!$update) {
             echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
