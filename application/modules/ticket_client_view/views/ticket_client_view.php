@@ -474,6 +474,15 @@
             $('#formTicketClient').on('submit', function(e) {
                 e.preventDefault();
 
+                // Tampilkan pop-up "Mohon Tunggu"
+                swal({
+                    title: "Mohon Tunggu",
+                    text: "Sedang memproses ticket...",
+                    buttons: false, // Sembunyikan tombol OK
+                    closeOnClickOutside: false // Tidak boleh menutup dengan mengklik di luar
+                });
+
+
                 // Ambil data dari form
                 let formData = new FormData(this);
 
@@ -493,15 +502,18 @@
                     success: function(response) {
                         let res = JSON.parse(response);
                         if (res.success) {
+                            swal.close();
                             swal('Sukses', 'Request Ticket Berhasil Dikirim!', 'success').then(function() {
                                 location.href = "<?php echo base_url(); ?>" + "ticket_client_view/ticket_queue";
                             });
                         } else {
-                            alert('Gagal menyimpan data: ' + response.error);
+                            swal.close();
+                            swal('Gagal', res.error, 'error');
                         }
                     },
                     error: function() {
-                        alert('Terjadi kesalahan pada server.');
+                        swal.close();
+                        swal('Gagal', 'Terjadi kesalahan pada Server !', 'error');
                     }
                 });
             });

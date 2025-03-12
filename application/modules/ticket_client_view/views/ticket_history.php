@@ -21,6 +21,8 @@
     <!-- Fancybox -->
     <script src="<?php echo base_url('assets/js/fancybox.umd.js'); ?>"></script>
     <link rel="stylesheet" href="<?php echo base_url('assets/css/fancybox.css'); ?>" />
+    <!-- Toastr -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/bundles/izitoast/css/iziToast.min.css'); ?>">
     <style>
         .judul-ticketing {
             color: #202d45;
@@ -37,7 +39,7 @@
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
             <!-- Main Content -->
-            <div class="main-content">
+            <div class="main-content pt-5">
                 <section class="section px-4 px-md-0 px-lg-0">
                     <h3 class="judul-ticketing"> <img src="<?php echo base_url('assets/img/Logo SA X7.png'); ?>" width="60px" alt=""> Ticket Progress</h3>
                     <div class="section-body">
@@ -54,7 +56,8 @@
                         ?>
 
                         <?php foreach ($groupedData as $date => $activities) : ?>
-                            <h2 class="section-title"><?php echo $date; ?></h2> <!-- Judul tanggal -->
+                            <!-- Judul tanggal -->
+                            <!-- <h2 class="section-title"><?php echo $date; ?></h2> -->
                             <div class="row">
                                 <div class="col-12">
                                     <div class="activities">
@@ -90,6 +93,7 @@
                                                     </div>
                                                     <p class="font-weight-bold"><?php echo $d->KETERANGAN; ?></p>
                                                     <p class="mt-2">Dikerjakan Oleh : <a href="javascript:void(0);"><?php echo $d->NAME_TECHNICIAN; ?></a></p>
+                                                    <p id="complaints-list"></p>
                                                     <?php if ($d->FOTO !== null) : ?>
                                                         <hr>
                                                         <div class="d-flex justify-content-center align-items-center">
@@ -127,13 +131,121 @@
     <script src="<?php echo base_url('assets/js/custom.js'); ?>"></script>
     <!-- AOS -->
     <script src="<?php echo base_url('assets/js/aos.js'); ?>"></script>
+    <!-- Toastr -->
+    <script src="<?php echo base_url('assets/bundles/izitoast/js/iziToast.min.js'); ?>"></script>
     <script>
-        AOS.init({
-            once: true
-        });
+        $(document).ready(function() {
+            // Fungsi untuk memuat ulang data
+            function loadTicketProgress() {
+                let id_ticket = '<?php echo $id_ticket; ?>';
+                $.ajax({
+                    url: '<?php echo site_url("ticket_client_view/get_ticket_progress/"); ?>' + id_ticket, // Sesuaikan dengan URL endpoint Anda
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        // Kosongkan konten timeline sebelum memuat ulang
+                        $('.section-body').empty(); // Hapus semua konten di dalam .section-body
 
-        // Inisialisasi Fancybox
-        Fancybox.bind("[data-fancybox]");
+                        // Kelompokkan data berdasarkan tanggal
+                        let groupedData = {};
+                        response.forEach(function(d) {
+                            let date = new Date(d.TGL_PENGERJAAN).toLocaleDateString('en-GB', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric'
+                            });
+                            if (!groupedData[date]) {
+                                groupedData[date] = [];
+                            }
+                            groupedData[date].push(d);
+                        });
+
+                        // Render ulang timeline
+                        for (let date in groupedData) {
+                            let activities = groupedData[date];
+                            let sectionTitle = `<h2 class="section-title">${date}</h2>`;
+                            let activityHtml = '<div class="activities">'; // Mulai kontainer activities
+
+                            activities.forEach(function(d, index) {
+                                let iconClass = '';
+                                let badgeClass = '';
+                                let badgeText = '';
+
+                                if (d.STATUS_PROGRESS == 100) {
+                                    iconClass = 'fas fa-check';
+                                    badgeClass = 'badge badge-success';
+                                    badgeText = 'SELESAI';
+                                } else if (d.STATUS_PROGRESS == 50) {
+                                    iconClass = 'fas fa-clock';
+                                    badgeClass = 'badge badge-danger';
+                                    badgeText = 'MENUNGGU VALIDASI';
+                                } else if (d.STATUS_PROGRESS == 25) {
+                                    iconClass = 'fas fa-cog';
+                                    badgeClass = 'badge badge-primary';
+                                    badgeText = 'SEDANG DIKERJAKAN';
+                                } else {
+                                    iconClass = 'fas fa-file-signature';
+                                    badgeClass = 'badge badge-warning';
+                                    badgeText = 'DALAM ANTRIAN';
+                                }
+
+                                activityHtml += `
+                                <div class="activity">
+                                    <div class="activity-icon bg-danger text-white">
+                                        <i class="${iconClass}"></i>
+                                    </div>
+                                    <div class="activity-detail" data-aos="zoom-in-right" data-aos-duration="1000">
+                                        <div class="mb-2">
+                                            <span class="text-job">${new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date(d.TGL_PENGERJAAN))}</span>
+                                            <span class="bullet"></span>
+                                            <a class="text-job" href="javascript:void(0);">
+                                                <span class="${badgeClass}" style="font-size: 10px;">${badgeText}</span><br>
+                                            </a>
+                                        </div>
+                                        <p class="font-weight-bold">${d.KETERANGAN}</p>
+                                        <p class="mt-2">Dikerjakan Oleh : <a href="javascript:void(0);">${d.NAME_TECHNICIAN}</a></p>
+                                        ${d.FOTO ? `
+                                            <hr>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <a href="<?php echo base_url('assets/uploads/ticket/') ?>${d.FOTO}" data-fancybox data-caption="${d.KETERANGAN}" data-image="<?php echo base_url('assets/uploads/ticket/') ?>${d.FOTO}" data-title="${d.KETERANGAN}">
+                                                    <img src="<?php echo base_url('assets/uploads/ticket/') ?>${d.FOTO}" class="img-thumbnail" style="filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.3));" width="60px" alt="${d.KETERANGAN}">
+                                                </a>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            `;
+                            });
+
+                            activityHtml += '</div>'; // Tutup kontainer activities
+                            $('.section-body').append(sectionTitle + activityHtml); // Tambahkan ke section-body
+                        }
+
+                        // Inisialisasi ulang AOS dan Fancybox
+                        AOS.init({
+                            once: true
+                        });
+                        Fancybox.bind("[data-fancybox]");
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching ticket progress:", error);
+                    }
+                });
+            }
+
+            // Lakukan polling setiap 15 detik
+            setInterval(loadTicketProgress, 15000);
+
+            // Muat data pertama kali saat halaman dimuat
+            loadTicketProgress();
+
+            // Contoh penggunaan iziToast
+            iziToast.info({
+                title: 'INFO',
+                message: 'Halaman ini akan di refresh setiap 15 detik',
+                position: 'topCenter'
+            });
+        });
     </script>
 </body>
 

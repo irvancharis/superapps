@@ -41,9 +41,17 @@ class Ticket_client_view extends CI_Controller
     {
         // get ticket by id
         $ticket['ticket_detail'] = $this->M_TICKET->get_ticket_detail_view($kode);
+        $ticket['id_ticket'] = $kode;
         // get nama technician by id
         // $ticket['technician'] = $this->M_TECHNICIAN->get_teknisi_by_id($ticket['ticket_detail']->TECHNICIAN);
         $this->load->view('ticket_history', $ticket);
+    }
+
+    // Fungsi untuk mengembalikan data JSON Ticket History
+    public function get_ticket_progress($kode)
+    {
+        $ticket_detail = $this->M_TICKET->get_ticket_detail_view($kode); // Ambil data dari model
+        echo json_encode($ticket_detail); // Kembalikan data dalam format JSON
     }
 
     public function ticket_queue($page = 'ticket')
