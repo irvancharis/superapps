@@ -43,10 +43,10 @@ class Login extends CI_Controller
 
                 return redirect()->to('/dashboard');
             } else {
-                echo json_encode(['success' => false, 'error' => 'password salah.']);
+                return redirect()->to('/login');
             }
         } else {
-            echo json_encode(['success' => false, 'error' => 'email tidak terdaftar.']);
+            return redirect()->to('/login');
         }
     }
 
