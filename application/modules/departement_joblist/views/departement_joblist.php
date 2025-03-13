@@ -46,8 +46,8 @@
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">
-                                                                    <a href="#" class="dropdown-item has-icon view-btn" data-departement="<?php echo $d->DEPARTEMENT; ?>" data-joblist="<?php echo $d->NAMA_JOBLIST; ?>" data-toggle="modal" data-target="#viewModal"><i class="fas fa-eye"></i> View</a>
-                                                                    <a href="#" class="dropdown-item has-icon edit-btn" data-id="<?php echo $d->ID_JOBLIST; ?>" data-departement="<?php echo $d->DEPARTEMENT; ?>" data-joblist="<?php echo $d->NAMA_JOBLIST; ?>" data-toggle="modal" data-target="#editModal"><i class="far fa-edit"></i> Edit</a>
+                                                                    <a href="#" class="dropdown-item has-icon view-btn" data-departement="<?php echo $d->DEPARTEMENT; ?>" data-joblist="<?php echo $d->NAMA_JOBLIST; ?>" data-area="<?php echo $d->KODE_AREA; ?>" data-toggle="modal" data-target="#viewModal"><i class="fas fa-eye"></i> View</a>
+                                                                    <a href="#" class="dropdown-item has-icon edit-btn" data-id="<?php echo $d->ID_JOBLIST; ?>" data-departement="<?php echo $d->DEPARTEMENT; ?>" data-joblist="<?php echo $d->NAMA_JOBLIST; ?>" data-area="<?php echo $d->KODE_AREA; ?>" data-toggle="modal" data-target="#editModal"><i class="far fa-edit"></i> Edit</a>
                                                                     <div class="dropdown-divider"></div>
                                                                     <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->ID_JOBLIST; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
                                                                         Delete</a>
@@ -156,7 +156,7 @@
                     </div>
                 </div>
             </div>
-            
+
             </div>
             </div>
 
@@ -186,6 +186,17 @@
                                     <label>Nama Joblist</label>
                                     <input type="text" class="form-control" placeholder="Trouble FINA" name="nama_joblist" id="nama_joblist">
                                 </div>
+                                <div class="form-group">
+                                    <label>Lingkup Area</label>
+                                    <div class="selectgroup selectgroup-pills">
+                                        <?php foreach ($get_area as $key => $value) : ?>
+                                            <label class="selectgroup-item">
+                                                <input type="checkbox" name="kode_area[]" value="<?= $value->KODE_AREA ?>" class="selectgroup-input">
+                                                <span class="selectgroup-button"><?= $value->NAMA_AREA ?></span>
+                                            </label>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
                                 <button type="submit" class="btn btn-primary" id="btnSimpanTambah">Simpan</button>
@@ -211,7 +222,7 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Departemen</label>
-                                    <select class="form-control" name="id_departement_view" id="id_departement_view">
+                                    <select class="form-control" name="id_departement_view" id="id_departement_view" disabled>
                                         <option value="">Pilih Departemen</option>
                                         <?php foreach ($get_departement as $key => $value) { ?>
                                             <option value="<?= $value->KODE_DEPARTEMEN ?>"><?= $value->NAMA_DEPARTEMEN ?></option>
@@ -220,7 +231,18 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Nama Joblist</label>
-                                    <input type="text" class="form-control" placeholder="Trouble FINA" name="nama_joblist_view" id="nama_joblist_view">
+                                    <input type="text" class="form-control" placeholder="Trouble FINA" name="nama_joblist_view" id="nama_joblist_view" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Lingkup Area</label>
+                                    <div class="selectgroup selectgroup-pills">
+                                        <?php foreach ($get_area as $key => $value) : ?>
+                                            <label class="selectgroup-item">
+                                                <input type="checkbox" name="kode_area_view[]" value="<?= $value->KODE_AREA ?>" class="selectgroup-input" disabled>
+                                                <span class="selectgroup-button"><?= $value->NAMA_AREA ?></span>
+                                            </label>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
@@ -257,6 +279,17 @@
                                 <div class="form-group">
                                     <label>Nama Joblist</label>
                                     <input type="text" class="form-control" placeholder="Trouble FINA" name="nama_joblist_edit" id="nama_joblist_edit">
+                                </div>
+                                <div class="form-group">
+                                    <label>Lingkup Area</label>
+                                    <div class="selectgroup selectgroup-pills">
+                                        <?php foreach ($get_area as $key => $value) : ?>
+                                            <label class="selectgroup-item">
+                                                <input type="checkbox" name="kode_area_edit[]" value="<?= $value->KODE_AREA ?>" class="selectgroup-input">
+                                                <span class="selectgroup-button"><?= $value->NAMA_AREA ?></span>
+                                            </label>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
@@ -302,21 +335,89 @@
                     $('.view-btn').on('click', function() {
                         const departement = $(this).data('departement');
                         const joblist = $(this).data('joblist');
+                        const kode_area = $(this).data('area'); // Contoh data area: "1,2,3,4" atau "1" atau null
 
-                        // Isi form di modal edit
+                        // Isi form di modal view
                         $('#id_departement_view').val(departement).change();
                         $('#nama_joblist_view').val(joblist);
+
+                        // Format checkbox kode_area_view berdasarkan data area
+                        if (kode_area) { // Pastikan kode_area tidak kosong
+                            // Ubah kode_area menjadi string (jika belum string)
+                            const kode_area_str = String(kode_area);
+                            const checkboxValues = kode_area_str.split(',').map(Number); // Ubah string menjadi array angka
+
+                            // Loop melalui semua checkbox
+                            $('input[name="kode_area_view[]"]').each(function() {
+                                const checkbox = $(this);
+                                const value = parseInt(checkbox.val(), 10); // Ambil nilai checkbox sebagai number
+
+                                // Hapus atribut disabled sementara
+                                checkbox.prop('disabled', false);
+
+                                // Centang checkbox jika nilai ada dalam array checkboxValues
+                                if (checkboxValues.includes(value)) {
+                                    checkbox.prop('checked', true);
+                                } else {
+                                    checkbox.prop('checked', false);
+                                }
+
+                                // Kembalikan atribut disabled
+                                checkbox.prop('disabled', true);
+                            });
+                        } else {
+                            // Jika kode_area kosong, pastikan semua checkbox tidak tercentang
+                            $('input[name="kode_area_view[]"]').each(function() {
+                                const checkbox = $(this);
+
+                                // Hapus atribut disabled sementara
+                                checkbox.prop('disabled', false);
+
+                                // Uncheck checkbox
+                                checkbox.prop('checked', false);
+
+                                // Kembalikan atribut disabled
+                                checkbox.prop('disabled', true);
+                            });
+                        }
                     });
 
                     $('.edit-btn').on('click', function() {
                         const id = $(this).data('id');
                         const departement = $(this).data('departement');
                         const joblist = $(this).data('joblist');
+                        const kode_area = $(this).data('area'); // Ambil data area
 
                         // Isi form di modal edit
                         $('#id_joblist_edit').val(id);
                         $('#id_departement_edit').val(departement).change();
                         $('#nama_joblist_edit').val(joblist);
+
+                        // Format checkbox kode_area_edit berdasarkan data area
+                        if (kode_area) { // Pastikan kode_area tidak kosong
+                            // Ubah kode_area menjadi string (jika belum string)
+                            const kode_area_str = String(kode_area);
+                            const checkboxValues = kode_area_str.split(',').map(Number); // Ubah string menjadi array angka
+
+                            // Loop melalui semua checkbox
+                            $('input[name="kode_area_edit[]"]').each(function() {
+                                const checkbox = $(this);
+                                const value = parseInt(checkbox.val(), 10); // Ambil nilai checkbox sebagai number
+
+                                // Centang checkbox jika nilai ada dalam array checkboxValues
+                                if (checkboxValues.includes(value)) {
+                                    checkbox.prop('checked', true);
+                                } else {
+                                    checkbox.prop('checked', false);
+                                }
+                            });
+                        } else {
+                            // Jika kode_area kosong, pastikan semua checkbox tidak tercentang
+                            $('input[name="kode_area_edit[]"]').prop('checked', false);
+                        }
+
+                        // Tampilkan modal edit
+                        $('#editModal').modal('show');
                     });
 
                     $('.hapus-btn').on('click', function() {
