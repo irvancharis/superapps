@@ -1818,7 +1818,10 @@ tr:first-child > td > .fc-day-grid-event {
 	top: 0;
 	width: 2px;
 	height: 100%;
-	background-color: #6777ef;
+	/* Pengaturan CSS Bawaan Template */
+	background-color: #6777ef; 
+	/* Pengaturan CSS Custom Septian */
+	/* background-color: #f85550;  */
 }
 .activities .activity:last-child:before {
 	display: none;

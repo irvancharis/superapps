@@ -12,6 +12,7 @@ class Ticket_client_view extends CI_Controller
         $this->load->model('departement/M_DEPARTEMENT');
         $this->load->model('technician/M_TECHNICIAN');
         $this->load->model('karyawan/M_KARYAWAN');
+        $this->load->model('maping_area/M_MAPING_AREA');
         $this->load->helper('url_helper');
     }
 
@@ -35,6 +36,36 @@ class Ticket_client_view extends CI_Controller
         // get nama technician by id
         $ticket['technician'] = $this->M_TECHNICIAN->get_teknisi_by_id($ticket['ticket']->TECHNICIAN);
         $this->load->view('ticket_card', $ticket);
+    }
+
+    public function ticket_history($kode)
+    {
+        // get ticket by id
+        $ticket['ticket_detail'] = $this->M_TICKET->get_ticket_detail_view($kode);
+        $ticket['id_ticket'] = $kode;
+        // get nama technician by id
+        // $ticket['technician'] = $this->M_TECHNICIAN->get_teknisi_by_id($ticket['ticket_detail']->TECHNICIAN);
+        $this->load->view('ticket_history', $ticket);
+    }
+
+    // Fungsi untuk mengembalikan data JSON Ticket History
+    public function get_ticket_progress($kode)
+    {
+        $ticket_detail = $this->M_TICKET->get_ticket_detail_view($kode); // Ambil data dari model
+        echo json_encode($ticket_detail); // Kembalikan data dalam format JSON
+    }
+
+    public function ticket_queue($page = 'ticket')
+    {
+        $this->load->library('session');
+
+        $data['M_TICKET'] = $this->M_TICKET->get_news();
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $data['get_departement'] = $this->M_TICKET->get_departement();
+        $data['get_area'] = $this->M_TICKET->get_area();
+
+        $this->load->view('ticket_queue', $data);
     }
 
     public function get_departement()
@@ -85,29 +116,63 @@ class Ticket_client_view extends CI_Controller
     {
 
         // Ambil data dari POST
-        $get_last_ticket = $this->M_TICKET->get_latest_data();
-        $id_ticket = isset($get_last_ticket[0]->IDTICKET) ? $get_last_ticket[0]->IDTICKET + 1 : 1; // Default ke 1 jika data kosong
         $requestby = $this->input->post('request_by');
         $id_departement = $this->input->post('id_departemen');
-        $email_ticket = $this->input->post('email_ticket');
+        // E-MAIL
+        // $email_ticket = $this->input->post('email_ticket');
+        // TELP
+        $telp = $this->input->post('telp');
         $site_ticket = $this->input->post('id_area');
+        $lokasi_ticket = $this->M_MAPING_AREA->get_maping_area_single($site_ticket)->row()->NAMA_AREA;
         $id_departement_request = $this->input->post('id_departemen_request');
+        $nama_departemen_request = $this->M_DEPARTEMENT->get_departemen_single($id_departement_request)->NAMA_DEPARTEMEN;
         $type_ticket = $this->input->post('type_ticket');
         $description_ticket = $this->input->post('description_ticket');
         $result = null;
 
-        // if (empty($type_ticket) || !is_array($type_ticket)) {
-        //     echo json_encode(['success' => false, 'error' => 'Pilih setidaknya satu jenis keluhan.']);
-        //     return;
-        // }
+        // Generate ID Ticket
+        // Fungsi untuk generate kode kategori secara otomatis
+        function generate_category_code($type_ticket)
+        {
+            // Hilangkan spasi dan karakter khusus, lalu ambil 3 huruf pertama
+            $cleaned_string = preg_replace('/[^a-zA-Z]/', '', $type_ticket); // Hanya ambil huruf
+            $category_code = strtoupper(substr($cleaned_string, 0, 3)); // Ambil 3 huruf pertama dan ubah ke uppercase
+            return $category_code;
+        }
 
-        // // Gabungkan array type_ticket menjadi string untuk penyimpanan di tabel Ticket
-        // $type_ticket_str = implode(',', $type_ticket);
+        // Generate kode kategori
+        $category_code = generate_category_code($type_ticket);
+
+        // Ambil data tiket terakhir
+        $get_last_ticket = $this->M_TICKET->get_latest_data();
+
+        // Tanggal saat ini
+        $current_date = date('Ymd'); // Format: TahunBulanTanggal (YYYYMMDD)
+
+        // Nomor urut
+        if (isset($get_last_ticket[0]->IDTICKET)) {
+            // Jika ada tiket sebelumnya, ambil nomor urut terakhir
+            $last_id_ticket = $get_last_ticket[0]->IDTICKET;
+            $last_sequence_number = intval(substr($last_id_ticket, -3)); // Ambil 3 digit terakhir
+            $sequence_number = $last_sequence_number + 1; // Increment nomor urut
+        } else {
+            // Jika tidak ada tiket sebelumnya, mulai dari 1
+            $sequence_number = 1;
+        }
+
+        // Format nomor urut menjadi 3 digit (misalnya, 001, 002, dst.)
+        $formatted_sequence_number = str_pad($sequence_number, 3, '0', STR_PAD_LEFT);
+
+        // Gabungkan komponen untuk membuat IDTICKET
+        $id_ticket = $current_date . '-' . $category_code . '-' . $formatted_sequence_number;
+
+        // Contoh hasil: 20231015-NET-001
+        // End Generate ID Ticket
 
         // Konfigurasi upload Gambar
         $config['upload_path'] = APPPATH . '../assets/uploads/ticket/';
-        $config['allowed_types'] = 'jpg|jpeg|png';
-        $config['max_size'] = 2048; // 2MB
+        $config['allowed_types'] = 'jpg|jpeg|png|pdf|doc|docx|xls|xlsx';
+        $config['max_size'] = 4096; // 4MB
         $config['file_name'] = $id_ticket . '_' . $requestby;
 
         // Cek Apakah ada gambar yang diupload
@@ -127,7 +192,43 @@ class Ticket_client_view extends CI_Controller
                 'IDTICKET' => $id_ticket,
                 'REQUESTBY' => $requestby,
                 'DEPARTEMENT' => $id_departement,
-                'EMAIL_TICKET' => $email_ticket,
+                // E-MAIL
+                // 'EMAIL_TICKET' => $email_ticket,
+                // TELP
+                'TELP' => $telp,
+                'SITE_TICKET' => $site_ticket,
+                'DEPARTEMENT_DIREQUEST' => $id_departement_request,
+                'TYPE_TICKET' => $type_ticket,
+                'DESCRIPTION_TICKET' => $description_ticket,
+                'DATE_TICKET' => date('Y-m-d H:i:s'),
+                'DATE_TICKET_DONE' => null,
+                'STATUS_TICKET' => 0,
+                'APPROVAL_TICKET' => 0,
+                'PROSENTASE' => null,
+                'FOTO' => $foto
+            ];
+
+            $result = $this->M_TICKET->insert($data);
+        } elseif (!empty($_FILES['dokumen']['name'])) {
+            $this->load->library('upload', $config);
+            if (!$this->upload->do_upload('dokumen')) {
+                echo json_encode(['success' => false, 'error' => $this->upload->display_errors()]);
+                return;
+            }
+            // Ambil data file yang diupload
+            $data_dokumen = $this->upload->data();
+            $extension = $data_dokumen['file_ext'];
+            $foto = $id_ticket . '_' . $requestby . $extension;
+
+            // Jika validasi lolos, lanjutkan proses penyimpanan
+            $data = [
+                'IDTICKET' => $id_ticket,
+                'REQUESTBY' => $requestby,
+                'DEPARTEMENT' => $id_departement,
+                // E-MAIL
+                // 'EMAIL_TICKET' => $email_ticket,
+                // TELP
+                'TELP' => $telp,
                 'SITE_TICKET' => $site_ticket,
                 'DEPARTEMENT_DIREQUEST' => $id_departement_request,
                 'TYPE_TICKET' => $type_ticket,
@@ -146,7 +247,10 @@ class Ticket_client_view extends CI_Controller
                 'IDTICKET' => $id_ticket,
                 'REQUESTBY' => $requestby,
                 'DEPARTEMENT' => $id_departement,
-                'EMAIL_TICKET' => $email_ticket,
+                // E-MAIL
+                // 'EMAIL_TICKET' => $email_ticket,
+                // TELP
+                'TELP' => $telp,
                 'SITE_TICKET' => $site_ticket,
                 'DEPARTEMENT_DIREQUEST' => $id_departement_request,
                 'TYPE_TICKET' => $type_ticket,
@@ -162,29 +266,12 @@ class Ticket_client_view extends CI_Controller
             $result = $this->M_TICKET->insert($data);
         }
 
-        // $this->db->trans_start();
-
-        // ke tabel Ticket_Detail
-        // if ($result) {
-        //     foreach ($type_ticket as $value) {
-        //         $data_detail = [
-        //             'IDTICKET' => $id_ticket,
-        //             'TECHNICIAN' => $value,
-        //             'KETERANGAN' => null,
-        //             'FOTO' => null
-        //         ];
-        //         $this->M_TICKET->insert_detail($data_detail);
-        //     }
-        // }
-
-        // Selesaikan transaksi
-        // $this->db->trans_complete();
-
         // Membuat format pesan sesuai permintaan
         $get_nama_departement = $this->M_DEPARTEMENT->get_departemen_single($id_departement);
         $nama_departemen = $get_nama_departement->NAMA_DEPARTEMEN;
-        $url = "http://192.168.3.105/superapps/ticket";
-        $get_kabag = $this->M_KARYAWAN->get_karyawan_by_departemen($id_departement);
+        $get_IP = $this->get_lan_ip();
+        $url = "http://" . $get_IP . "/superapps/ticket";
+        $get_kabag = $this->M_KARYAWAN->get_kabag_by_departemen($id_departement);
         $KABAG = $get_kabag->TELEPON;
 
         // Kirim pesan WA ke Tim IT
@@ -205,34 +292,39 @@ class Ticket_client_view extends CI_Controller
         // $this->WHATSAPP->send_wa('081216126123', $message);
 
         // Kirim pesan WA ke KABAG bersangkutan
-        // $message =
-        //     "📢 REQUEST TICKETING \n\n" .
+        $message =
+            "=====*REQUEST TICKETING*===== \n\n" .
 
-        //     "📌 Informasi Perequest: \n\n" .
-        //     "\t👤 Nama: `$requestby` \n" .
-        //     "\t🏢 Departemen: `$nama_departemen` \n\n" .
+            "=====*INFORMASI PEREQUEST*===== \n" .
+            "   👤 NAMA: `" . strtoupper($requestby) . "` \n" .
+            "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
+            "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
 
-        //     "📌 Detail Keluhan: \n\n" .
-        //     "\t📂 Tipe Keluhan: `$type_ticket` \n" .
-        //     "\t📝 Deskripsi: \n" .
-        //     "```$description_ticket``` \n\n\n";
-        // $this->WHATSAPP->send_wa($KABAG, $message);
+            "=====*DETAIL KELUHAN*===== \n" .
+            "   📂 TIPE KELUHAN: `" . strtoupper($type_ticket) . "` \n" .
+            "   📝 DESKRIPSI KELUHAN: `" . strtoupper($description_ticket) . "` \n\n" .
+
+            "=====*DEPARTEMEN DIREQUEST*===== \n" .
+            "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen_request) . "`";
+
+        $this->WHATSAPP->send_wa($KABAG, $message);
 
         // Kirim Pesan ke Telegram Tim IT
         $ms_telegram =
-            "📢 REQUEST TICKETING \n\n" .
+            "=====*REQUEST TICKETING*===== \n\n" .
 
-            "📌 Informasi Pengguna: \n\n" .
-            "\t👤 Nama: `$requestby` \n" .
-            "\t🏢 Departemen: `$nama_departemen` \n\n" .
+            "=====*INFORMASI PEREQUEST*===== \n" .
+            "   👤 NAMA: `" . strtoupper($requestby) . "` \n" .
+            "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
+            "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
 
-            "📌 Detail Keluhan: \n\n" .
-            "\t📂 Tipe Keluhan: `$type_ticket` \n" .
-            "\t📝 Deskripsi: \n" .
-            "```$description_ticket``` \n\n\n" .
+            "=====*DETAIL KELUHAN*===== \n" .
+            "   📂 TIPE KELUHAN: `" . strtoupper($type_ticket) . "` \n" .
+            "   📝 DESKRIPSI KELUHAN: `" . strtoupper($description_ticket) . "` \n\n" .
 
-            "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
-            "🔗 ($url)";
+            "🚨 *HARAP SEGERA PROSES TICKET DENGAN MEMBUKA URL DI BAWAH INI:* \n" .
+            "[ $url ]";
+
         $this->TELEGRAM->send_message('8007581238', $ms_telegram);
 
         if ($result) {
@@ -306,7 +398,10 @@ class Ticket_client_view extends CI_Controller
         $id_ticket =  $this->input->post('id_ticket');
         $requestby = $this->input->post('request_by');
         $id_departement = $this->input->post('id_departemen');
-        $email_ticket = $this->input->post('email_ticket');
+        // E-MAIL
+        // $email_ticket = $this->input->post('email_ticket');
+        // TELP
+        $telp = $this->input->post('telp');
         $site_ticket = $this->input->post('id_area');
         $type_ticket = $this->input->post('type_ticket');
         $description_ticket = $this->input->post('description_ticket');
@@ -340,7 +435,10 @@ class Ticket_client_view extends CI_Controller
         $data = [
             'REQUESTBY' => $requestby,
             'DEPARTEMENT' => $id_departement,
-            'EMAIL_TICKET' => $email_ticket,
+            // E-MAIL
+            // 'EMAIL_TICKET' => $email_ticket,
+            // TELP
+            'TELP' => $telp,
             'SITE_TICKET' => $site_ticket,
             'TYPE_TICKET' => $type_ticket,
             'DESCRIPTION_TICKET' => $description_ticket,
@@ -446,5 +544,22 @@ class Ticket_client_view extends CI_Controller
         } else {
             echo json_encode(['success' => false, 'error' => 'Gagal menghapus data.']);
         }
+    }
+
+    // Get lan ip
+    private function get_lan_ip()
+    {
+        // Jalankan perintah ipconfig
+        $output = shell_exec('ipconfig | findstr IPv4');
+
+        // Cari alamat IPv4 menggunakan regex
+        preg_match('/IPv4 Address[\.\s]+:\s+([\d\.]+)/', $output, $matches);
+
+        // Jika ditemukan, kembalikan alamat IP
+        if (isset($matches[1])) {
+            return $matches[1];
+        }
+
+        return null; // Jika tidak ditemukan
     }
 }

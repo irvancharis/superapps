@@ -50,7 +50,13 @@
                                                     <div class="col-md-3">
                                                         <address>
                                                             <strong>Ditangani Oleh (Teknisi):</strong><br>
-                                                            <?php echo strtoupper($get_technician->NAME_TECHNICIAN); ?>
+                                                            <?php
+                                                            if (empty($get_technician->NAME_TECHNICIAN)) {
+                                                                echo "-";
+                                                            } else {
+                                                                echo strtoupper($get_technician->NAME_TECHNICIAN);
+                                                            }
+                                                            ?>
                                                         </address>
                                                     </div>
                                                     <div class="col-md-3 text-md-right">
@@ -103,9 +109,29 @@
                                             </div>
                                             <div class="col-12 col-md-4 col-lg-4">
                                                 <div class="d-flex justify-content-center my-5 my-md-0 my-lg-0">
-                                                    <a href="<?php echo base_url('assets/uploads/ticket/') . $ticket->FOTO; ?>" data-fancybox data-caption="Single image" data-image="<?php echo base_url('assets/uploads/ticket/') . $ticket->FOTO; ?>" data-title="<?= $ticket->KETERANGAN; ?>">
-                                                        <img class="img-thumbnail" style="filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.3));" width="150px" src="<?php echo base_url('assets/uploads/ticket/' . $ticket->FOTO); ?>" alt="">
-                                                    </a>
+                                                    <?php
+                                                    // Ambil ekstensi file
+                                                    $fileExtension = pathinfo($ticket->FOTO, PATHINFO_EXTENSION);
+
+                                                    // Daftar ekstensi foto
+                                                    $photoExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+                                                    // Daftar ekstensi dokumen
+                                                    $documentExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+
+                                                    // Cek apakah file adalah foto
+                                                    if (in_array(strtolower($fileExtension), $photoExtensions)) {
+                                                        // Jika file adalah foto, tampilkan gambar dengan Fancybox
+                                                        echo '<a href="' . base_url('assets/uploads/ticket/') . $ticket->FOTO . '" data-fancybox data-caption="Single image" data-image="' . base_url('assets/uploads/ticket/') . $ticket->FOTO . '" data-title="' . $ticket->KETERANGAN . '">
+                                                                        <img class="img-thumbnail" style="filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.3));" width="150px" src="' . base_url('assets/uploads/ticket/' . $ticket->FOTO) . '" alt="">
+                                                                    </a>';
+                                                    } else if (in_array(strtolower($fileExtension), $documentExtensions)) {
+                                                        // Jika file adalah dokumen, tampilkan tautan untuk mengunduh
+                                                        echo '<a href="' . base_url('assets/uploads/ticket/') . $ticket->FOTO . '" download>
+                                                                        <i class="fas fa-file-download"></i> Download ' . $ticket->FOTO . '
+                                                                    </a>';
+                                                    }
+                                                    ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -119,7 +145,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th data-width="40">#</th>
-                                                        <!-- <th>Teknisi</th> -->
+                                                        <th>Tgl & Waktu Pengerjaan</th>
                                                         <th>Objektif Pengerjaan</th>
                                                         <th>Keterangan Pengerjaan</th>
                                                         <th>Dikerjakan Oleh</th>
@@ -130,6 +156,7 @@
                                                     <?php foreach ($ticket_detail as $index => $d) : ?>
                                                         <tr height="150">
                                                             <td><?php echo $index + 1; ?></td>
+                                                            <td><?php echo date('d-m-Y H:i', strtotime($d->TGL_PENGERJAAN)); ?></td>
                                                             <td><?php echo $d->OBJEK_DITANGANI; ?></td>
                                                             <td><?php echo $d->KETERANGAN; ?></td>
                                                             <td><?php echo $d->NAME_TECHNICIAN; ?></td>

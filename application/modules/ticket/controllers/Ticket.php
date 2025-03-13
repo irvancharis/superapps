@@ -325,17 +325,55 @@ class Ticket extends CI_Controller
 
         $result = $this->M_TICKET->update($id_ticket, $data);
 
+        // Simpan data detail ticket
+        $IDTICKET_DETAIL = $this->uuid->v4();
+        $data_detail = [
+            'IDTICKET_DETAIL' => $IDTICKET_DETAIL,
+            'IDTICKET' => $id_ticket,
+            'TGL_PENGERJAAN' => date('Y-m-d H:i:s'),
+            'TECHNICIAN' => $id_technician,
+            'OBJEK_DITANGANI' => "Approval Ticket",
+            'KETERANGAN' => "Ticket Diproses Oleh Teknisi",
+            'FOTO' => null,
+            'STATUS_PROGRESS' => $status_ticket
+        ];
+        $this->M_TICKET->insert_detail($data_detail);
+
         // Ambil data teknisi dan departemen dari database
         $get_ticket = $this->M_TICKET->get_ticket($id_ticket);
         $get_departemen = $this->M_DEPARTEMENT->get_departemen_single($get_ticket->DEPARTEMENT);
         $get_teknisi = $this->M_TECHNICIAN->get_teknisi_by_id($id_technician);
         $get_karyawan = $this->M_KARYAWAN->get_karyawan_by_id($get_teknisi->IDKARYAWAN);
-        $TEKNISI = $get_karyawan->TELEPON;
+        $lokasi_ticket = $this->M_MAPING_AREA->get_maping_area_single($get_ticket->SITE_TICKET)->row()->NAMA_AREA;
+        $TELP_TEKNISI = $get_karyawan->TELEPON;
+        $NAMA_TEKNISI = $get_karyawan->NAMA_KARYAWAN;
         $get_IP = $this->get_lan_ip();
-        $url = "http://" . $get_IP . "/superapps/ticket_client_view/ticket_card/$id_ticket";
+        // Ticket Card
+        // $url = "http://" . $get_IP . "/superapps/ticket_client_view/ticket_card/$id_ticket";
+        // Ticket History
+        $url_client = "http://" . urlencode($get_IP) . "/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
+        $url_teknisi = "http://" . urlencode($get_IP) . "/superapps/ticket/ticket_technician/"  . urlencode($id_ticket);
 
         // Membuat format pesan sesuai permintaan
-        // $message =
+        // // Kirim Pesan ke WA (Teknisi)
+        $message =
+            "===== REQUEST TICKETING =====\n\n" .
+
+            "===== INFORMASI PEREQUEST =====\n" .
+            "👤 NAMA: " . strtoupper($get_ticket->REQUESTBY) . "\n" .
+            "🏢 DEPARTEMEN: " . strtoupper($get_departemen->NAMA_DEPARTEMEN) . "\n" .
+            "📍 LOKASI: " . strtoupper($lokasi_ticket) . "\n\n" .
+
+            "===== DETAIL KELUHAN =====\n" .
+            "📂 TIPE KELUHAN: " . strtoupper($get_ticket->TYPE_TICKET) . "\n" .
+            "📝 DESKRIPSI KELUHAN: " . strtoupper($get_ticket->DESCRIPTION_TICKET) . "\n\n" .
+
+            "🚨 HARAP SEGERA PROSES TICKET DENGAN MEMBUKA URL DI BAWAH INI:\n" .
+            $url_teknisi;
+        $this->WHATSAPP->send_wa($TELP_TEKNISI, $message);
+
+        // // Kirim Pesan ke Telegram (Teknisi)
+        // $ms_telegram_teknisi =
         //     "📢 REQUEST TICKETING \n\n" .
 
         //     "📌 Informasi Pengguna: \n\n" .
@@ -349,34 +387,29 @@ class Ticket extends CI_Controller
 
         //     "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
         //     "🔗 ($url)";
-        // $this->WHATSAPP->send_wa($TEKNISI, $message);
-
-        // // Kirim Pesan ke Telegram (Teknisi)
-        $ms_telegram_teknisi =
-            "📢 REQUEST TICKETING \n\n" .
-
-            "📌 Informasi Pengguna: \n\n" .
-            "\t👤 Nama: `$get_ticket->REQUESTBY` \n" .
-            "\t🏢 Departemen: `$get_departemen->NAMA_DEPARTEMEN` \n\n" .
-
-            "📌 Detail Keluhan: \n\n" .
-            "\t📂 Tipe Keluhan: `$get_ticket->TYPE_TICKET` \n" .
-            "\t📝 Deskripsi: \n" .
-            "```$get_ticket->DESCRIPTION_TICKET``` \n\n\n" .
-
-            "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
-            "🔗 ($url)";
-        $this->TELEGRAM->send_message('8007581238', $ms_telegram_teknisi);
+        // $this->TELEGRAM->send_message('8007581238', $ms_telegram_teknisi);
 
         // // Kirim Pesan ke Telegram (Client)
-        $ms_telegram_client =
-            "📢 REQUEST TICKETING \n\n" .
+        // $ms_telegram_client =
+        //     "📢 TICKETING PROGRESS \n\n" .
 
-            "📌 Ticket Sudah Di Proses \n\n" .
+        //     "📌 Ticket Sudah DIPROSES \n\n" .
 
-            "🚨 Lihat Ticket anda dengan membuka URL di bawah ini:\n" .
-            "🔗 ($url)";
-        $this->TELEGRAM->send_message('8007581238', $ms_telegram_client);
+        //     "🚨 Lihat Progress Ticket anda dengan membuka URL di bawah ini:\n" .
+        //     "🔗 [ $url ]";
+        // $this->TELEGRAM->send_message('8007581238', $ms_telegram_client);
+
+        // // Kirim Pesan ke WA (Client)
+        $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
+        $ms_wa_client =
+            "=====*TICKET PROGRESS*===== \n\n" .
+            "=====_INFORMASI TICKET_===== \n\n" .
+            "📌 ID TICKET: " . strtoupper($get_ticket->IDTICKET) . " \n" .
+            "👤 TEKNISI: " . strtoupper($NAMA_TEKNISI) . " \n\n" .
+
+            "🚨 LIHAT PROGRESS TICKET ANDA DENGAN MEMBUKA URL DI BAWAH INI:\n" .
+            $url_client;
+        $this->WHATSAPP->send_wa($telp_client, $ms_wa_client);
 
         if ($result) {
             echo json_encode(['success' => true]);
@@ -442,19 +475,23 @@ class Ticket extends CI_Controller
                 $data_detail = [
                     'IDTICKET_DETAIL' => $IDTICKET_DETAIL,
                     'IDTICKET' => $id_ticket,
+                    'TGL_PENGERJAAN' => date('Y-m-d H:i:s'),
                     'TECHNICIAN' => $this->session->userdata('ID_KARYAWAN'),
                     'OBJEK_DITANGANI' => $objek_ditangani,
                     'KETERANGAN' => $keterangan,
-                    'FOTO' => $foto
+                    'FOTO' => $foto,
+                    'STATUS_PROGRESS' => $status_ticket
                 ];
             } else {
                 $data_detail = [
                     'IDTICKET_DETAIL' => $IDTICKET_DETAIL,
                     'IDTICKET' => $id_ticket,
+                    'TGL_PENGERJAAN' => date('Y-m-d H:i:s'),
                     'TECHNICIAN' => $this->session->userdata('ID_KARYAWAN'),
                     'OBJEK_DITANGANI' => $objek_ditangani,
                     'KETERANGAN' => $keterangan,
-                    'FOTO' => null
+                    'FOTO' => null,
+                    'STATUS_PROGRESS' => $status_ticket
                 ];
             }
             $this->M_TICKET->insert_detail($data_detail);

@@ -18,7 +18,7 @@ class M_TICKET extends CI_Model
         $this->db->join('DEPARTEMEN', 'TICKET.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
         $this->db->join('TECHNICIAN', 'TICKET.TECHNICIAN = TECHNICIAN.IDTECH', 'left');
         $this->db->join('MAPING_AREA', 'TICKET.SITE_TICKET = MAPING_AREA.KODE_AREA', 'left');
-        $this->db->where('TICKET.APPROVAL_TICKET', '0');
+        // $this->db->where('TICKET.APPROVAL_TICKET', '0');
         $query = $this->db->get();
         return $query->result_object();
     }
@@ -64,6 +64,16 @@ class M_TICKET extends CI_Model
         $this->db->order_by('IDTICKET', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get($this->table);
+        return $query->result_object();
+    }
+
+    public function get_ticket_detail_view($id_ticket)
+    {
+        $this->db->select('*');
+        $this->db->from('VIEW_TICKET_DETAIL');
+        $this->db->where('IDTICKET', $id_ticket);
+        $this->db->order_by('TGL_PENGERJAAN', 'DESC');
+        $query = $this->db->get();
         return $query->result_object();
     }
 

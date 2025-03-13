@@ -63,6 +63,16 @@ class M_KARYAWAN extends CI_Model
         return $query->row();
     }
 
+    public function get_kabag_by_departemen($KODE)
+    {
+        $this->db->select('*');
+        $this->db->from('VIEW_KARYAWAN');
+        $this->db->where('ID_DEPARTEMENT', $KODE);
+        $this->db->where('NAMA_JABATAN', 'KABAG');
+        $query = $this->db->get();
+        return $query->row_object();
+    }
+
     public function get_area()
     {
         $query = $this->db->get('MAPING_AREA');

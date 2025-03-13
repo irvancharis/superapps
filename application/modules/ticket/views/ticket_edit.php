@@ -156,7 +156,11 @@
                                         </div>
                                     </div>
                                     <div class="card-footer text-right">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <?php if ($approval_ticket == 1 || $approval_ticket == 2) : ?>
+                                            <button type="submit" class="btn btn-primary" disabled>Simpan</button>
+                                        <?php else : ?>
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <?php endif; ?>
                                         <a href="<?php echo base_url() . 'ticket' ?>" class="btn btn-secondary">Kembali</a>
                                     </div>
                                 </form>
@@ -165,7 +169,7 @@
                     </div>
                 </section>
             </div>
-            
+
             </div>
             </div>
 
@@ -308,7 +312,7 @@
                             success: function(response) {
                                 let res = JSON.parse(response);
                                 if (res.success) {
-                                    swal('Sukses', 'Tambah Data Berhasil!', 'success').then(function() {
+                                    swal('Sukses', 'Ticket Berhasil Di Approve!', 'success').then(function() {
                                         location.href = "<?php echo base_url(); ?>ticket";
                                     });
                                 } else {
