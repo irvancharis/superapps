@@ -61,7 +61,7 @@ class M_TICKET extends CI_Model
 
     public function get_latest_data()
     {
-        $this->db->order_by('IDTICKET', 'DESC');
+        $this->db->order_by('DATE_TICKET', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get($this->table);
         return $query->result_object();

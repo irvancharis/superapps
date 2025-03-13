@@ -285,6 +285,14 @@
                     $('#formTicketEdit').on('submit', function(e) {
                         e.preventDefault();
 
+                        // Tampilkan pop-up "Mohon Tunggu"
+                        swal({
+                            title: "Mohon Tunggu",
+                            text: "Sedang memproses update ticket...",
+                            buttons: false, // Sembunyikan tombol OK
+                            closeOnClickOutside: false // Tidak boleh menutup dengan mengklik di luar
+                        });
+
                         // Ambil data dari form
                         let formData = $(this).serialize();
 
@@ -296,15 +304,18 @@
                             success: function(response) {
                                 let res = JSON.parse(response);
                                 if (res.success) {
+                                    swal.close();
                                     swal('Sukses', 'Ticket Berhasil Di Approve!', 'success').then(function() {
                                         location.href = "<?php echo base_url(); ?>ticket";
                                     });
                                 } else {
-                                    alert('Gagal menyimpan data: ' + response.error);
+                                    swal.close();
+                                    swal('Gagal', res.error, 'error');
                                 }
                             },
                             error: function() {
-                                alert('Gagal melakukan proses.');
+                                swal.close();
+                                swal('Gagal', 'Terjadi kesalahan pada Server !', 'error');
                             }
                         });
                     });
