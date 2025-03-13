@@ -12,7 +12,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped" id="table-2">
+                                        <table class="table table-striped" id="table-ticket">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center pt-3">
@@ -22,11 +22,12 @@
                                                             <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                                                         </div>
                                                     </th>
-                                                    <th>TICKET ID</th>
+                                                    <th>#</th>
+                                                    <th>ID TICKET</th>
                                                     <th>ORDER BY</th>
-                                                    <th>SITE</th>
+                                                    <th>LOKASI</th>
                                                     <th>APPROVAL</th>
-                                                    <th>TECHNICIAN</th>
+                                                    <th>TEKNISI</th>
                                                     <th>STATUS</th>
                                                     <th>CLEAR AT</th>
                                                     <th>Action</th>
@@ -42,6 +43,7 @@
                                                                 <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                                                             </div>
                                                         </td>
+                                                        <td><?php echo $index + 1; ?></td>
                                                         <td><?php echo $d->IDTICKET; ?></td>
                                                         <td><?php echo $d->REQUESTBY; ?></td>
                                                         <td><?php echo $d->NAMA_AREA; ?></td>
@@ -235,6 +237,9 @@
 
             <script>
                 $(document).ready(function() {
+                    // DataTable
+                    $('#table-ticket').DataTable();
+
                     $('.hapus-btn').on('click', function() {
                         const id = $(this).data('id');
 

@@ -88,13 +88,22 @@ class Ticket_client_view extends CI_Controller
 
     public function get_departement_joblist()
     {
-        $id_departement = $this->input->post('id_departemen');
-        $result = $this->M_TICKET->get_departement_joblist($id_departement);
+        $id_departemen = $this->input->post('id_departemen');
+        $id_area = $this->input->post('id_area');
 
-        if (!empty($result)) {
-            echo json_encode(['success' => true, 'data' => $result], JSON_PRETTY_PRINT);
+        // Validasi input
+        if (empty($id_departemen) || empty($id_area)) {
+            echo json_encode(['success' => false, 'error' => 'Departemen dan Area harus dipilih.']);
+            return;
+        }
+
+        // Ambil data joblist berdasarkan id_departemen dan id_area
+        $data = $this->M_TICKET->get_joblist_by_departement_and_area($id_departemen, $id_area);
+
+        if ($data) {
+            echo json_encode(['success' => true, 'data' => $data]);
         } else {
-            echo json_encode(['success' => false, 'error' => 'Data tidak ditemukan']);
+            echo json_encode(['success' => false, 'error' => 'Tidak ada data joblist untuk departemen dan area yang dipilih.']);
         }
     }
 
@@ -292,22 +301,22 @@ class Ticket_client_view extends CI_Controller
         // $this->WHATSAPP->send_wa('081216126123', $message);
 
         // Kirim pesan WA ke KABAG bersangkutan
-        $message =
-            "=====*REQUEST TICKETING*===== \n\n" .
+        // $message =
+        //     "=====*REQUEST TICKETING*===== \n\n" .
 
-            "=====*INFORMASI PEREQUEST*===== \n" .
-            "   👤 NAMA: `" . strtoupper($requestby) . "` \n" .
-            "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
-            "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
+        //     "=====*INFORMASI PEREQUEST*===== \n" .
+        //     "   👤 NAMA: `" . strtoupper($requestby) . "` \n" .
+        //     "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
+        //     "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
 
-            "=====*DETAIL KELUHAN*===== \n" .
-            "   📂 TIPE KELUHAN: `" . strtoupper($type_ticket) . "` \n" .
-            "   📝 DESKRIPSI KELUHAN: `" . strtoupper($description_ticket) . "` \n\n" .
+        //     "=====*DETAIL KELUHAN*===== \n" .
+        //     "   📂 TIPE KELUHAN: `" . strtoupper($type_ticket) . "` \n" .
+        //     "   📝 DESKRIPSI KELUHAN: `" . strtoupper($description_ticket) . "` \n\n" .
 
-            "=====*DEPARTEMEN DIREQUEST*===== \n" .
-            "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen_request) . "`";
+        //     "=====*DEPARTEMEN DIREQUEST*===== \n" .
+        //     "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen_request) . "`";
 
-        $this->WHATSAPP->send_wa($KABAG, $message);
+        // $this->WHATSAPP->send_wa($KABAG, $message);
 
         // Kirim Pesan ke Telegram Tim IT
         $ms_telegram =

@@ -66,22 +66,6 @@
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label class="form-label">TYPE KELUHAN</label>
                                                 <div class="selectgroup selectgroup-pills type-ticket">
-                                                    <!-- <label class="selectgroup-item">
-                                                        <input type="checkbox" name="type_ticket[]" value="Computer" class="selectgroup-input" <?= (is_array($type_ticket) && in_array('Computer', $type_ticket)) ? 'checked' : ''; ?>>
-                                                        <span class="selectgroup-button">Computer</span>
-                                                    </label>
-                                                    <label class="selectgroup-item">
-                                                        <input type="checkbox" name="type_ticket[]" value="Printer" class="selectgroup-input" <?= (is_array($type_ticket) && in_array('Printer', $type_ticket)) ? 'checked' : ''; ?>>
-                                                        <span class="selectgroup-button">Printer</span>
-                                                    </label>
-                                                    <label class="selectgroup-item">
-                                                        <input type="checkbox" name="type_ticket[]" value="Network" class="selectgroup-input" <?= (is_array($type_ticket) && in_array('Network', $type_ticket)) ? 'checked' : ''; ?>>
-                                                        <span class="selectgroup-button">Network/Internet</span>
-                                                    </label>
-                                                    <label class="selectgroup-item">
-                                                        <input type="checkbox" name="type_ticket[]" value="Fina" class="selectgroup-input" <?= (is_array($type_ticket) && in_array('Fina', $type_ticket)) ? 'checked' : ''; ?>>
-                                                        <span class="selectgroup-button">FINA</span>
-                                                    </label> -->
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
@@ -483,11 +467,11 @@
                                     $(".type-ticket").empty();
 
                                     // Ambil data yang sudah dipilih sebelumnya
-                                    let selectedTickets = res.selected_tickets || []; // Pastikan server mengembalikan daftar yang dipilih                                    
+                                    let selectedTickets = res.selected_tickets || []; // Pastikan server mengembalikan daftar yang dipilih
 
                                     // Tambahkan opsi baru dari database
                                     res.data.forEach(function(item) {
-                                        let isChecked = selectedTickets.some(ticket => ticket.TYPE_TICKET === item.NAMA_JOBLIST) ? 'checked' : '';
+                                        let isChecked = selectedTickets.includes(item.NAMA_JOBLIST) ? 'checked' : '';
                                         $(".type-ticket").append(`
                                             <label class="selectgroup-item">
                                                 <input type="checkbox" name="type_ticket" value="${item.NAMA_JOBLIST}" class="selectgroup-input" ${isChecked} disabled>

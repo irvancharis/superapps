@@ -297,7 +297,8 @@
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label class="form-label">PILIH TYPE KELUHAN</label>
                                                     <div class="selectgroup selectgroup-pills type-ticket">
-                                                        <p style="color:red;font-style: italic;">*). Muncul setelah memilih DEPARTEMEN DIREQUEST</p>
+                                                        <!-- <p style="color:red;font-style: italic;">*). Muncul setelah memilih DEPARTEMEN DIREQUEST</p> -->
+                                                        <p style="color:red;font-style: italic;">*). Muncul setelah memilih AREA</p>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
@@ -518,14 +519,86 @@
                 });
             });
 
-            $('#id_departemen_request').change(function() {
-                // Ambil nilai dari radio button yang dipilih
-                let id_departemen = $(this).val();
+            // Event listener untuk id_area
+            $('#id_area').change(function() {
+                const id_area = $(this).val();
+                const id_departemen = $('#id_departemen_request').val();
+
+                // Jika id_departemen belum dipilih, tampilkan pesan
+                if (!id_departemen) {
+                    swal('Peringatan', 'Silakan pilih Departemen Direquest terlebih dahulu.', 'warning');
+                    return;
+                }
+
+                // Kirim permintaan AJAX untuk mendapatkan type_ticket
                 $.ajax({
-                    url: "<?php echo base_url(); ?>" + "ticket/get_departement_joblist", // Endpoint untuk proses input
+                    url: "<?php echo base_url(); ?>ticket_client_view/get_departement_joblist",
                     type: 'POST',
                     data: {
-                        id_departemen: id_departemen
+                        id_departemen: id_departemen,
+                        id_area: id_area
+                    },
+                    success: function(response) {
+                        let res = JSON.parse(response);
+                        console.log(res);
+
+                        if (res.success && res.data) {
+                            // Kosongkan pilihan type keluhan sebelumnya
+                            $(".type-ticket").empty();
+
+                            // Tambahkan opsi baru dari database
+                            res.data.forEach(function(item) {
+                                $(".type-ticket").append(`
+                            <label class="selectgroup-item">
+                                <input type="radio" name="type_ticket" value="${item.NAMA_JOBLIST}" class="selectgroup-input">
+                                <span class="selectgroup-button">${item.NAMA_JOBLIST}</span>
+                            </label>
+                        `);
+                            });
+
+                            // Tambahkan event listener untuk radio button type keluhan
+                            $('input[name="type_ticket"]').change(function() {
+                                let selectedType = $(this).val();
+
+                                // Cek jika kategori keluhan adalah "Register OB Sales" atau "Pindah Rute Sales"
+                                if (selectedType === "REGISTER OB SALES" || selectedType === "PINDAH RUTE SALES") {
+                                    // Tampilkan input file dokumen
+                                    $("#image-container").hide();
+                                    $("#dokumen-container").show();
+                                } else {
+                                    // Sembunyikan input file dokumen
+                                    $("#dokumen-container").hide();
+                                    $("#image-container").show();
+                                }
+                            });
+                        } else {
+                            swal('Failed', res.error, 'error');
+                        }
+                    },
+                    error: function() {
+                        swal('Failed', 'Gagal melakukan proses.', 'error');
+                    }
+                });
+            });
+
+            // Event listener untuk id_departemen_request
+            $('#id_departemen_request').change(function() {
+                const id_departemen = $(this).val();
+                const id_area = $('#id_area').val();
+
+                // Jika id_area belum dipilih, tampilkan pesan
+                if (!id_area) {
+                    swal('Peringatan', 'Silakan pilih Area terlebih dahulu.', 'warning');
+                    return;
+                }
+
+                // Kirim permintaan AJAX untuk mendapatkan type_ticket
+                $.ajax({
+                    url: "<?php echo base_url(); ?>ticket/get_departement_joblist",
+                    type: 'POST',
+                    data: {
+                        id_departemen: id_departemen,
+                        id_area: id_area
                     },
                     success: function(response) {
                         let res = JSON.parse(response);
@@ -536,11 +609,11 @@
                             // Tambahkan opsi baru dari database
                             res.data.forEach(function(item) {
                                 $(".type-ticket").append(`
-                                    <label class="selectgroup-item">
-                                        <input type="radio" name="type_ticket" value="${item.NAMA_JOBLIST}" class="selectgroup-input">
-                                        <span class="selectgroup-button">${item.NAMA_JOBLIST}</span>
-                                    </label>
-                                `);
+                            <label class="selectgroup-item">
+                                <input type="radio" name="type_ticket" value="${item.NAMA_JOBLIST}" class="selectgroup-input">
+                                <span class="selectgroup-button">${item.NAMA_JOBLIST}</span>
+                            </label>
+                        `);
                             });
 
                             // Tambahkan event listener untuk radio button type keluhan
@@ -569,7 +642,7 @@
             });
 
             // Trigger event change saat halaman pertama kali dimuat
-            $('#id_departemen_request').trigger('change');
+            // $('#id_departemen_request').trigger('change');
 
             // 🚀 1. Inisialisasi Semua Progress Bar Saat Halaman Dimuat
             $(".progress-bar").each(function() {

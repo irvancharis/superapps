@@ -131,24 +131,34 @@ class Ticket extends CI_Controller
     public function get_departement_joblist_edit()
     {
         $id_ticket = $this->input->get('id_ticket');
-        $id_departement = $this->input->get('id_departemen');
+        $id_departemen = $this->input->get('id_departemen');
 
-        if (!$id_ticket) {
-            echo json_encode(['success' => false, 'error' => 'ID Departemen tidak ditemukan']);
+        // Validasi input
+        if (empty($id_ticket) || empty($id_departemen)) {
+            echo json_encode(['success' => false, 'error' => 'ID Ticket dan Departemen harus dipilih.']);
             return;
         }
 
-        // Ambil daftar joblist dari database
-        $joblist = $this->M_TICKET->get_departement_joblist($id_departement);
+        // Ambil data ticket untuk mendapatkan type_ticket yang sudah dipilih
+        $ticket = $this->M_TICKET->get_ticket($id_ticket);
+        $selected_tickets = isset($ticket->TYPE_TICKET)
+            ? (strpos($ticket->TYPE_TICKET, ',') !== false
+                ? explode(',', $ticket->TYPE_TICKET)
+                : [$ticket->TYPE_TICKET])
+            : [];
 
-        // Ambil daftar yang sudah dipilih sebelumnya
-        $selected_tickets = $this->M_TICKET->get_selected_tickets($id_ticket);
+        // Ambil data joblist berdasarkan id_departemen
+        $data = $this->M_TICKET->get_departement_joblist($id_departemen);
 
-        echo json_encode([
-            'success' => true,
-            'data' => $joblist,
-            'selected_tickets' => $selected_tickets // Kirim daftar yang sudah dipilih
-        ]);
+        if ($data) {
+            echo json_encode([
+                'success' => true,
+                'data' => $data,
+                'selected_tickets' => $selected_tickets // Kirim daftar type_ticket yang sudah dipilih
+            ]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Tidak ada data joblist untuk departemen yang dipilih.']);
+        }
     }
 
     public function tambah_view($page = 'ticket')
@@ -356,60 +366,60 @@ class Ticket extends CI_Controller
 
         // Membuat format pesan sesuai permintaan
         // // Kirim Pesan ke WA (Teknisi)
-        $message =
-            "===== REQUEST TICKETING =====\n\n" .
+        // $message =
+        //     "===== REQUEST TICKETING =====\n\n" .
 
-            "===== INFORMASI PEREQUEST =====\n" .
-            "👤 NAMA: " . strtoupper($get_ticket->REQUESTBY) . "\n" .
-            "🏢 DEPARTEMEN: " . strtoupper($get_departemen->NAMA_DEPARTEMEN) . "\n" .
-            "📍 LOKASI: " . strtoupper($lokasi_ticket) . "\n\n" .
+        //     "===== INFORMASI PEREQUEST =====\n" .
+        //     "👤 NAMA: " . strtoupper($get_ticket->REQUESTBY) . "\n" .
+        //     "🏢 DEPARTEMEN: " . strtoupper($get_departemen->NAMA_DEPARTEMEN) . "\n" .
+        //     "📍 LOKASI: " . strtoupper($lokasi_ticket) . "\n\n" .
 
-            "===== DETAIL KELUHAN =====\n" .
-            "📂 TIPE KELUHAN: " . strtoupper($get_ticket->TYPE_TICKET) . "\n" .
-            "📝 DESKRIPSI KELUHAN: " . strtoupper($get_ticket->DESCRIPTION_TICKET) . "\n\n" .
+        //     "===== DETAIL KELUHAN =====\n" .
+        //     "📂 TIPE KELUHAN: " . strtoupper($get_ticket->TYPE_TICKET) . "\n" .
+        //     "📝 DESKRIPSI KELUHAN: " . strtoupper($get_ticket->DESCRIPTION_TICKET) . "\n\n" .
 
-            "🚨 HARAP SEGERA PROSES TICKET DENGAN MEMBUKA URL DI BAWAH INI:\n" .
-            $url_teknisi;
-        $this->WHATSAPP->send_wa($TELP_TEKNISI, $message);
+        //     "🚨 HARAP SEGERA PROSES TICKET DENGAN MEMBUKA URL DI BAWAH INI:\n" .
+        //     $url_teknisi;
+        // $this->WHATSAPP->send_wa($TELP_TEKNISI, $message);
 
         // // Kirim Pesan ke Telegram (Teknisi)
-        // $ms_telegram_teknisi =
-        //     "📢 REQUEST TICKETING \n\n" .
+        $ms_telegram_teknisi =
+            "📢 REQUEST TICKETING \n\n" .
 
-        //     "📌 Informasi Pengguna: \n\n" .
-        //     "\t👤 Nama: `$get_ticket->REQUESTBY` \n" .
-        //     "\t🏢 Departemen: `$get_departemen->NAMA_DEPARTEMEN` \n\n" .
+            "📌 Informasi Pengguna: \n\n" .
+            "\t👤 Nama: `$get_ticket->REQUESTBY` \n" .
+            "\t🏢 Departemen: `$get_departemen->NAMA_DEPARTEMEN` \n\n" .
 
-        //     "📌 Detail Keluhan: \n\n" .
-        //     "\t📂 Tipe Keluhan: `$get_ticket->TYPE_TICKET` \n" .
-        //     "\t📝 Deskripsi: \n" .
-        //     "```$get_ticket->DESCRIPTION_TICKET``` \n\n\n" .
+            "📌 Detail Keluhan: \n\n" .
+            "\t📂 Tipe Keluhan: `$get_ticket->TYPE_TICKET` \n" .
+            "\t📝 Deskripsi: \n" .
+            "```$get_ticket->DESCRIPTION_TICKET``` \n\n\n" .
 
-        //     "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
-        //     "🔗 ($url)";
-        // $this->TELEGRAM->send_message('8007581238', $ms_telegram_teknisi);
+            "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
+            "🔗 ($url_teknisi)";
+        $this->TELEGRAM->send_message('8007581238', $ms_telegram_teknisi);
 
         // // Kirim Pesan ke Telegram (Client)
-        // $ms_telegram_client =
-        //     "📢 TICKETING PROGRESS \n\n" .
+        $ms_telegram_client =
+            "📢 TICKETING PROGRESS \n\n" .
 
-        //     "📌 Ticket Sudah DIPROSES \n\n" .
+            "📌 Ticket Sudah DIPROSES \n\n" .
 
-        //     "🚨 Lihat Progress Ticket anda dengan membuka URL di bawah ini:\n" .
-        //     "🔗 [ $url ]";
-        // $this->TELEGRAM->send_message('8007581238', $ms_telegram_client);
+            "🚨 Lihat Progress Ticket anda dengan membuka URL di bawah ini:\n" .
+            "🔗 [ $url_client ]";
+        $this->TELEGRAM->send_message('8007581238', $ms_telegram_client);
 
         // // Kirim Pesan ke WA (Client)
-        $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
-        $ms_wa_client =
-            "=====*TICKET PROGRESS*===== \n\n" .
-            "=====_INFORMASI TICKET_===== \n\n" .
-            "📌 ID TICKET: " . strtoupper($get_ticket->IDTICKET) . " \n" .
-            "👤 TEKNISI: " . strtoupper($NAMA_TEKNISI) . " \n\n" .
+        // $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
+        // $ms_wa_client =
+        //     "=====*TICKET PROGRESS*===== \n\n" .
+        //     "=====_INFORMASI TICKET_===== \n\n" .
+        //     "📌 ID TICKET: " . strtoupper($get_ticket->IDTICKET) . " \n" .
+        //     "👤 TEKNISI: " . strtoupper($NAMA_TEKNISI) . " \n\n" .
 
-            "🚨 LIHAT PROGRESS TICKET ANDA DENGAN MEMBUKA URL DI BAWAH INI:\n" .
-            $url_client;
-        $this->WHATSAPP->send_wa($telp_client, $ms_wa_client);
+        //     "🚨 LIHAT PROGRESS TICKET ANDA DENGAN MEMBUKA URL DI BAWAH INI:\n" .
+        //     $url_client;
+        // $this->WHATSAPP->send_wa($telp_client, $ms_wa_client);
 
         if ($result) {
             echo json_encode(['success' => true]);

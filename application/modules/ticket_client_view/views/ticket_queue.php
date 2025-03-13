@@ -223,13 +223,13 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>TICKET ID</th>
+                                                <th>ID TICKET</th>
                                                 <th>ORDER BY</th>
-                                                <th>SITE</th>
+                                                <th>LOKASI</th>
                                                 <th>APPROVAL</th>
-                                                <th>TECHNICIAN</th>
+                                                <th>TEKNISI</th>
                                                 <th>PROGRESS</th>
-                                                <th>CLEAR AT</th>
+                                                <th>SELESAI PADA</th>
                                             </tr>
                                         </thead>
                                         <tbody>
