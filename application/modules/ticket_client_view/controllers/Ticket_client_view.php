@@ -284,22 +284,22 @@ class Ticket_client_view extends CI_Controller
         // $this->WHATSAPP->send_wa('081216126123', $message);
 
         // Kirim pesan WA ke KABAG bersangkutan
-        // $message =
-        //     "=====*REQUEST TICKETING*===== \n\n" .
+        $message =
+            "=====*REQUEST TICKETING*===== \n\n" .
 
-        //     "=====*INFORMASI PEREQUEST*===== \n" .
-        //     "   👤 NAMA: `" . strtoupper($requestby) . "` \n" .
-        //     "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
-        //     "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
+            "=====*INFORMASI PEREQUEST*===== \n" .
+            "   👤 NAMA: `" . strtoupper($requestby) . "` \n" .
+            "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
+            "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
 
-        //     "=====*DETAIL KELUHAN*===== \n" .
-        //     "   📂 TIPE KELUHAN: `" . strtoupper($type_ticket) . "` \n" .
-        //     "   📝 DESKRIPSI KELUHAN: `" . strtoupper($description_ticket) . "` \n\n" .
+            "=====*DETAIL KELUHAN*===== \n" .
+            "   📂 TIPE KELUHAN: `" . strtoupper($type_ticket) . "` \n" .
+            "   📝 DESKRIPSI KELUHAN: `" . strtoupper($description_ticket) . "` \n\n" .
 
-        //     "=====*DEPARTEMEN DIREQUEST*===== \n" .
-        //     "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen_request) . "`";
+            "=====*DEPARTEMEN DIREQUEST*===== \n" .
+            "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen_request) . "`";
 
-        // $this->WHATSAPP->send_wa($KABAG, $message);
+        $this->WHATSAPP->send_wa($KABAG, $message);
 
         // Kirim Pesan ke Telegram Tim IT
         $ms_telegram =

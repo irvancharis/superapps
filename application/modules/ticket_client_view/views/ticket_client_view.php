@@ -716,6 +716,11 @@
                 }
             });
 
+            // **Format input teks menjadi huruf kapital**
+            $(document).on('input', '#request_by, #description_ticket', function() {
+                $(this).val($(this).val().toUpperCase());
+            });
+
         });
     </script>
 </body>

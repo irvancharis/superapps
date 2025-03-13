@@ -7,7 +7,7 @@
                                 <div class="card-header">
                                     <h4>Data Ticketing</h4>
                                     <div class="card-header-action">
-                                        <a href="<?php echo base_url('ticket/tambah_view') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
+                                        <span class="d-inline-block" data-toggle="tooltip" data-title="Sementara Dinonaktifkan"><a href="<?php echo base_url('ticket/tambah_view') ?>" class="btn btn-primary disabled"><i class="fas fa-plus"></i> Tambah Data</a></span>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -30,7 +30,7 @@
                                                     <th>TEKNISI</th>
                                                     <th>STATUS</th>
                                                     <th>CLEAR AT</th>
-                                                    <th>Action</th>
+                                                    <th>ACTION</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -45,7 +45,7 @@
                                                         </td>
                                                         <td><?php echo $index + 1; ?></td>
                                                         <td><?php echo $d->IDTICKET; ?></td>
-                                                        <td><?php echo $d->REQUESTBY; ?></td>
+                                                        <td><?php echo strtoupper($d->REQUESTBY); ?></td>
                                                         <td><?php echo $d->NAMA_AREA; ?></td>
                                                         <td>
                                                             <?php
@@ -58,7 +58,13 @@
                                                             }
                                                             ?>
                                                         </td>
-                                                        <td><?php echo $d->NAME_TECHNICIAN; ?></td>
+                                                        <td class="text-center">
+                                                            <?php if ($d->NAME_TECHNICIAN == null) : ?>
+                                                                <span>-</span>
+                                                            <?php else : ?>
+                                                                <?php echo strtoupper($d->NAME_TECHNICIAN); ?>
+                                                            <?php endif; ?>
+                                                        </td>
                                                         <td>
                                                             <div class="progress">
                                                                 <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
@@ -92,9 +98,13 @@
                                                                     </div>
                                                                 <?php else : ?>
                                                                     <?php if ($d->STATUS_TICKET == 100) : ?>
-                                                                        <a href="javascript:void(0)" class="btn btn-success has-icon disabled"> <i class="fas fa-check"></i> Selesai</a>
+                                                                        <span class="d-inline-block" data-toggle="tooltip" data-title="Selesai"><a href="javascript:void(0)" class="btn btn-success has-icon disabled"> <i class="fas fa-check"></i> Selesai</a></span>
                                                                     <?php else : ?>
-                                                                        <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Proses</a>
+                                                                        <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                            <span class="d-inline-block" data-toggle="tooltip" data-title="Belum Disetujui"><a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon disabled"> <i class="fas fa-hourglass-half"></i> Proses</a></span>
+                                                                        <?php else : ?>
+                                                                            <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Proses</a>
+                                                                        <?php endif; ?>
                                                                     <?php endif; ?>
                                                                 <?php endif; ?>
                                                             </div>
