@@ -48,12 +48,10 @@ class Karyawan extends CI_Controller
 
     public function tambah($page = 'karyawan')
     {
-        $this->load->library('session');
-        $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'TAMBAH KARYAWAN');
-        if (!$CEK_ROLE) {
-            redirect('non_akses');
-        }
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'KARYAWAN','TAMBAH KARYAWAN');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
 
 
         $this->session->set_userdata('page', $page);
@@ -121,12 +119,10 @@ class Karyawan extends CI_Controller
     public function insert()
     {
 
-        $this->load->library('session');
-        $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'TAMBAH KARYAWAN');
-        if (!$CEK_ROLE) {
-            redirect('non_akses');
-        }
+        $this->load->library( 'session' );
+        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'KARYAWAN','TAMBAH KARYAWAN');
+        if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $KODE = $this->uuid->v4();
 
@@ -148,7 +144,7 @@ class Karyawan extends CI_Controller
             $inputan = $this->input->post(null, TRUE);
             $inputan['FOTO'] = $KODE . $extension;
             $inputan['ID_KARYAWAN'] = $KODE;
-            $result = $this->M_KARYAWAN->insert($inputan);
+		    $result = $this->M_KARYAWAN->insert($inputan);
 
             if ($result) {
                 echo json_encode(['success' => true]);

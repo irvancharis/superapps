@@ -13,10 +13,10 @@ class MAPING_ruangan extends CI_Controller
 
     public function index($page = 'maping_ruangan')
     {
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_RUANGAN','LIST');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        // $this->load->library( 'session' );
+        // $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_RUANGAN','LIST');
+        // if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $data['M_MAPING_RUANGAN'] = $this->M_MAPING_RUANGAN->get_maping_ruangan();
         $this->session->set_userdata('page', $page);
@@ -44,10 +44,10 @@ class MAPING_ruangan extends CI_Controller
 
     public function tambah($page = 'maping_ruangan')
     {
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_RUANGAN','TAMBAH');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        // $this->load->library( 'session' );
+        // $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_RUANGAN','TAMBAH');
+        // if (!$CEK_ROLE) { redirect('non_akses'); }
 
 
         $this->session->set_userdata('page', $page);
@@ -97,10 +97,10 @@ class MAPING_ruangan extends CI_Controller
     public function insert()
     {
 
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_RUANGAN','TAMBAH');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        // $this->load->library( 'session' );
+        // $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_RUANGAN','TAMBAH');
+        // if (!$CEK_ROLE) { redirect('non_akses'); }
 
 
         $KODE_RUANGAN = $this->input->post('KODE_RUANGAN');
@@ -176,11 +176,24 @@ class MAPING_ruangan extends CI_Controller
         $this->load->library( 'session' );
         $SESSION_ROLE = $this->session->userdata( 'ROLE' );
         $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_RUANGAN','HAPUS');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        if (!$CEK_ROLE) { 
+            redirect('non_akses');
+        }else{
+             // Ambil data dari POST
+            $id_area = $this->input->post('id_ruangan_hapus');
+
+            // Proses hapus data
+            $result = $this->M_MAPING_RUANGAN->hapus($KODE_RUANGAN);
+
+            if ($result) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'error' => 'Gagal menghapus data.']);
+            }
+        }
 
 
-        // Proses hapus data
-        $result = $this->M_MAPING_RUANGAN->hapus($KODE_RUANGAN);
-        redirect('maping_ruangan');
+
+        
     }
 } 

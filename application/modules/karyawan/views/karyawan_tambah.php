@@ -190,16 +190,7 @@
                                                 </div>
                                             </div>
                                             
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label>STATUS KARYAWAN</label>
-                                                <select required name="STATUS_KARYAWAN" id="STATUS_KARYAWAN" class="form-control">
-                                                    <option value="AKTIF" class="text-center"  >AKTIF</option>
-                                                    <option value="NONAKTIF" class="text-center"  >NON-AKTIF</option>                                                   
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan STATUS KARYAWAN!
-                                                </div>
-                                            </div>
+                    
                                         </div>
                                     </div>
                                     <div class="card-footer text-right">

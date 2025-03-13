@@ -14,10 +14,10 @@ class Maping_area extends CI_Controller
 
     public function index($page = 'maping_area')
     {
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_AREA','LIST');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        // $this->load->library( 'session' );
+        // $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_AREA','LIST');
+        // if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $data['sfa_maping_area'] = $this->M_MAPING_AREA->get_news();
         $this->session->set_userdata('page', $page);
@@ -30,10 +30,10 @@ class Maping_area extends CI_Controller
 
     public function insert()
     {
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_AREA','TAMBAH');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        // $this->load->library( 'session' );
+        // $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_AREA','TAMBAH');
+        // if (!$CEK_ROLE) { redirect('non_akses'); }
 
         // Ambil data dari POST
         $get_last_area = $this->M_MAPING_AREA->get_latest_data();
@@ -104,19 +104,23 @@ class Maping_area extends CI_Controller
         $this->load->library( 'session' );
         $SESSION_ROLE = $this->session->userdata( 'ROLE' );
         $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_AREA','HAPUS');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        if (!$CEK_ROLE) { 
+            echo json_encode(['success' => false, 'error' => 'anda tidak memiliki akses']); 
+        }else{
+             // Ambil data dari POST
+            $id_area = $this->input->post('id_area_hapus');
 
+            // Proses hapus data
+            $result = $this->M_MAPING_AREA->hapus($id_area);
 
-        // Ambil data dari POST
-        $id_area = $this->input->post('id_area_hapus');
-
-        // Proses hapus data
-        $result = $this->M_MAPING_AREA->hapus($id_area);
-
-        if ($result) {
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false, 'error' => 'Gagal menghapus data.']);
+            if ($result) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'error' => 'Gagal menghapus data.']);
+            }
         }
+
+
+       
     }
 }

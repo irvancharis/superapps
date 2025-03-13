@@ -32,6 +32,11 @@ class M_TRANSAKSI_OPNAME extends CI_Model
 
     public function get_data()
     {
+        $this->db->where('STATUS_OPNAME !=', 'SELESAI');
+        $this->db->where('STATUS_OPNAME !=', 'DITOLAK KABAG');
+        $this->db->where('STATUS_OPNAME !=', 'DITOLAK GM');
+        $this->db->where('STATUS_OPNAME !=', 'DITOLAK HEAD');
+        $this->db->order_by('TANGGAL_OPNAME', 'DESC');
         $query = $this->db->get('VIEW_TRANSAKSI_OPNAME');
         return $query->result_object();
     }
