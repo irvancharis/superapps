@@ -299,27 +299,27 @@
         <span class="traingle-shadow"></span>
         <ul class="chatBox">
             <li>
-                <a href="">
+                <a href="https://wa.me/6287777176997" target="_blank">
                     <span class="icon-circle">
                         <img src="<?= base_url('assets/img/whatsapp.png'); ?>" alt="whatsapp">
                     </span>
-                    <abbr title="">Whatsapp</abbr>
+                    <abbr title="">RIO</abbr>
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="https://wa.me/628175766631" target="_blank">
                     <span class="icon-circle">
-                        <img src="<?= base_url('assets/img/facebook_messanger.png'); ?>" alt="facebook">
+                        <img src="<?= base_url('assets/img/whatsapp.png'); ?>" alt="facebook">
                     </span>
-                    <abbr title="">Facebook</abbr>
+                    <abbr title="">TAUFIQ</abbr>
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="https://wa.me/6281357501196" target="_blank">
                     <span class="icon-circle">
-                        <img src="<?= base_url('assets/img/message-closed-envelope.png'); ?>" alt="email">
+                        <img src="<?= base_url('assets/img/whatsapp.png'); ?>" alt="email">
                     </span>
-                    <abbr title="">Email</abbr>
+                    <abbr title="">CHARIS</abbr>
                 </a>
             </li>
         </ul>
