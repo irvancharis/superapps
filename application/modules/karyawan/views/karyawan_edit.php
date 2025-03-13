@@ -11,18 +11,6 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="form-group col-12 col-md-6 col-lg-4">
-                                                <label>AREA</label>
-                                                <select required name="ID_MAPING_AREA" id="ID_MAPING_AREA" class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih Area --</option>
-                                                    <?php foreach ($get_area as $row) : ?>
-                                                        <option <?php if ($row->KODE_AREA == $get_single->ID_MAPING_AREA) echo "selected"; ?> value="<?= $row->KODE_AREA; ?>"><?= $row->NAMA_AREA; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Silahkan masukkan AREA!
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-4">
                                                 <label>DEPARTEMEN</label>
                                                 <select required name="ID_DEPARTEMENT" id="ID_DEPARTEMENT" class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih Departement --</option>
@@ -181,9 +169,9 @@
                                             
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>STATUS KARYAWAN</label>
-                                                <select required name="STATUS_KARYAWAN" id="STATUS_KARYAWAN" class="form-control">
-                                                    <option value="AKTIF" class="text-center" >AKTIF</option>
-                                                    <option value="NONAKTIF" class="text-center" >NON-AKTIF</option>                                                   
+                                                <select required name="STATUS" id="STATUS" class="form-control">
+                                                    <option value="1" class="text-center" >AKTIF</option>
+                                                    <option value="0" class="text-center" >NON-AKTIF</option>                                                   
                                                 </select>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan STATUS KARYAWAN!

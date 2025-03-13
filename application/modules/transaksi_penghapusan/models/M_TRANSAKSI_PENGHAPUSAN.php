@@ -32,6 +32,11 @@ class M_TRANSAKSI_PENGHAPUSAN extends CI_Model
 
     public function get_data()
     {
+        $this->db->where('STATUS_PENGHAPUSAN !=', 'SELESAI');
+        $this->db->where('STATUS_PENGHAPUSAN !=', 'DITOLAK KABAG');
+        $this->db->where('STATUS_PENGHAPUSAN !=', 'DITOLAK GM');
+        $this->db->where('STATUS_PENGHAPUSAN !=', 'DITOLAK HEAD');
+        $this->db->order_by('TANGGAL_PENGAJUAN', 'DESC');
         $query = $this->db->get('VIEW_TRANSAKSI_PENGHAPUSAN');
         return $query->result_object();
     }

@@ -384,7 +384,7 @@
                                         location.reload();
                                     });
                                 } else {
-                                    alert('Gagal menghapus data: ' + response.error);
+                                    alert(res.error);
                                 }
                             },
                             error: function() {
