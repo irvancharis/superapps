@@ -210,9 +210,13 @@
     <div class="loader"></div>
     <div id="app">
         <section class="section">
-            <div class="container mt-5">
+            <div class="container">
                 <div class="row">
                     <div class="col-12 col-md-10 offset-md-1 col-lg-10 offset-lg-1 mt-5">
+                        <div class="login-brand">
+                            <img src="<?php echo base_url('assets/img/Logo SA X7.png'); ?>" alt="" class="img-fluid" style="width: 100px    ; height: 100px;">
+                            <span class="SA">SA</span> <span class="GROUP">GROUP</span>
+                        </div>
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="judul-ticketing mx-auto"><i class="fas fa-list"></i> DAFTAR ANTRIAN TICKETING</h4>
@@ -223,13 +227,13 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>TICKET ID</th>
+                                                <th>ID TICKET</th>
                                                 <th>ORDER BY</th>
-                                                <th>SITE</th>
+                                                <th>LOKASI</th>
                                                 <th>APPROVAL</th>
-                                                <th>TECHNICIAN</th>
+                                                <th>TEKNISI</th>
                                                 <th>PROGRESS</th>
-                                                <th>CLEAR AT</th>
+                                                <th>SELESAI PADA</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -237,7 +241,7 @@
                                                 <tr>
                                                     <td><?php echo $index + 1; ?></td>
                                                     <td><?php echo $d->IDTICKET; ?></td>
-                                                    <td><?php echo $d->REQUESTBY; ?></td>
+                                                    <td><?php echo strtoupper($d->REQUESTBY); ?></td>
                                                     <td><?php echo $d->NAMA_AREA; ?></td>
                                                     <td>
                                                         <?php
@@ -254,7 +258,7 @@
                                                         <?php if ($d->NAME_TECHNICIAN == null) : ?>
                                                             <span>-</span>
                                                         <?php else : ?>
-                                                            <?php echo $d->NAME_TECHNICIAN; ?>
+                                                            <?php echo strtoupper($d->NAME_TECHNICIAN); ?>
                                                         <?php endif; ?>
                                                     </td>
                                                     <td>
@@ -295,27 +299,27 @@
         <span class="traingle-shadow"></span>
         <ul class="chatBox">
             <li>
-                <a href="">
+                <a href="https://wa.me/6287777176997" target="_blank">
                     <span class="icon-circle">
                         <img src="<?= base_url('assets/img/whatsapp.png'); ?>" alt="whatsapp">
                     </span>
-                    <abbr title="">Whatsapp</abbr>
+                    <abbr title="">RIO</abbr>
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="https://wa.me/628175766631" target="_blank">
                     <span class="icon-circle">
-                        <img src="<?= base_url('assets/img/facebook_messanger.png'); ?>" alt="facebook">
+                        <img src="<?= base_url('assets/img/whatsapp.png'); ?>" alt="facebook">
                     </span>
-                    <abbr title="">Facebook</abbr>
+                    <abbr title="">TAUFIQ</abbr>
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="https://wa.me/6281357501196" target="_blank">
                     <span class="icon-circle">
-                        <img src="<?= base_url('assets/img/message-closed-envelope.png'); ?>" alt="email">
+                        <img src="<?= base_url('assets/img/whatsapp.png'); ?>" alt="email">
                     </span>
-                    <abbr title="">Email</abbr>
+                    <abbr title="">CHARIS</abbr>
                 </a>
             </li>
         </ul>

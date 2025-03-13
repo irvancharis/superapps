@@ -18,7 +18,7 @@ class M_TICKET extends CI_Model
         $this->db->join('DEPARTEMEN', 'TICKET.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
         $this->db->join('TECHNICIAN', 'TICKET.TECHNICIAN = TECHNICIAN.IDTECH', 'left');
         $this->db->join('MAPING_AREA', 'TICKET.SITE_TICKET = MAPING_AREA.KODE_AREA', 'left');
-        // $this->db->where('TICKET.APPROVAL_TICKET', '0');
+        $this->db->where('TICKET.STATUS_TICKET !=', '100');
         $query = $this->db->get();
         return $query->result_object();
     }
@@ -61,10 +61,21 @@ class M_TICKET extends CI_Model
 
     public function get_latest_data()
     {
-        $this->db->order_by('IDTICKET', 'DESC');
+        $this->db->order_by('DATE_TICKET', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get($this->table);
         return $query->result_object();
+    }
+
+    public function get_joblist_by_departement_and_area($id_departemen, $id_area)
+    {
+        $this->db->select('NAMA_JOBLIST');
+        $this->db->from('DEPARTEMENT_JOBLIST');
+        $this->db->where('DEPARTEMENT', $id_departemen);
+        $this->db->like('KODE_AREA', $id_area); // Asumsi KODE_AREA disimpan sebagai string (misalnya, "1,2,3")
+        $query = $this->db->get();
+
+        return $query->result();
     }
 
     public function get_ticket_detail_view($id_ticket)

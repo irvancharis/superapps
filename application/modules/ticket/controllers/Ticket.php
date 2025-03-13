@@ -131,24 +131,34 @@ class Ticket extends CI_Controller
     public function get_departement_joblist_edit()
     {
         $id_ticket = $this->input->get('id_ticket');
-        $id_departement = $this->input->get('id_departemen');
+        $id_departemen = $this->input->get('id_departemen');
 
-        if (!$id_ticket) {
-            echo json_encode(['success' => false, 'error' => 'ID Departemen tidak ditemukan']);
+        // Validasi input
+        if (empty($id_ticket) || empty($id_departemen)) {
+            echo json_encode(['success' => false, 'error' => 'ID Ticket dan Departemen harus dipilih.']);
             return;
         }
 
-        // Ambil daftar joblist dari database
-        $joblist = $this->M_TICKET->get_departement_joblist($id_departement);
+        // Ambil data ticket untuk mendapatkan type_ticket yang sudah dipilih
+        $ticket = $this->M_TICKET->get_ticket($id_ticket);
+        $selected_tickets = isset($ticket->TYPE_TICKET)
+            ? (strpos($ticket->TYPE_TICKET, ',') !== false
+                ? explode(',', $ticket->TYPE_TICKET)
+                : [$ticket->TYPE_TICKET])
+            : [];
 
-        // Ambil daftar yang sudah dipilih sebelumnya
-        $selected_tickets = $this->M_TICKET->get_selected_tickets($id_ticket);
+        // Ambil data joblist berdasarkan id_departemen
+        $data = $this->M_TICKET->get_departement_joblist($id_departemen);
 
-        echo json_encode([
-            'success' => true,
-            'data' => $joblist,
-            'selected_tickets' => $selected_tickets // Kirim daftar yang sudah dipilih
-        ]);
+        if ($data) {
+            echo json_encode([
+                'success' => true,
+                'data' => $data,
+                'selected_tickets' => $selected_tickets // Kirim daftar type_ticket yang sudah dipilih
+            ]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Tidak ada data joblist untuk departemen yang dipilih.']);
+        }
     }
 
     public function tambah_view($page = 'ticket')
@@ -386,7 +396,7 @@ class Ticket extends CI_Controller
         //     "```$get_ticket->DESCRIPTION_TICKET``` \n\n\n" .
 
         //     "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
-        //     "🔗 ($url)";
+        //     "🔗 ($url_teknisi)";
         // $this->TELEGRAM->send_message('8007581238', $ms_telegram_teknisi);
 
         // // Kirim Pesan ke Telegram (Client)
@@ -396,7 +406,7 @@ class Ticket extends CI_Controller
         //     "📌 Ticket Sudah DIPROSES \n\n" .
 
         //     "🚨 Lihat Progress Ticket anda dengan membuka URL di bawah ini:\n" .
-        //     "🔗 [ $url ]";
+        //     "🔗 [ $url_client ]";
         // $this->TELEGRAM->send_message('8007581238', $ms_telegram_client);
 
         // // Kirim Pesan ke WA (Client)

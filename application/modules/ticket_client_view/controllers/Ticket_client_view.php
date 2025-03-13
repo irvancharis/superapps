@@ -88,13 +88,22 @@ class Ticket_client_view extends CI_Controller
 
     public function get_departement_joblist()
     {
-        $id_departement = $this->input->post('id_departemen');
-        $result = $this->M_TICKET->get_departement_joblist($id_departement);
+        $id_departemen = $this->input->post('id_departemen');
+        $id_area = $this->input->post('id_area');
 
-        if (!empty($result)) {
-            echo json_encode(['success' => true, 'data' => $result], JSON_PRETTY_PRINT);
+        // Validasi input
+        if (empty($id_departemen) || empty($id_area)) {
+            echo json_encode(['success' => false, 'error' => 'Departemen dan Area harus dipilih.']);
+            return;
+        }
+
+        // Ambil data joblist berdasarkan id_departemen dan id_area
+        $data = $this->M_TICKET->get_joblist_by_departement_and_area($id_departemen, $id_area);
+
+        if ($data) {
+            echo json_encode(['success' => true, 'data' => $data]);
         } else {
-            echo json_encode(['success' => false, 'error' => 'Data tidak ditemukan']);
+            echo json_encode(['success' => false, 'error' => 'Tidak ada data joblist untuk departemen dan area yang dipilih.']);
         }
     }
 
@@ -114,13 +123,9 @@ class Ticket_client_view extends CI_Controller
 
     public function insert()
     {
-
         // Ambil data dari POST
         $requestby = $this->input->post('request_by');
         $id_departement = $this->input->post('id_departemen');
-        // E-MAIL
-        // $email_ticket = $this->input->post('email_ticket');
-        // TELP
         $telp = $this->input->post('telp');
         $site_ticket = $this->input->post('id_area');
         $lokasi_ticket = $this->M_MAPING_AREA->get_maping_area_single($site_ticket)->row()->NAMA_AREA;
@@ -130,7 +135,6 @@ class Ticket_client_view extends CI_Controller
         $description_ticket = $this->input->post('description_ticket');
         $result = null;
 
-        // Generate ID Ticket
         // Fungsi untuk generate kode kategori secara otomatis
         function generate_category_code($type_ticket)
         {
@@ -143,22 +147,15 @@ class Ticket_client_view extends CI_Controller
         // Generate kode kategori
         $category_code = generate_category_code($type_ticket);
 
-        // Ambil data tiket terakhir
-        $get_last_ticket = $this->M_TICKET->get_latest_data();
-
         // Tanggal saat ini
         $current_date = date('Ymd'); // Format: TahunBulanTanggal (YYYYMMDD)
 
+        // Ambil jumlah tiket pada hari ini
+        $this->db->like('IDTICKET', $current_date, 'after'); // Cari IDTICKET yang dimulai dengan tanggal hari ini
+        $ticket_count = $this->db->count_all_results('TICKET'); // Hitung jumlah tiket
+
         // Nomor urut
-        if (isset($get_last_ticket[0]->IDTICKET)) {
-            // Jika ada tiket sebelumnya, ambil nomor urut terakhir
-            $last_id_ticket = $get_last_ticket[0]->IDTICKET;
-            $last_sequence_number = intval(substr($last_id_ticket, -3)); // Ambil 3 digit terakhir
-            $sequence_number = $last_sequence_number + 1; // Increment nomor urut
-        } else {
-            // Jika tidak ada tiket sebelumnya, mulai dari 1
-            $sequence_number = 1;
-        }
+        $sequence_number = $ticket_count + 1; // Increment nomor urut
 
         // Format nomor urut menjadi 3 digit (misalnya, 001, 002, dst.)
         $formatted_sequence_number = str_pad($sequence_number, 3, '0', STR_PAD_LEFT);
@@ -166,8 +163,11 @@ class Ticket_client_view extends CI_Controller
         // Gabungkan komponen untuk membuat IDTICKET
         $id_ticket = $current_date . '-' . $category_code . '-' . $formatted_sequence_number;
 
-        // Contoh hasil: 20231015-NET-001
-        // End Generate ID Ticket
+        // Contoh hasil:
+        // 20250312-FIN-001
+        // 20250312-COM-002
+        // 20250312-PRI-003
+        // 20250313-FIN-001
 
         // Konfigurasi upload Gambar
         $config['upload_path'] = APPPATH . '../assets/uploads/ticket/';
@@ -192,9 +192,6 @@ class Ticket_client_view extends CI_Controller
                 'IDTICKET' => $id_ticket,
                 'REQUESTBY' => $requestby,
                 'DEPARTEMENT' => $id_departement,
-                // E-MAIL
-                // 'EMAIL_TICKET' => $email_ticket,
-                // TELP
                 'TELP' => $telp,
                 'SITE_TICKET' => $site_ticket,
                 'DEPARTEMENT_DIREQUEST' => $id_departement_request,
@@ -225,9 +222,6 @@ class Ticket_client_view extends CI_Controller
                 'IDTICKET' => $id_ticket,
                 'REQUESTBY' => $requestby,
                 'DEPARTEMENT' => $id_departement,
-                // E-MAIL
-                // 'EMAIL_TICKET' => $email_ticket,
-                // TELP
                 'TELP' => $telp,
                 'SITE_TICKET' => $site_ticket,
                 'DEPARTEMENT_DIREQUEST' => $id_departement_request,
@@ -247,9 +241,6 @@ class Ticket_client_view extends CI_Controller
                 'IDTICKET' => $id_ticket,
                 'REQUESTBY' => $requestby,
                 'DEPARTEMENT' => $id_departement,
-                // E-MAIL
-                // 'EMAIL_TICKET' => $email_ticket,
-                // TELP
                 'TELP' => $telp,
                 'SITE_TICKET' => $site_ticket,
                 'DEPARTEMENT_DIREQUEST' => $id_departement_request,
@@ -265,6 +256,7 @@ class Ticket_client_view extends CI_Controller
 
             $result = $this->M_TICKET->insert($data);
         }
+
 
         // Membuat format pesan sesuai permintaan
         $get_nama_departement = $this->M_DEPARTEMENT->get_departemen_single($id_departement);
