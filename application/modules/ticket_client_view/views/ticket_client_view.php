@@ -301,14 +301,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
-                                                    <label>DESCRIPTION</label>
+                                                    <label>DESKRIPSI KELUHAN</label>
                                                     <textarea name="description_ticket" placeholder="Masukkan deskripsi keluhan" class="form-control" id="description_ticket"></textarea>
                                                     <div class="invalid-feedback">
                                                         Silahkan masukkan deskripsi keluhan anda!
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-12 col-md-6 col-lg-6" id="image-container">
-                                                    <label>FOTO</label>
+                                                    <label>FOTO BUKTI KELUHAN</label>
                                                     <div class="d-flex justify-content-center align-items-center">
                                                         <div id="image-preview" class="image-preview">
                                                             <label for="image-upload" id="image-label">Upload Gambar</label>
@@ -330,7 +330,7 @@
                                             </div>
                                         </div>
                                         <div class="card-footer text-right">
-                                            <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send</button>
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Kirim</button>
                                             <button type="reset" class="btn btn-secondary"><i class="fas fa-redo"></i> Reset</button>
                                         </div>
                                     </form>

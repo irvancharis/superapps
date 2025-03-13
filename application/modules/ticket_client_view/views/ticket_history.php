@@ -42,6 +42,7 @@
             <div class="main-content pt-5">
                 <section class="section px-4 px-md-0 px-lg-0">
                     <h3 class="judul-ticketing"> <img src="<?php echo base_url('assets/img/Logo SA X7.png'); ?>" width="60px" alt=""> Ticket Progress</h3>
+                    <h5 class="mt-5">ID TICKET : <span style="color: #114fd8;"><?php echo $id_ticket; ?></span></h5>
                     <div class="section-body">
                         <?php
                         // Kelompokkan data berdasarkan tanggal
@@ -242,7 +243,7 @@
             // Contoh penggunaan iziToast
             iziToast.info({
                 title: 'INFO',
-                message: 'Halaman ini akan di refresh setiap 15 detik',
+                message: 'Halaman ini akan refresh otomatis setiap 15 detik untuk memperbarui update pengerjaan ticket.',
                 position: 'topCenter'
             });
         });

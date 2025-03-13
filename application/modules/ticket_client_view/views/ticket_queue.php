@@ -1,4 +1,3 @@
-`
 <!DOCTYPE html>
 <html lang="en">
 
@@ -229,7 +228,7 @@
                                                 <th>SITE</th>
                                                 <th>APPROVAL</th>
                                                 <th>TECHNICIAN</th>
-                                                <th>STATUS</th>
+                                                <th>PROGRESS</th>
                                                 <th>CLEAR AT</th>
                                             </tr>
                                         </thead>
@@ -251,7 +250,13 @@
                                                         }
                                                         ?>
                                                     </td>
-                                                    <td><?php echo $d->NAME_TECHNICIAN; ?></td>
+                                                    <td class="text-center">
+                                                        <?php if ($d->NAME_TECHNICIAN == null) : ?>
+                                                            <span>-</span>
+                                                        <?php else : ?>
+                                                            <?php echo $d->NAME_TECHNICIAN; ?>
+                                                        <?php endif; ?>
+                                                    </td>
                                                     <td>
                                                         <div class="progress">
                                                             <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
@@ -338,6 +343,23 @@
             $(this).toggleClass('btnblickanim');
             $('.main-chat-box').toggle();
         });
+
+        // 🚀 1. Inisialisasi Semua Progress Bar Saat Halaman Dimuat
+        $(".progress-bar").each(function() {
+            const id = $(this).data("id");
+            const progressValue = $(this).data("status");
+            if (progressValue !== undefined) {
+                updateProgressBar(id, progressValue);
+            }
+        });
+
+        // Fungsi untuk update tampilan progress bar
+        function updateProgressBar(id, progressValue) {
+            $(`.progress-bar[data-id='${id}']`)
+                .css("width", progressValue + "%")
+                .attr("aria-valuenow", progressValue)
+                .text(progressValue + "%");
+        }
     </script>
 </body>
 

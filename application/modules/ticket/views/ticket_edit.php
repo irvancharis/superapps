@@ -312,7 +312,7 @@
                             success: function(response) {
                                 let res = JSON.parse(response);
                                 if (res.success) {
-                                    swal('Sukses', 'Tambah Data Berhasil!', 'success').then(function() {
+                                    swal('Sukses', 'Ticket Berhasil Di Approve!', 'success').then(function() {
                                         location.href = "<?php echo base_url(); ?>ticket";
                                     });
                                 } else {

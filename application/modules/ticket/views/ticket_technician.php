@@ -543,6 +543,11 @@
                         }
                     }
                 });
+
+                // **Format input teks menjadi huruf kapital**
+                $(document).on('input', '#OBJEK_DITANGANI, #KETERANGAN', function() {
+                    $(this).val($(this).val().toUpperCase());
+                });
             });
 
             // Fungsi untuk update tampilan progress bar
