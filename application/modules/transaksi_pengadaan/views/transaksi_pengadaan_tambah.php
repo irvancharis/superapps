@@ -127,7 +127,7 @@
                             });
                         }
 
-                        if (!formData.AREA_PENEMPATAN || !formData.DEPARTEMEN_PENGAJUAN || !formData.RUANGAN_PENEMPATAN || !formData.LOKASI_PENEMPATAN || !formData.TANGGAL_PENGAJUAN) {
+                        if (!formData.AREA_PENEMPATAN || !formData.DEPARTEMEN_PENGAJUAN || !formData.RUANGAN_PENEMPATAN || !formData.LOKASI_PENEMPATAN) {
                             swal('Error', 'Lengkapi semua data.', 'error').then(function() {
                                 return;
                             });
@@ -141,9 +141,9 @@
                                 form: formData
                             },
                             success: function(response) {
-                                let res = JSON.parse(response);
+                                let res = JSON.parse(response);                        
                                 if (res.success) {
-                                    swal('Sukses', 'Pengajuan Berhasil Dikirim!', 'success').then(function() {
+                                    swal('success', 'Pengajuan Berhasil Dikirim!', 'success').then(function() {
                                         localStorage.removeItem('selectedItems'); // Hapus localStorage setelah disimpan
                                         localStorage.removeItem('formPengadaan'); // Hapus localStorage setelah disimpan
                                         location.href = "<?php echo base_url(); ?>" + "transaksi_pengadaan";

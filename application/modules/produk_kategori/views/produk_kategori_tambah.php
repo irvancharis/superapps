@@ -10,21 +10,21 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>KODE KATEGORI</label>
                                                 <input required type="text" name="KODE_PRODUK_KATEGORI" id="KODE_PRODUK_KATEGORI" class="form-control">
                                                 <div class="invalid-feedback">
                                                 Masukkan kode kategori?
                                                 </div>
                                             </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>NAMA KATEGORI</label>
                                                 <input required type="text" class="form-control" id="NAMA_PRODUK_KATEGORI" name="NAMA_PRODUK_KATEGORI">
                                                 <div class="invalid-feedback">
                                                     Masukkan nama kategori  !
                                                 </div>
                                             </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>KETERANGAN KATEGORI</label>
                                                 <textarea required name="KETERANGAN_PRODUK_KATEGORI" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket"></textarea>
                                                 <div class="invalid-feedback">

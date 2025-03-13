@@ -535,7 +535,7 @@ class Transaksi_pengadaan extends CI_Controller
                 'TOKEN' => rand(100000, 999999),
                 'CREATE' => date('Y-m-d H:i:s'),
                 'MASA_BERLAKU' => date('Y-m-d H:i:s', strtotime('+1 days')),
-                'USER_AKSES' => '8b045f06-cef0-4611-a086-cde108614c8d',
+                'USER_AKSES' => 'd3d646fb-b1e2-430d-ad50-6b4e7aa882c1',
                 'KETERANGAN_TRANSAKSI' => 'TRANSAKSI PENGADAAN - APROVAL KABAG',
                 'LINK' => base_url('appinkabag/' . $uuid_token),
                 'UUID_TRANSAKSI' => $uuid_transaksi,
@@ -631,14 +631,14 @@ Sejahtera Abadi Group'
             'TOKEN' => rand(100000, 999999),
             'CREATE' => date('Y-m-d H:i:s'),
             'MASA_BERLAKU' => date('Y-m-d H:i:s', strtotime('+1 days')),
-            'USER_AKSES' => '8b045f06-cef0-4611-a086-cde108614c8d',
+            'USER_AKSES' => 'd3d646fb-b1e2-430d-ad50-6b4e7aa882c1',
             'KETERANGAN_TRANSAKSI' => 'TRANSAKSI PENGADAAN - APROVAL GM',
             'LINK' => base_url('appingm/' . $uuid_token),
             'UUID_TRANSAKSI' => $id_transaksi,
         ];
         $this->db->insert('TOKEN', $data_token);
 
-        $get_setting = $this->db->get('SETTING')->row();
+        $get_setting = $this->db->get('SETTING')->row();        
         $this->db->where('ID_KARYAWAN', $get_setting->GM);
         $get_kabag = $this->db->get('VIEW_KARYAWAN')->row();
 
@@ -684,10 +684,7 @@ Sejahtera Abadi Group'
     }
 
     public function update_approval_gm()
-    {
-        if (!$this->session->userdata('isLoggedIn')) {
-            redirect('login');
-        }
+    {        
 
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $items = $this->input->post('items');
@@ -771,9 +768,6 @@ Sejahtera Abadi Group'
 
     public function update_approval_head()
     {
-        if (!$this->session->userdata('isLoggedIn')) {
-            redirect('login');
-        }
 
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $items = $this->input->post('items');
