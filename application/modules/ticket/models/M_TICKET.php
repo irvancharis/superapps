@@ -1,4 +1,6 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
 class M_TICKET extends CI_Model
 {
 
@@ -22,6 +24,16 @@ class M_TICKET extends CI_Model
         $this->db->order_by('DATE_TICKET', 'ASC');
         $query = $this->db->get();
         return $query->result_object();
+    }
+
+    public function count_ticket_dalam_antrian()
+    {
+        // Hitung jumlah ticket DALAM ANTRIAN
+        $this->db->select('COUNT(IDTICKET) AS JUMLAH_TICKET');
+        $this->db->from('TICKET');
+        $this->db->where('APPROVAL_TICKET', '0');
+        $query = $this->db->get();
+        return $query->row_object();
     }
 
     public function get_ticket($id_ticket)

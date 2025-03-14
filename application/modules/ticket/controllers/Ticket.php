@@ -31,6 +31,7 @@ class Ticket extends CI_Controller
         $data['page'] = $this->session->userdata('page');
         $data['get_departement'] = $this->M_TICKET->get_departement();
         $data['get_technician'] = $this->M_TICKET->get_technician();
+        $data['jml_ticket_dalam_antrian'] = $this->M_TICKET->count_ticket_dalam_antrian();
 
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .

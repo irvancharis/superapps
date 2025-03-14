@@ -19,6 +19,7 @@ class M_TICKET extends CI_Model
         $this->db->join('TECHNICIAN', 'TICKET.TECHNICIAN = TECHNICIAN.IDTECH', 'left');
         $this->db->join('MAPING_AREA', 'TICKET.SITE_TICKET = MAPING_AREA.KODE_AREA', 'left');
         $this->db->where('TICKET.STATUS_TICKET !=', '100');
+        $this->db->where('TICKET.APPROVAL_TICKET !=', '2');
         $query = $this->db->get();
         return $query->result_object();
     }
