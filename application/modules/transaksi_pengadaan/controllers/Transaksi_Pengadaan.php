@@ -11,6 +11,10 @@ class Transaksi_pengadaan extends CI_Controller
         $this->load->model('produk_item/M_PRODUK_ITEM');
         $this->load->model('produk_stok/M_PRODUK_STOK');
         $this->load->model('karyawan/M_KARYAWAN');
+        $this->load->model('departement/M_DEPARTEMENT');
+        $this->load->model('maping_area/M_MAPING_AREA');
+        $this->load->model('maping_ruangan/M_MAPING_RUANGAN');
+        $this->load->model('maping_lokasi/M_MAPING_LOKASI');
         $this->load->helper('url_helper');
         $this->load->library('Uuid');
         $this->load->library('session');
@@ -426,10 +430,10 @@ class Transaksi_pengadaan extends CI_Controller
         $data['page'] = $this->session->userdata('page');
         $data['M_TRANSAKSI_PENGADAAN'] = $this->M_TRANSAKSI_PENGADAAN->get_data();
         $data['get_karyawan'] = $this->M_TRANSAKSI_PENGADAAN->get_karyawan();
-        $data['get_area'] = $this->M_TRANSAKSI_PENGADAAN->get_area();
-        $data['get_ruangan'] = $this->M_TRANSAKSI_PENGADAAN->get_ruangan();
-        $data['get_lokasi'] = $this->M_TRANSAKSI_PENGADAAN->get_lokasi();
-        $data['get_departemen'] = $this->M_TRANSAKSI_PENGADAAN->get_departemen();
+        $data['get_area'] = $this->M_MAPING_AREA->get_area();
+        $data['get_departemen'] = $this->M_DEPARTEMENT->get_departemen();
+        $data['get_ruangan'] = $this->M_MAPING_RUANGAN->get_maping_ruangan();
+        $data['get_lokasi'] = $this->M_MAPING_LOKASI->get_maping_lokasi();
         $data['get_jabatan'] = $this->M_TRANSAKSI_PENGADAAN->get_jabatan();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
@@ -535,7 +539,7 @@ class Transaksi_pengadaan extends CI_Controller
                 'TOKEN' => rand(100000, 999999),
                 'CREATE' => date('Y-m-d H:i:s'),
                 'MASA_BERLAKU' => date('Y-m-d H:i:s', strtotime('+1 days')),
-                'USER_AKSES' => '8b045f06-cef0-4611-a086-cde108614c8d',
+                'USER_AKSES' => 'd3d646fb-b1e2-430d-ad50-6b4e7aa882c1',
                 'KETERANGAN_TRANSAKSI' => 'TRANSAKSI PENGADAAN - APROVAL KABAG',
                 'LINK' => base_url('appinkabag/' . $uuid_token),
                 'UUID_TRANSAKSI' => $uuid_transaksi,
@@ -631,14 +635,14 @@ Sejahtera Abadi Group'
             'TOKEN' => rand(100000, 999999),
             'CREATE' => date('Y-m-d H:i:s'),
             'MASA_BERLAKU' => date('Y-m-d H:i:s', strtotime('+1 days')),
-            'USER_AKSES' => '8b045f06-cef0-4611-a086-cde108614c8d',
+            'USER_AKSES' => 'd3d646fb-b1e2-430d-ad50-6b4e7aa882c1',
             'KETERANGAN_TRANSAKSI' => 'TRANSAKSI PENGADAAN - APROVAL GM',
             'LINK' => base_url('appingm/' . $uuid_token),
             'UUID_TRANSAKSI' => $id_transaksi,
         ];
         $this->db->insert('TOKEN', $data_token);
 
-        $get_setting = $this->db->get('SETTING')->row();
+        $get_setting = $this->db->get('SETTING')->row();        
         $this->db->where('ID_KARYAWAN', $get_setting->GM);
         $get_kabag = $this->db->get('VIEW_KARYAWAN')->row();
 
@@ -684,10 +688,7 @@ Sejahtera Abadi Group'
     }
 
     public function update_approval_gm()
-    {
-        if (!$this->session->userdata('isLoggedIn')) {
-            redirect('login');
-        }
+    {        
 
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $items = $this->input->post('items');
@@ -771,9 +772,6 @@ Sejahtera Abadi Group'
 
     public function update_approval_head()
     {
-        if (!$this->session->userdata('isLoggedIn')) {
-            redirect('login');
-        }
 
         $id_transaksi = $this->input->post('id_transaksi'); // Ambil ID transaksi
         $items = $this->input->post('items');

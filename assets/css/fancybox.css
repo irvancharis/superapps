@@ -701,7 +701,7 @@ html.with-fancybox body.hide-scrollbar {
     --f-button-width: 34px;
     --f-button-height: 34px;
     --f-button-border-radius: 4px;
-    --f-button-color: var(--fancybox-color, #fff);
+    --f-button-color: #000000;
     --f-button-hover-color: var(--fancybox-color, #fff);
     --f-button-bg: transparent;
     --f-button-hover-bg: transparent;

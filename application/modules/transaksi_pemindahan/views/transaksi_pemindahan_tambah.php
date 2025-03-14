@@ -17,13 +17,14 @@
                                         <div class="row mt-2">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
-                                                <select required name="AREA_AWAL" id="AREA_AWAL" class="form-control">
+                                                <select disabled name="AREA_AWAL" id="AREA_AWAL" class="form-control">
                                                     <option value="" class="text-center" selected>-- Pilih
                                                         Area
                                                         --</option>
                                                     <?php foreach ($get_area as $row) : ?>
-                                                    <option value="<?= $row->KODE_AREA; ?>"><?= $row->NAMA_AREA; ?>
-                                                    </option>
+                                                    <option value="<?= $row->KODE_AREA; ?>"
+                                                        <?php echo $row->KODE_AREA == $this->session->userdata('ID_AREA') ? "selected" : ""; ?>>
+                                                        <?= $row->NAMA_AREA; ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                                 <div class="invalid-feedback">
@@ -32,7 +33,7 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DEPARTEMEN</label>
-                                                <select required name="DEPARTEMEN_AWAL" id="DEPARTEMEN_AWAL"
+                                                <select disabled name="DEPARTEMEN_AWAL" id="DEPARTEMEN_AWAL"
                                                     class="form-control">
                                                     <?php foreach ($get_departemen as $row) : ?>
                                                     <option value="<?= $row->KODE_DEPARTEMEN; ?>"
@@ -83,12 +84,7 @@
                                             <label>
                                                 <button type="button" class="btn btn-danger" id="btn-riset">
                                                     <i class="fa fa-redo"></i> RISET
-                                            </label>
-
-                                            <label>
-                                                <button type="button" class="btn btn-success" id="btn-lock-produk">
-                                                    <i class="fa fa-save"></i> LOCK DATA
-                                            </label>
+                                            </label>                                            
 
                                         </div>
                                         <div class="table-responsive">
@@ -215,6 +211,14 @@
             <script>
 $(document).ready(function() {
 
+    let formData = JSON.parse(localStorage.getItem('FormPemindahan'));
+
+    if (formData && formData.AREA_AWAL === '') {
+        get_ruangan_by_area();
+    }
+    
+    loadFormData();
+
 
     $('#btnshowproduk').on('click', function() {
 
@@ -242,7 +246,7 @@ $(document).ready(function() {
     let storedItems = JSON.parse(localStorage.getItem("storedProdukItems")) || [];
 
     loadSelectedItems();
-    loadFormData();
+    
 
 
     // Tangkap event dari Fancybox
@@ -287,8 +291,8 @@ $(document).ready(function() {
     });
 
     // Get Ruangan By Area
-    $('#AREA_AWAL').on('change', function() {
-        let area = $(this).val();
+    function get_ruangan_by_area() {
+        let area = $('#AREA_AWAL').val();
         $.ajax({
             url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_ruangan_by_area",
             type: "POST",
@@ -316,7 +320,7 @@ $(document).ready(function() {
                 swal('Error', 'Tidak dapat terhubung ke server.', 'error');
             }
         });
-    });
+    };
 
     // Get Lokasi By Ruangan
     $('#RUANGAN_AWAL').on('change', function() {

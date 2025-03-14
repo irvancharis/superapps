@@ -144,6 +144,7 @@ class Karyawan extends CI_Controller
             $inputan = $this->input->post(null, TRUE);
             $inputan['FOTO'] = $KODE . $extension;
             $inputan['ID_KARYAWAN'] = $KODE;
+            $inputan['STATUS'] = 1;
 		    $result = $this->M_KARYAWAN->insert($inputan);
 
             if ($result) {

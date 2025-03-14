@@ -207,7 +207,7 @@
                 data: {
                     id_transaksi: idTransaksi, // Kirim ID transaksi agar dapat diupdate
                     items: selectedItems,
-                    token: '<?php echo $this->uri->segment(3); ?>'
+                    token: '<?php echo $this->uri->segment(2); ?>'
                 },
                 success: function(response) {
                     let res = JSON.parse(response);
@@ -252,8 +252,8 @@
                     data: {
                         id_transaksi: idTransaksi,
                         KETERANGAN_CANCEL_HEAD: $('#KETERANGAN_CANCEL_HEAD').val(),
-                        items: selectedItems.
-                        token: '<?php echo $this->uri->segment(3); ?>'
+                        items: selectedItems,
+                        token: '<?php echo $this->uri->segment(2); ?>'
                     },
                     success: function(response) {
                         let res = JSON.parse(response);

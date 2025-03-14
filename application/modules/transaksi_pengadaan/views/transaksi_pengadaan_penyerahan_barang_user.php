@@ -152,9 +152,7 @@
 
                     let idTransaksi = "<?php echo $id_transaksi_pengadaan; ?>"; // ID transaksi dari PHP
 
-                    $('#KODE_USER_PENERIMA_BARANG').on('change', function() {
-                        saveFormData();
-                    })
+                    
 
                     function loadSelectedItems() {
                         let selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
@@ -231,15 +229,7 @@
                         });
                     }
 
-                    // Form Data Save to Local Storage
-                    function saveFormData() {
-                        let formData = {
-                            KODE_USER_PENERIMA_BARANG: $('#KODE_USER_PENERIMA_BARANG').val(),
-                        };
-
-                        localStorage.setItem('formPengadaan', JSON.stringify(formData));
-                    }
-
+                   
                     // Update data ke database
                     $('#FORM_TRANSAKSI_PENGADAAN_PENYERAHAN_BARANG').on('submit', function(e) {
                         e.preventDefault();

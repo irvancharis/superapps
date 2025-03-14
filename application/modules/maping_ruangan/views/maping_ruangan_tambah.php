@@ -10,7 +10,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                        <div class="form-group col-12 col-md-6 col-lg-6">
+                                        <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>AREA</label>
                                                 <select required name="KODE_AREA" id="KODE_AREA" class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih Area --</option>
@@ -22,21 +22,21 @@
                                                     Silahkan masukkan kategori!
                                                 </div>
                                             </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>KODE RUANGAN</label>
                                                 <input required type="text" name="KODE_RUANGAN" id="KODE_RUANGAN" class="form-control">
                                                 <div class="invalid-feedback">
                                                 Masukkan kode ruangan?
                                                 </div>
                                             </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>NAMA RUANGAN</label>
                                                 <input required type="text" class="form-control" id="NAMA_RUANGAN" name="NAMA_RUANGAN">
                                                 <div class="invalid-feedback">
                                                     Masukkan nama ruangan  !
                                                 </div>
                                             </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>KETERANGAN RUANGAN</label>
                                                 <textarea required name="KETERANGAN_RUANGAN" placeholder="Masukkan keterangan ruangan" class="form-control" id="description_ticket"></textarea>
                                                 <div class="invalid-feedback">

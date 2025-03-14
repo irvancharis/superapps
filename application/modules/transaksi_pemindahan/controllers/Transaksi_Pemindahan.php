@@ -310,7 +310,7 @@ class Transaksi_pemindahan extends CI_Controller
             'DEPARTEMEN_AWAL' => $this->session->userdata('ID_DEPARTEMEN'),
             'TANGGAL_PENGAJUAN' => date('Y-m-d'),
             'KETERANGAN_PEMINDAHAN' => $inputan['KETERANGAN_PEMINDAHAN'],
-            'AREA_AWAL' => $inputan['AREA_AWAL'],            
+            'AREA_AWAL' => $this->session->userdata('ID_AREA'),       
             'RUANGAN_AWAL' => $inputan['RUANGAN_AWAL'],
             'LOKASI_AWAL' => $inputan['LOKASI_AWAL'],
             'AREA_AKHIR' => $inputan['AREA_AKHIR'],            
@@ -344,8 +344,6 @@ class Transaksi_pemindahan extends CI_Controller
 
                 $this->load->library('upload', $config);
 
-                
-
                 if (!$this->upload->do_upload('file')) {
                     echo json_encode(['success' => false, 'error' => $this->upload->display_errors()]);
                     exit;
@@ -354,7 +352,7 @@ class Transaksi_pemindahan extends CI_Controller
                     $data_produk = [
                         'UUID_TRANSAKSI_PEMINDAHAN' => $uuid_transaksi,
                         'UUID_PRODUK_STOK' => $inputan['UUID_STOK'][$i],
-                        'UUID_ASET' => $inputan['UUID_ASET'][$i],
+                        'UUID_ASET' => isset($inputan['UUID_ASET'][$i]) ? $inputan['UUID_ASET'][$i] : null,
                         'JUMLAH_PEMINDAHAN' => $inputan['JUMLAH_PEMINDAHAN'][$i],
                         'FOTO_AWAL' => $data['file_name'],
                         'KEPERLUAN' => $inputan['KETERANGAN_ITEM'][$i],

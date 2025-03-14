@@ -385,7 +385,7 @@ class Transaksi_penghapusan extends CI_Controller
             'KODE_DEPARTEMEN' => $this->session->userdata('ID_DEPARTEMEN'),
             'TANGGAL_PENGAJUAN' => date('Y-m-d'),
             'KETERANGAN_PENGHAPUSAN' => $inputan['KETERANGAN'],
-            'AREA_PENGHAPUSAN' => $inputan['AREA'],
+            'AREA_PENGHAPUSAN' => $this->session->userdata('ID_AREA'),
             'STATUS_PENGHAPUSAN' => 'MENUNGGU APROVAL KABAG',
             'RUANGAN_PENGHAPUSAN' => $inputan['RUANGAN'],
             'LOKASI_PENGHAPUSAN' => $inputan['LOKASI'],

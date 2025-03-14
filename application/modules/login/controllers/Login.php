@@ -30,7 +30,7 @@ class Login extends CI_Controller
                 $this->load->library('session');
                 $this->session->set_userdata('isLoggedIn', true);
                 $this->session->set_userdata('UUID_USER', $user->UUID_USER);
-                $this->session->set_userdata('ID_AREA', $user->ID_AREA);
+                $this->session->set_userdata('ID_AREA', $user->ID_MAPING_AREA);
                 $this->session->set_userdata('NAMA_AREA', $user->NAMA_AREA);
                 $this->session->set_userdata('ID_JABATAN', $user->ID_JABATAN);
                 $this->session->set_userdata('NAMA_JABATAN', $user->NAMA_JABATAN);
@@ -43,10 +43,10 @@ class Login extends CI_Controller
 
                 return redirect()->to('/dashboard');
             } else {
-                echo json_encode(['success' => false, 'error' => 'password salah.']);
+                return redirect()->to('/login');
             }
         } else {
-            echo json_encode(['success' => false, 'error' => 'email tidak terdaftar.']);
+            return redirect()->to('/login');
         }
     }
 

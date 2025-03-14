@@ -14,14 +14,13 @@
                                         <div class="row mt-2">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>AREA</label>
-                                                <select required name="AREA_PENEMPATAN" id="AREA_PENEMPATAN"
+                                                <select disabled name="AREA_PENEMPATAN" id="AREA_PENEMPATAN"
                                                     class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih
                                                         Area
                                                         --</option>
                                                     <?php foreach ($get_area as $row) : ?>
-                                                    <option value="<?= $row->KODE_AREA; ?>"><?= $row->NAMA_AREA; ?>
-                                                    </option>
+                                                        <option value="<?= $row->KODE_AREA; ?>" <?php echo $row->KODE_AREA == $this->session->userdata('ID_AREA') ? "selected" : ""; ?>><?= $row->NAMA_AREA; ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                                 <div class="invalid-feedback">
@@ -65,7 +64,7 @@
                                                 <select required name="LOKASI_PENEMPATAN" id="LOKASI_PENEMPATAN"
                                                     class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih
-                                                        Lokasi --</option>
+                                                        Lokasi --</option>                                                    
                                                     <?php foreach ($get_lokasi as $row) : ?>
                                                     <option value="<?= $row->KODE_LOKASI; ?>"><?= $row->NAMA_LOKASI; ?>
                                                     </option>
@@ -133,6 +132,12 @@
 
             <script>
 $(document).ready(function() {
+
+    let formData = JSON.parse(localStorage.getItem('FormOpname')) || {};
+
+    if (formData && formData.AREA_OPNAME === '') {
+        get_ruangan_by_area();
+    }
 
     $('#dataprodukitem').dataTable({
         paging: false,
@@ -212,8 +217,8 @@ $(document).ready(function() {
     });
 
     // Get Ruangan By Area
-    $('#AREA_PENEMPATAN').on('change', function() {
-        let area = $(this).val();
+    function get_ruangan_by_area() {
+        let area = $('#AREA_PENEMPATAN').val();
         $.ajax({
             url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_ruangan_by_area",
             type: "POST",
@@ -241,121 +246,121 @@ $(document).ready(function() {
                 swal('Error', 'Tidak dapat terhubung ke server.', 'error');
             }
         });
+    };
+
+// Get Lokasi By Ruangan
+$('#RUANGAN_PENEMPATAN').on('change', function() {
+    let ruangan = $(this).val();
+    $.ajax({
+        url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_lokasi_by_ruangan",
+        type: "POST",
+        data: {
+            RUANGAN_PENEMPATAN: ruangan
+        },
+        success: function(response) {
+            var lokasi = JSON.parse(response);
+            var data_lokasi = lokasi.data;
+            var $lokasiPenempatan = $('#LOKASI_PENEMPATAN');
+
+            $lokasiPenempatan.empty().append(
+                '<option value="" class="text-center" selected disabled>-- Pilih Lokasi --</option>'
+            );
+
+            $.each(data_lokasi, function(index, lokasi) {
+                $lokasiPenempatan.append($('<option>', {
+                    value: lokasi.KODE_LOKASI,
+                    text: lokasi.NAMA_LOKASI
+                }));
+            });
+
+        },
+        error: function() {
+            swal('Error', 'Tidak dapat terhubung ke server.', 'error');
+        }
     });
+});
 
-    // Get Lokasi By Ruangan
-    $('#RUANGAN_PENEMPATAN').on('change', function() {
-        let ruangan = $(this).val();
-        $.ajax({
-            url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_lokasi_by_ruangan",
-            type: "POST",
-            data: {
-                RUANGAN_PENEMPATAN: ruangan
-            },
-            success: function(response) {
-                var lokasi = JSON.parse(response);
-                var data_lokasi = lokasi.data;
-                var $lokasiPenempatan = $('#LOKASI_PENEMPATAN');
+$('#FORM_TRANSAKSI_OPNAME_TAMBAH').on('submit', function(e) {
+    e.preventDefault();
 
-                $lokasiPenempatan.empty().append(
-                    '<option value="" class="text-center" selected disabled>-- Pilih Lokasi --</option>'
-                );
+    let storedProdukItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
+    let formData = JSON.parse(localStorage.getItem('FormOpname')) || {};
 
-                $.each(data_lokasi, function(index, lokasi) {
-                    $lokasiPenempatan.append($('<option>', {
-                        value: lokasi.KODE_LOKASI,
-                        text: lokasi.NAMA_LOKASI
-                    }));
+    if (storedProdukItems.length == 0) {
+        swal('Error', 'Tidak ada produk yang dipilih.', 'error').then(function() {
+            console.log(storedProdukItems);
+        });
+    }
+
+    if (!formData.AREA_OPNAME || !formData.KODE_DEPARTEMEN || !formData
+        .RUANGAN_OPNAME || !formData.LOKASI_OPNAME || !formData.CATATAN_OPNAME) {
+        swal('Error', 'Lengkapi semua data.', 'error').then(function() {
+            return;
+        });
+    }
+
+    $.ajax({
+        url: "<?php echo base_url(); ?>" + "transaksi_opname/insert",
+        type: "POST",
+        data: {
+            items: storedProdukItems,
+            form: formData
+        },
+        success: function(response) {
+            let res = JSON.parse(response);
+            if (res.success) {
+                swal('Sukses', 'Simpan Data Berhasil!', 'success').then(function() {
+                    localStorage.removeItem(
+                        'storedProdukItems'
+                    ); // Hapus localStorage setelah disimpan
+                    localStorage.removeItem(
+                        'FormOpname'); // Hapus localStorage setelah disimpan
+                    location.href = "<?php echo base_url(); ?>" +
+                        "transaksi_opname";
                 });
-
-            },
-            error: function() {
-                swal('Error', 'Tidak dapat terhubung ke server.', 'error');
+            } else {
+                swal('Gagal', res.error, 'error');
             }
-        });
+        }
     });
+});
 
-    $('#FORM_TRANSAKSI_OPNAME_TAMBAH').on('submit', function(e) {
-        e.preventDefault();
+// Form Data Save to Local Storage
+function saveFormData() {
+    let formData = {
+        AREA_OPNAME: $('#AREA_PENEMPATAN').val(),
+        KODE_DEPARTEMEN: $('#DEPARTEMEN_PENGAJUAN').val(),
+        RUANGAN_OPNAME: $('#RUANGAN_PENEMPATAN').val(),
+        LOKASI_OPNAME: $('#LOKASI_PENEMPATAN').val(),
+        CATATAN_OPNAME: $('#CATATAN_OPNAME').val() == '' ? null : $('#CATATAN_OPNAME').val()
+    };
 
-        let storedProdukItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
-        let formData = JSON.parse(localStorage.getItem('FormOpname')) || {};
+    localStorage.setItem('FormOpname', JSON.stringify(formData));
+}
 
-        if (storedProdukItems.length == 0) {
-            swal('Error', 'Tidak ada produk yang dipilih.', 'error').then(function() {
-                console.log(storedProdukItems);
-            });
-        }
-
-        if (!formData.AREA_OPNAME || !formData.KODE_DEPARTEMEN || !formData
-            .RUANGAN_OPNAME || !formData.LOKASI_OPNAME || !formData.CATATAN_OPNAME) {
-            swal('Error', 'Lengkapi semua data.', 'error').then(function() {
-                return;
-            });
-        }
-
-        $.ajax({
-            url: "<?php echo base_url(); ?>" + "transaksi_opname/insert",
-            type: "POST",
-            data: {
-                items: storedProdukItems,
-                form: formData
-            },
-            success: function(response) {
-                let res = JSON.parse(response);
-                if (res.success) {
-                    swal('Sukses', 'Simpan Data Berhasil!', 'success').then(function() {
-                        localStorage.removeItem(
-                            'storedProdukItems'
-                        ); // Hapus localStorage setelah disimpan
-                        localStorage.removeItem(
-                            'FormOpname'); // Hapus localStorage setelah disimpan
-                        location.href = "<?php echo base_url(); ?>" +
-                            "transaksi_opname";
-                    });
-                } else {
-                    swal('Gagal', res.error, 'error');
-                }
-            }
-        });
-    });
-
-    // Form Data Save to Local Storage
-    function saveFormData() {
-        let formData = {
-            AREA_OPNAME: $('#AREA_PENEMPATAN').val(),
-            KODE_DEPARTEMEN: $('#DEPARTEMEN_PENGAJUAN').val(),
-            RUANGAN_OPNAME: $('#RUANGAN_PENEMPATAN').val(),
-            LOKASI_OPNAME: $('#LOKASI_PENEMPATAN').val(),
-            CATATAN_OPNAME: $('#CATATAN_OPNAME').val() == '' ? null : $('#CATATAN_OPNAME').val()
-        };
-
-        localStorage.setItem('FormOpname', JSON.stringify(formData));
+// Form Data Load from Local Storage
+function loadFormData() {
+    let formData = JSON.parse(localStorage.getItem('FormOpname'));
+    if (formData) {
+        $('#AREA_PENEMPATAN').val(formData.AREA_OPNAME);
+        $('#DEPARTEMEN_PENGAJUAN').val(formData.KODE_DEPARTEMEN);
+        $('#RUANGAN_PENEMPATAN').val(formData.RUANGAN_OPNAME);
+        $('#LOKASI_PENEMPATAN').val(formData.LOKASI_OPNAME);
+        $('#CATATAN_OPNAME').val(formData.CATATAN_OPNAME);
     }
+}
 
-    // Form Data Load from Local Storage
-    function loadFormData() {
-        let formData = JSON.parse(localStorage.getItem('FormOpname'));
-        if (formData) {
-            $('#AREA_PENEMPATAN').val(formData.AREA_PENEMPATAN);
-            $('#DEPARTEMEN_PENGAJUAN').val(formData.DEPARTEMEN_PENGAJUAN);
-            $('#RUANGAN_PENEMPATAN').val(formData.RUANGAN_PENEMPATAN);
-            $('#LOKASI_PENEMPATAN').val(formData.LOKASI_PENEMPATAN);
-            $('#CATATAN_OPNAME').val(formData.CATATAN_OPNAME);
-        }
-    }
+// Fungsi untuk menampilkan data dalam tabel
+function renderTable(data) {
+    let storedItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
+    let tbody = $("#selected-items-body");
+    tbody.empty(); // Kosongkan isi tabel sebelum diisi ulang
 
-    // Fungsi untuk menampilkan data dalam tabel
-    function renderTable(data) {
-        let storedItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
-        let tbody = $("#selected-items-body");
-        tbody.empty(); // Kosongkan isi tabel sebelum diisi ulang
-
-        if (data.length === 0) {
-            tbody.append('<tr><td colspan="4" class="text-center">Tidak ada data ditemukan</td></tr>');
-        } else {
-            data.forEach((item, index) => {
-                tbody.append(`
+    if (data.length === 0) {
+        tbody.append('<tr><td colspan="4" class="text-center">Tidak ada data ditemukan</td></tr>');
+    } else {
+        data.forEach((item, index) => {
+            tbody.append(`
                                     <tr data-index="${index}">
                                     <td class="text-center col-2"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${item.FOTO_ITEM}" alt="Thumbnail" style="cursor: pointer;" class="thumbnail" onclick="showPopup(this)"></center></td>    
                                     <td>${item.NAMA_PRODUK}</td>
@@ -363,24 +368,14 @@ $(document).ready(function() {
                                         <td class="text-center col-2"><input type="number" class="form-control stok-real" name="STOK_AKTUAL[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
                                     </tr>
                                 `);
-            });
-        }
-
-        // Perbarui listener input setelah render ulang
-        attachInputListeners();
-    }
-
-    function attachInputListeners() {
-        $('#selected-items-body').on('input', '.stok-real', function() {
-            let rowIndex = $(this).closest('tr').data('index');
-            let stokReal = $(this).val();
-
-            let storedItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
-            storedItems[rowIndex].STOK_AKTUAL = stokReal;
-            localStorage.setItem('storedProdukItems', JSON.stringify(storedItems));
         });
     }
 
+    // Perbarui listener input setelah render ulang
+    attachInputListeners();
+}
+
+function attachInputListeners() {
     $('#selected-items-body').on('input', '.stok-real', function() {
         let rowIndex = $(this).closest('tr').data('index');
         let stokReal = $(this).val();
@@ -389,6 +384,16 @@ $(document).ready(function() {
         storedItems[rowIndex].STOK_AKTUAL = stokReal;
         localStorage.setItem('storedProdukItems', JSON.stringify(storedItems));
     });
+}
+
+$('#selected-items-body').on('input', '.stok-real', function() {
+    let rowIndex = $(this).closest('tr').data('index');
+    let stokReal = $(this).val();
+
+    let storedItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
+    storedItems[rowIndex].STOK_AKTUAL = stokReal;
+    localStorage.setItem('storedProdukItems', JSON.stringify(storedItems));
+});
 
 
 });
