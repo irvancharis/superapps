@@ -181,7 +181,7 @@ class Transaksi_opname extends CI_Controller
                 'KODE_DEPARTEMEN' => $this->session->userdata('ID_DEPARTEMEN'),
                 'TANGGAL_OPNAME' => date('Y-m-d'),
                 'CATATAN_OPNAME' => $formData['CATATAN_OPNAME'],
-                'AREA_OPNAME' => $formData['AREA_OPNAME'],
+                'AREA_OPNAME' => $this->session->userdata('ID_AREA'),
                 'STATUS_OPNAME' => 'MENUNGGU APROVAL KABAG',
                 'RUANGAN_OPNAME' => $formData['RUANGAN_OPNAME'],
                 'LOKASI_OPNAME' => $formData['LOKASI_OPNAME'],
