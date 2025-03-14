@@ -3,6 +3,11 @@
 $CI = &get_instance();
 $CI->load->model('ticket/M_TICKET'); // Load model dari module "ticket"
 $jumlah_ticket = $CI->M_TICKET->count_ticket_dalam_antrian()->JUMLAH_TICKET;
+if ($jumlah_ticket > 0) {
+    $jumlah_ticket = $CI->M_TICKET->count_ticket_dalam_antrian()->JUMLAH_TICKET;
+} else {
+    $jumlah_ticket = 0;
+}
 ?>
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
