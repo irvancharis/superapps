@@ -1,0 +1,188 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36" version="26.1.0">
+  <diagram name="Page-1" id="c7558073-3199-34d8-9f00-42111426c3f3">
+    <mxGraphModel dx="1695" dy="468" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="826" pageHeight="1169" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="5" value="CLIENT REQUEST" style="shape=process;whiteSpace=wrap;align=center;verticalAlign=middle;size=0.0475;fontStyle=1;strokeWidth=3;fillColor=#FFCCCC" parent="1" vertex="1">
+          <mxGeometry x="200.99999999999991" y="391" width="400" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="11" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;&lt;strong&gt;FORM TICKET&lt;/strong&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;User / Client&amp;nbsp;&lt;br&gt;mengisi&amp;nbsp;&lt;br&gt;Form Ticket&lt;/p&gt;" style="verticalAlign=middle;align=center;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=1;fontStyle=1;strokeWidth=3;fillColor=#E6FFCC" parent="1" vertex="1">
+          <mxGeometry x="345.99999999999994" y="495" width="110" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="88" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;strokeColor=#990000;strokeWidth=2" parent="1" source="5" target="11" edge="1">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="50" y="500" as="sourcePoint" />
+            <mxPoint x="150" y="400" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="400" y="460" />
+              <mxPoint x="390" y="470" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-96" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;&lt;strong&gt;TICKET SUBMIT&lt;/strong&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Setelah Form&lt;br&gt;Dikirim maka&lt;br&gt;KABAG&lt;br&gt;Perequest yang&lt;br&gt;yang bersangkutan&amp;nbsp;&lt;br&gt;akan di konfirmasi&lt;br&gt;via WA&lt;/p&gt;" style="verticalAlign=middle;align=center;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=1;fontStyle=1;strokeWidth=3;fillColor=#E6FFCC" vertex="1" parent="1">
+          <mxGeometry x="150" y="630" width="154" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-97" value="" style="edgeStyle=elbowEdgeStyle;elbow=vertical;strokeColor=#990000;strokeWidth=2;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.483;entryY=-0.009;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="11" target="Z_nvGdSi16HkTH9aLA0T-98">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="400.66" y="630" as="sourcePoint" />
+            <mxPoint x="423" y="640" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="400" y="650" />
+              <mxPoint x="260" y="590" />
+              <mxPoint x="390.66" y="659" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-98" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;&lt;strong&gt;TICKET SUBMIT&lt;/strong&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;form dikirim ke&amp;nbsp;&lt;br&gt;database dan akan&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;mengirim konfirmasi&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;ke telegram Tim IT&lt;/p&gt;" style="verticalAlign=middle;align=center;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=1;fontStyle=1;strokeWidth=3;fillColor=#E6FFCC" vertex="1" parent="1">
+          <mxGeometry x="370" y="670" width="154" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-99" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;strokeColor=#990000;strokeWidth=2;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Z_nvGdSi16HkTH9aLA0T-98" target="Z_nvGdSi16HkTH9aLA0T-96">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="320" y="790" as="sourcePoint" />
+            <mxPoint x="320" y="844" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="320" y="809" />
+              <mxPoint x="310" y="819" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-100" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;strokeColor=#990000;strokeWidth=2;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="Z_nvGdSi16HkTH9aLA0T-98" target="Z_nvGdSi16HkTH9aLA0T-101">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="440" y="890" as="sourcePoint" />
+            <mxPoint x="440" y="900" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-101" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;&lt;strong&gt;REDIRECT CLIENT&lt;/strong&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Client akan diarahkan&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;ke halaman antrian&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;ticket&lt;/p&gt;" style="verticalAlign=middle;align=center;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=1;fontStyle=1;strokeWidth=3;fillColor=#E6FFCC" vertex="1" parent="1">
+          <mxGeometry x="370" y="870" width="154" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-102" value="ADMIN MANAJEMEN" style="shape=process;whiteSpace=wrap;align=center;verticalAlign=middle;size=0.0475;fontStyle=1;strokeWidth=3;fillColor=#FFCCCC" vertex="1" parent="1">
+          <mxGeometry x="639.9999999999999" y="391" width="400" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-103" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;LIST DATA TICKET&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Ticket yang dikirim&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;masuk ke list data&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;ticket dan status&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;APPROVAL nya&amp;nbsp;&lt;br&gt;DALAM ANTRIAN&lt;/p&gt;" style="verticalAlign=middle;align=center;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=1;fontStyle=1;strokeWidth=3;fillColor=#E6FFCC" vertex="1" parent="1">
+          <mxGeometry x="763" y="495" width="154" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-104" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;strokeColor=#990000;strokeWidth=2;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="Z_nvGdSi16HkTH9aLA0T-103">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="839.9757142857143" y="441" as="sourcePoint" />
+            <mxPoint x="839.71" y="624.06" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-105" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;strokeColor=#990000;strokeWidth=2;" edge="1" parent="1" source="Z_nvGdSi16HkTH9aLA0T-98" target="Z_nvGdSi16HkTH9aLA0T-103">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="669.9957142857143" y="720" as="sourcePoint" />
+            <mxPoint x="670.02" y="774" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-106" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;APPROVAL TICKET&amp;nbsp;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Admin mengupdate&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;APPROVAL TICKET&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;dengan memilih opsi&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;CEK di TOMBOL DETAIL&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;lalu memilih APPROVAL&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;(DISETUJUI/DITOLAK)&lt;/p&gt;" style="verticalAlign=middle;align=center;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=1;fontStyle=1;strokeWidth=3;fillColor=#E6FFCC" vertex="1" parent="1">
+          <mxGeometry x="751.5" y="730" width="177" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-107" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;strokeColor=#990000;strokeWidth=2;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="Z_nvGdSi16HkTH9aLA0T-103" target="Z_nvGdSi16HkTH9aLA0T-106">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="762.9957142857143" y="650" as="sourcePoint" />
+            <mxPoint x="763.02" y="704" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-108" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;TEKNISI TICKET&amp;nbsp;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Admin memilih TEKNISI&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;untuk menghandle TICKET&lt;/p&gt;" style="verticalAlign=middle;align=center;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=1;fontStyle=1;strokeWidth=3;fillColor=#E6FFCC" vertex="1" parent="1">
+          <mxGeometry x="970" y="700" width="177" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-109" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;strokeColor=#990000;strokeWidth=2;entryX=0.024;entryY=0.636;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryPerimeter=0;" edge="1" parent="1" source="Z_nvGdSi16HkTH9aLA0T-106" target="Z_nvGdSi16HkTH9aLA0T-108">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="1000" y="830" as="sourcePoint" />
+            <mxPoint x="1000" y="895" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-110" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;UPDATE TICKET&amp;nbsp;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;UPDATE APPROVAL&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;TICKET &amp;amp; TEKNISI&lt;/p&gt;" style="verticalAlign=middle;align=center;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=1;fontStyle=1;strokeWidth=3;fillColor=#E6FFCC" vertex="1" parent="1">
+          <mxGeometry x="751.5" y="930" width="177" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-111" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;strokeColor=#990000;strokeWidth=2;" edge="1" parent="1" source="Z_nvGdSi16HkTH9aLA0T-106" target="Z_nvGdSi16HkTH9aLA0T-110">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="851.08" y="910" as="sourcePoint" />
+            <mxPoint x="851.08" y="1005" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-113" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;strokeColor=#990000;strokeWidth=2;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Z_nvGdSi16HkTH9aLA0T-108" target="Z_nvGdSi16HkTH9aLA0T-110">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="1050" y="830" as="sourcePoint" />
+            <mxPoint x="1050" y="890" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="990" y="970" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-114" value="TEKNISI MANAJEMEN" style="shape=process;whiteSpace=wrap;align=center;verticalAlign=middle;size=0.0475;fontStyle=1;strokeWidth=3;fillColor=#FFCCCC" vertex="1" parent="1">
+          <mxGeometry x="1160" y="391" width="400" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-115" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;UPDATE TICKET&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;PROGRESS&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Ticket yang sudah di&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;UPDATE APPROVAL nya&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;akan dikerjakan oleh&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;teknisi dan teknisi&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;harus update pengerjaan&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;ticket dengan menekan&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;tombol PROSES&lt;/p&gt;" style="verticalAlign=middle;align=center;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=1;fontStyle=1;strokeWidth=3;fillColor=#E6FFCC" vertex="1" parent="1">
+          <mxGeometry x="1276.5" y="490" width="167" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-116" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;strokeColor=#990000;strokeWidth=2;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="Z_nvGdSi16HkTH9aLA0T-114" target="Z_nvGdSi16HkTH9aLA0T-115">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="1370" y="480" as="sourcePoint" />
+            <mxPoint x="1270.02" y="524" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1360" y="490" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-117" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;strokeColor=#990000;strokeWidth=2;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" edge="1" parent="1" source="Z_nvGdSi16HkTH9aLA0T-110" target="Z_nvGdSi16HkTH9aLA0T-115">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="1211" y="900" as="sourcePoint" />
+            <mxPoint x="1150" y="1095" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1200" y="970" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-118" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;FORM&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;UPDATE&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;TICKET&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;PROGRESS&lt;/span&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Setelah halaman Update&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Pengerjaan Ticket muncul&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;TEKNISI harus menekan&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;tombol&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;UPDATE PENGERJAAN&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;untuk mengisi FORM&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;PENGERJAAN&lt;/p&gt;" style="verticalAlign=middle;align=center;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=1;fontStyle=1;strokeWidth=3;fillColor=#E6FFCC" vertex="1" parent="1">
+          <mxGeometry x="1268.25" y="720" width="183.5" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-119" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;strokeColor=#990000;strokeWidth=2;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="Z_nvGdSi16HkTH9aLA0T-115" target="Z_nvGdSi16HkTH9aLA0T-118">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="1359.64" y="690" as="sourcePoint" />
+            <mxPoint x="1359.64" y="739" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1359.64" y="739" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-120" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;SUBMIT UPDATE&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Mengupdate Progress Ticket&lt;br&gt;dan akan mengupdate&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;STATUS TICKET &amp;amp;&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;PROGRESS TICKET&lt;/p&gt;" style="verticalAlign=middle;align=center;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=1;fontStyle=1;strokeWidth=3;fillColor=#E6FFCC" vertex="1" parent="1">
+          <mxGeometry x="1268.25" y="930" width="183.5" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-121" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;strokeColor=#990000;strokeWidth=2;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="Z_nvGdSi16HkTH9aLA0T-118" target="Z_nvGdSi16HkTH9aLA0T-120">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="1370" y="910" as="sourcePoint" />
+            <mxPoint x="1370" y="970" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1360" y="930" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-122" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;STATUS TICKET&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;-&amp;gt; DALAM ANTRIAN&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;-&amp;gt; SEDANG DIKERJAKAN&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;-&amp;gt; MENUNGGU VALIDASI (keyword &quot;VALIDASI&quot;)&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;-&amp;gt; SELESAI (keyword &quot;SELESAI&quot;)&lt;/p&gt;" style="verticalAlign=middle;align=center;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=1;fontStyle=1;strokeWidth=3;fillColor=#E6FFCC" vertex="1" parent="1">
+          <mxGeometry x="1510" y="720" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-123" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;strokeColor=#990000;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.009;entryY=0.566;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Z_nvGdSi16HkTH9aLA0T-118" target="Z_nvGdSi16HkTH9aLA0T-122">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="1550" y="885" as="sourcePoint" />
+            <mxPoint x="1550" y="935" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-124" value="INFO KONTAK KABAG" style="swimlane;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="-60" y="385" width="230" height="195" as="geometry">
+            <mxRectangle x="-60" y="385" width="140" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-126" value="MARKETING -&amp;gt; (NO. WA MAS CHARIS)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="Z_nvGdSi16HkTH9aLA0T-124">
+          <mxGeometry y="26" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-127" value="ACCOUNTING -&amp;gt; (NO. WA MAS JUN)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="Z_nvGdSi16HkTH9aLA0T-124">
+          <mxGeometry y="65" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_nvGdSi16HkTH9aLA0T-131" value="*). NOTE UNTUK SEMENTARA PILIH&lt;br&gt;DEPARTEMEN DIATAS TERLEBIH&lt;div&gt;DAHULU KARENA BELUM INPUT DATA&amp;nbsp;&lt;/div&gt;&lt;div&gt;KARYAWAN SEMUA KABAG DEPARTEMEN&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="Z_nvGdSi16HkTH9aLA0T-124">
+          <mxGeometry y="105" width="230" height="95" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
