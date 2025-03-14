@@ -1,3 +1,14 @@
+<!-- Ambil Jumlah Ticket DALAM ANTRIAN -->
+<?php
+$CI = &get_instance();
+$CI->load->model('ticket/M_TICKET'); // Load model dari module "ticket"
+$jumlah_ticket = $CI->M_TICKET->count_ticket_dalam_antrian()->JUMLAH_TICKET;
+if ($jumlah_ticket > 0) {
+    $jumlah_ticket = $CI->M_TICKET->count_ticket_dalam_antrian()->JUMLAH_TICKET;
+} else {
+    $jumlah_ticket = 0;
+}
+?>
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
@@ -37,7 +48,7 @@
                     </li>
                     <li>
                         <a href="<?php echo base_url('produk_stok'); ?>" class="nav-link"><i data-feather="box"></i><span>Stok</span></a>
-                    </li>                    
+                    </li>
                 </ul>
             </li>
             <li class="dropdown <?php (isset($page) && $page == 'departement') || (isset($page) && $page == 'jabatan') ? print 'active' : ''; ?>">
@@ -84,7 +95,7 @@
             </li>
             <li class="menu-header">Ticketing</li>
             <li class="dropdown <?php (isset($page) && $page == 'ticket') ? print 'active' : ''; ?>">
-                <a href="<?php echo base_url('ticket'); ?>" class="nav-link"><i data-feather="mail"></i><span>Ticket</span></a>
+                <a href="<?php echo base_url('ticket'); ?>" class="nav-link"><i data-feather="mail"></i><span>Ticket</span><span class="badge badge-primary" style="width: auto;"><?php echo $jumlah_ticket; ?></span></a>
             </li>
             <li class="menu-header">INVENTORY</li>
             <li class="dropdown <?php (isset($page) && $page == 'transaksi') ? print 'active' : ''; ?>">

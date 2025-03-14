@@ -216,6 +216,13 @@
                         info: false
                     });
 
+                    // Swal jika Teknisi Tidak Ada
+                    let teknisi = "<?php echo $ticket->TECHNICIAN; ?>";
+                    let approval = "<?php echo $ticket->APPROVAL_TICKET; ?>";
+                    if (teknisi == "" && approval != 2) {
+                        swal("PERHATIAN!", "Ticket ini belum diberikan kepada teknisi.", "warning");
+                    }
+
                     // 🚀 1. Inisialisasi Progress Bar Saat Halaman Dimuat
                     $(".progress-bar").each(function() {
                         const id = $(this).data("id");
