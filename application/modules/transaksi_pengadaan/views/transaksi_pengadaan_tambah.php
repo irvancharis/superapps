@@ -145,43 +145,51 @@ $(document).ready(function() {
         let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
         let formData = JSON.parse(localStorage.getItem('formPengadaan')) || {};
 
-        if (selectedItems.length == 0) {
-            swal('Error', 'Tidak ada produk yang dipilih.', 'error').then(function() {
-                console.log(selectedItems);
-            });
-        }
-
         if (!formData.AREA_PENEMPATAN || !formData.DEPARTEMEN_PENGAJUAN || !formData
             .RUANGAN_PENEMPATAN || !formData.LOKASI_PENEMPATAN) {
             swal('Error', 'Lengkapi semua data.', 'error').then(function() {
                 return;
             });
         }
+        
+        if (selectedItems.length == 0 || selectedItems.some(item => !item.jumlah || !item.keperluan)) {
+            swal('Error', 'Lengkapi data produk.', 'error').then(function() {
+                console.log(selectedItems);
+            });
+        } else {
 
-        $.ajax({
-            url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/insert",
-            type: "POST",
-            data: {
-                items: selectedItems,
-                form: formData
-            },
-            success: function(response) {
-                let res = JSON.parse(response);
-                if (res.success) {
-                    swal('success', 'Pengajuan Berhasil Dikirim!', 'success').then(
-                    function() {
-                        localStorage.removeItem(
-                        'selectedItems'); // Hapus localStorage setelah disimpan
-                        localStorage.removeItem(
-                        'formPengadaan'); // Hapus localStorage setelah disimpan
-                        location.href = "<?php echo base_url(); ?>" +
-                            "transaksi_pengadaan";
-                    });
-                } else {
-                    swal('Gagal', res.error, 'error');
+            $.ajax({
+                url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/insert",
+                type: "POST",
+                data: {
+                    items: selectedItems,
+                    form: formData
+                },
+                success: function(response) {
+                    let res = JSON.parse(response);
+                    if (res.success) {
+                        swal('success', 'Pengajuan Berhasil Dikirim!', 'success').then(
+                            function() {
+                                localStorage.removeItem(
+                                    'selectedItems'
+                                    ); // Hapus localStorage setelah disimpan
+                                localStorage.removeItem(
+                                    'formPengadaan'
+                                    ); // Hapus localStorage setelah disimpan
+                                location.href = "<?php echo base_url(); ?>" +
+                                    "transaksi_pengadaan";
+                            });
+                    } else {
+                        swal('Gagal', res.error, 'error');
+                    }
                 }
-            }
-        });
+            });
+
+        }
+
+
+
+
     });
 
     // Fancybox
@@ -252,8 +260,8 @@ $(document).ready(function() {
                                         </div>
                                     </td>
                                     <td>${item.nama}</td>
-                                    <td><input type="number" class="form-control jumlah" name="JUMLAH_PENGADAAN[${index}]" value="${item.jumlah || ''}"></td>
-                                    <td><input type="text" class="form-control keperluan" name="KEPERLUAN[${index}]" value="${item.keperluan || ''}"></td>
+                                    <td><input type="number" required class="form-control jumlah" name="JUMLAH_PENGADAAN[${index}]" value="${item.jumlah || ''}"></td>
+                                    <td><input type="text" required class="form-control keperluan" name="KEPERLUAN[${index}]" value="${item.keperluan || ''}"></td>
                                     <td>
                                         <button class="btn btn-danger remove-item" data-index="${index}">Hapus</button>
                                     </td>
@@ -310,7 +318,7 @@ $(document).ready(function() {
 
                 $ruanganPenempatan.empty().append(
                     '<option value="" class="text-center" selected disabled>-- Pilih Ruangan --</option>'
-                    );
+                );
 
                 $.each(data_ruangan, function(index, lokasi) {
                     $ruanganPenempatan.append($('<option>', {
@@ -342,7 +350,7 @@ $(document).ready(function() {
 
                 $lokasiPenempatan.empty().append(
                     '<option value="" class="text-center" selected disabled>-- Pilih Lokasi --</option>'
-                    );
+                );
 
                 $.each(data_lokasi, function(index, lokasi) {
                     $lokasiPenempatan.append($('<option>', {

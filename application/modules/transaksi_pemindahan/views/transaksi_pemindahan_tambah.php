@@ -84,7 +84,7 @@
                                             <label>
                                                 <button type="button" class="btn btn-danger" id="btn-riset">
                                                     <i class="fa fa-redo"></i> RISET
-                                            </label>                                            
+                                            </label>
 
                                         </div>
                                         <div class="table-responsive">
@@ -216,7 +216,7 @@ $(document).ready(function() {
     if (formData && formData.AREA_AWAL === '') {
         get_ruangan_by_area();
     }
-    
+
     loadFormData();
 
 
@@ -246,7 +246,7 @@ $(document).ready(function() {
     let storedItems = JSON.parse(localStorage.getItem("storedProdukItems")) || [];
 
     loadSelectedItems();
-    
+
 
 
     // Tangkap event dari Fancybox
@@ -417,36 +417,117 @@ $(document).ready(function() {
         });
     });
 
+
+    // Fungsi Load Data dari Local Storage
+    function loadSelectedItems() {
+        storedProdukItems = JSON.parse(localStorage.getItem("storedProdukItems")) || [];
+        var tbody = $("#selected-items-body");
+        tbody.empty();
+
+        storedProdukItems.forEach(function(item, index) {
+            tbody.append(`
+                                <tr data-index="${index}">
+                                    <td class="text-center col-1"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/') ?>${item.FOTO_ITEM}" alt=""></center></td>    
+                                    <td>${item.NAMA_PRODUK}</td>
+                                    <td class="text-center col-1">${item.JUMLAH_STOK}</td>
+                                    <input type="hidden" class="form-control UUID_STOK" name="UUID_STOK[${index}]" value="${item.UUID_STOK || ''}">
+                                    <input type="hidden" class="form-control KODE_ITEM" name="KODE_ITEM[${index}]" value="${item.KODE_ITEM || ''}">
+                                    <td class="text-center col-1"><input type="number" required class="form-control JUMLAH_PEMINDAHAN" a="JUMLAH_PEMINDAHAN" name="JUMLAH_PEMINDAHAN[${index}]" value="${item.JUMLAH_PEMINDAHAN || ''}"></td>
+                                    <td class="text-center col-3"><input type="text" required class="form-control KETERANGAN_ITEM" a="KETERANGAN_ITEM" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
+                                    <td class="text-center col-2"><input type="file" required accept="image/gif, image/jpeg, image/png" a="FOTO_AWAL" class="form-control FOTO_AWAL" name="FOTO_AWAL[${index}]"></td>
+                                    <td class="text-center col-1">
+                                        <button class="btn btn-danger remove-item" data-index="${index}">Hapus</button>
+                                    </td>
+                                </tr>
+                            `);
+        });
+
+        attachInputListeners();
+
+    }
+
+
+
+    // Hapus data local Storage
+    $('#selected-items-body').on('click', '.remove-item', function() {
+        let selectedItems = JSON.parse(localStorage.getItem("storedProdukItems")) || [];
+        let index = $(this).data("index");
+
+        if (index > -1) {
+            selectedItems.splice(index, 1);
+            localStorage.setItem("storedProdukItems", JSON.stringify(
+                selectedItems)); // Perbaikan di sini
+        }
+
+        loadSelectedItems();
+    });
+
+
+
+
+function attachInputListeners() {
+    $('.JUMLAH_PEMINDAHAN, .KETERANGAN_ITEM, .FOTO_AWAL').on('input', function() {
+        let rowIndex = $(this).closest('tr').data('index');
+        let fieldName = $(this).attr('a');
+        let storedItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
+
+        storedItems[rowIndex][fieldName] = $(this).val();
+        localStorage.setItem('storedProdukItems', JSON.stringify(storedItems));
+    });
+}
+
+});
+
     $('#FORM_TRANSAKSI_PEMINDAHAN_TAMBAH').on('submit', function(e) {
         e.preventDefault();
 
         let formData = new FormData(this);
+        let requiredFields = ['AREA_AWAL', 'DEPARTEMEN_AWAL', 'RUANGAN_AWAL', 'LOKASI_AWAL',
+            'AREA_AKHIR', 'DEPARTEMEN_AKHIR', 'RUANGAN_AKHIR', 'LOKASI_AKHIR', 'KETERANGAN'
+        ];
+        let isEmpty = requiredFields.some(field => !formData.get(field));
 
+        if (isEmpty) {
+            swal('Error', 'Lengkapi semua data.', 'error');
+        }
 
-        $.ajax({
-            url: "<?php echo base_url(); ?>" + "transaksi_pemindahan/insert",
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                let res = JSON.parse(response);
-                if (res.success) {
-                    swal('Sukses', 'Simpan Data Berhasil!', 'success').then(function() {
-                        localStorage.removeItem(
-                            'storedProdukItems'
-                        ); // Hapus localStorage setelah disimpan
-                        localStorage.removeItem(
-                            'FormPemindahan'
-                        ); // Hapus localStorage setelah disimpan
-                        location.href = "<?php echo base_url(); ?>" +
-                            "transaksi_pemindahan";
-                    });
-                } else {
-                    swal('Gagal', res.error, 'error');
+        let storedProdukItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
+
+        if (storedProdukItems.length == 0 || storedProdukItems.some(item => !item.JUMLAH_PEMINDAHAN ||
+                !item.KETERANGAN_ITEM || !item.FOTO_AWAL)) {
+            swal('Error', 'Lengkapi data produk.', 'error').then(function() {
+                console.log(storedProdukItems);
+            });
+        } else {
+            $.ajax({
+                url: "<?php echo base_url(); ?>" + "transaksi_pemindahan/insert",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    let res = JSON.parse(response);
+                    if (res.success) {
+                        swal('Sukses', 'Simpan Data Berhasil!', 'success').then(function() {
+                            localStorage.removeItem(
+                                'storedProdukItems'
+                            ); // Hapus localStorage setelah disimpan
+                            localStorage.removeItem(
+                                'FormPemindahan'
+                            ); // Hapus localStorage setelah disimpan
+                            location.href = "<?php echo base_url(); ?>" +
+                                "transaksi_pemindahan";
+                        });
+                    } else {
+                        swal('Gagal', res.error, 'error');
+                    }
                 }
-            }
-        });
+            });
+
+        }
+
+
+
     });
 
     // Form Data Save to Local Storage
@@ -482,71 +563,9 @@ $(document).ready(function() {
         }
     }
 
-    // Fungsi Load Data dari Local Storage
-    function loadSelectedItems() {
-        storedProdukItems = JSON.parse(localStorage.getItem("storedProdukItems")) || [];
-        var tbody = $("#selected-items-body");
-        tbody.empty();
-
-        storedProdukItems.forEach(function(item, index) {
-            tbody.append(`
-                                <tr data-index="${index}">
-                                    <td class="text-center col-1"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/') ?>${item.FOTO_ITEM}" alt=""></center></td>    
-                                    <td>${item.NAMA_PRODUK}</td>
-                                    <td class="text-center col-1">${item.JUMLAH_STOK}</td>
-                                    <input type="hidden" class="form-control UUID_STOK" name="UUID_STOK[${index}]" value="${item.UUID_STOK || ''}">
-                                    <input type="hidden" class="form-control KODE_ITEM" name="KODE_ITEM[${index}]" value="${item.KODE_ITEM || ''}">
-                                    <td class="text-center col-1"><input type="number" class="form-control" name="JUMLAH_PEMINDAHAN[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
-                                    <td class="text-center col-3"><input type="text" class="form-control" name="KETERANGAN_ITEM[${index}]" value="${item.KETERANGAN_ITEM || ''}"></td>
-                                    <td class="text-center col-2"><input type="file" accept="image/gif, image/jpeg, image/png" class="form-control" name="FOTO_AWAL[${index}]"></td>
-                                    <td class="text-center col-1">
-                                        <button class="btn btn-danger remove-item" data-index="${index}">Hapus</button>
-                                    </td>
-                                </tr>
-                            `);
-        });
-        // Perbarui listener input setelah render ulang
-        attachInputListeners();
-    }
+    
 
 
-
-    // Hapus data local Storage
-    $('#selected-items-body').on('click', '.remove-item', function() {
-        let selectedItems = JSON.parse(localStorage.getItem("storedProdukItems")) || [];
-        let index = $(this).data("index");
-
-        if (index > -1) {
-            selectedItems.splice(index, 1);
-            localStorage.setItem("storedProdukItems", JSON.stringify(
-                selectedItems)); // Perbaikan di sini
-        }
-
-        loadSelectedItems();
-    });
-
-    function attachInputListeners() {
-        $('#selected-items-body').on('input', '.JUMLAH_PEMINDAHAN', function() {
-            let rowIndex = $(this).closest('tr').data('index');
-            let stokReal = $(this).val();
-
-            let storedItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
-            storedItems[rowIndex].JUMLAH_PEMINDAHAN = stokReal;
-            localStorage.setItem('storedProdukItems', JSON.stringify(storedItems));
-        });
-    }
-
-    $('#selected-items-body').on('input', '.JUMLAH_PEMINDAHAN', function() {
-        let rowIndex = $(this).closest('tr').data('index');
-        let stokReal = $(this).val();
-
-        let storedItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
-        storedItems[rowIndex].STOK_AKTUAL = stokReal;
-        localStorage.setItem('storedProdukItems', JSON.stringify(storedItems));
-    });
-
-
-});
             </script>
             </body>
 

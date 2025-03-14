@@ -521,7 +521,9 @@ class Transaksi_pengadaan extends CI_Controller
                 'KODE_RUANGAN_DEFAULT' => $formData['RUANGAN_PENEMPATAN'],
                 'KODE_LOKASI_DEFAULT' => $formData['LOKASI_PENEMPATAN'],
             ];
+
             $this->db->insert('TRANSAKSI_PENGADAAN', $data_transaksi);
+            
             $jumlah_item = count($items);
             // Simpan detail produk
             foreach ($items as $item) {
