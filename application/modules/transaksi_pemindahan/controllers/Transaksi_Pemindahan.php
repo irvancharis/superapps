@@ -301,7 +301,6 @@ class Transaksi_pemindahan extends CI_Controller
     {
         $inputan = $this->input->post(null, TRUE);
         $KODE_ITEM = $this->input->post('KODE_ITEM');
-
         $uuid_transaksi = $this->uuid->v4();
 
         $data_transaksi = [
@@ -325,9 +324,7 @@ class Transaksi_pemindahan extends CI_Controller
         // Cek apakah ada file yang diunggah
         if (!empty($_FILES['FOTO_AWAL']['name'][0])) {
             $files = $_FILES;
-            $count = count($_FILES['FOTO_AWAL']['name']);
-
-            
+            $count = count($_FILES['FOTO_AWAL']['name']);            
             for ($i = 0; $i < $count; $i++) {
                 $FOTO_NAME = $this->uuid->v4();
 
@@ -361,9 +358,13 @@ class Transaksi_pemindahan extends CI_Controller
 
                 }
             }
+
+            echo json_encode(['success' => true]);
+        }else{
+            echo json_encode(['success' => false, 'error' => 'Gagal memperbarui data.']);
         }
 
-        echo json_encode(['success' => true]);
+        
     }
 
 

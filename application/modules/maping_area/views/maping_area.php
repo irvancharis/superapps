@@ -15,14 +15,6 @@
                                         <table class="table table-striped" id="table-2">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center pt-3">
-                                                        <div class="custom-checkbox custom-checkbox-table custom-control">
-                                                            <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
-                                                                class="custom-control-input" id="checkbox-all">
-                                                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                                                        </div>
-                                                    </th>
-                                                    <th>#</th>
                                                     <th>Nama Area</th>
                                                     <th>Keterangan</th>
                                                     <th>Action</th>
@@ -31,14 +23,6 @@
                                             <tbody>
                                                 <?php foreach ($sfa_maping_area as $index => $d) : ?>
                                                     <tr>
-                                                        <td class="text-center pt-2">
-                                                            <div class="custom-checkbox custom-control">
-                                                                <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
-                                                                    id="checkbox-1">
-                                                                <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td><?php echo $index + 1; ?></td>
                                                         <td><?php echo $d->NAMA_AREA; ?></td>
                                                         <td><?php echo $d->KETERANGAN_AREA; ?></td>
                                                         <td>

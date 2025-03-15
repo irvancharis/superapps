@@ -20,7 +20,7 @@
                                             </div>
                                             <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>KODE RUANGAN</label>
-                                                <input required type="text" name="KODE_RUANGAN" id="KODE_RUANGAN" value="<?= $get_maping_ruangan->KODE_RUANGAN; ?>" class="form-control">
+                                                <input required readonly type="text" name="KODE_RUANGAN" id="KODE_RUANGAN" value="<?= $get_maping_ruangan->KODE_RUANGAN; ?>" class="form-control">
                                             </div>
                                             <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>NAMA RUANGAN</label>

@@ -107,7 +107,7 @@
                                         <br><br>
                                         <div class="form-group col-12 col-md-12 col-lg-12">
                                             <label>KETERANGAN</label>
-                                            <textarea name="CATATAN_OPNAME" placeholder="Masukkan keterangan opname"
+                                            <textarea required name="CATATAN_OPNAME" placeholder="Masukkan keterangan opname"
                                                 class="form-control" id="CATATAN_OPNAME"></textarea>
                                             <div class="invalid-feedback">
                                                 Silahkan masukkan keterangan opname!
@@ -365,7 +365,7 @@ function renderTable(data) {
                                     <td class="text-center col-2"><center><img width="100px" src="<?php echo base_url('assets/uploads/item/')?>${item.FOTO_ITEM}" alt="Thumbnail" style="cursor: pointer;" class="thumbnail" onclick="showPopup(this)"></center></td>    
                                     <td>${item.NAMA_PRODUK}</td>
                                         <td class="text-center col-2">${item.JUMLAH_STOK}</td>
-                                        <td class="text-center col-2"><input type="number" class="form-control stok-real" name="STOK_AKTUAL[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
+                                        <td class="text-center col-2"><input type="number" required class="form-control stok-real" name="STOK_AKTUAL[${index}]" value="${item.STOK_AKTUAL || ''}"></td>
                                     </tr>
                                 `);
         });
