@@ -121,8 +121,11 @@
             ]
         });
 
+        $('#table-produk_filter input').focus();
+
         // 🔥 Inisialisasi Ulang Chocolat Setiap Kali DataTable Render (draw.dt event)
         $('#table-produk').on('draw.dt', function() {
+            
             if (jQuery().Chocolat) {
                 $(".gallery").Chocolat({
                     className: 'gallery',

@@ -151,7 +151,7 @@ $(document).ready(function() {
                 return;
             });
         }
-        
+
         if (selectedItems.length == 0 || selectedItems.some(item => !item.jumlah || !item.keperluan)) {
             swal('Error', 'Lengkapi data produk.', 'error').then(function() {
                 console.log(selectedItems);
@@ -172,10 +172,10 @@ $(document).ready(function() {
                             function() {
                                 localStorage.removeItem(
                                     'selectedItems'
-                                    ); // Hapus localStorage setelah disimpan
+                                ); // Hapus localStorage setelah disimpan
                                 localStorage.removeItem(
                                     'formPengadaan'
-                                    ); // Hapus localStorage setelah disimpan
+                                ); // Hapus localStorage setelah disimpan
                                 location.href = "<?php echo base_url(); ?>" +
                                     "transaksi_pengadaan";
                             });
@@ -199,7 +199,7 @@ $(document).ready(function() {
             type: "iframe",
             preload: false,
             width: "100%",
-            height: "100%",
+            height: "100%",            
         }, ]);
     })
     $('#btn-tambah-produk').on('click', function() {

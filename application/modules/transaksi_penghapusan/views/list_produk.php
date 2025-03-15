@@ -123,6 +123,8 @@
             info: false
         });
 
+        $('#tabel_filter input').focus();
+
         $('.addItem').on('click', function() {
             let dataItem = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
 
