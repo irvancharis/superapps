@@ -34,7 +34,7 @@
                                             </div>
                                             <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>KODE LOKASI</label>
-                                                <input required type="text" name="KODE_LOKASI" id="KODE_LOKASI" value="<?= $get_maping_lokasi->KODE_LOKASI; ?>" class="form-control">
+                                                <input required readonly type="text" name="KODE_LOKASI" id="KODE_LOKASI" value="<?= $get_maping_lokasi->KODE_LOKASI; ?>" class="form-control">
                                             </div>
                                             <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>NAMA LOKASI</label>
