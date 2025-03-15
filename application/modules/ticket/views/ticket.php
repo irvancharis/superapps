@@ -10,111 +10,1002 @@
                                         <span class="d-inline-block" data-toggle="tooltip" data-title="Sementara Dinonaktifkan"><a href="<?php echo base_url('ticket/tambah_view') ?>" class="btn btn-primary disabled"><i class="fas fa-plus"></i> Tambah Data</a></span>
                                     </div>
                                 </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped" id="table-ticket">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center pt-3">
-                                                        <div class="custom-checkbox custom-checkbox-table custom-control">
-                                                            <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
-                                                                class="custom-control-input" id="checkbox-all">
-                                                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                                                        </div>
-                                                    </th>
-                                                    <th>#</th>
-                                                    <th>ID TICKET</th>
-                                                    <th>ORDER BY</th>
-                                                    <th>LOKASI</th>
-                                                    <th>APPROVAL</th>
-                                                    <th>TEKNISI</th>
-                                                    <th>STATUS</th>
-                                                    <th>CLEAR AT</th>
-                                                    <th>ACTION</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php foreach ($M_TICKET as $index => $d) : ?>
-                                                    <tr onclick>
-                                                        <td class="text-center pt-2">
-                                                            <div class="custom-checkbox custom-control">
-                                                                <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
-                                                                    id="checkbox-1">
-                                                                <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td><?php echo $index + 1; ?></td>
-                                                        <td><?php echo $d->IDTICKET; ?></td>
-                                                        <td><?php echo strtoupper($d->REQUESTBY); ?></td>
-                                                        <td><?php echo $d->NAMA_AREA; ?></td>
-                                                        <td>
-                                                            <?php
-                                                            if ($d->APPROVAL_TICKET == 0) {
-                                                                echo '<span class="badge badge-warning">Dalam Antrian</span>';
-                                                            } elseif ($d->APPROVAL_TICKET == 1) {
-                                                                echo '<span class="badge badge-success">Disetujui</span>';
-                                                            } else {
-                                                                echo '<span class="badge badge-danger">Ditolak</span>';
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <?php if ($d->NAME_TECHNICIAN == null) : ?>
-                                                                <span>-</span>
-                                                            <?php else : ?>
-                                                                <?php echo strtoupper($d->NAME_TECHNICIAN); ?>
-                                                            <?php endif; ?>
-                                                        </td>
-                                                        <td>
-                                                            <div class="progress">
-                                                                <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
-                                                            </div>
-                                                        </td>
-                                                        <td> <?php
-                                                                if (!empty($d->DATE_TICKET_DONE)) {
-                                                                    $date_done = new DateTime($d->DATE_TICKET_DONE);
-                                                                    $now = new DateTime($d->DATE_TICKET);
-                                                                    $diff = $now->diff($date_done);
+                                <?php if ($this->session->userdata('NAMA_ROLE') == 'IT'): ?>
+                                    <div class="card-body">
+                                        <ul class="nav nav-pills mb-4" id="myTab3" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="all-tab3" data-toggle="tab" href="#all3" role="tab"
+                                                    aria-controls="all" aria-selected="false"><i class="fas fa-list"></i> All <span class="badge badge-primary"><?php echo $JML_ALL->JUMLAH_TICKET; ?></span></a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3" role="tab"
+                                                    aria-controls="home" aria-selected="true"><i class="fas fa-spinner"></i> Dalam Antrian <span class="badge badge-primary"><?php echo $JML_DALAM_ANTRIAN->JUMLAH_TICKET; ?></span></a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab"
+                                                    aria-controls="profile" aria-selected="false"><i class="fas fa-check"></i> Disetujui <span class="badge badge-primary"><?php echo $JML_DISETUJUI->JUMLAH_TICKET; ?></span></a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="contact-tab3" data-toggle="tab" href="#contact3" role="tab"
+                                                    aria-controls="contact" aria-selected="false"><i class="fas fa-times"></i> Ditolak <span class="badge badge-primary"><?php echo $JML_DITOLAK->JUMLAH_TICKET; ?></span></a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content" id="myTabContent2">
+                                            <div class="tab-pane fade" id="all3" role="tabpanel" aria-labelledby="all-tab3">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped" id="table-ticket-all">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center pt-3">
+                                                                    <div class="custom-checkbox custom-checkbox-table custom-control">
+                                                                        <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
+                                                                            class="custom-control-input" id="checkbox-all">
+                                                                        <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                                                    </div>
+                                                                </th>
+                                                                <th>#</th>
+                                                                <th>ID TICKET</th>
+                                                                <th>ORDER BY</th>
+                                                                <th>LOKASI</th>
+                                                                <th>APPROVAL</th>
+                                                                <th>TEKNISI</th>
+                                                                <th>STATUS</th>
+                                                                <th>CLEAR AT</th>
+                                                                <th>ACTION</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php foreach ($M_TICKET_ALL as $index => $d) : ?>
+                                                                <tr onclick>
+                                                                    <td class="text-center pt-2">
+                                                                        <div class="custom-checkbox custom-control">
+                                                                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
+                                                                                id="checkbox-1">
+                                                                            <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><?php echo $index + 1; ?></td>
+                                                                    <td><?php echo $d->IDTICKET; ?></td>
+                                                                    <td><?php echo strtoupper($d->REQUESTBY); ?></td>
+                                                                    <td><?php echo $d->NAMA_AREA; ?></td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($d->APPROVAL_TICKET == 0) {
+                                                                            echo '<span class="badge badge-warning">Dalam Antrian</span>';
+                                                                        } elseif ($d->APPROVAL_TICKET == 1) {
+                                                                            echo '<span class="badge badge-success">Disetujui</span>';
+                                                                        } else {
+                                                                            echo '<span class="badge badge-danger">Ditolak</span>';
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <?php if ($d->NAME_TECHNICIAN == null) : ?>
+                                                                            <span>-</span>
+                                                                        <?php else : ?>
+                                                                            <?php echo strtoupper($d->NAME_TECHNICIAN); ?>
+                                                                        <?php endif; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="progress">
+                                                                            <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td> <?php
+                                                                            if (!empty($d->DATE_TICKET_DONE)) {
+                                                                                $date_done = new DateTime($d->DATE_TICKET_DONE);
+                                                                                $now = new DateTime($d->DATE_TICKET);
+                                                                                $diff = $now->diff($date_done);
 
-                                                                    // Format hasil: "X hari, Y jam, Z menit"
-                                                                    echo "{$diff->d} hari, {$diff->h} jam, {$diff->i} menit";
-                                                                } else {
-                                                                    echo "-"; // Jika tidak ada tanggal, tampilkan tanda "-"
-                                                                }
-                                                                ?></td>
-                                                        <td>
-                                                            <div class="dropdown">
-                                                                <?php if ($this->session->userdata('NAMA_ROLE') == 'IT') : ?>
-                                                                    <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
-                                                                    <div class="dropdown-menu">
-                                                                        <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
-                                                                        <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek</a>
-                                                                        <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
-                                                                        <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
-                                                                        <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
+                                                                                // Format hasil: "X hari, Y jam, Z menit"
+                                                                                echo "{$diff->d} hari, {$diff->h} jam, {$diff->i} menit";
+                                                                            } else {
+                                                                                echo "-"; // Jika tidak ada tanggal, tampilkan tanda "-"
+                                                                            }
+                                                                            ?></td>
+                                                                    <td>
+                                                                        <div class="dropdown">
+                                                                            <?php if ($this->session->userdata('NAMA_ROLE') == 'IT') : ?>
+                                                                                <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
+                                                                                <div class="dropdown-menu">
+                                                                                    <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
+                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
+                                                                                    <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
+                                                                                    <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
                                                                         <div class="dropdown-divider"></div>
                                                                         <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTICKET; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
                                                                             Delete</a> -->
+                                                                                </div>
+                                                                            <?php else : ?>
+                                                                                <?php if ($d->STATUS_TICKET == 100) : ?>
+                                                                                    <span class="d-inline-block" data-toggle="tooltip" data-title="Selesai"><a href="javascript:void(0)" class="btn btn-success has-icon disabled"> <i class="fas fa-check"></i> Selesai</a></span>
+                                                                                <?php else : ?>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <span class="d-inline-block" data-toggle="tooltip" data-title="Belum Disetujui"><a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon disabled"> <i class="fas fa-hourglass-half"></i> Proses</a></span>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Proses</a>
+                                                                                    <?php endif; ?>
+                                                                                <?php endif; ?>
+                                                                            <?php endif; ?>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php endforeach; ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade show active" id="home3" role="tabpanel" aria-labelledby="home-tab3">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped" id="table-ticket-dalam-antrian">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center pt-3">
+                                                                    <div class="custom-checkbox custom-checkbox-table custom-control">
+                                                                        <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
+                                                                            class="custom-control-input" id="checkbox-all">
+                                                                        <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                                                                     </div>
-                                                                <?php else : ?>
-                                                                    <?php if ($d->STATUS_TICKET == 100) : ?>
-                                                                        <span class="d-inline-block" data-toggle="tooltip" data-title="Selesai"><a href="javascript:void(0)" class="btn btn-success has-icon disabled"> <i class="fas fa-check"></i> Selesai</a></span>
-                                                                    <?php else : ?>
-                                                                        <?php if ($d->APPROVAL_TICKET == 0) : ?>
-                                                                            <span class="d-inline-block" data-toggle="tooltip" data-title="Belum Disetujui"><a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon disabled"> <i class="fas fa-hourglass-half"></i> Proses</a></span>
+                                                                </th>
+                                                                <th>#</th>
+                                                                <th>ID TICKET</th>
+                                                                <th>ORDER BY</th>
+                                                                <th>LOKASI</th>
+                                                                <th>APPROVAL</th>
+                                                                <th>TEKNISI</th>
+                                                                <th>STATUS</th>
+                                                                <th>CLEAR AT</th>
+                                                                <th>ACTION</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php foreach ($M_TICKET_DALAM_ANTRIAN as $index => $d) : ?>
+                                                                <tr onclick>
+                                                                    <td class="text-center pt-2">
+                                                                        <div class="custom-checkbox custom-control">
+                                                                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
+                                                                                id="checkbox-1">
+                                                                            <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><?php echo $index + 1; ?></td>
+                                                                    <td><?php echo $d->IDTICKET; ?></td>
+                                                                    <td><?php echo strtoupper($d->REQUESTBY); ?></td>
+                                                                    <td><?php echo $d->NAMA_AREA; ?></td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($d->APPROVAL_TICKET == 0) {
+                                                                            echo '<span class="badge badge-warning">Dalam Antrian</span>';
+                                                                        } elseif ($d->APPROVAL_TICKET == 1) {
+                                                                            echo '<span class="badge badge-success">Disetujui</span>';
+                                                                        } else {
+                                                                            echo '<span class="badge badge-danger">Ditolak</span>';
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <?php if ($d->NAME_TECHNICIAN == null) : ?>
+                                                                            <span>-</span>
                                                                         <?php else : ?>
-                                                                            <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Proses</a>
+                                                                            <?php echo strtoupper($d->NAME_TECHNICIAN); ?>
                                                                         <?php endif; ?>
-                                                                    <?php endif; ?>
-                                                                <?php endif; ?>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                <?php endforeach; ?>
-                                            </tbody>
-                                        </table>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="progress">
+                                                                            <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td> <?php
+                                                                            if (!empty($d->DATE_TICKET_DONE)) {
+                                                                                $date_done = new DateTime($d->DATE_TICKET_DONE);
+                                                                                $now = new DateTime($d->DATE_TICKET);
+                                                                                $diff = $now->diff($date_done);
+
+                                                                                // Format hasil: "X hari, Y jam, Z menit"
+                                                                                echo "{$diff->d} hari, {$diff->h} jam, {$diff->i} menit";
+                                                                            } else {
+                                                                                echo "-"; // Jika tidak ada tanggal, tampilkan tanda "-"
+                                                                            }
+                                                                            ?></td>
+                                                                    <td>
+                                                                        <div class="dropdown">
+                                                                            <?php if ($this->session->userdata('NAMA_ROLE') == 'IT') : ?>
+                                                                                <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
+                                                                                <div class="dropdown-menu">
+                                                                                    <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
+                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
+                                                                                    <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
+                                                                                    <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                        <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTICKET; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
+                                                                            Delete</a> -->
+                                                                                </div>
+                                                                            <?php else : ?>
+                                                                                <?php if ($d->STATUS_TICKET == 100) : ?>
+                                                                                    <span class="d-inline-block" data-toggle="tooltip" data-title="Selesai"><a href="javascript:void(0)" class="btn btn-success has-icon disabled"> <i class="fas fa-check"></i> Selesai</a></span>
+                                                                                <?php else : ?>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <span class="d-inline-block" data-toggle="tooltip" data-title="Belum Disetujui"><a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon disabled"> <i class="fas fa-hourglass-half"></i> Proses</a></span>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Proses</a>
+                                                                                    <?php endif; ?>
+                                                                                <?php endif; ?>
+                                                                            <?php endif; ?>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php endforeach; ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="profile3" role="tabpanel" aria-labelledby="profile-tab3">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped" id="table-ticket-disetujui">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center pt-3">
+                                                                    <div class="custom-checkbox custom-checkbox-table custom-control">
+                                                                        <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
+                                                                            class="custom-control-input" id="checkbox-all">
+                                                                        <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                                                    </div>
+                                                                </th>
+                                                                <th>#</th>
+                                                                <th>ID TICKET</th>
+                                                                <th>ORDER BY</th>
+                                                                <th>LOKASI</th>
+                                                                <th>APPROVAL</th>
+                                                                <th>TEKNISI</th>
+                                                                <th>STATUS</th>
+                                                                <th>CLEAR AT</th>
+                                                                <th>ACTION</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php foreach ($M_TICKET_DISETUJUI as $index => $d) : ?>
+                                                                <tr onclick>
+                                                                    <td class="text-center pt-2">
+                                                                        <div class="custom-checkbox custom-control">
+                                                                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
+                                                                                id="checkbox-1">
+                                                                            <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><?php echo $index + 1; ?></td>
+                                                                    <td><?php echo $d->IDTICKET; ?></td>
+                                                                    <td><?php echo strtoupper($d->REQUESTBY); ?></td>
+                                                                    <td><?php echo $d->NAMA_AREA; ?></td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($d->APPROVAL_TICKET == 0) {
+                                                                            echo '<span class="badge badge-warning">Dalam Antrian</span>';
+                                                                        } elseif ($d->APPROVAL_TICKET == 1) {
+                                                                            echo '<span class="badge badge-success">Disetujui</span>';
+                                                                        } else {
+                                                                            echo '<span class="badge badge-danger">Ditolak</span>';
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <?php if ($d->NAME_TECHNICIAN == null) : ?>
+                                                                            <span>-</span>
+                                                                        <?php else : ?>
+                                                                            <?php echo strtoupper($d->NAME_TECHNICIAN); ?>
+                                                                        <?php endif; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="progress">
+                                                                            <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td> <?php
+                                                                            if (!empty($d->DATE_TICKET_DONE)) {
+                                                                                $date_done = new DateTime($d->DATE_TICKET_DONE);
+                                                                                $now = new DateTime($d->DATE_TICKET);
+                                                                                $diff = $now->diff($date_done);
+
+                                                                                // Format hasil: "X hari, Y jam, Z menit"
+                                                                                echo "{$diff->d} hari, {$diff->h} jam, {$diff->i} menit";
+                                                                            } else {
+                                                                                echo "-"; // Jika tidak ada tanggal, tampilkan tanda "-"
+                                                                            }
+                                                                            ?></td>
+                                                                    <td>
+                                                                        <div class="dropdown">
+                                                                            <?php if ($this->session->userdata('NAMA_ROLE') == 'IT') : ?>
+                                                                                <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
+                                                                                <div class="dropdown-menu">
+                                                                                    <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
+                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
+                                                                                    <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
+                                                                                    <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                        <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTICKET; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
+                                                                            Delete</a> -->
+                                                                                </div>
+                                                                            <?php else : ?>
+                                                                                <?php if ($d->STATUS_TICKET == 100) : ?>
+                                                                                    <span class="d-inline-block" data-toggle="tooltip" data-title="Selesai"><a href="javascript:void(0)" class="btn btn-success has-icon disabled"> <i class="fas fa-check"></i> Selesai</a></span>
+                                                                                <?php else : ?>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <span class="d-inline-block" data-toggle="tooltip" data-title="Belum Disetujui"><a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon disabled"> <i class="fas fa-hourglass-half"></i> Proses</a></span>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Proses</a>
+                                                                                    <?php endif; ?>
+                                                                                <?php endif; ?>
+                                                                            <?php endif; ?>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php endforeach; ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="contact3" role="tabpanel" aria-labelledby="contact-tab3">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped" id="table-ticket-ditolak">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center pt-3">
+                                                                    <div class="custom-checkbox custom-checkbox-table custom-control">
+                                                                        <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
+                                                                            class="custom-control-input" id="checkbox-all">
+                                                                        <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                                                    </div>
+                                                                </th>
+                                                                <th>#</th>
+                                                                <th>ID TICKET</th>
+                                                                <th>ORDER BY</th>
+                                                                <th>LOKASI</th>
+                                                                <th>APPROVAL</th>
+                                                                <th>TEKNISI</th>
+                                                                <th>STATUS</th>
+                                                                <th>CLEAR AT</th>
+                                                                <th>ACTION</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php foreach ($M_TICKET_DITOLAK as $index => $d) : ?>
+                                                                <tr onclick>
+                                                                    <td class="text-center pt-2">
+                                                                        <div class="custom-checkbox custom-control">
+                                                                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
+                                                                                id="checkbox-1">
+                                                                            <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><?php echo $index + 1; ?></td>
+                                                                    <td><?php echo $d->IDTICKET; ?></td>
+                                                                    <td><?php echo strtoupper($d->REQUESTBY); ?></td>
+                                                                    <td><?php echo $d->NAMA_AREA; ?></td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($d->APPROVAL_TICKET == 0) {
+                                                                            echo '<span class="badge badge-warning">Dalam Antrian</span>';
+                                                                        } elseif ($d->APPROVAL_TICKET == 1) {
+                                                                            echo '<span class="badge badge-success">Disetujui</span>';
+                                                                        } else {
+                                                                            echo '<span class="badge badge-danger">Ditolak</span>';
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <?php if ($d->NAME_TECHNICIAN == null) : ?>
+                                                                            <span>-</span>
+                                                                        <?php else : ?>
+                                                                            <?php echo strtoupper($d->NAME_TECHNICIAN); ?>
+                                                                        <?php endif; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="progress">
+                                                                            <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td> <?php
+                                                                            if (!empty($d->DATE_TICKET_DONE)) {
+                                                                                $date_done = new DateTime($d->DATE_TICKET_DONE);
+                                                                                $now = new DateTime($d->DATE_TICKET);
+                                                                                $diff = $now->diff($date_done);
+
+                                                                                // Format hasil: "X hari, Y jam, Z menit"
+                                                                                echo "{$diff->d} hari, {$diff->h} jam, {$diff->i} menit";
+                                                                            } else {
+                                                                                echo "-"; // Jika tidak ada tanggal, tampilkan tanda "-"
+                                                                            }
+                                                                            ?></td>
+                                                                    <td>
+                                                                        <div class="dropdown">
+                                                                            <?php if ($this->session->userdata('NAMA_ROLE') == 'IT') : ?>
+                                                                                <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
+                                                                                <div class="dropdown-menu">
+                                                                                    <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
+                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
+                                                                                    <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
+                                                                                    <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                        <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTICKET; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
+                                                                            Delete</a> -->
+                                                                                </div>
+                                                                            <?php else : ?>
+                                                                                <?php if ($d->STATUS_TICKET == 100) : ?>
+                                                                                    <span class="d-inline-block" data-toggle="tooltip" data-title="Selesai"><a href="javascript:void(0)" class="btn btn-success has-icon disabled"> <i class="fas fa-check"></i> Selesai</a></span>
+                                                                                <?php else : ?>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <span class="d-inline-block" data-toggle="tooltip" data-title="Belum Disetujui"><a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon disabled"> <i class="fas fa-hourglass-half"></i> Proses</a></span>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Proses</a>
+                                                                                    <?php endif; ?>
+                                                                                <?php endif; ?>
+                                                                            <?php endif; ?>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php endforeach; ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                <?php elseif ($this->session->userdata('NAMA_ROLE') == 'IT TEKNISI'): ?>
+                                    <div class="card-body">
+                                        <ul class="nav nav-pills mb-4" id="myTab3" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="all-tab3" data-toggle="tab" href="#all3" role="tab"
+                                                    aria-controls="all" aria-selected="false"><i class="fas fa-list"></i> All Teknisi <span class="badge badge-primary"><?php echo $JML_ALL->JUMLAH_TICKET; ?></span></a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3" role="tab"
+                                                    aria-controls="home" aria-selected="true"><i class="fas fa-spinner"></i> Dalam Antrian <span class="badge badge-primary"><?php echo $JML_DALAM_ANTRIAN->JUMLAH_TICKET; ?></span></a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab"
+                                                    aria-controls="profile" aria-selected="false"><i class="fas fa-tools"></i> Sedang Dikerjakan <span class="badge badge-primary"><?php echo $JML_SEDANG_DIKERJAKAN->JUMLAH_TICKET; ?></span></a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="contact-tab3" data-toggle="tab" href="#contact3" role="tab"
+                                                    aria-controls="contact" aria-selected="false"><i class="fas fa-hourglass-half"></i> Menunggu Validasi <span class="badge badge-primary"><?php echo $JML_MENUNGGU_VALIDASI->JUMLAH_TICKET; ?></span></a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="selesai-tab3" data-toggle="tab" href="#selesai3" role="tab"
+                                                    aria-controls="selesai" aria-selected="false"><i class="fas fa-check"></i> Selesai <span class="badge badge-primary"><?php echo $JML_SELESAI->JUMLAH_TICKET; ?></span></a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content" id="myTabContent2">
+                                            <div class="tab-pane fade" id="all3" role="tabpanel" aria-labelledby="all-tab3">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped" id="table-ticket-all">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center pt-3">
+                                                                    <div class="custom-checkbox custom-checkbox-table custom-control">
+                                                                        <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
+                                                                            class="custom-control-input" id="checkbox-all">
+                                                                        <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                                                    </div>
+                                                                </th>
+                                                                <th>#</th>
+                                                                <th>ID TICKET</th>
+                                                                <th>ORDER BY</th>
+                                                                <th>LOKASI</th>
+                                                                <th>APPROVAL</th>
+                                                                <th>TEKNISI</th>
+                                                                <th>STATUS</th>
+                                                                <th>CLEAR AT</th>
+                                                                <th>ACTION</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php foreach ($M_TICKET_ALL_TECHNICIAN as $index => $d) : ?>
+                                                                <tr onclick>
+                                                                    <td class="text-center pt-2">
+                                                                        <div class="custom-checkbox custom-control">
+                                                                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
+                                                                                id="checkbox-1">
+                                                                            <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><?php echo $index + 1; ?></td>
+                                                                    <td><?php echo $d->IDTICKET; ?></td>
+                                                                    <td><?php echo strtoupper($d->REQUESTBY); ?></td>
+                                                                    <td><?php echo $d->NAMA_AREA; ?></td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($d->APPROVAL_TICKET == 0) {
+                                                                            echo '<span class="badge badge-warning">Dalam Antrian</span>';
+                                                                        } elseif ($d->APPROVAL_TICKET == 1) {
+                                                                            echo '<span class="badge badge-success">Disetujui</span>';
+                                                                        } else {
+                                                                            echo '<span class="badge badge-danger">Ditolak</span>';
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <?php if ($d->NAME_TECHNICIAN == null) : ?>
+                                                                            <span>-</span>
+                                                                        <?php else : ?>
+                                                                            <?php echo strtoupper($d->NAME_TECHNICIAN); ?>
+                                                                        <?php endif; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="progress">
+                                                                            <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td> <?php
+                                                                            if (!empty($d->DATE_TICKET_DONE)) {
+                                                                                $date_done = new DateTime($d->DATE_TICKET_DONE);
+                                                                                $now = new DateTime($d->DATE_TICKET);
+                                                                                $diff = $now->diff($date_done);
+
+                                                                                // Format hasil: "X hari, Y jam, Z menit"
+                                                                                echo "{$diff->d} hari, {$diff->h} jam, {$diff->i} menit";
+                                                                            } else {
+                                                                                echo "-"; // Jika tidak ada tanggal, tampilkan tanda "-"
+                                                                            }
+                                                                            ?></td>
+                                                                    <td>
+                                                                        <div class="dropdown">
+                                                                            <?php if ($this->session->userdata('NAMA_ROLE') == 'IT') : ?>
+                                                                                <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
+                                                                                <div class="dropdown-menu">
+                                                                                    <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
+                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
+                                                                                    <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
+                                                                                    <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                        <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTICKET; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
+                                                                            Delete</a> -->
+                                                                                </div>
+                                                                            <?php else : ?>
+                                                                                <?php if ($d->STATUS_TICKET == 100) : ?>
+                                                                                    <span class="d-inline-block" data-toggle="tooltip" data-title="Selesai"><a href="javascript:void(0)" class="btn btn-success has-icon disabled"> <i class="fas fa-check"></i> Selesai</a></span>
+                                                                                <?php else : ?>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <span class="d-inline-block" data-toggle="tooltip" data-title="Belum Disetujui"><a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon disabled"> <i class="fas fa-hourglass-half"></i> Proses</a></span>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Proses</a>
+                                                                                    <?php endif; ?>
+                                                                                <?php endif; ?>
+                                                                            <?php endif; ?>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php endforeach; ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade show active" id="home3" role="tabpanel" aria-labelledby="home-tab3">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped" id="table-ticket-dalam-antrian">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center pt-3">
+                                                                    <div class="custom-checkbox custom-checkbox-table custom-control">
+                                                                        <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
+                                                                            class="custom-control-input" id="checkbox-all">
+                                                                        <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                                                    </div>
+                                                                </th>
+                                                                <th>#</th>
+                                                                <th>ID TICKET</th>
+                                                                <th>ORDER BY</th>
+                                                                <th>LOKASI</th>
+                                                                <th>APPROVAL</th>
+                                                                <th>TEKNISI</th>
+                                                                <th>STATUS</th>
+                                                                <th>CLEAR AT</th>
+                                                                <th>ACTION</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php foreach ($M_TICKET_DALAM_ANTRIAN as $index => $d) : ?>
+                                                                <tr onclick>
+                                                                    <td class="text-center pt-2">
+                                                                        <div class="custom-checkbox custom-control">
+                                                                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
+                                                                                id="checkbox-1">
+                                                                            <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><?php echo $index + 1; ?></td>
+                                                                    <td><?php echo $d->IDTICKET; ?></td>
+                                                                    <td><?php echo strtoupper($d->REQUESTBY); ?></td>
+                                                                    <td><?php echo $d->NAMA_AREA; ?></td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($d->APPROVAL_TICKET == 0) {
+                                                                            echo '<span class="badge badge-warning">Dalam Antrian</span>';
+                                                                        } elseif ($d->APPROVAL_TICKET == 1) {
+                                                                            echo '<span class="badge badge-success">Disetujui</span>';
+                                                                        } else {
+                                                                            echo '<span class="badge badge-danger">Ditolak</span>';
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <?php if ($d->NAME_TECHNICIAN == null) : ?>
+                                                                            <span>-</span>
+                                                                        <?php else : ?>
+                                                                            <?php echo strtoupper($d->NAME_TECHNICIAN); ?>
+                                                                        <?php endif; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="progress">
+                                                                            <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td> <?php
+                                                                            if (!empty($d->DATE_TICKET_DONE)) {
+                                                                                $date_done = new DateTime($d->DATE_TICKET_DONE);
+                                                                                $now = new DateTime($d->DATE_TICKET);
+                                                                                $diff = $now->diff($date_done);
+
+                                                                                // Format hasil: "X hari, Y jam, Z menit"
+                                                                                echo "{$diff->d} hari, {$diff->h} jam, {$diff->i} menit";
+                                                                            } else {
+                                                                                echo "-"; // Jika tidak ada tanggal, tampilkan tanda "-"
+                                                                            }
+                                                                            ?></td>
+                                                                    <td>
+                                                                        <div class="dropdown">
+                                                                            <?php if ($this->session->userdata('NAMA_ROLE') == 'IT') : ?>
+                                                                                <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
+                                                                                <div class="dropdown-menu">
+                                                                                    <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
+                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
+                                                                                    <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
+                                                                                    <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                        <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTICKET; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
+                                                                            Delete</a> -->
+                                                                                </div>
+                                                                            <?php else : ?>
+                                                                                <?php if ($d->STATUS_TICKET == 100) : ?>
+                                                                                    <span class="d-inline-block" data-toggle="tooltip" data-title="Selesai"><a href="javascript:void(0)" class="btn btn-success has-icon disabled"> <i class="fas fa-check"></i> Selesai</a></span>
+                                                                                <?php else : ?>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <span class="d-inline-block" data-toggle="tooltip" data-title="Belum Disetujui"><a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon disabled"> <i class="fas fa-hourglass-half"></i> Proses</a></span>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Proses</a>
+                                                                                    <?php endif; ?>
+                                                                                <?php endif; ?>
+                                                                            <?php endif; ?>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php endforeach; ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="profile3" role="tabpanel" aria-labelledby="profile-tab3">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped" id="table-ticket-disetujui">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center pt-3">
+                                                                    <div class="custom-checkbox custom-checkbox-table custom-control">
+                                                                        <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
+                                                                            class="custom-control-input" id="checkbox-all">
+                                                                        <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                                                    </div>
+                                                                </th>
+                                                                <th>#</th>
+                                                                <th>ID TICKET</th>
+                                                                <th>ORDER BY</th>
+                                                                <th>LOKASI</th>
+                                                                <th>APPROVAL</th>
+                                                                <th>TEKNISI</th>
+                                                                <th>STATUS</th>
+                                                                <th>CLEAR AT</th>
+                                                                <th>ACTION</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php foreach ($M_TICKET_SEDANG_DIKERJAKAN as $index => $d) : ?>
+                                                                <tr onclick>
+                                                                    <td class="text-center pt-2">
+                                                                        <div class="custom-checkbox custom-control">
+                                                                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
+                                                                                id="checkbox-1">
+                                                                            <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><?php echo $index + 1; ?></td>
+                                                                    <td><?php echo $d->IDTICKET; ?></td>
+                                                                    <td><?php echo strtoupper($d->REQUESTBY); ?></td>
+                                                                    <td><?php echo $d->NAMA_AREA; ?></td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($d->APPROVAL_TICKET == 0) {
+                                                                            echo '<span class="badge badge-warning">Dalam Antrian</span>';
+                                                                        } elseif ($d->APPROVAL_TICKET == 1) {
+                                                                            echo '<span class="badge badge-success">Disetujui</span>';
+                                                                        } else {
+                                                                            echo '<span class="badge badge-danger">Ditolak</span>';
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <?php if ($d->NAME_TECHNICIAN == null) : ?>
+                                                                            <span>-</span>
+                                                                        <?php else : ?>
+                                                                            <?php echo strtoupper($d->NAME_TECHNICIAN); ?>
+                                                                        <?php endif; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="progress">
+                                                                            <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td> <?php
+                                                                            if (!empty($d->DATE_TICKET_DONE)) {
+                                                                                $date_done = new DateTime($d->DATE_TICKET_DONE);
+                                                                                $now = new DateTime($d->DATE_TICKET);
+                                                                                $diff = $now->diff($date_done);
+
+                                                                                // Format hasil: "X hari, Y jam, Z menit"
+                                                                                echo "{$diff->d} hari, {$diff->h} jam, {$diff->i} menit";
+                                                                            } else {
+                                                                                echo "-"; // Jika tidak ada tanggal, tampilkan tanda "-"
+                                                                            }
+                                                                            ?></td>
+                                                                    <td>
+                                                                        <div class="dropdown">
+                                                                            <?php if ($this->session->userdata('NAMA_ROLE') == 'IT') : ?>
+                                                                                <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
+                                                                                <div class="dropdown-menu">
+                                                                                    <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
+                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
+                                                                                    <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
+                                                                                    <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                        <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTICKET; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
+                                                                            Delete</a> -->
+                                                                                </div>
+                                                                            <?php else : ?>
+                                                                                <?php if ($d->STATUS_TICKET == 100) : ?>
+                                                                                    <span class="d-inline-block" data-toggle="tooltip" data-title="Selesai"><a href="javascript:void(0)" class="btn btn-success has-icon disabled"> <i class="fas fa-check"></i> Selesai</a></span>
+                                                                                <?php else : ?>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <span class="d-inline-block" data-toggle="tooltip" data-title="Belum Disetujui"><a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon disabled"> <i class="fas fa-hourglass-half"></i> Proses</a></span>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Proses</a>
+                                                                                    <?php endif; ?>
+                                                                                <?php endif; ?>
+                                                                            <?php endif; ?>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php endforeach; ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="contact3" role="tabpanel" aria-labelledby="contact-tab3">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped" id="table-ticket-ditolak">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center pt-3">
+                                                                    <div class="custom-checkbox custom-checkbox-table custom-control">
+                                                                        <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
+                                                                            class="custom-control-input" id="checkbox-all">
+                                                                        <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                                                    </div>
+                                                                </th>
+                                                                <th>#</th>
+                                                                <th>ID TICKET</th>
+                                                                <th>ORDER BY</th>
+                                                                <th>LOKASI</th>
+                                                                <th>APPROVAL</th>
+                                                                <th>TEKNISI</th>
+                                                                <th>STATUS</th>
+                                                                <th>CLEAR AT</th>
+                                                                <th>ACTION</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php foreach ($M_TICKET_MENUNGGU_VALIDASI as $index => $d) : ?>
+                                                                <tr onclick>
+                                                                    <td class="text-center pt-2">
+                                                                        <div class="custom-checkbox custom-control">
+                                                                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
+                                                                                id="checkbox-1">
+                                                                            <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><?php echo $index + 1; ?></td>
+                                                                    <td><?php echo $d->IDTICKET; ?></td>
+                                                                    <td><?php echo strtoupper($d->REQUESTBY); ?></td>
+                                                                    <td><?php echo $d->NAMA_AREA; ?></td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($d->APPROVAL_TICKET == 0) {
+                                                                            echo '<span class="badge badge-warning">Dalam Antrian</span>';
+                                                                        } elseif ($d->APPROVAL_TICKET == 1) {
+                                                                            echo '<span class="badge badge-success">Disetujui</span>';
+                                                                        } else {
+                                                                            echo '<span class="badge badge-danger">Ditolak</span>';
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <?php if ($d->NAME_TECHNICIAN == null) : ?>
+                                                                            <span>-</span>
+                                                                        <?php else : ?>
+                                                                            <?php echo strtoupper($d->NAME_TECHNICIAN); ?>
+                                                                        <?php endif; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="progress">
+                                                                            <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td> <?php
+                                                                            if (!empty($d->DATE_TICKET_DONE)) {
+                                                                                $date_done = new DateTime($d->DATE_TICKET_DONE);
+                                                                                $now = new DateTime($d->DATE_TICKET);
+                                                                                $diff = $now->diff($date_done);
+
+                                                                                // Format hasil: "X hari, Y jam, Z menit"
+                                                                                echo "{$diff->d} hari, {$diff->h} jam, {$diff->i} menit";
+                                                                            } else {
+                                                                                echo "-"; // Jika tidak ada tanggal, tampilkan tanda "-"
+                                                                            }
+                                                                            ?></td>
+                                                                    <td>
+                                                                        <div class="dropdown">
+                                                                            <?php if ($this->session->userdata('NAMA_ROLE') == 'IT') : ?>
+                                                                                <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
+                                                                                <div class="dropdown-menu">
+                                                                                    <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
+                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
+                                                                                    <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
+                                                                                    <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                        <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTICKET; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
+                                                                            Delete</a> -->
+                                                                                </div>
+                                                                            <?php else : ?>
+                                                                                <?php if ($d->STATUS_TICKET == 100) : ?>
+                                                                                    <span class="d-inline-block" data-toggle="tooltip" data-title="Selesai"><a href="javascript:void(0)" class="btn btn-success has-icon disabled"> <i class="fas fa-check"></i> Selesai</a></span>
+                                                                                <?php else : ?>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <span class="d-inline-block" data-toggle="tooltip" data-title="Belum Disetujui"><a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon disabled"> <i class="fas fa-hourglass-half"></i> Proses</a></span>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Proses</a>
+                                                                                    <?php endif; ?>
+                                                                                <?php endif; ?>
+                                                                            <?php endif; ?>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php endforeach; ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="selesai3" role="tabpanel" aria-labelledby="selesai-tab3">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped" id="table-ticket-selesai">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center pt-3">
+                                                                    <div class="custom-checkbox custom-checkbox-table custom-control">
+                                                                        <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
+                                                                            class="custom-control-input" id="checkbox-all">
+                                                                        <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                                                    </div>
+                                                                </th>
+                                                                <th>#</th>
+                                                                <th>ID TICKET</th>
+                                                                <th>ORDER BY</th>
+                                                                <th>LOKASI</th>
+                                                                <th>APPROVAL</th>
+                                                                <th>TEKNISI</th>
+                                                                <th>STATUS</th>
+                                                                <th>CLEAR AT</th>
+                                                                <th>ACTION</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php foreach ($M_TICKET_SELESAI as $index => $d) : ?>
+                                                                <tr onclick>
+                                                                    <td class="text-center pt-2">
+                                                                        <div class="custom-checkbox custom-control">
+                                                                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
+                                                                                id="checkbox-1">
+                                                                            <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><?php echo $index + 1; ?></td>
+                                                                    <td><?php echo $d->IDTICKET; ?></td>
+                                                                    <td><?php echo strtoupper($d->REQUESTBY); ?></td>
+                                                                    <td><?php echo $d->NAMA_AREA; ?></td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($d->APPROVAL_TICKET == 0) {
+                                                                            echo '<span class="badge badge-warning">Dalam Antrian</span>';
+                                                                        } elseif ($d->APPROVAL_TICKET == 1) {
+                                                                            echo '<span class="badge badge-success">Disetujui</span>';
+                                                                        } else {
+                                                                            echo '<span class="badge badge-danger">Ditolak</span>';
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <?php if ($d->NAME_TECHNICIAN == null) : ?>
+                                                                            <span>-</span>
+                                                                        <?php else : ?>
+                                                                            <?php echo strtoupper($d->NAME_TECHNICIAN); ?>
+                                                                        <?php endif; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="progress">
+                                                                            <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td> <?php
+                                                                            if (!empty($d->DATE_TICKET_DONE)) {
+                                                                                $date_done = new DateTime($d->DATE_TICKET_DONE);
+                                                                                $now = new DateTime($d->DATE_TICKET);
+                                                                                $diff = $now->diff($date_done);
+
+                                                                                // Format hasil: "X hari, Y jam, Z menit"
+                                                                                echo "{$diff->d} hari, {$diff->h} jam, {$diff->i} menit";
+                                                                            } else {
+                                                                                echo "-"; // Jika tidak ada tanggal, tampilkan tanda "-"
+                                                                            }
+                                                                            ?></td>
+                                                                    <td>
+                                                                        <div class="dropdown">
+                                                                            <?php if ($this->session->userdata('NAMA_ROLE') == 'IT') : ?>
+                                                                                <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
+                                                                                <div class="dropdown-menu">
+                                                                                    <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
+                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
+                                                                                    <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
+                                                                                    <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                        <a href="#" class="dropdown-item has-icon text-danger hapus-btn" data-id="<?php echo $d->IDTICKET; ?>" data-toggle="modal" data-target="#hapusModal"><i class="far fa-trash-alt"></i>
+                                                                            Delete</a> -->
+                                                                                </div>
+                                                                            <?php else : ?>
+                                                                                <?php if ($d->STATUS_TICKET == 100) : ?>
+                                                                                    <span class="d-inline-block" data-toggle="tooltip" data-title="Selesai"><a href="javascript:void(0)" class="btn btn-success has-icon disabled"> <i class="fas fa-check"></i> Selesai</a></span>
+                                                                                <?php else : ?>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <span class="d-inline-block" data-toggle="tooltip" data-title="Belum Disetujui"><a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon disabled"> <i class="fas fa-hourglass-half"></i> Proses</a></span>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/ticket_technician/' . $d->IDTICKET ?>" class="btn btn-primary has-icon"> <i class="fas fa-hourglass-half"></i> Proses</a>
+                                                                                    <?php endif; ?>
+                                                                                <?php endif; ?>
+                                                                            <?php endif; ?>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php endforeach; ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -248,7 +1139,11 @@
             <script>
                 $(document).ready(function() {
                     // DataTable
-                    $('#table-ticket').DataTable();
+                    $('#table-ticket-all').DataTable();
+                    $('#table-ticket-dalam-antrian').DataTable();
+                    $('#table-ticket-disetujui').DataTable();
+                    $('#table-ticket-ditolak').DataTable();
+                    $('#table-ticket-selesai').DataTable();
 
                     $('.hapus-btn').on('click', function() {
                         const id = $(this).data('id');
@@ -478,7 +1373,7 @@
                                             <span class="selectgroup-button approval" id="label-approval2">DITOLAK</span>
                                         </label>
                                     </div>
-                    `
+                                `
                                 }
                             },
                             buttons: {
@@ -543,6 +1438,26 @@
                         } else if ($('#approval2').is(':checked')) {
                             $('#label-approval2').addClass('bg-danger text-white');
                         }
+                    });
+
+                    // Fungsi untuk mengupdate badge berdasarkan status active
+                    function updateBadge() {
+                        $('.nav-link').each(function() {
+                            var badge = $(this).find('.badge');
+                            if ($(this).hasClass('active')) {
+                                badge.removeClass('badge-primary').addClass('badge-white');
+                            } else {
+                                badge.removeClass('badge-white').addClass('badge-primary');
+                            }
+                        });
+                    }
+
+                    // Panggil fungsi updateBadge saat halaman dimuat
+                    updateBadge();
+
+                    // Panggil fungsi updateBadge saat tab diubah
+                    $('a[data-toggle="tab"]').on('shown.bs.tab', function() {
+                        updateBadge();
                     });
                 });
             </script>

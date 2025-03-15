@@ -26,12 +26,50 @@ class M_TICKET extends CI_Model
         return $query->result_object();
     }
 
-    public function count_ticket_dalam_antrian()
+    public function get_ticket_approval_disetujui()
     {
-        // Hitung jumlah ticket DALAM ANTRIAN
+        $this->db->select('TICKET.*, DEPARTEMEN.*, TECHNICIAN.*, MAPING_AREA.*');
+        $this->db->from('TICKET');
+        $this->db->join('DEPARTEMEN', 'TICKET.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
+        $this->db->join('TECHNICIAN', 'TICKET.TECHNICIAN = TECHNICIAN.IDTECH', 'left');
+        $this->db->join('MAPING_AREA', 'TICKET.SITE_TICKET = MAPING_AREA.KODE_AREA', 'left');
+        $this->db->order_by('DATE_TICKET', 'ASC');
+        $this->db->where('TICKET.APPROVAL_TICKET', '1');
+        $query = $this->db->get();
+        return $query->result_object();
+    }
+
+    public function count_ticket_by_approval(?string $kode_approval = null)
+    {
+        if ($kode_approval != null) {
+            $this->db->select('COUNT(IDTICKET) AS JUMLAH_TICKET');
+            $this->db->from('TICKET');
+            $this->db->where('APPROVAL_TICKET', $kode_approval);
+            $query = $this->db->get();
+            return $query->row_object();
+        } else {
+            $this->db->select('COUNT(IDTICKET) AS JUMLAH_TICKET');
+            $this->db->from('TICKET');
+            $query = $this->db->get();
+            return $query->row_object();
+        }
+    }
+
+    public function count_ticket_by_approval_disetujui()
+    {
         $this->db->select('COUNT(IDTICKET) AS JUMLAH_TICKET');
         $this->db->from('TICKET');
-        $this->db->where('APPROVAL_TICKET', '0');
+        $this->db->where('APPROVAL_TICKET', '1');
+        $query = $this->db->get();
+        return $query->row_object();
+    }
+
+    public function count_ticket_by_technician(?string $kode_technician = null, ?string $kode_status = null)
+    {
+        $this->db->select('COUNT(IDTICKET) AS JUMLAH_TICKET');
+        $this->db->from('TICKET');
+        $this->db->where('TECHNICIAN', $kode_technician);
+        $this->db->where('STATUS_TICKET', $kode_status);
         $query = $this->db->get();
         return $query->row_object();
     }
@@ -46,6 +84,33 @@ class M_TICKET extends CI_Model
         $this->db->where('TICKET.IDTICKET', $id_ticket);
         $query = $this->db->get();
         return $query->row_object();
+    }
+
+    public function get_ticket_by_approval($kode_approval)
+    {
+        $this->db->select('TICKET.*, DEPARTEMEN.*, TECHNICIAN.*, MAPING_AREA.*');
+        $this->db->from('TICKET');
+        $this->db->join('DEPARTEMEN', 'TICKET.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
+        $this->db->join('TECHNICIAN', 'TICKET.TECHNICIAN = TECHNICIAN.IDTECH', 'left');
+        $this->db->join('MAPING_AREA', 'TICKET.SITE_TICKET = MAPING_AREA.KODE_AREA', 'left');
+        $this->db->order_by('DATE_TICKET', 'ASC');
+        $this->db->where('TICKET.APPROVAL_TICKET', $kode_approval);
+        $query = $this->db->get();
+        return $query->result_object();
+    }
+
+    public function get_ticket_by_technician($kode_technician, string $kode_status)
+    {
+        $this->db->select('TICKET.*, DEPARTEMEN.*, TECHNICIAN.*, MAPING_AREA.*');
+        $this->db->from('TICKET');
+        $this->db->join('DEPARTEMEN', 'TICKET.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
+        $this->db->join('TECHNICIAN', 'TICKET.TECHNICIAN = TECHNICIAN.IDTECH', 'left');
+        $this->db->join('MAPING_AREA', 'TICKET.SITE_TICKET = MAPING_AREA.KODE_AREA', 'left');
+        $this->db->order_by('DATE_TICKET', 'ASC');
+        $this->db->where('TICKET.TECHNICIAN', $kode_technician);
+        $this->db->where('TICKET.STATUS_TICKET', $kode_status);
+        $query = $this->db->get();
+        return $query->result_object();
     }
 
     public function get_ticket_detail_view($id_ticket)

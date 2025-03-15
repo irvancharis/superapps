@@ -35,11 +35,19 @@
                                                     Silahkan masukkan departemen!
                                                 </div>
                                             </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <!-- E-MAIL -->
+                                            <!-- <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>E-MAIL</label>
                                                 <input type="email" class="form-control" id="email_ticket" name="email_ticket" value="<?= isset($get_ticket->EMAIL_TICKET) ? $get_ticket->EMAIL_TICKET : ''; ?>" disabled>
                                                 <div class="invalid-feedback">
                                                     Masukkan Email dengan benar!
+                                                </div>
+                                            </div> -->
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>NO. WA</label>
+                                                <input type="text" class="form-control" id="telp" name="telp" value="<?= isset($get_ticket->TELP) ? $get_ticket->TELP : ''; ?>" disabled>
+                                                <div class="invalid-feedback">
+                                                    Masukkan NO. WA dengan benar!
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
@@ -145,7 +153,7 @@
                                         <?php else : ?>
                                             <button type="submit" class="btn btn-primary">Simpan</button>
                                         <?php endif; ?>
-                                        <a href="<?php echo base_url() . 'ticket' ?>" class="btn btn-secondary">Kembali</a>
+                                        <button type="button" onclick="history.go(-1)" class="btn btn-secondary btn btn-secondary btn-icon icon-left">Kembali</button>
                                     </div>
                                 </form>
                             </div>
@@ -501,6 +509,12 @@
                     }
 
                     updateTypeTicket("<?php echo $id_ticket; ?>");
+                });
+
+                // Hapus semua data localStorage & sessionStorage ketika user meninggalkan halaman
+                $(window).on('beforeunload', function() {
+                    localStorage.clear(); // Hapus semua data localStorage
+                    sessionStorage.clear(); // Hapus semua data sessionStorage
                 });
             </script>
             </body>

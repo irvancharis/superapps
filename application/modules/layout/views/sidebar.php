@@ -2,11 +2,20 @@
 <?php
 $CI = &get_instance();
 $CI->load->model('ticket/M_TICKET'); // Load model dari module "ticket"
-$jumlah_ticket = $CI->M_TICKET->count_ticket_dalam_antrian()->JUMLAH_TICKET;
-if ($jumlah_ticket > 0) {
-    $jumlah_ticket = $CI->M_TICKET->count_ticket_dalam_antrian()->JUMLAH_TICKET;
-} else {
-    $jumlah_ticket = 0;
+if ($this->session->userdata('NAMA_ROLE') == 'IT') {
+    $jumlah_ticket = $CI->M_TICKET->count_ticket_by_approval(0)->JUMLAH_TICKET;
+    if ($jumlah_ticket > 0) {
+        $jumlah_ticket = $CI->M_TICKET->count_ticket_by_approval(0)->JUMLAH_TICKET;
+    } else {
+        $jumlah_ticket = 0;
+    }
+} elseif ($this->session->userdata('NAMA_ROLE') == 'IT TEKNISI') {
+    $jumlah_ticket = $CI->M_TICKET->count_ticket_by_technician($this->session->userdata('NAMA_ROLE'), 0)->JUMLAH_TICKET;
+    if ($jumlah_ticket > 0) {
+        $jumlah_ticket = $CI->M_TICKET->count_ticket_by_technician($this->session->userdata('NAMA_ROLE'), 0)->JUMLAH_TICKET;
+    } else {
+        $jumlah_ticket = 0;
+    }
 }
 ?>
 <div class="main-sidebar sidebar-style-2">
