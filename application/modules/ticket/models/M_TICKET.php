@@ -39,7 +39,7 @@ class M_TICKET extends CI_Model
         return $query->result_object();
     }
 
-    public function count_ticket_by_approval(?string $kode_approval = null)
+    public function count_ticket_by_approval(string $kode_approval = null)
     {
         if ($kode_approval != null) {
             $this->db->select('COUNT(IDTICKET) AS JUMLAH_TICKET');
@@ -64,7 +64,7 @@ class M_TICKET extends CI_Model
         return $query->row_object();
     }
 
-    public function count_ticket_by_technician(?string $kode_technician = null, ?string $kode_status = null)
+    public function count_ticket_by_technician(string $kode_technician = null, string $kode_status = null)
     {
         $this->db->select('COUNT(IDTICKET) AS JUMLAH_TICKET');
         $this->db->from('TICKET');
