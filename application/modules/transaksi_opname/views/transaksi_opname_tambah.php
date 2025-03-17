@@ -90,11 +90,11 @@
                                         </div>
 
                                         <div class="table-responsive">
-                                            <table class="table table-striped" id="dataprodukitem">
+                                            <table class="table table-striped table-sm" id="dataprodukitem">
                                                 <thead>
                                                     <tr>
-                                                        <th>FOTO</th>
-                                                        <th>PRODUK/ITEM</th>
+                                                        <th class="text-center col-2">FOTO</th>
+                                                        <th class="col-3">PRODUK/ITEM</th>
                                                         <th class="text-center col-2">STOK SISTEM</th>
                                                         <th class="text-center col-2">STOK REAL</th>
                                                     </tr>
@@ -142,7 +142,9 @@ $(document).ready(function() {
     $('#dataprodukitem').dataTable({
         paging: false,
         searching: false,
-        info: false
+        info: false,
+        sorting: false,
+        ordering: false
     });
 
     // Cek apakah sudah ada data di LocalStorage
