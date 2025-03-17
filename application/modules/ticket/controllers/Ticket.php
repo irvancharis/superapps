@@ -26,16 +26,43 @@ class Ticket extends CI_Controller
     {
         $this->load->library('session');
 
-        $data['M_TICKET'] = $this->M_TICKET->get_news();
-        $this->session->set_userdata('page', $page);
-        $data['page'] = $this->session->userdata('page');
-        $data['get_departement'] = $this->M_TICKET->get_departement();
-        $data['get_technician'] = $this->M_TICKET->get_technician();
-        $data['jml_ticket_dalam_antrian'] = $this->M_TICKET->count_ticket_dalam_antrian();
+        if ($this->session->userdata('NAMA_ROLE') == 'IT') {
+            $data['M_TICKET_DALAM_ANTRIAN'] = $this->M_TICKET->get_ticket_by_approval(0);
+            $data['JML_DALAM_ANTRIAN'] = $this->M_TICKET->count_ticket_by_approval(0);
+            $data['M_TICKET_DISETUJUI'] = $this->M_TICKET->get_ticket_by_approval(1);
+            $data['JML_DISETUJUI'] = $this->M_TICKET->count_ticket_by_approval(1);
+            $data['M_TICKET_DITOLAK'] = $this->M_TICKET->get_ticket_by_approval(2);
+            $data['JML_DITOLAK'] = $this->M_TICKET->count_ticket_by_approval(2);
+            $data['M_TICKET_ALL'] = $this->M_TICKET->get_news();
+            $data['JML_ALL'] = $this->M_TICKET->count_ticket_by_approval();
+            $this->session->set_userdata('page', $page);
+            $data['page'] = $this->session->userdata('page');
+            $data['get_departement'] = $this->M_TICKET->get_departement();
+            $data['get_technician'] = $this->M_TICKET->get_technician();
 
-        $this->load->view('layout/navbar') .
-            $this->load->view('layout/sidebar', $data) .
-            $this->load->view('ticket', $data);
+            $this->load->view('layout/navbar') .
+                $this->load->view('layout/sidebar', $data) .
+                $this->load->view('ticket', $data);
+        } elseif ($this->session->userdata('NAMA_ROLE') == 'IT TEKNISI') {
+            $data['M_TICKET_DALAM_ANTRIAN'] = $this->M_TICKET->get_ticket_by_technician($this->session->userdata('ID_KARYAWAN'), 0);
+            $data['JML_DALAM_ANTRIAN'] = $this->M_TICKET->count_ticket_by_technician($this->session->userdata('ID_KARYAWAN'), 0);
+            $data['M_TICKET_SEDANG_DIKERJAKAN'] = $this->M_TICKET->get_ticket_by_technician($this->session->userdata('ID_KARYAWAN'), 25);
+            $data['JML_SEDANG_DIKERJAKAN'] = $this->M_TICKET->count_ticket_by_technician($this->session->userdata('ID_KARYAWAN'), 25);
+            $data['M_TICKET_MENUNGGU_VALIDASI'] = $this->M_TICKET->get_ticket_by_technician($this->session->userdata('ID_KARYAWAN'), 50);
+            $data['JML_MENUNGGU_VALIDASI'] = $this->M_TICKET->count_ticket_by_technician($this->session->userdata('ID_KARYAWAN'), 50);
+            $data['M_TICKET_SELESAI'] = $this->M_TICKET->get_ticket_by_technician($this->session->userdata('ID_KARYAWAN'), 100);
+            $data['JML_SELESAI'] = $this->M_TICKET->count_ticket_by_technician($this->session->userdata('ID_KARYAWAN'), 100);
+            $data['M_TICKET_ALL_TECHNICIAN'] = $this->M_TICKET->get_ticket_approval_disetujui();
+            $data['JML_ALL'] = $this->M_TICKET->count_ticket_by_approval_disetujui();
+            $this->session->set_userdata('page', $page);
+            $data['page'] = $this->session->userdata('page');
+            $data['get_departement'] = $this->M_TICKET->get_departement();
+            $data['get_technician'] = $this->M_TICKET->get_technician();
+
+            $this->load->view('layout/navbar') .
+                $this->load->view('layout/sidebar', $data) .
+                $this->load->view('ticket', $data);
+        }
     }
 
     public function ticket_card($kode)
@@ -325,107 +352,132 @@ class Ticket extends CI_Controller
             $date_ticket_done = null; // Atau set default jika diperlukan
         }
 
-        // Jika validasi lolos, lanjutkan proses penyimpanan
-        $data = [
-            'DATE_TICKET_DONE' => $date_ticket_done,
-            'TECHNICIAN' => $id_technician,
-            'STATUS_TICKET' => $status_ticket,
-            'APPROVAL_TICKET' => $approval_ticket,
-            'PROSENTASE' => $prosentase
-        ];
+        // Kondisi jika value variabel $approval_ticket bernilai 2 / ditolak
+        if ($approval_ticket != 2) {
+            // Jika validasi lolos, lanjutkan proses penyimpanan
+            $data = [
+                'DATE_TICKET_DONE' => $date_ticket_done,
+                'TECHNICIAN' => $id_technician,
+                'STATUS_TICKET' => $status_ticket,
+                'APPROVAL_TICKET' => $approval_ticket,
+                'PROSENTASE' => $prosentase
+            ];
 
-        $result = $this->M_TICKET->update($id_ticket, $data);
+            $result = $this->M_TICKET->update($id_ticket, $data);
 
-        // Simpan data detail ticket
-        $IDTICKET_DETAIL = $this->uuid->v4();
-        $data_detail = [
-            'IDTICKET_DETAIL' => $IDTICKET_DETAIL,
-            'IDTICKET' => $id_ticket,
-            'TGL_PENGERJAAN' => date('Y-m-d H:i:s'),
-            'TECHNICIAN' => $id_technician,
-            'OBJEK_DITANGANI' => "Approval Ticket",
-            'KETERANGAN' => "Ticket Diproses Oleh Teknisi",
-            'FOTO' => null,
-            'STATUS_PROGRESS' => $status_ticket
-        ];
-        $this->M_TICKET->insert_detail($data_detail);
+            // Simpan data detail ticket
+            $IDTICKET_DETAIL = $this->uuid->v4();
+            $data_detail = [
+                'IDTICKET_DETAIL' => $IDTICKET_DETAIL,
+                'IDTICKET' => $id_ticket,
+                'TGL_PENGERJAAN' => date('Y-m-d H:i:s'),
+                'TECHNICIAN' => $id_technician,
+                'OBJEK_DITANGANI' => "Approval Ticket",
+                'KETERANGAN' => "Ticket Diproses Oleh Teknisi",
+                'FOTO' => null,
+                'STATUS_PROGRESS' => $status_ticket
+            ];
+            $this->M_TICKET->insert_detail($data_detail);
 
-        // Ambil data teknisi dan departemen dari database
-        $get_ticket = $this->M_TICKET->get_ticket($id_ticket);
-        $get_departemen = $this->M_DEPARTEMENT->get_departemen_single($get_ticket->DEPARTEMENT);
-        $get_teknisi = $this->M_TECHNICIAN->get_teknisi_by_id($id_technician);
-        $get_karyawan = $this->M_KARYAWAN->get_karyawan_by_id($get_teknisi->IDKARYAWAN);
-        $lokasi_ticket = $this->M_MAPING_AREA->get_maping_area_single($get_ticket->SITE_TICKET)->row()->NAMA_AREA;
-        $TELP_TEKNISI = $get_karyawan->TELEPON;
-        $NAMA_TEKNISI = $get_karyawan->NAMA_KARYAWAN;
-        $get_IP = $this->get_lan_ip();
-        // Ticket Card
-        // $url = "http://" . $get_IP . "/superapps/ticket_client_view/ticket_card/$id_ticket";
-        // Ticket History
-        $url_client = "http://" . urlencode($get_IP) . "/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
-        $url_teknisi = "http://" . urlencode($get_IP) . "/superapps/ticket/ticket_technician/"  . urlencode($id_ticket);
+            // Ambil data teknisi dan departemen dari database
+            $get_ticket = $this->M_TICKET->get_ticket($id_ticket);
+            $get_departemen = $this->M_DEPARTEMENT->get_departemen_single($get_ticket->DEPARTEMENT);
+            $get_teknisi = $this->M_TECHNICIAN->get_teknisi_by_id($id_technician);
+            $get_karyawan = $this->M_KARYAWAN->get_karyawan_by_id($get_teknisi->IDKARYAWAN);
+            $lokasi_ticket = $this->M_MAPING_AREA->get_maping_area_single($get_ticket->SITE_TICKET)->row()->NAMA_AREA;
+            $TELP_TEKNISI = $get_karyawan->TELEPON;
+            $NAMA_TEKNISI = $get_karyawan->NAMA_KARYAWAN;
+            $get_IP = $this->get_lan_ip();
+            // Ticket Card
+            // $url = "http://" . $get_IP . "/superapps/ticket_client_view/ticket_card/$id_ticket";
 
-        // Membuat format pesan sesuai permintaan
-        // // Kirim Pesan ke WA (Teknisi)
-        $message =
-            "===== REQUEST TICKETING =====\n\n" .
+            // Ticket History
+            // $url_client = "http://" . urlencode($get_IP) . "/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
+            // $url_teknisi = "http://" . urlencode($get_IP) . "/superapps/ticket/ticket_technician/"  . urlencode($id_ticket);
 
-            "===== INFORMASI PEREQUEST =====\n" .
-            "👤 NAMA: " . strtoupper($get_ticket->REQUESTBY) . "\n" .
-            "🏢 DEPARTEMEN: " . strtoupper($get_departemen->NAMA_DEPARTEMEN) . "\n" .
-            "📍 LOKASI: " . strtoupper($lokasi_ticket) . "\n\n" .
+            // Ticket History Versi ZROK
+            $url_client = "https://wkgprx814ige.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
+            $url_teknisi = "https://wkgprx814ige.share.zrok.io/superapps/ticket/ticket_technician/"  . urlencode($id_ticket);
 
-            "===== DETAIL KELUHAN =====\n" .
-            "📂 TIPE KELUHAN: " . strtoupper($get_ticket->TYPE_TICKET) . "\n" .
-            "📝 DESKRIPSI KELUHAN: " . strtoupper($get_ticket->DESCRIPTION_TICKET) . "\n\n" .
+            // Membuat format pesan sesuai permintaan
+            // // Kirim Pesan ke WA (Teknisi)
+            $message =
+                "===== REQUEST TICKETING =====\n\n" .
 
-            "🚨 HARAP SEGERA PROSES TICKET DENGAN MEMBUKA URL DI BAWAH INI:\n" .
-            $url_teknisi;
-        $this->WHATSAPP->send_wa($TELP_TEKNISI, $message);
+                "===== INFORMASI PEREQUEST =====\n" .
+                "👤 NAMA: " . strtoupper($get_ticket->REQUESTBY) . "\n" .
+                "🏢 DEPARTEMEN: " . strtoupper($get_departemen->NAMA_DEPARTEMEN) . "\n" .
+                "📍 LOKASI: " . strtoupper($lokasi_ticket) . "\n\n" .
 
-        // // Kirim Pesan ke Telegram (Teknisi)
-        // $ms_telegram_teknisi =
-        //     "📢 REQUEST TICKETING \n\n" .
+                "===== DETAIL KELUHAN =====\n" .
+                "📂 TIPE KELUHAN: " . strtoupper($get_ticket->TYPE_TICKET) . "\n" .
+                "📝 DESKRIPSI KELUHAN: " . strtoupper($get_ticket->DESCRIPTION_TICKET) . "\n\n" .
 
-        //     "📌 Informasi Pengguna: \n\n" .
-        //     "\t👤 Nama: `$get_ticket->REQUESTBY` \n" .
-        //     "\t🏢 Departemen: `$get_departemen->NAMA_DEPARTEMEN` \n\n" .
+                "🚨 HARAP SEGERA PROSES TICKET DENGAN MEMBUKA URL DI BAWAH INI:\n" .
+                $url_teknisi;
+            $this->WHATSAPP->send_wa($TELP_TEKNISI, $message);
 
-        //     "📌 Detail Keluhan: \n\n" .
-        //     "\t📂 Tipe Keluhan: `$get_ticket->TYPE_TICKET` \n" .
-        //     "\t📝 Deskripsi: \n" .
-        //     "```$get_ticket->DESCRIPTION_TICKET``` \n\n\n" .
+            // // Kirim Pesan ke Telegram (Teknisi)
+            // $ms_telegram_teknisi =
+            //     "📢 REQUEST TICKETING \n\n" .
 
-        //     "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
-        //     "🔗 ($url_teknisi)";
-        // $this->TELEGRAM->send_message('8007581238', $ms_telegram_teknisi);
+            //     "📌 Informasi Pengguna: \n\n" .
+            //     "\t👤 Nama: `$get_ticket->REQUESTBY` \n" .
+            //     "\t🏢 Departemen: `$get_departemen->NAMA_DEPARTEMEN` \n\n" .
 
-        // // Kirim Pesan ke Telegram (Client)
-        // $ms_telegram_client =
-        //     "📢 TICKETING PROGRESS \n\n" .
+            //     "📌 Detail Keluhan: \n\n" .
+            //     "\t📂 Tipe Keluhan: `$get_ticket->TYPE_TICKET` \n" .
+            //     "\t📝 Deskripsi: \n" .
+            //     "```$get_ticket->DESCRIPTION_TICKET``` \n\n\n" .
 
-        //     "📌 Ticket Sudah DIPROSES \n\n" .
+            //     "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
+            //     "🔗 ($url_teknisi)";
+            // $this->TELEGRAM->send_message('8007581238', $ms_telegram_teknisi);
 
-        //     "🚨 Lihat Progress Ticket anda dengan membuka URL di bawah ini:\n" .
-        //     "🔗 [ $url_client ]";
-        // $this->TELEGRAM->send_message('8007581238', $ms_telegram_client);
+            // // Kirim Pesan ke Telegram (Client)
+            // $ms_telegram_client =
+            //     "📢 TICKETING PROGRESS \n\n" .
 
-        // // Kirim Pesan ke WA (Client)
-        $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
-        $ms_wa_client =
-            "=====*TICKET PROGRESS*===== \n\n" .
-            "=====_INFORMASI TICKET_===== \n\n" .
-            "📌 ID TICKET: " . strtoupper($get_ticket->IDTICKET) . " \n" .
-            "👤 TEKNISI: " . strtoupper($NAMA_TEKNISI) . " \n\n" .
+            //     "📌 Ticket Sudah DIPROSES \n\n" .
 
-            "🚨 LIHAT PROGRESS TICKET ANDA DENGAN MEMBUKA URL DI BAWAH INI:\n" .
-            $url_client;
-        $this->WHATSAPP->send_wa($telp_client, $ms_wa_client);
+            //     "🚨 Lihat Progress Ticket anda dengan membuka URL di bawah ini:\n" .
+            //     "🔗 [ $url_client ]";
+            // $this->TELEGRAM->send_message('8007581238', $ms_telegram_client);
 
-        if ($result) {
-            echo json_encode(['success' => true]);
+            // // Kirim Pesan ke WA (Client)
+            $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
+            $ms_wa_client =
+                "=====*TICKET PROGRESS*===== \n\n" .
+                "=====_INFORMASI TICKET_===== \n\n" .
+                "📌 ID TICKET: " . strtoupper($get_ticket->IDTICKET) . " \n" .
+                "👤 TEKNISI: " . strtoupper($NAMA_TEKNISI) . " \n\n" .
+
+                "🚨 LIHAT PROGRESS TICKET ANDA DENGAN MEMBUKA URL DI BAWAH INI:\n" .
+                $url_client;
+            $this->WHATSAPP->send_wa($telp_client, $ms_wa_client);
+
+            if ($result) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'error' => 'Gagal menyimpan data.']);
+            }
         } else {
-            echo json_encode(['success' => false, 'error' => 'Gagal menyimpan data.']);
+            // Jika validasi lolos, lanjutkan proses penyimpanan
+            $data = [
+                'DATE_TICKET_DONE' => $date_ticket_done,
+                'TECHNICIAN' => $id_technician,
+                'STATUS_TICKET' => 200,
+                'APPROVAL_TICKET' => $approval_ticket,
+                'PROSENTASE' => 0
+            ];
+
+            $result = $this->M_TICKET->update($id_ticket, $data);
+
+            if ($result) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'error' => 'Gagal menyimpan data.']);
+            }
         }
     }
 
