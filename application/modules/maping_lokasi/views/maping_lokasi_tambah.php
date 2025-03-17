@@ -35,13 +35,6 @@
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-12 col-lg-12">
-                                                <label>KODE LOKASI</label>
-                                                <input required type="text" name="KODE_LOKASI" id="KODE_LOKASI" class="form-control">
-                                                <div class="invalid-feedback">
-                                                Masukkan kode lokasi?
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>NAMA LOKASI</label>
                                                 <input required type="text" class="form-control" id="NAMA_LOKASI" name="NAMA_LOKASI">
                                                 <div class="invalid-feedback">

@@ -9,6 +9,7 @@ class MAPING_ruangan extends CI_Controller
         $this->load->model('M_MAPING_RUANGAN');
         $this->load->helper('url_helper');
         $this->load->model('role/M_ROLE');
+        $this->load->library('Uuid');
     }
 
     public function index($page = 'maping_ruangan')
@@ -103,20 +104,12 @@ class MAPING_ruangan extends CI_Controller
         // if (!$CEK_ROLE) { redirect('non_akses'); }
 
 
-        $KODE_RUANGAN = $this->input->post('KODE_RUANGAN');
         $NAMA_RUANGAN = $this->input->post('NAMA_RUANGAN');
-        $KODE_RUANGAN = $this->input->post('KODE_RUANGAN');
         $KETERANGAN_KATEGORI = $this->input->post('KETERANGAN_KATEGORI');
 
         // Validasi 
-        if (empty($KODE_RUANGAN)) {
-            $errors[] = 'KODE RUANGAN tidak boleh kosong.';
-        }
         if (empty($NAMA_RUANGAN)) {
             $errors[] = 'NAMA RUANGAN tidak boleh kosong.';
-        }
-        if (empty($KODE_RUANGAN)) {
-            $errors[] = 'KODE RUANGAN tidak boleh kosong.';
         }
         if (empty($KETERANGAN_KATEGORI)) {
             $errors[] = 'KETERANGAN KATEGORI tidak boleh kosong.';
@@ -124,6 +117,7 @@ class MAPING_ruangan extends CI_Controller
 
 
         $inputan = $this->input->post(null, TRUE);
+        $inputan['KODE_RUANGAN'] = $this->uuid->v4();
 		$result = $this->M_MAPING_RUANGAN->insert($inputan);
 
         if ($result) {
