@@ -11,7 +11,7 @@
                                     <div class="card-body">
 
                                         <div class="row ">
-                                            <div class="form-group col-6 col-md-2 col-lg-8">
+                                            <div class="form-group col-5 col-md-2 col-lg-5">
                                                 <table class="table table-striped table-sm">
                                                     <tbody>
                                                         <tr>
@@ -104,7 +104,7 @@
 
                                             </div>
                                             <div class="row">
-                                                <div class="form-group col-4 col-md-2 col-lg-6">
+                                                <div class="form-group col-4 col-md-2 col-lg-4">
                                                     <table class="table table-striped table-sm">
                                                         <tbody>
                                                             <tr>

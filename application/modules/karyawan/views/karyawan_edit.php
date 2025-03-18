@@ -71,7 +71,18 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>PENDIDIKAN AKHIR</label>
-                                                <input required type="text" value="<?= $get_single->PENDIDIKAN_AKHIR; ?>" class="form-control" id="PENDIDIKAN_AKHIR" name="PENDIDIKAN_AKHIR">
+                                                <select required name="PENDIDIKAN_AKHIR" id="PENDIDIKAN_AKHIR" class="form-control">
+                                                <option value="" class="text-center" selected disabled>-- Pilih Pendidikan Akhir --</option>
+                                                    <option <?php if ('TIDAK SEKOLAH' == $get_single->PENDIDIKAN_AKHIR) echo "selected"; ?> value="TIDAK SEKOLAH"   >TIDAK SEKOLAH</option>
+                                                    <option <?php if ('SD / MI / PAKET A' == $get_single->PENDIDIKAN_AKHIR) echo "selected"; ?> value="SD"   >SD / MI / PAKET A</option>
+                                                    <option <?php if ('SMP / MTS / PAKET B' == $get_single->PENDIDIKAN_AKHIR) echo "selected"; ?> value="SMP"   >SMP / MTS / PAKET B</option>                                                   
+                                                    <option <?php if ('SMK / SMA / PAKET C' == $get_single->PENDIDIKAN_AKHIR) echo "selected"; ?> value="SMK / SMA"   >SMK / SMA / PAKET C </option>
+                                                    <option <?php if ('D1' == $get_single->PENDIDIKAN_AKHIR) echo "selected"; ?> value="D1"   >D1</option>
+                                                    <option <?php if ('D3' == $get_single->PENDIDIKAN_AKHIR) echo "selected"; ?> value="D3"   >D3</option>
+                                                    <option <?php if ('D4' == $get_single->PENDIDIKAN_AKHIR) echo "selected"; ?> value="D4"   >D4</option>
+                                                    <option <?php if ('S1' == $get_single->PENDIDIKAN_AKHIR) echo "selected"; ?> value="S1"  >S1</option>
+                                                    <option <?php if ('S2' == $get_single->PENDIDIKAN_AKHIR) echo "selected"; ?> value="S2"   >S2</option>
+                                                </select>
                                                 <div class="invalid-feedback">
                                                     Masukkan PENDIDIKAN AKHIR  !
                                                 </div>

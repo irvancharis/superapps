@@ -85,14 +85,25 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>EMAIL</label>
-                                                <input required type="text" class="form-control" id="EMAIL" name="EMAIL">
+                                                <input required type="email" class="form-control" id="EMAIL" name="EMAIL">
                                                 <div class="invalid-feedback">
                                                     Masukkan EMAIL  !
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>PENDIDIKAN AKHIR</label>
-                                                <input required type="text" class="form-control" id="PENDIDIKAN_AKHIR" name="PENDIDIKAN_AKHIR">
+                                                <select required name="PENDIDIKAN_AKHIR" id="PENDIDIKAN_AKHIR" class="form-control">
+                                                <option value="" class="text-center" selected disabled>-- Pilih Pendidikan Akhir --</option>
+                                                    <option value="TIDAK SEKOLAH"   >TIDAK SEKOLAH</option>
+                                                    <option value="SD"   >SD / MI / PAKET A</option>
+                                                    <option value="SMP"   >SMP / MTS / PAKET B</option>                                                   
+                                                    <option value="SMK / SMA"   >SMK / SMA / PAKET C </option>
+                                                    <option value="D1"   >D1</option>
+                                                    <option value="D3"   >D3</option>
+                                                    <option value="D4"   >D4</option>
+                                                    <option value="S1"  >S1</option>
+                                                    <option value="S2"   >S2</option>
+                                                </select>
                                                 <div class="invalid-feedback">
                                                     Masukkan PENDIDIKAN AKHIR  !
                                                 </div>
