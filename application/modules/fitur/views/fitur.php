@@ -15,21 +15,17 @@
                                         <table class="table table-striped" id="table-2">
                                             <thead>
                                                 <tr>
-                                                    <th>KODE FITUR</th>
                                                     <th>NAMA FITUR</th>
                                                     <th>KETERANGAN</th>
-                                                    <th>DETAIL FITUR</th>                                                    
-                                                    <th>Action</th>
+                                                    <th class="text-center col-1">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php foreach ($M_FITUR as $index => $d) : ?>
                                                     <tr>
-                                                        <td><?php echo $d->KODE_FITUR; ?></td>
                                                         <td><?php echo $d->NAMA_FITUR; ?></td>
                                                         <td><?php echo $d->KETERANGAN; ?></td>
-                                                        <td><?php echo $d->KETERANGAN; ?></td>
-                                                        <td>
+                                                        <td class="text-center">
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">
