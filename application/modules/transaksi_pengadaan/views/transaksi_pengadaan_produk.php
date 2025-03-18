@@ -178,6 +178,8 @@
                     position: 'topRight'
                 });
             }
+
+            $('#table-produk_filter input').focus();
         });
     });
     </script>

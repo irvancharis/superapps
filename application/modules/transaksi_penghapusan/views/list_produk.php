@@ -153,6 +153,7 @@
                     action: 'updateTable'
                 }, '*');
             }
+            $('#tabel_filter input').focus();
         });
 
         function detail_stok(UUID_STOK, UUID_ASET) {
