@@ -9,6 +9,7 @@ class Produk_kategori extends CI_Controller
         $this->load->model('M_PRODUK_KATEGORI');
         $this->load->helper('url_helper');
         $this->load->model('role/M_ROLE');
+        $this->load->library('Uuid');
     }
 
     public function index($page = 'produk_kategori')
@@ -103,20 +104,11 @@ class Produk_kategori extends CI_Controller
         if (!$CEK_ROLE) { redirect('non_akses'); }
 
 
-        $KODE_PRODUK_KATEGORI = $this->input->post('KODE_PRODUK_KATEGORI');
         $NAMA_PRODUK_KATEGORI = $this->input->post('NAMA_PRODUK_KATEGORI');
-        $KODE_PRODUK_KATEGORI = $this->input->post('KODE_PRODUK_KATEGORI');
         $KETERANGAN_KATEGORI = $this->input->post('KETERANGAN_KATEGORI');
 
-        // Validasi 
-        if (empty($KODE_PRODUK_KATEGORI)) {
-            $errors[] = 'KODE KATEGORI tidak boleh kosong.';
-        }
         if (empty($NAMA_PRODUK_KATEGORI)) {
             $errors[] = 'NAMA KATEGORI tidak boleh kosong.';
-        }
-        if (empty($KODE_PRODUK_KATEGORI)) {
-            $errors[] = 'KODE KATEGORI tidak boleh kosong.';
         }
         if (empty($KETERANGAN_KATEGORI)) {
             $errors[] = 'KETERANGAN KATEGORI tidak boleh kosong.';
@@ -124,6 +116,7 @@ class Produk_kategori extends CI_Controller
 
 
         $inputan = $this->input->post(null, TRUE);
+        $inputan['KODE_PRODUK_KATEGORI'] = $this->uuid->v4();
 		$result = $this->M_PRODUK_KATEGORI->insert($inputan);
 
         if ($result) {
@@ -144,7 +137,6 @@ class Produk_kategori extends CI_Controller
 
         $KODE_PRODUK_KATEGORI = $this->input->post('KODE_PRODUK_KATEGORI');
         $NAMA_PRODUK_KATEGORI = $this->input->post('NAMA_PRODUK_KATEGORI');
-        $KODE_PRODUK_KATEGORI = $this->input->post('KODE_PRODUK_KATEGORI');
         $KETERANGAN_KATEGORI = $this->input->post('KETERANGAN_KATEGORI');
 
         // Validasi 
@@ -153,9 +145,6 @@ class Produk_kategori extends CI_Controller
         }
         if (empty($NAMA_PRODUK_KATEGORI)) {
             $errors[] = 'NAMA KATEGORI tidak boleh kosong.';
-        }
-        if (empty($KODE_PRODUK_KATEGORI)) {
-            $errors[] = 'KODE KATEGORI tidak boleh kosong.';
         }
         if (empty($KETERANGAN_KATEGORI)) {
             $errors[] = 'KETERANGAN KATEGORI tidak boleh kosong.';

@@ -125,7 +125,9 @@ $(document).ready(function() {
     $('#table-data-produk').dataTable({
         paging: false,
         searching: false,
-        info: false
+        info: false,
+        sorting: false,
+        ordering: false
     });
 
     loadSelectedItems();
