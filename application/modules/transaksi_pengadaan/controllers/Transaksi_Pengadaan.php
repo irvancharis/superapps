@@ -628,10 +628,9 @@ Sejahtera Abadi Group'
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
 
-
         $this->db->where('UUID_TOKEN', $token);
         $this->db->delete('TOKEN');
-
+        
         $data_token = [
             'UUID_TOKEN' => $uuid_token,
             'TOKEN' => rand(100000, 999999),
@@ -715,7 +714,7 @@ Sejahtera Abadi Group'
 
         $this->db->where('UUID_TOKEN', $token);
         $this->db->delete('TOKEN');
-
+        
         $data_token = [
             'UUID_TOKEN' => $uuid_token,
             'TOKEN' => rand(100000, 999999),
