@@ -36,6 +36,9 @@ class M_TRANSAKSI_OPNAME extends CI_Model
         $this->db->where('STATUS_OPNAME !=', 'DITOLAK KABAG');
         $this->db->where('STATUS_OPNAME !=', 'DITOLAK GM');
         $this->db->where('STATUS_OPNAME !=', 'DITOLAK HEAD');
+        if ($this->session->userdata("ROLE") !== 'GM' && $this->session->userdata("ROLE") !== 'HEAD') {
+            $this->db->where('KODE_DEPARTEMEN =' ,$this->session->userdata("ID_DEPARTEMEN"));
+        }
         $this->db->order_by('TANGGAL_OPNAME', 'DESC');
         $query = $this->db->get('VIEW_TRANSAKSI_OPNAME');
         return $query->result_object();
