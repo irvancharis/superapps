@@ -153,7 +153,8 @@ class Transaksi_penghapusan extends CI_Controller
         $data['get_karyawan'] = $this->M_KARYAWAN->get_karyawan();
         $data['get_area'] = $this->M_MAPING_AREA->get_area();
         $data['get_departemen'] = $this->M_DEPARTEMENT->get_departemen();
-        $data['get_ruangan'] = $this->M_MAPING_RUANGAN->get_maping_ruangan();
+        $kode_area = $this->session->userdata('ID_AREA');
+        $data['get_ruangan'] = $this->M_MAPING_RUANGAN->get_maping_ruangan_by_area($kode_area);
         $data['get_lokasi'] = $this->M_MAPING_LOKASI->get_maping_lokasi();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .

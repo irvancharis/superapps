@@ -118,7 +118,7 @@ $(document).ready(function() {
 
     let formData = JSON.parse(localStorage.getItem('formPengadaan')) || {};
 
-    if (formData && formData.AREA_PENEMPATAN === '') {
+    if (formData && formData.AREA_PENEMPATAN !== '') {
         get_ruangan_by_area();
     }
 
@@ -321,8 +321,6 @@ $(document).ready(function() {
                 $ruanganPenempatan.empty().append(
                     '<option value="" class="text-center" selected disabled>-- Pilih Ruangan --</option>'
                 );
-
-                alert(data_ruangan);
 
                 $.each(data_ruangan, function(index, lokasi) {
                     $ruanganPenempatan.append($('<option>', {

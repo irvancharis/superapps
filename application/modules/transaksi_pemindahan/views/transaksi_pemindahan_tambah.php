@@ -213,7 +213,8 @@ $(document).ready(function() {
 
     let formData = JSON.parse(localStorage.getItem('FormPemindahan'));
 
-    if (formData && formData.AREA_AWAL === '') {
+    if (formData && formData.AREA_AWAL !== '') {    
+        alert('Data pemindahan berhasil disimpan!');    
         get_ruangan_by_area();
     }
 
@@ -292,6 +293,7 @@ $(document).ready(function() {
 
     // Get Ruangan By Area
     function get_ruangan_by_area() {
+        alert('test');
         let area = $('#AREA_AWAL').val();
         $.ajax({
             url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_ruangan_by_area",

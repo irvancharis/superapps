@@ -22,7 +22,6 @@
                                                             <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                                                         </div>
                                                     </th>
-                                                    <th>#</th>
                                                     <th>Nama Jabatan</th>
                                                     <th>Keterangan</th>
                                                     <th>Action</th>
@@ -38,7 +37,6 @@
                                                                 <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                                                             </div>
                                                         </td>
-                                                        <td><?php echo $index + 1; ?></td>
                                                         <td><?php echo $d->NAMA_JABATAN; ?></td>
                                                         <td><?php echo $d->KETERANGAN; ?></td>
                                                         <td>
