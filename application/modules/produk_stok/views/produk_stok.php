@@ -178,9 +178,13 @@ $(document).ready(function() {
                 var ruangan = JSON.parse(response);
                 var data_ruangan = ruangan;
                 var $ruanganPenempatan = $('#RUANGAN_PENEMPATAN');
+                var $lokasiPenempatan = $('#LOKASI_PENEMPATAN');
 
                 $ruanganPenempatan.empty().append(
                     '<option value="" class="text-center" selected disabled>-- Pilih Ruangan --</option>'
+                );
+                $lokasiPenempatan.empty().append(
+                    '<option value="" class="text-center" selected disabled>-- Pilih Lokasi --</option>'
                 );
 
                 $.each(data_ruangan, function(index, lokasi) {
