@@ -99,9 +99,13 @@
                                                                         <?php endif; ?>
                                                                     </td>
                                                                     <td>
-                                                                        <div class="progress">
-                                                                            <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
-                                                                        </div>
+                                                                        <?php if ($d->STATUS_TICKET != 200) : ?>
+                                                                            <div class="progress">
+                                                                                <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $d->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><?php echo $d->STATUS_TICKET; ?>%</div>
+                                                                            </div>
+                                                                        <?php else : ?>
+                                                                            <span class="badge badge-danger">Ditolak</span>
+                                                                        <?php endif; ?>
                                                                     </td>
                                                                     <td> <?php
                                                                             if (!empty($d->DATE_TICKET_DONE)) {

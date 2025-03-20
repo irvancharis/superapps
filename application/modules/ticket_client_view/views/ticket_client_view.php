@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <!-- MODIFIKASI SEPTIAN SUPAYA SUPPORT ZROK (URL TUNNEL) -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>SAGROUP TICKETING</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/app.min.css'); ?>">
@@ -474,7 +474,7 @@
     <!-- Video Desktop -->
     <div id="desktopVideo" style="display: none;">
         <video controls>
-            <source src="https://drive.google.com/file/d/1qKZvi4XYC57DxUXT4pgXTJS4AfzWzl4u/view?usp=sharing" type="video/mp4">
+            <source src="<?php echo base_url('assets/img/Tutorial/Desktop.mp4'); ?>" type="video/mp4">
             Browser Anda tidak mendukung tag video.
         </video>
     </div>
@@ -482,7 +482,7 @@
     <!-- Video Mobile -->
     <div id="mobileVideo" style="display: none;">
         <video controls>
-            <source src="path/to/mobile-video.mp4" type="video/mp4">
+            <source src="<?php echo base_url('assets/img/Tutorial/Mobile.mp4'); ?>" type="video/mp4">
             Browser Anda tidak mendukung tag video.
         </video>
     </div>
@@ -751,7 +751,8 @@
                 `);
                     } else {
                         // Jika format tidak didukung
-                        previewBox.append(`<p class="file-preview text-danger mt-5">Format file tidak didukung</p>`);
+                        swal('PERINGATAN', 'Format file tidak didukung.', 'error');
+                        previewBox.append(`<p class="file-preview text-danger" style="margin-top: 100px;">Format file tidak didukung</p>`);
                     }
 
                     label.text("Change File"); // Ubah label setelah file dipilih
