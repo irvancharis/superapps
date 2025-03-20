@@ -428,13 +428,15 @@
                         // Menambahkan kelas warna sesuai pilihan
                         if ($('#approval0').is(':checked')) {
                             $('#label-approval0').addClass('bg-warning text-white');
-                            $('#id_technician').prop('disabled', true);
+                            $('#id_technician').prop('disabled', true).next('small').remove();
+                            $('#id_technician').val('');
                         } else if ($('#approval1').is(':checked')) {
                             $('#label-approval1').addClass('bg-success text-white');
                             $('#id_technician').prop('disabled', false);
+                            $('#id_technician').after('<small class="form-text text-danger font-14 font-italic font-bold">Silahkan Pilih Teknisi</small>');
                         } else if ($('#approval2').is(':checked')) {
                             $('#label-approval2').addClass('bg-danger text-white');
-                            $('#id_technician').prop('disabled', true);
+                            $('#id_technician').prop('disabled', true).next('small').remove();
                             $('#id_technician').val('');
                         }
                     });
