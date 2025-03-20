@@ -99,24 +99,7 @@
                                                     Pilih Teknisi!
                                                 </div>
                                             </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label class="form-label">APPROVAL</label>
-                                                <div class="selectgroup selectgroup-pills">
-                                                    <label class="selectgroup-item">
-                                                        <input type="radio" name="approval_ticket" value="0" class="selectgroup-input-radio" id="approval0" <?= ($approval_ticket == 0) ? 'checked' : ''; ?>>
-                                                        <span class="selectgroup-button approval <?= $approval_ticket == 0 ? 'bg-warning text-white' : ''; ?>" id="label-approval0"><i class="fas fa-spinner"></i> DALAM ANTRIAN</span>
-                                                    </label>
-                                                    <label class="selectgroup-item">
-                                                        <input type="radio" name="approval_ticket" value="1" class="selectgroup-input-radio" id="approval1" <?= ($approval_ticket == 1) ? 'checked' : ''; ?>>
-                                                        <span class="selectgroup-button approval <?= $approval_ticket == 1 ? ' bg-success text-white' : ''; ?>" id="label-approval1"><i class="fas fa-check"></i> DISETUJUI</span>
-                                                    </label>
-                                                    <label class="selectgroup-item">
-                                                        <input type="radio" name="approval_ticket" value="2" class="selectgroup-input-radio" id="approval2" <?= ($approval_ticket == 2) ? 'checked' : ''; ?>>
-                                                        <span class="selectgroup-button approval <?= $approval_ticket == 2 ? ' bg-danger text-white' : ''; ?>" id="label-approval2"><i class="fas fa-times"></i> DITOLAK</span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                            <div class="form-group col-12 col-md-6 col-lg-6" style="display: none;">
                                                 <label class="form-label">STATUS</label>
                                                 <div class="selectgroup selectgroup-pills">
                                                     <label class="selectgroup-item">
@@ -143,6 +126,23 @@
                                                     <input type="hidden" name="prosentase" id="prosentase">
                                                     <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $status_ticket; ?>" aria-valuemin="0"
                                                         aria-valuemax="100" id="progress-bar" data-status="<?php echo $status_ticket; ?>"><?php echo $status_ticket; ?>%</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label class="form-label">APPROVAL <span style="font-style: italic; color: gray;font-size: 14px;font-weight: bold;color: red;">(Approve Di sini)</span></label>
+                                                <div class="selectgroup selectgroup-pills">
+                                                    <label class="selectgroup-item">
+                                                        <input type="radio" name="approval_ticket" value="0" class="selectgroup-input-radio" id="approval0" <?= ($approval_ticket == 0) ? 'checked' : ''; ?>>
+                                                        <span class="selectgroup-button approval <?= $approval_ticket == 0 ? 'bg-warning text-white' : ''; ?>" id="label-approval0"><i class="fas fa-spinner"></i> DALAM ANTRIAN</span>
+                                                    </label>
+                                                    <label class="selectgroup-item">
+                                                        <input type="radio" name="approval_ticket" value="1" class="selectgroup-input-radio" id="approval1" <?= ($approval_ticket == 1) ? 'checked' : ''; ?>>
+                                                        <span class="selectgroup-button approval <?= $approval_ticket == 1 ? ' bg-success text-white' : ''; ?>" id="label-approval1"><i class="fas fa-check"></i> DISETUJUI</span>
+                                                    </label>
+                                                    <label class="selectgroup-item">
+                                                        <input type="radio" name="approval_ticket" value="2" class="selectgroup-input-radio" id="approval2" <?= ($approval_ticket == 2) ? 'checked' : ''; ?>>
+                                                        <span class="selectgroup-button approval <?= $approval_ticket == 2 ? ' bg-danger text-white' : ''; ?>" id="label-approval2"><i class="fas fa-times"></i> DITOLAK</span>
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
