@@ -169,14 +169,14 @@ $(document).ready(function() {
     $('#AREA_PENEMPATAN').on('change', function() {
         let area = $(this).val();
         $.ajax({
-            url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_ruangan_by_area",
+            url: "<?php echo base_url(); ?>" + "maping_ruangan/get_maping_ruangan_by_area/" + $(this).val(),
             type: "POST",
             data: {
                 AREA_PENEMPATAN: area
             },
             success: function(response) {
                 var ruangan = JSON.parse(response);
-                var data_ruangan = ruangan.data;
+                var data_ruangan = ruangan;
                 var $ruanganPenempatan = $('#RUANGAN_PENEMPATAN');
 
                 $ruanganPenempatan.empty().append(

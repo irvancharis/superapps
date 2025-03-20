@@ -1,5 +1,5 @@
 <?php
-class MAPING_ruangan extends CI_Controller
+class Maping_ruangan extends CI_Controller
 {
     public $data = array();
 
@@ -92,6 +92,12 @@ class MAPING_ruangan extends CI_Controller
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('maping_ruangan_detail', $data);
+    }
+
+    public function get_maping_ruangan_by_area($KODE_AREA)
+    {
+        $result = $this->M_MAPING_RUANGAN->get_maping_ruangan_by_area($KODE_AREA);
+        echo json_encode($result);
     }
 
 
