@@ -213,10 +213,6 @@ $(document).ready(function() {
 
     let formData = JSON.parse(localStorage.getItem('FormPemindahan'));
 
-    if (formData && formData.AREA_AWAL === '') {
-        get_ruangan_by_area();
-    }
-
     loadFormData();
 
 

@@ -25,7 +25,7 @@ class M_TRANSAKSI_PEMINDAHAN extends CI_Model
         $this->db->where('STATUS_PEMINDAHAN !=', 'SELESAI');
         $this->db->where('STATUS_PEMINDAHAN !=', 'DITOLAK KABAG');
         $this->db->where('STATUS_PEMINDAHAN !=', 'DITOLAK GM');
-        $this->db->where('STATUS_PEMINDAHAN !=', 'DITOLAK HEAD');
+        $this->db->where('STATUS_PEMINDAHAN !=', 'DITOLAK HEAD');        
         $query = $this->db->count_all_results('VIEW_TRANSAKSI_PEMINDAHAN');
         return $query;
     }
@@ -36,6 +36,9 @@ class M_TRANSAKSI_PEMINDAHAN extends CI_Model
         $this->db->where('STATUS_PEMINDAHAN !=' ,'DITOLAK KABAG');
         $this->db->where('STATUS_PEMINDAHAN !=' ,'DITOLAK GM');
         $this->db->where('STATUS_PEMINDAHAN !=' ,'DITOLAK HEAD');
+        if ($this->session->userdata("ROLE") !== 'GM' && $this->session->userdata("ROLE") !== 'HEAD') {
+            $this->db->where('DEPARTEMEN_AWAL =' ,$this->session->userdata("ID_DEPARTEMEN"));
+        }
         $this->db->order_by('TANGGAL_PENGAJUAN', 'DESC');   
         $query = $this->db->get('VIEW_TRANSAKSI_PEMINDAHAN');
         return $query->result_object();
