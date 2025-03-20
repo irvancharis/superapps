@@ -12,7 +12,7 @@
                                         <div class="row">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>KARYAWAN</label>
-                                                <select required name="ID_KARYAWAN" id="ID_KARYAWAN"
+                                                <select required disabled readonly name="ID_KARYAWAN" id="ID_KARYAWAN"
                                                     class="form-control">
                                                     <option value="" class="text-center" selected disabled>-- Pilih
                                                         Karyawan --</option>

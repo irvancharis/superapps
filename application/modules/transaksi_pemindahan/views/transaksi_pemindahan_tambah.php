@@ -180,8 +180,6 @@
                                             </div>
                                         </div>
 
-
-
                                         <div class="form-group col-12 col-md-12 col-lg-12">
                                             <label>KETERANGAN</label>
                                             <textarea name="KETERANGAN_PEMINDAHAN"
