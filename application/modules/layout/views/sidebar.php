@@ -10,9 +10,9 @@ if ($this->session->userdata('NAMA_ROLE') == 'IT') {
         $jumlah_ticket = 0;
     }
 } elseif ($this->session->userdata('NAMA_ROLE') == 'IT TEKNISI') {
-    $jumlah_ticket = $CI->M_TICKET->count_ticket_by_technician($this->session->userdata('NAMA_ROLE'), 0)->JUMLAH_TICKET;
+    $jumlah_ticket = $CI->M_TICKET->count_ticket_by_technician($this->session->userdata('ID_KARYAWAN'), 0)->JUMLAH_TICKET;
     if ($jumlah_ticket > 0) {
-        $jumlah_ticket = $CI->M_TICKET->count_ticket_by_technician($this->session->userdata('NAMA_ROLE'), 0)->JUMLAH_TICKET;
+        $jumlah_ticket = $CI->M_TICKET->count_ticket_by_technician($this->session->userdata('ID_KARYAWAN'), 0)->JUMLAH_TICKET;
     } else {
         $jumlah_ticket = 0;
     }

@@ -93,17 +93,25 @@
                                                                 echo "<span class='badge badge-primary' style='font-size: small;'>SEDANG DIKERJAKAN</span><br>";
                                                             } elseif ($ticket->STATUS_TICKET == 50) {
                                                                 echo "<span class='badge badge-danger' style='font-size: small;'>MENUNGGU VALIDASI</span><br>";
-                                                            } else {
+                                                            } elseif ($ticket->STATUS_TICKET == 100) {
                                                                 echo "<span class='badge badge-success' style='font-size: small;'>SELESAI</span><br>";
+                                                            } else {
+                                                                echo "<span class='badge badge-danger' style='font-size: small;'>DITOLAK</span><br>";
                                                             }
                                                             ?>
                                                         </address>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <address><strong>Progress (%):</strong></address>
-                                                        <div class="progress">
-                                                            <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $ticket->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $ticket->IDTICKET; ?>" data-status="<?php echo $ticket->STATUS_TICKET; ?>"><?php echo $ticket->STATUS_TICKET; ?>%</div>
-                                                        </div>
+                                                        <?php if ($ticket->STATUS_TICKET != 200) : ?>
+                                                            <div class="progress">
+                                                                <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $ticket->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $ticket->IDTICKET; ?>" data-status="<?php echo $ticket->STATUS_TICKET; ?>"><?php echo $ticket->STATUS_TICKET; ?>%</div>
+                                                            </div>
+                                                        <?php else : ?>
+                                                            <div class="progress">
+                                                                <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $ticket->IDTICKET; ?>" data-status="0">0%</div>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -202,6 +210,13 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- Watermark -->
+                <?php if ($ticket->STATUS_TICKET == 200) : ?>
+                    <div class="watermark-ditolak"></div>
+                <?php elseif ($ticket->STATUS_TICKET == 100) : ?>
+                    <div class="watermark-selesai"></div>
+                <?php endif; ?>
             </div>
 
 

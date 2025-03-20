@@ -105,6 +105,12 @@ class M_TICKET extends CI_Model
         return $this->db->update($this->table, $data);
     }
 
+    public function update_konfirmasi_selesai($id_ticket, $data)
+    {
+        $this->db->where('IDTICKET', $id_ticket);
+        return $this->db->update($this->table, $data);
+    }
+
     public function hapus($id_ticket)
     {
         $this->db->where('IDTICKET', $id_ticket);

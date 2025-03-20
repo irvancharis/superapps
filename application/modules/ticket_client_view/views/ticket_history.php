@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <!-- MODIFIKASI SEPTIAN SUPAYA SUPPORT ZROK (URL TUNNEL) -->
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
     <title>SAGROUP</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/app.min.css'); ?>">
@@ -33,12 +33,40 @@
             letter-spacing: 1px;
             font-style: italic;
         }
+
+        .confirmation-button-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            /* Pastikan tombol berada di atas elemen lain */
+        }
+
+        .btn-confirm {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 25px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-confirm:hover {
+            background-color: #0056b3;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+        }
     </style>
 </head>
 
 <body>
     <div class="loader"></div>
     <div id="app">
+        <!-- Tombol Konfirmasi -->
+        <?php if ($status_ticket != '0' && $status_ticket != '100') : ?>
+            <div class="confirmation-button-container">
+                <button class="btn btn-success btn-confirm" data-id="<?php echo $id_ticket; ?>">Konfirmasi Selesai</button>
+            </div>
+        <?php endif; ?>
+
         <div class="main-wrapper main-wrapper-1">
             <!-- Main Content -->
             <div class="main-content pt-5">
@@ -136,6 +164,9 @@
     <script src="<?php echo base_url('assets/js/aos.js'); ?>"></script>
     <!-- Toastr -->
     <script src="<?php echo base_url('assets/bundles/izitoast/js/iziToast.min.js'); ?>"></script>
+    <!-- Sweetalert -->
+    <script src="<?php echo base_url('assets/bundles/sweetalert/sweetalert.min.js'); ?>"></script>
+    <script src="<?php echo base_url('assets/js/page/sweetalert.js'); ?>"></script>
     <script>
         $(document).ready(function() {
             // Fungsi untuk memuat ulang data
@@ -148,6 +179,10 @@
                     success: function(response) {
                         // Kosongkan konten timeline sebelum memuat ulang
                         $('.section-body').empty(); // Hapus semua konten di dalam .section-body
+
+                        // Cek data terbaru
+                        let latestData = response[0]; // Ambil data terbaru (indeks 0)
+                        let isTicketCompleted = latestData.STATUS_PROGRESS == 100; // Cek apakah status ticket adalah 100
 
                         // Kelompokkan data berdasarkan tanggal
                         let groupedData = {};
@@ -247,6 +282,73 @@
                 title: 'INFO',
                 message: 'Halaman ini akan refresh otomatis setiap 15 detik untuk memperbarui update pengerjaan ticket.',
                 position: 'topCenter'
+            });
+
+            // Event listener untuk tombol konfirmasi
+            $(document).on('click', '.btn-confirm', function() {
+                let id_ticket = $(this).data('id'); // Ambil ID ticket dari atribut data-id
+
+                // Tampilkan SweetAlert
+                swal({
+                    title: 'KONFIRMASI',
+                    text: 'Yakin Konfirmasi Selesai?',
+                    icon: 'warning',
+                    buttons: {
+                        cancel: {
+                            text: 'Tidak',
+                            value: false,
+                            visible: true,
+                            closeModal: true
+                        },
+                        confirm: {
+                            text: 'Ya',
+                            value: true,
+                            visible: true,
+                            closeModal: true
+                        }
+                    },
+                    dangerMode: true
+                }).then((confirm) => {
+                    if (confirm) {
+                        // Jika pengguna menekan "Ya", lakukan AJAX request untuk update ticket
+                        $.ajax({
+                            url: '<?php echo site_url("ticket_client_view/updateKonfirmasiSelesai/"); ?>' + id_ticket, // Sesuaikan dengan URL endpoint Anda
+                            method: 'POST',
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.success) {
+                                    // Tampilkan pesan sukses
+                                    swal({
+                                        title: 'SUKSES!',
+                                        text: response.message,
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then(() => {
+                                        // Refresh halaman atau lakukan sesuatu setelah update
+                                        location.reload(); // Contoh: refresh halaman
+                                    });
+                                } else {
+                                    // Tampilkan pesan error
+                                    swal({
+                                        title: 'GAGAL!',
+                                        text: response.message,
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                // Tampilkan pesan error jika AJAX request gagal
+                                swal({
+                                    title: 'ERROR!',
+                                    text: 'Terjadi kesalahan saat mengupdate ticket.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        });
+                    }
+                });
             });
         });
     </script>
