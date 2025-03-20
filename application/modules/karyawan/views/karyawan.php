@@ -46,7 +46,7 @@
                                                         <td><?php echo $d->NAMA_AREA; ?></td>                                                       
                                                         <td><?php echo $d->NAMA_DEPARTEMEN; ?></td>    
                                                         <td><?php echo $d->NAMA_JABATAN; ?></td> 
-                                                        <td><?php if($d->STATUS == '1'){echo '<span class="badge badge-success">AKTIF</span>';}else{echo '<span class="badge badge-error">NON AKTIF</span>';}?></td>   
+                                                        <td><?php if($d->STATUS == '1'){echo '<span class="badge badge-success">AKTIF</span>';}else{echo '<span class="badge badge-danger">NON AKTIF</span>';}?></td>   
                                                         <td>
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>

@@ -10,6 +10,7 @@ class Maping_area extends CI_Controller
         $this->load->model('M_MAPING_AREA');
         $this->load->helper('url_helper');
         $this->load->model('role/M_ROLE');
+        $this->load->library('Uuid');
     }
 
     public function index($page = 'maping_area')
@@ -35,9 +36,6 @@ class Maping_area extends CI_Controller
         // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'MAPING_AREA','TAMBAH');
         // if (!$CEK_ROLE) { redirect('non_akses'); }
 
-        // Ambil data dari POST
-        $get_last_area = $this->M_MAPING_AREA->get_latest_data();
-        $id_area = $get_last_area[0]->KODE_AREA + 1;
         $nama_area = $this->input->post('nama_area');
         $keterangan = $this->input->post('keterangan');
 
@@ -49,7 +47,7 @@ class Maping_area extends CI_Controller
 
         // Proses simpan data
         $data = [
-            'KODE_AREA' => $id_area,
+            'KODE_AREA' => $this->uuid->v4(),
             'NAMA_AREA' => $nama_area,
             'KETERANGAN_AREA' => $keterangan,
         ];

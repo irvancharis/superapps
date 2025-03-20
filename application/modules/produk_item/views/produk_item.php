@@ -15,35 +15,19 @@
                                         <table class="table table-striped" id="table-2">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center pt-3">
-                                                        <div class="custom-checkbox custom-checkbox-table custom-control">
-                                                            <input required type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
-                                                                class="custom-control-input" id="checkbox-all">
-                                                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                                                        </div>
-                                                    </th>
-                                                    <th>#</th>
-                                                    <th>KODE PRODUK</th>
-                                                    <th>NAMA PRODUK</th>
-                                                    <th>KATEGORI</th>
-                                                    <th>FOTO ITEM</th>
-                                                    <th>Action</th>
+                                                    <th class="text-center col-2">KODE PRODUK</th>
+                                                    <th class="text-center col-3">NAMA PRODUK</th>
+                                                    <th class="text-center col-2">KATEGORI</th>
+                                                    <th class="text-center col-2">FOTO ITEM</th>
+                                                    <th class="text-center col-1">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php foreach ($M_PRODUK_ITEM as $index => $d) : ?>
                                                     <tr>
-                                                        <td class="text-center pt-2">
-                                                            <div class="custom-checkbox custom-control">
-                                                                <input required type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
-                                                                    id="checkbox-1">
-                                                                <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td><?php echo $index + 1; ?></td>
                                                         <td><?php echo $d->KODE_ITEM; ?></td>
                                                         <td><?php echo $d->NAMA_ITEM; ?></td>
-                                                        <td><?php echo $d->NAMA_PRODUK_KATEGORI; ?></td>
+                                                        <td class="text-center"><?php echo $d->NAMA_PRODUK_KATEGORI; ?></td>
                                                         <td class="text-center">
                                                             <div class="gallery d-flex justify-content-center">
                                                                 <a class="gallery-item w-25"
@@ -56,7 +40,7 @@
                                                                 </a>
                                                             </div>
                                                         </td>
-                                                        <td>
+                                                        <td class="text-center">
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                 <div class="dropdown-menu">

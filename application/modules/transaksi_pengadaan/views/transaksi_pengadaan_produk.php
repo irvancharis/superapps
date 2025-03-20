@@ -155,6 +155,7 @@
                 foto: $(this).data("foto")
             };
 
+
             // Cek apakah item sudah ada
             var exists = selectedItems.some(i => i.id === item.id);
             if (!exists) {
@@ -165,6 +166,7 @@
                     message: 'Berhasil menambahkan item ke daftar.',
                     position: 'topRight'
                 });
+                this.style.display = "none";
                 // Kirim event ke parent window untuk update tabel
                 window.parent.postMessage({
                     action: 'updateTable'
@@ -176,6 +178,8 @@
                     position: 'topRight'
                 });
             }
+
+            $('#table-produk_filter input').focus();
         });
     });
     </script>

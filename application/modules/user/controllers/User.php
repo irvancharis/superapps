@@ -92,6 +92,13 @@ class User extends CI_Controller
     public function update($KODE_ITEM)
     {
         $inputan = $this->input->post(null, TRUE);
+        if (empty($inputan['PASSWORD'])) {
+            unset($inputan['PASSWORD']);
+        }else{
+            $password = $inputan['PASSWORD'];
+            $inputan['PASSWORD'] = password_hash($password, PASSWORD_DEFAULT);
+        }
+
         $result = $this->M_USER->update($KODE_ITEM, $inputan);
 
         if ($result) {

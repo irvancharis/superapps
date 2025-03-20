@@ -9,6 +9,7 @@ class Maping_lokasi extends CI_Controller
         $this->load->model('M_MAPING_LOKASI');
         $this->load->helper('url_helper');
         $this->load->model('role/M_ROLE');
+        $this->load->library('Uuid');
     }
 
     public function index($page = 'maping_lokasi')
@@ -108,20 +109,12 @@ class Maping_lokasi extends CI_Controller
         // if (!$CEK_ROLE) { redirect('non_akses'); }
 
 
-        $KODE_LOKASI = $this->input->post('KODE_LOKASI');
         $NAMA_LOKASI = $this->input->post('NAMA_LOKASI');
-        $KODE_LOKASI = $this->input->post('KODE_LOKASI');
         $KETERANGAN_KATEGORI = $this->input->post('KETERANGAN_KATEGORI');
 
         // Validasi 
-        if (empty($KODE_LOKASI)) {
-            $errors[] = 'KODE LOKASI tidak boleh kosong.';
-        }
         if (empty($NAMA_LOKASI)) {
             $errors[] = 'NAMA LOKASI tidak boleh kosong.';
-        }
-        if (empty($KODE_LOKASI)) {
-            $errors[] = 'KODE LOKASI tidak boleh kosong.';
         }
         if (empty($KETERANGAN_KATEGORI)) {
             $errors[] = 'KETERANGAN KATEGORI tidak boleh kosong.';
@@ -129,6 +122,7 @@ class Maping_lokasi extends CI_Controller
 
 
         $inputan = $this->input->post(null, TRUE);
+        $inputan['KODE_LOKASI'] = $this->uuid->v4();
 		$result = $this->M_MAPING_LOKASI->insert($inputan);
 
         if ($result) {

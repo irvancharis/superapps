@@ -15,30 +15,14 @@
                                         <table class="table table-striped" id="table-2">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center pt-3">
-                                                        <div class="custom-checkbox custom-checkbox-table custom-control">
-                                                            <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
-                                                                class="custom-control-input" id="checkbox-all">
-                                                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                                                        </div>
-                                                    </th>
-                                                    <th>#</th>
-                                                    <th>KODE KATEGORI</th>
+                                                    <th class="text-center col-3">KODE KATEGORI</th>
                                                     <th>NAMA KATEGORI</th>
-                                                    <th>Action</th>
+                                                    <th class="text-center col-1">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php foreach ($M_PRODUK_KATEGORI as $index => $d) : ?>
                                                     <tr>
-                                                        <td class="text-center pt-2">
-                                                            <div class="custom-checkbox custom-control">
-                                                                <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
-                                                                    id="checkbox-1">
-                                                                <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td><?php echo $index + 1; ?></td>
                                                         <td><?php echo $d->KODE_PRODUK_KATEGORI; ?></td>
                                                         <td><?php echo $d->NAMA_PRODUK_KATEGORI; ?></td>
                                                         <td>

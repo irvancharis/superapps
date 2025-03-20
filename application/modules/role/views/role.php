@@ -16,19 +16,17 @@
                                         <table class="table table-striped" id="table-2">
                                             <thead>
                                                 <tr>
-                                                    <th>KODE ROLE</th>
                                                     <th>NAMA ROLE</th>
                                                     <th>KETERANGAN</th>
-                                                    <th>Action</th>
+                                                    <th class="text-center col-1">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php foreach ($M_ROLE as $index => $d) : ?>
                                                 <tr>
-                                                    <td><?php echo $d->KODE_ROLE; ?></td>
                                                     <td><?php echo $d->NAMA_ROLE; ?></td>
                                                     <td><?php echo $d->KETERANGAN; ?></td>
-                                                    <td>
+                                                    <td class="text-center">
                                                         <div class="dropdown">
                                                             <a href="#" data-toggle="dropdown"
                                                                 class="btn btn-primary dropdown-toggle">Detail</a>

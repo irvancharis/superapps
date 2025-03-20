@@ -47,7 +47,7 @@
                                                 <option value="" class="text-center" selected disabled>-- Pilih Lokasi
                                                     --</option>
                                                 <?php foreach ($get_lokasi as $row) : ?>
-                                                <option value="<?= $row->KODE_LOKASI; ?>"><?= $row->NAMA_RUANGAN; ?>
+                                                <option value="<?= $row->KODE_LOKASI; ?>"><?= $row->NAMA_LOKASI; ?>
                                                 </option>
                                                 <?php endforeach; ?>
                                             </select>
@@ -169,18 +169,22 @@ $(document).ready(function() {
     $('#AREA_PENEMPATAN').on('change', function() {
         let area = $(this).val();
         $.ajax({
-            url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_ruangan_by_area",
+            url: "<?php echo base_url(); ?>" + "maping_ruangan/get_maping_ruangan_by_area/" + $(this).val(),
             type: "POST",
             data: {
                 AREA_PENEMPATAN: area
             },
             success: function(response) {
                 var ruangan = JSON.parse(response);
-                var data_ruangan = ruangan.data;
+                var data_ruangan = ruangan;
                 var $ruanganPenempatan = $('#RUANGAN_PENEMPATAN');
+                var $lokasiPenempatan = $('#LOKASI_PENEMPATAN');
 
                 $ruanganPenempatan.empty().append(
                     '<option value="" class="text-center" selected disabled>-- Pilih Ruangan --</option>'
+                );
+                $lokasiPenempatan.empty().append(
+                    '<option value="" class="text-center" selected disabled>-- Pilih Lokasi --</option>'
                 );
 
                 $.each(data_ruangan, function(index, lokasi) {

@@ -34,6 +34,14 @@
                                                     Silahkan masukkan kategori!
                                                 </div>
                                             </div>
+
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>password</label>
+                                                <label class="form-control" readonly><?= $get_user->PASSWORD; ?></label>
+                                                <div class="invalid-feedback">
+                                                    Silahkan masukkan kategori!
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card-footer text-right">

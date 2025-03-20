@@ -143,7 +143,7 @@ class Produk_stok extends CI_Controller
     }
 
 
-    public function input_histori($kode_stok,$kode_aset,$page = 'produk_stok')
+    public function input_histori($kode_stok,$kode_aset,$page = 'produk')
     {
         $this->load->library( 'session' );
         $SESSION_ROLE = $this->session->userdata( 'ROLE' );

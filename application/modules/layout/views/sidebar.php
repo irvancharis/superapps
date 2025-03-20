@@ -45,7 +45,7 @@ if ($this->session->userdata('NAMA_ROLE') == 'IT') {
                     </li>
                 </ul>
             </li>
-            <li class="dropdown <?php (isset($page) && $page == 'produk_item') || (isset($page) && $page == 'produk_kategori') ? print 'active' : ''; ?>">
+            <li class="dropdown <?php (isset($page) && $page == 'produk_item') || (isset($page) && $page == 'produk_kategori') || (isset($page) && $page == 'produk_stok') ? print 'active' : ''; ?>">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i
                         data-feather="box"></i><span>Produk</span></a>
                 <ul class="dropdown-menu">

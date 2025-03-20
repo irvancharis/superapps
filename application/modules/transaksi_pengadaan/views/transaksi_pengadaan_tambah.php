@@ -125,7 +125,9 @@ $(document).ready(function() {
     $('#table-data-produk').dataTable({
         paging: false,
         searching: false,
-        info: false
+        info: false,
+        sorting: false,
+        ordering: false
     });
 
     loadSelectedItems();
@@ -319,6 +321,8 @@ $(document).ready(function() {
                 $ruanganPenempatan.empty().append(
                     '<option value="" class="text-center" selected disabled>-- Pilih Ruangan --</option>'
                 );
+
+                alert(data_ruangan);
 
                 $.each(data_ruangan, function(index, lokasi) {
                     $ruanganPenempatan.append($('<option>', {

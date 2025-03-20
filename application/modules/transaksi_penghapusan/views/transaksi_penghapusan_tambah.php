@@ -85,8 +85,7 @@
                                         <div class="table-responsive">
                                             <div class="card-header-action text-right">
 
-                                                <a id="btnshowproduk" href="#" class="btn btn-primary"><i
-                                                        class="fas fa-search"></i></a>
+                                                <a id="btnshowproduk" href="#" class="btn btn-primary"><i class="fas fa-search"></i></a>
 
                                             </div>
                                             <table class="table table-striped" id="dataprodukitem">

@@ -23,13 +23,6 @@
                                                 </div>
                                             </div>
                                             <div class="form-group col-12 col-md-12 col-lg-12">
-                                                <label>KODE RUANGAN</label>
-                                                <input required type="text" name="KODE_RUANGAN" id="KODE_RUANGAN" class="form-control">
-                                                <div class="invalid-feedback">
-                                                Masukkan kode ruangan?
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>NAMA RUANGAN</label>
                                                 <input required type="text" class="form-control" id="NAMA_RUANGAN" name="NAMA_RUANGAN">
                                                 <div class="invalid-feedback">

@@ -15,20 +15,20 @@
                                         <table class="table table-striped" id="table-2">
                                             <thead>
                                                 <tr>
-                                                    <th>UUID_USER</th>
+                                                    <th class="text-center col-3">UUID_USER</th>
                                                     <th>NAMA</th>
-                                                    <th>JABATAN</th>
-                                                    <th>ROLE</th>
-                                                    <th>Action</th>
+                                                    <th class="text-center col-2">JABATAN</th>
+                                                    <th class="text-center col-1">ROLE</th>
+                                                    <th class="text-center col-1">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php foreach ($M_USER as $index => $d) : ?>
                                                     <tr>
-                                                        <td><?php echo $d->UUID_USER; ?></td>
+                                                        <td class="text-center"><?php echo $d->UUID_USER; ?></td>
                                                         <td><?php echo $d->NAMA_KARYAWAN; ?></td>
-                                                        <td><?php echo $d->NAMA_JABATAN; ?></td>
-                                                        <td><?php echo $d->NAMA_ROLE; ?></td>
+                                                        <td class="text-center"><?php echo $d->NAMA_JABATAN; ?></td>
+                                                        <td class="text-center"><?php echo $d->NAMA_ROLE; ?></td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
