@@ -11,6 +11,7 @@ class Departement extends CI_Controller
         $this->load->model( 'M_DEPARTEMENT' );
         $this->load->helper( 'url_helper' );
         $this->load->model('role/M_ROLE');
+        $this->load->library('Uuid');
 
         if ( !$this->session->userdata( 'isLoggedIn' ) ) {
             redirect('login');
@@ -43,8 +44,7 @@ class Departement extends CI_Controller
         if (!$CEK_ROLE) { redirect('non_akses'); }
 
         // Ambil data dari POST
-        $get_last_departement = $this->M_DEPARTEMENT->get_latest_data();
-        $id_departement = $get_last_departement[ 0 ]->KODE_DEPARTEMEN + 1;
+        $id_departement = $this->uuid->v4();
         $nama_departement = $this->input->post( 'nama_departement' );
         $keterangan = $this->input->post( 'keterangan' );
 

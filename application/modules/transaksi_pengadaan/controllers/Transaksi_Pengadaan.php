@@ -160,7 +160,7 @@ class Transaksi_pengadaan extends CI_Controller
             redirect('login');
         }
 
-        $KODE_AREA = $this->input->post('AREA_PENEMPATAN');
+        $KODE_AREA = $this->session->userdata('ID_AREA');
 
         $result = $this->M_TRANSAKSI_PENGADAAN->get_ruangan_by_area($KODE_AREA);
         if ($result) {
@@ -432,7 +432,8 @@ class Transaksi_pengadaan extends CI_Controller
         $data['get_karyawan'] = $this->M_TRANSAKSI_PENGADAAN->get_karyawan();
         $data['get_area'] = $this->M_MAPING_AREA->get_area();
         $data['get_departemen'] = $this->M_DEPARTEMENT->get_departemen();
-        $data['get_ruangan'] = $this->M_MAPING_RUANGAN->get_maping_ruangan();
+        $kode_area = $this->session->userdata('ID_AREA');
+        $data['get_ruangan'] = $this->M_MAPING_RUANGAN->get_maping_ruangan_by_area($kode_area);
         $data['get_lokasi'] = $this->M_MAPING_LOKASI->get_maping_lokasi();
         $data['get_jabatan'] = $this->M_TRANSAKSI_PENGADAAN->get_jabatan();
         $this->load->view('layout/navbar') .
@@ -1034,6 +1035,7 @@ Sejahtera Abadi Group'
             'KODE_USER_PENERIMA_KIRIMAN' => $this->session->userdata('ID_KARYAWAN'),
             'TANGGAL_PENERIMAAN_KIRIMAN' => date('Y-m-d'),
             'STATUS_PENGADAAN' => 'MENUNGGU PENYERAHAN',
+
         ];
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
@@ -1052,7 +1054,7 @@ Sejahtera Abadi Group'
                 'JUMLAH_PENGADAAN' => $item['jumlah'],
                 'KEPERLUAN' => $item['keperluan']
             ];
-            $this->M_TRANSAKSI_PENGADAAN->insert_detail($data_detail);
+            $this->M_TRANSAKSI_PENGADAAN->insert_detail($data_detail);            
         }
 
         echo json_encode(['success' => true]);

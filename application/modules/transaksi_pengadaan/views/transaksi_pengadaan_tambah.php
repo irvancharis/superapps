@@ -322,6 +322,8 @@ $(document).ready(function() {
                     '<option value="" class="text-center" selected disabled>-- Pilih Ruangan --</option>'
                 );
 
+                alert(data_ruangan);
+
                 $.each(data_ruangan, function(index, lokasi) {
                     $ruanganPenempatan.append($('<option>', {
                         value: lokasi.KODE_RUANGAN,

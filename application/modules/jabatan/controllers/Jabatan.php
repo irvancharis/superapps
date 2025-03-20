@@ -9,6 +9,7 @@ class Jabatan extends CI_Controller
         $this->load->model('M_JABATAN');
         $this->load->model('role/M_ROLE');
         $this->load->helper('url_helper');
+        $this->load->library('Uuid');
     }
 
     public function index($page = 'jabatan')
@@ -35,9 +36,7 @@ class Jabatan extends CI_Controller
         $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'JABATAN','TAMBAH JABATAN');
         if (!$CEK_ROLE) { redirect('non_akses'); }
 
-        // Ambil data dari POST
-        $get_last_jabatan = $this->M_JABATAN->get_latest_data();
-        $id_jabatan = isset($get_last_jabatan[0]->KODE_JABATAN) ? $get_last_jabatan[0]->KODE_JABATAN + 1 : 1;
+        $id_jabatan = $this->uuid->v4();
         $nama_jabatan = $this->input->post('nama_jabatan');
         $keterangan = $this->input->post('keterangan');
 

@@ -41,6 +41,13 @@
                                                     Silahkan masukkan kategori!
                                                 </div>
                                             </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <label>NEW PASSWORD</label>
+                                                <input type="text" name="PASSWORD" id="PASSWORD" class="form-control" >
+                                                <div class="invalid-feedback">
+                                                    Silahkan masukkan PASWORD!
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card-footer text-right">

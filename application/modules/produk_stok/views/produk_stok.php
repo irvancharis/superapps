@@ -47,7 +47,7 @@
                                                 <option value="" class="text-center" selected disabled>-- Pilih Lokasi
                                                     --</option>
                                                 <?php foreach ($get_lokasi as $row) : ?>
-                                                <option value="<?= $row->KODE_LOKASI; ?>"><?= $row->NAMA_RUANGAN; ?>
+                                                <option value="<?= $row->KODE_LOKASI; ?>"><?= $row->NAMA_LOKASI; ?>
                                                 </option>
                                                 <?php endforeach; ?>
                                             </select>

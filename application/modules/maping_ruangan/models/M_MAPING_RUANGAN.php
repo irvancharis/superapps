@@ -32,7 +32,7 @@ class M_MAPING_RUANGAN extends CI_Model
 		$this->db->from('VIEW_RUANGAN');
 		$this->db->where('KODE_AREA', $KODE);
 		$query = $this->db->get();
-        return $query;
+        return $query->result_object();
     }
 
     public function get_area()
