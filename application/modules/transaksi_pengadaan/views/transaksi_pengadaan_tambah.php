@@ -118,10 +118,6 @@ $(document).ready(function() {
 
     let formData = JSON.parse(localStorage.getItem('formPengadaan')) || {};
 
-    if (formData && formData.AREA_PENEMPATAN !== '') {
-        get_ruangan_by_area();
-    }
-
     $('#table-data-produk').dataTable({
         paging: false,
         searching: false,
