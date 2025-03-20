@@ -21,8 +21,8 @@ if ($this->session->userdata('NAMA_ROLE') == 'IT') {
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html"> <img alt="image" src="<?php echo base_url('assets/img/Logo SA.png'); ?>" class="header-logo" /> <span
-                    class="logo-name">SAGROUP</span>
+            <a href="index.html"> <img alt="image" src="<?php echo base_url('assets/img/Logo SA X7.png'); ?>" class="header-logo" />
+                <span class="logo-name"><span class="SA">SA</span> <span class="GROUP">GROUP</span></span>
             </a>
         </div>
         <ul class="sidebar-menu">

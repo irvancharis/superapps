@@ -33,6 +33,24 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.css'); ?>"> -->
 
     <style>
+        .SA {
+            font-size: 1.2em;
+            color: #e91b31;
+            font-weight: bold;
+            font-family: 'Barlow Semi Condensed', sans-serif;
+            letter-spacing: 0;
+            font-style: italic;
+        }
+
+        .GROUP {
+            font-size: 1.2em;
+            color: #202d45;
+            font-weight: bold;
+            font-family: 'Barlow Semi Condensed', sans-serif;
+            letter-spacing: 0;
+            font-style: italic;
+        }
+
         /* Gaya dasar untuk watermark */
         .watermark-ditolak,
         .watermark-selesai {
