@@ -14,6 +14,7 @@ class Ticket_client_view extends CI_Controller
         $this->load->model('karyawan/M_KARYAWAN');
         $this->load->model('maping_area/M_MAPING_AREA');
         $this->load->helper('url_helper');
+        $this->load->library('Uuid');
     }
 
     public function index($page = 'ticket')
@@ -43,6 +44,7 @@ class Ticket_client_view extends CI_Controller
         // get ticket by id
         $ticket['ticket_detail'] = $this->M_TICKET->get_ticket_detail_view($kode);
         $ticket['id_ticket'] = $kode;
+        $ticket['status_ticket'] = $this->M_TICKET->get_ticket($kode)->STATUS_TICKET;
         // get nama technician by id
         // $ticket['technician'] = $this->M_TECHNICIAN->get_teknisi_by_id($ticket['ticket_detail']->TECHNICIAN);
         $this->load->view('ticket_history', $ticket);
@@ -262,7 +264,7 @@ class Ticket_client_view extends CI_Controller
         $get_nama_departement = $this->M_DEPARTEMENT->get_departemen_single($id_departement);
         $nama_departemen = $get_nama_departement->NAMA_DEPARTEMEN;
         $get_IP = $this->get_lan_ip();
-        $url = "http://" . $get_IP . "/superapps/ticket";
+        $url = "http://" . $get_IP . "/superapps/login";
         $get_kabag = $this->M_KARYAWAN->get_kabag_by_departemen($id_departement);
         $KABAG = $get_kabag->TELEPON;
 
@@ -520,6 +522,38 @@ class Ticket_client_view extends CI_Controller
             echo json_encode(['success' => true]);
         } else {
             echo json_encode(['success' => false, 'error' => 'Gagal menyimpan data.']);
+        }
+    }
+
+    public function updateKonfirmasiSelesai($id_ticket)
+    {
+        $get_ticket = $this->M_TICKET->get_ticket($id_ticket);
+
+        // Lakukan proses update status ticket di sini
+        $data = [
+            'STATUS_TICKET' => 100,
+            'DATE_TICKET_DONE' => date('Y-m-d H:i:s'),
+            'PROSENTASE' => 100
+        ];
+        $result = $this->M_TICKET->update_konfirmasi_selesai($id_ticket, $data); // Misalnya, status 100 = SELESAI
+
+        $IDTICKET_DETAIL = $this->uuid->v4();
+        $data_detail = [
+            'IDTICKET_DETAIL' => $IDTICKET_DETAIL,
+            'IDTICKET' => $id_ticket,
+            'TGL_PENGERJAAN' => date('Y-m-d H:i:s'),
+            'TECHNICIAN' => $get_ticket->TECHNICIAN,
+            'OBJEK_DITANGANI' => 'Selesai',
+            'KETERANGAN' => 'Sudah Dikonfirmasi Selesai Oleh Client',
+            'FOTO' => null,
+            'STATUS_PROGRESS' => 100
+        ];
+        $this->M_TICKET->insert_detail($data_detail);
+
+        if ($result) {
+            echo json_encode(['success' => true, 'message' => 'Ticket berhasil dikonfirmasi selesai.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Gagal mengonfirmasi ticket.']);
         }
     }
 

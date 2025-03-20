@@ -7,6 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <!-- MODIFIKASI SEPTIAN SUPAYA SUPPORT ZROK (URL TUNNEL) -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>SAGROUP</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/app.min.css'); ?>">
@@ -30,6 +32,65 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/bundles/jquery-selectric/selectric.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.css'); ?>"> -->
 
+    <style>
+        /* Gaya dasar untuk watermark */
+        .watermark-ditolak,
+        .watermark-selesai {
+            position: fixed;
+            /* Tetap di posisi yang sama saat di-scroll */
+            top: 50%;
+            /* Posisi vertikal di tengah */
+            left: 50%;
+            /* Posisi horizontal di tengah */
+            transform: translate(-50%, -50%);
+            /* Pusatkan elemen */
+            width: 50%;
+            /* Lebar penuh */
+            height: 50%;
+            /* Tinggi penuh */
+            background-size: contain;
+            /* Gambar menyesuaikan container */
+            background-repeat: no-repeat;
+            /* Gambar tidak diulang */
+            background-position: center;
+            /* Gambar di tengah */
+            z-index: 1000;
+            /* Pastikan watermark di atas elemen lain */
+            pointer-events: none;
+            /* Mencegah interaksi dengan watermark */
+            opacity: 0.3;
+            /* Transparansi gambar */
+        }
+
+        /* Gambar untuk status DITOLAK */
+        .watermark-ditolak {
+            background-image: url('<?php echo base_url('assets/img/wm-ditolak.png'); ?>');
+        }
+
+        /* Gambar untuk status SELESAI */
+        .watermark-selesai {
+            background-image: url('<?php echo base_url('assets/img/wm-selesai.png'); ?>');
+        }
+
+        /* Responsif untuk perangkat kecil */
+        @media (max-width: 768px) {
+
+            .watermark-ditolak,
+            .watermark-selesai {
+                background-size: 80%;
+                /* Gambar lebih kecil di perangkat kecil */
+            }
+        }
+
+        @media (max-width: 576px) {
+
+            .watermark-ditolak,
+            .watermark-selesai {
+                background-size: 60%;
+                /* Gambar lebih kecil di perangkat sangat kecil */
+            }
+        }
+    </style>
 </head>
 
 <body>

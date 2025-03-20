@@ -35,6 +35,14 @@ class Ticket extends CI_Controller
             $data['JML_DITOLAK'] = $this->M_TICKET->count_ticket_by_approval(2);
             $data['M_TICKET_ALL'] = $this->M_TICKET->get_news();
             $data['JML_ALL'] = $this->M_TICKET->count_ticket_by_approval();
+            $data['M_TICKET_SEDANG_DIKERJAKAN'] = $this->M_TICKET->get_ticket_by_status(25);
+            $data['JML_SEDANG_DIKERJAKAN'] = $this->M_TICKET->count_ticket_by_status(25);
+            $data['M_TICKET_MENUNGGU_VALIDASI'] = $this->M_TICKET->get_ticket_by_status(50);
+            $data['JML_MENUNGGU_VALIDASI'] = $this->M_TICKET->count_ticket_by_status(50);
+            $data['M_TICKET_SELESAI'] = $this->M_TICKET->get_ticket_by_status(100);
+            $data['JML_SELESAI'] = $this->M_TICKET->count_ticket_by_status(100);
+
+
             $this->session->set_userdata('page', $page);
             $data['page'] = $this->session->userdata('page');
             $data['get_departement'] = $this->M_TICKET->get_departement();
@@ -396,8 +404,8 @@ class Ticket extends CI_Controller
             // $url_teknisi = "http://" . urlencode($get_IP) . "/superapps/ticket/ticket_technician/"  . urlencode($id_ticket);
 
             // Ticket History Versi ZROK
-            $url_client = "https://wkgprx814ige.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
-            $url_teknisi = "https://wkgprx814ige.share.zrok.io/superapps/ticket/ticket_technician/"  . urlencode($id_ticket);
+            $url_client = "https://lezyctjsalqe.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
+            $url_teknisi = "https://lezyctjsalqe.share.zrok.io/superapps/ticket/ticket_technician/"  . urlencode($id_ticket);
 
             // Membuat format pesan sesuai permintaan
             // // Kirim Pesan ke WA (Teknisi)

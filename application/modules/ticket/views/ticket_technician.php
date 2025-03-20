@@ -7,6 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <!-- MODIFIKASI SEPTIAN SUPAYA SUPPORT ZROK (URL TUNNEL) -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
     <title>SAGROUP TICKETING</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/app.min.css'); ?>">
@@ -562,10 +564,10 @@
 
             // Fungsi untuk mengatur kelas warna ketika radio button dipilih
             $(document).on("change", "input[name='status_ticket']", function() {
-                let hintMessage = $(".hint-message"); // Target elemen hint
+                // let hintMessage = $(".hint-message"); // Target elemen hint
 
-                // Reset pesan hint
-                hintMessage.html("").hide();
+                // // Reset pesan hint
+                // hintMessage.html("").hide();
 
                 $('.status').removeClass('bg-warning bg-info bg-danger bg-success text-white');
 
@@ -573,10 +575,10 @@
                     $('#label-status0').addClass('bg-warning text-white');
                 } else if ($('#status1').is(':checked')) {
                     $('#label-status1').addClass('bg-info text-white');
-                    hintMessage.html("*). Ketik <span class='text-danger'>VALIDASI</span> untuk mengubah status ke <span class='badge badge-danger' style='font-size: small;'>MENUNGGU VALIDASI</span>.").show();
+                    // hintMessage.html("*). Ketik <span class='text-danger'>VALIDASI</span> untuk mengubah status ke <span class='badge badge-danger' style='font-size: small;'>MENUNGGU VALIDASI</span>.").show();
                 } else if ($('#status2').is(':checked')) {
                     $('#label-status2').addClass('bg-danger text-white');
-                    hintMessage.html("*). Ketik <span class='text-success'>SELESAI</span> untuk mengubah status ke <span class='badge badge-success' style='font-size: small;'>SELESAI</span>.").show();
+                    // hintMessage.html("*). Ketik <span class='text-success'>SELESAI</span> untuk mengubah status ke <span class='badge badge-success' style='font-size: small;'>SELESAI</span>.").show();
                 } else if ($('#status3').is(':checked')) {
                     $('#label-status3').addClass('bg-success text-white');
                 }

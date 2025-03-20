@@ -7,6 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <!-- MODIFIKASI SEPTIAN SUPAYA SUPPORT ZROK (URL TUNNEL) -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
     <title>SAGROUP TICKETING</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/app.min.css'); ?>">
@@ -15,6 +17,9 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/components.css'); ?>">
     <!-- Custom style CSS -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/custom.css'); ?>">
+    <!-- Fancybox -->
+    <script src="<?php echo base_url('assets/js/fancybox.umd.js'); ?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/fancybox.css'); ?>" />
     <!-- Preview Image -->
     <link rel="stylesheet" href="<?php echo base_url('assets/bundles/summernote/summernote-bs4.css'); ?>">
     <!-- <link rel="stylesheet" href="<?php echo base_url('assets/bundles/jquery-selectric/selectric.css'); ?>"> -->
@@ -223,6 +228,9 @@
                                     <form class="needs-validation" novalidate="" id="formTicketClient" enctype="multipart/form-data">
                                         <div class="card-header">
                                             <h4 class="judul-ticketing">TICKETING</h4>
+                                            <button type="button" id="guideButton" class="btn btn-outline-danger btn-sm">
+                                                <i class="fas fa-video"></i> Panduan Ticket
+                                            </button>
                                             <div class="card-header-action">
                                                 <div class="form-group row" style="display: none;">
                                                     <label class="col-sm-5 col-form-label">Tgl Request</label>
@@ -415,6 +423,16 @@
     <div class="main-chat-box">
         <span class="traingle-shadow"></span>
         <ul class="chatBox">
+            <!-- <li class="menu-header">Tutorial</li>
+            <li>
+                <a href="javascript:void(0);" id="guideButton">
+                    <span class="icon-circle">
+                        <img src="<?= base_url('assets/img/video-tutorials.png'); ?>" alt="whatsapp">
+                    </span>
+                    <abbr title="">PANDUAN TICKET</abbr>
+                </a>
+            </li> -->
+            <li class="menu-header">Call Center</li>
             <li>
                 <a href="https://wa.me/6287777176997" target="_blank">
                     <span class="icon-circle">
@@ -441,6 +459,34 @@
             </li>
         </ul>
     </div>
+
+    <!-- Modal Pilihan Desktop/Mobile -->
+    <div id="videoGuideModal" style="display: none; text-align: center;">
+        <h3>Pilih Versi Panduan</h3>
+        <button onclick="playDesktopVideo()" style="padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; margin: 10px;">
+            🖥️ Desktop
+        </button>
+        <button onclick="playMobileVideo()" style="padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; margin: 10px;">
+            📱 Mobile
+        </button>
+    </div>
+
+    <!-- Video Desktop -->
+    <div id="desktopVideo" style="display: none;">
+        <video controls>
+            <source src="https://drive.google.com/file/d/1qKZvi4XYC57DxUXT4pgXTJS4AfzWzl4u/view?usp=sharing" type="video/mp4">
+            Browser Anda tidak mendukung tag video.
+        </video>
+    </div>
+
+    <!-- Video Mobile -->
+    <div id="mobileVideo" style="display: none;">
+        <video controls>
+            <source src="path/to/mobile-video.mp4" type="video/mp4">
+            Browser Anda tidak mendukung tag video.
+        </video>
+    </div>
+
     <!-- General JS Scripts -->
     <script src="<?php echo base_url('assets/js/app.min.js') ?>"></script>
     <!-- Preview Gambar -->
@@ -721,7 +767,32 @@
                 $(this).val($(this).val().toUpperCase());
             });
 
+            // Inisialisasi Fancybox untuk tombol panduan
+            document.getElementById('guideButton').addEventListener('click', function() {
+                Fancybox.show([{
+                    src: "#videoGuideModal",
+                    type: "inline",
+                }, ]);
+            });
         });
+
+        // Fungsi untuk memutar video Desktop
+        function playDesktopVideo() {
+            Fancybox.close(); // Tutup modal pilihan
+            Fancybox.show([{
+                src: "#desktopVideo",
+                type: "inline",
+            }, ]);
+        }
+
+        // Fungsi untuk memutar video Mobile
+        function playMobileVideo() {
+            Fancybox.close(); // Tutup modal pilihan
+            Fancybox.show([{
+                src: "#mobileVideo",
+                type: "inline",
+            }, ]);
+        }
     </script>
 </body>
 
