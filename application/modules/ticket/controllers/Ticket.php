@@ -34,7 +34,7 @@ class Ticket extends CI_Controller
             $data['M_TICKET_DITOLAK'] = $this->M_TICKET->get_ticket_by_approval(2);
             $data['JML_DITOLAK'] = $this->M_TICKET->count_ticket_by_approval(2);
             $data['M_TICKET_ALL'] = $this->M_TICKET->get_news();
-            $data['JML_ALL'] = $this->M_TICKET->count_ticket_by_approval();
+            $data['JML_ALL'] = $this->M_TICKET->count_ticket_all();
             $data['M_TICKET_SEDANG_DIKERJAKAN'] = $this->M_TICKET->get_ticket_by_status(25);
             $data['JML_SEDANG_DIKERJAKAN'] = $this->M_TICKET->count_ticket_by_status(25);
             $data['M_TICKET_MENUNGGU_VALIDASI'] = $this->M_TICKET->get_ticket_by_status(50);
@@ -350,6 +350,7 @@ class Ticket extends CI_Controller
         $id_technician = $this->input->post('id_technician');
         $status_ticket = $this->input->post('status_ticket');
         $approval_ticket = $this->input->post('approval_ticket');
+        $alasan_ditolak = $this->input->post('alasan_ditolak');
         $prosentase = $this->input->post('prosentase');
         $date_ticket_done = $this->input->post('date_ticket_done');
 
@@ -476,10 +477,23 @@ class Ticket extends CI_Controller
                 'TECHNICIAN' => $id_technician,
                 'STATUS_TICKET' => 200,
                 'APPROVAL_TICKET' => $approval_ticket,
-                'PROSENTASE' => 0
+                'PROSENTASE' => 0,
+                'ALASAN_DITOLAK' => $alasan_ditolak
             ];
 
             $result = $this->M_TICKET->update($id_ticket, $data);
+
+            // // Kirim Pesan ke WA (Client)
+            $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
+            $url_client = "https://lezyctjsalqe.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
+            $ms_wa_client =
+                "=====*TICKET PROGRESS*===== \n\n" .
+                "=====_INFORMASI TICKET_===== \n\n" .
+                "📌 MOHON MAAF TICKET ANDA KAMI TOLAK  \n" .
+                "👤 ALASAN: " . strtoupper($alasan_ditolak) . " \n\n" .
+
+                "🚨 JIKA ADA KENDALA MOHON KONFIRMASI LEBIH LANJUT";
+            $this->WHATSAPP->send_wa($telp_client, $ms_wa_client);
 
             if ($result) {
                 echo json_encode(['success' => true]);

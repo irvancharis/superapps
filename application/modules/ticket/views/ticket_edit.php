@@ -149,6 +149,13 @@
                                                     </label>
                                                 </div>
                                             </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6 alasan-ditolak d-none">
+                                                <label>ALASAN DITOLAK</label>
+                                                <input type="text" name="alasan_ditolak" id="alasan_ditolak" class="form-control" value="<?= isset($get_ticket->ALASAN_DITOLAK) ? $get_ticket->ALASAN_DITOLAK : ''; ?>">
+                                                <div class="invalid-feedback">
+                                                    Di Request Oleh?
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card-footer text-right">
@@ -433,15 +440,24 @@
                         if ($('#approval0').is(':checked')) {
                             $('#label-approval0').addClass('bg-warning text-white');
                             $('#id_technician').prop('disabled', true).next('small').remove();
+                            $('#alasan_ditolak').next('small').remove();
                             $('#id_technician').val('');
+                            $('.alasan-ditolak').addClass('d-none');
                         } else if ($('#approval1').is(':checked')) {
                             $('#label-approval1').addClass('bg-success text-white');
                             $('#id_technician').prop('disabled', false);
                             $('#id_technician').after('<small class="form-text text-danger font-14 font-italic font-bold">Silahkan Pilih Teknisi</small>');
+                            $('#alasan_ditolak').next('small').remove();
+                            $('.alasan-ditolak').addClass('d-none');
                         } else if ($('#approval2').is(':checked')) {
                             $('#label-approval2').addClass('bg-danger text-white');
                             $('#id_technician').prop('disabled', true).next('small').remove();
                             $('#id_technician').val('');
+                            $('.alasan-ditolak').removeClass('d-none');
+                            $('#alasan_ditolak').after('<small class="form-text text-danger font-14 font-italic font-bold">Silahkan Berikan Alasan</small>');
+                            if ($('#alasan_ditolak').val() != '') {
+                                $('#alasan_ditolak').prop('disabled', true);
+                            }
                         }
                     });
 
@@ -532,6 +548,11 @@
                 $(window).on('beforeunload', function() {
                     localStorage.clear(); // Hapus semua data localStorage
                     sessionStorage.clear(); // Hapus semua data sessionStorage
+                });
+
+                // **Format input teks menjadi huruf kapital**
+                $(document).on('input', '#alasan_ditolak', function() {
+                    $(this).val($(this).val().toUpperCase());
                 });
             </script>
             </body>

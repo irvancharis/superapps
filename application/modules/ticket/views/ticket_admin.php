@@ -113,6 +113,14 @@
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>
+                                                    <?php if ($ticket->APPROVAL_TICKET == 2) : ?>
+                                                        <div class="col-md-3 text-md-right">
+                                                            <address>
+                                                                <strong>Alasan Ditolak:</strong><br>
+                                                                <?php echo strtoupper($ticket->ALASAN_DITOLAK); ?><br>
+                                                            </address>
+                                                        </div>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
                                             <?php if ($ticket->FOTO !== null) : ?>
