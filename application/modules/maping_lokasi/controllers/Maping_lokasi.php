@@ -142,8 +142,7 @@ class Maping_lokasi extends CI_Controller
 
         $KODE_LOKASI = $this->input->post('KODE_LOKASI');
         $NAMA_LOKASI = $this->input->post('NAMA_LOKASI');
-        $KODE_LOKASI = $this->input->post('KODE_LOKASI');
-        $KETERANGAN_KATEGORI = $this->input->post('KETERANGAN_KATEGORI');
+        $KETERANGAN_LOKASI = $this->input->post('KETERANGAN_LOKASI');
 
         // Validasi 
         if (empty($KODE_LOKASI)) {
@@ -152,11 +151,8 @@ class Maping_lokasi extends CI_Controller
         if (empty($NAMA_LOKASI)) {
             $errors[] = 'NAMA LOKASI tidak boleh kosong.';
         }
-        if (empty($KODE_LOKASI)) {
-            $errors[] = 'KODE LOKASI tidak boleh kosong.';
-        }
-        if (empty($KETERANGAN_KATEGORI)) {
-            $errors[] = 'KETERANGAN KATEGORI tidak boleh kosong.';
+        if (empty($KETERANGAN_LOKASI)) {
+            $errors[] = 'KETERANGAN LOKASI tidak boleh kosong.';
         }
 
         $inputan = $this->input->post(null, TRUE);

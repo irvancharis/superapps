@@ -32,10 +32,10 @@ class M_TRANSAKSI_PEMINDAHAN extends CI_Model
 
     public function get_data()
     {
-        $this->db->where('STATUS_PEMINDAHAN !=' ,'SELESAI');
-        $this->db->where('STATUS_PEMINDAHAN !=' ,'DITOLAK KABAG');
-        $this->db->where('STATUS_PEMINDAHAN !=' ,'DITOLAK GM');
-        $this->db->where('STATUS_PEMINDAHAN !=' ,'DITOLAK HEAD');
+        // $this->db->where('STATUS_PEMINDAHAN !=' ,'SELESAI');
+        // $this->db->where('STATUS_PEMINDAHAN !=' ,'DITOLAK KABAG');
+        // $this->db->where('STATUS_PEMINDAHAN !=' ,'DITOLAK GM');
+        // $this->db->where('STATUS_PEMINDAHAN !=' ,'DITOLAK HEAD');
         if ($this->session->userdata("ROLE") !== 'GM' && $this->session->userdata("ROLE") !== 'HEAD') {
             $this->db->where('DEPARTEMEN_AWAL =' ,$this->session->userdata("ID_DEPARTEMEN"));
         }

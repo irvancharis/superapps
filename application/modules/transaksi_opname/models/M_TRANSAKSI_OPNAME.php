@@ -32,10 +32,10 @@ class M_TRANSAKSI_OPNAME extends CI_Model
 
     public function get_data()
     {
-        $this->db->where('STATUS_OPNAME !=', 'SELESAI');
-        $this->db->where('STATUS_OPNAME !=', 'DITOLAK KABAG');
-        $this->db->where('STATUS_OPNAME !=', 'DITOLAK GM');
-        $this->db->where('STATUS_OPNAME !=', 'DITOLAK HEAD');
+        // $this->db->where('STATUS_OPNAME !=', 'SELESAI');
+        // $this->db->where('STATUS_OPNAME !=', 'DITOLAK KABAG');
+        // $this->db->where('STATUS_OPNAME !=', 'DITOLAK GM');
+        // $this->db->where('STATUS_OPNAME !=', 'DITOLAK HEAD');
         if ($this->session->userdata("ROLE") !== 'GM' && $this->session->userdata("ROLE") !== 'HEAD') {
             $this->db->where('KODE_DEPARTEMEN =' ,$this->session->userdata("ID_DEPARTEMEN"));
         }

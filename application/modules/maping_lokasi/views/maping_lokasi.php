@@ -7,7 +7,8 @@
                                 <div class="card-header">
                                     <h4>DATA LOKASI</h4>
                                     <div class="card-header-action">
-                                        <a href="<?php echo base_url('maping_lokasi/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
+                                        <a href="<?php echo base_url('maping_lokasi/tambah') ?>"
+                                            class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -24,24 +25,24 @@
                                             </thead>
                                             <tbody>
                                                 <?php foreach ($M_MAPING_LOKASI as $index => $d) : ?>
-                                                    <tr>
-                                                        <td><?php echo $d->NAMA_AREA; ?></td>
-                                                        <td><?php echo $d->NAMA_RUANGAN; ?></td>
-                                                        <td><?php echo $d->KODE_LOKASI; ?></td>
-                                                        <td><?php echo $d->NAMA_LOKASI; ?></td>
-                                                        <td>
-                                                            <div class="dropdown">
-                                                                <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
-                                                                <div class="dropdown-menu">
-                                                                    <a href="<?=site_url('maping_lokasi/detail/'.$d->KODE_LOKASI);?>" class="dropdown-kategori has-icon view-btn" ><i class="fas fa-eye"></i> View</a>
-                                                                    <a href="<?=site_url('maping_lokasi/edit/'.$d->KODE_LOKASI);?>" class="dropdown-kategori has-icon edit-btn" ><i class="far fa-edit"></i> Edit</a>
-                                                                    <div class="dropdown-divider"></div>
-                                                                    <a href="<?=site_url('maping_lokasi/hapus/'.$d->KODE_LOKASI);?>" class="dropdown-kategori has-icon text-danger hapus-btn"  onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>
-                                                                        Delete</a>
-                                                                </div>
+                                                <tr>
+                                                    <td><?php echo $d->NAMA_AREA; ?></td>
+                                                    <td><?php echo $d->NAMA_RUANGAN; ?></td>
+                                                    <td><?php echo $d->KODE_LOKASI; ?></td>
+                                                    <td><?php echo $d->NAMA_LOKASI; ?></td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <a href="#" data-toggle="dropdown"
+                                                                class="btn btn-primary dropdown-toggle">Detail</a>
+                                                            <div class="dropdown-menu">                                                            
+                                                                <a href="<?php echo site_url('maping_lokasi/detail/'.$d->KODE_LOKASI);?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a>
+                                                                <a href="<?php echo site_url('maping_lokasi/edit/'.$d->KODE_LOKASI);?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Edit</a>
+                                                                <div class="dropdown-divider"></div>
+                                                                <a href="<?php echo site_url('maping_lokasi/hapus/'.$d->KODE_LOKASI);?>" class="dropdown-item has-icon text-danger hapus-btn" ><i class="far fa-trash-alt"></i>Delete</a>
                                                             </div>
-                                                        </td>
-                                                    </tr>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
                                         </table>
@@ -62,11 +63,13 @@
                                 <h6 class="font-medium m-b-10">Select Layout</h6>
                                 <div class="selectgroup layout-color w-50">
                                     <label class="selectgroup-kategori">
-                                        <input type="radio" name="value" value="1" class="selectgroup-input-radio select-layout" checked>
+                                        <input type="radio" name="value" value="1"
+                                            class="selectgroup-input-radio select-layout" checked>
                                         <span class="selectgroup-button">Light</span>
                                     </label>
                                     <label class="selectgroup-kategori">
-                                        <input type="radio" name="value" value="2" class="selectgroup-input-radio select-layout">
+                                        <input type="radio" name="value" value="2"
+                                            class="selectgroup-input-radio select-layout">
                                         <span class="selectgroup-button">Dark</span>
                                     </label>
                                 </div>
@@ -75,12 +78,14 @@
                                 <h6 class="font-medium m-b-10">Sidebar Color</h6>
                                 <div class="selectgroup selectgroup-pills sidebar-color">
                                     <label class="selectgroup-kategori">
-                                        <input type="radio" name="icon-input" value="1" class="selectgroup-input select-sidebar">
+                                        <input type="radio" name="icon-input" value="1"
+                                            class="selectgroup-input select-sidebar">
                                         <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
                                             data-original-title="Light Sidebar"><i class="fas fa-sun"></i></span>
                                     </label>
                                     <label class="selectgroup-kategori">
-                                        <input type="radio" name="icon-input" value="2" class="selectgroup-input select-sidebar" checked>
+                                        <input type="radio" name="icon-input" value="2"
+                                            class="selectgroup-input select-sidebar" checked>
                                         <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
                                             data-original-title="Dark Sidebar"><i class="fas fa-moon"></i></span>
                                     </label>
@@ -143,7 +148,7 @@
                     </div>
                 </div>
             </div>
-            
+
             </div>
             </div>
 
@@ -162,22 +167,26 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
-                                    <input required type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician">
+                                    <input required type="text" class="form-control" placeholder="Nama Teknisi"
+                                        name="nama_technician">
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
                                         <label>Departemen</label>
                                         <select class="form-control" name="id_departement">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
+                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen
+                                                --</option>
                                             <?php foreach ($get_departement as $row) : ?>
-                                                <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
+                                            <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?>
+                                            </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6 col-12">
                                         <label>Status</label>
                                         <select class="form-control" name="status">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Status --</option>
+                                            <option value="" class="text-center" selected disabled>-- Pilih Status --
+                                            </option>
                                             <option value="0">PASIF</option>
                                             <option value="1">AKTIF</option>
                                         </select>
@@ -186,15 +195,18 @@
                                 <div class="form-group">
                                     <label>ID Karyawan</label>
                                     <select class="form-control" name="id_karyawan">
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --</option>
+                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --
+                                        </option>
                                         <?php foreach ($get_karyawan as $row) : ?>
-                                            <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> - <?= $row->NAMA_KARYAWAN; ?></option>
+                                        <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> -
+                                            <?= $row->NAMA_KARYAWAN; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Deskripsi Teknisi</label>
-                                    <textarea class="form-control" placeholder="Deskripsi" name="description_technician"></textarea>
+                                    <textarea class="form-control" placeholder="Deskripsi"
+                                        name="description_technician"></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
@@ -221,22 +233,27 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
-                                    <input required type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician" id="nama_technician_view" disabled>
+                                    <input required type="text" class="form-control" placeholder="Nama Teknisi"
+                                        name="nama_technician" id="nama_technician_view" disabled>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
                                         <label>Departemen</label>
-                                        <select class="form-control" name="id_departement" id="id_departement_view" disabled>
-                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
+                                        <select class="form-control" name="id_departement" id="id_departement_view"
+                                            disabled>
+                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen
+                                                --</option>
                                             <?php foreach ($get_departement as $row) : ?>
-                                                <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
+                                            <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?>
+                                            </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6 col-12">
                                         <label>Status</label>
                                         <select class="form-control" name="status" id="status_view" disabled>
-                                            <option value="" class="text-center" selected disabled>-- Pilih Status --</option>
+                                            <option value="" class="text-center" selected disabled>-- Pilih Status --
+                                            </option>
                                             <option value="0">PASIF</option>
                                             <option value="1">AKTIF</option>
                                         </select>
@@ -245,15 +262,18 @@
                                 <div class="form-group">
                                     <label>ID Karyawan</label>
                                     <select class="form-control" name="id_karyawan" id="id_karyawan_view" disabled>
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --</option>
+                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --
+                                        </option>
                                         <?php foreach ($get_karyawan as $row) : ?>
-                                            <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> - <?= $row->NAMA_KARYAWAN; ?></option>
+                                        <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> -
+                                            <?= $row->NAMA_KARYAWAN; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Deskripsi Teknisi</label>
-                                    <textarea class="form-control" placeholder="Deskripsi" name="description_technician" id="description_technician_view" disabled></textarea>
+                                    <textarea class="form-control" placeholder="Deskripsi" name="description_technician"
+                                        id="description_technician_view" disabled></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
@@ -279,23 +299,29 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Nama Teknisi</label>
-                                    <input type="hidden" id="id_technician_edit" class="form-control" placeholder="ID" name="id_technician_edit">
-                                    <input required type="text" class="form-control" placeholder="Nama Teknisi" name="nama_technician_edit" id="nama_technician_edit">
+                                    <input type="hidden" id="id_technician_edit" class="form-control" placeholder="ID"
+                                        name="id_technician_edit">
+                                    <input required type="text" class="form-control" placeholder="Nama Teknisi"
+                                        name="nama_technician_edit" id="nama_technician_edit">
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
                                         <label>Departemen</label>
-                                        <select class="form-control" name="id_departement_edit" id="id_departement_edit">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
+                                        <select class="form-control" name="id_departement_edit"
+                                            id="id_departement_edit">
+                                            <option value="" class="text-center" selected disabled>-- Pilih Departemen
+                                                --</option>
                                             <?php foreach ($get_departement as $row) : ?>
-                                                <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
+                                            <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?>
+                                            </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6 col-12">
                                         <label>Status</label>
                                         <select class="form-control" name="status_edit" id="status_edit">
-                                            <option value="" class="text-center" selected disabled>-- Pilih Status --</option>
+                                            <option value="" class="text-center" selected disabled>-- Pilih Status --
+                                            </option>
                                             <option value="0">PASIF</option>
                                             <option value="1">AKTIF</option>
                                         </select>
@@ -304,15 +330,18 @@
                                 <div class="form-group">
                                     <label>ID Karyawan</label>
                                     <select class="form-control" name="id_karyawan_edit" id="id_karyawan_edit">
-                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --</option>
+                                        <option value="" class="text-center" selected disabled>-- Pilih ID Karyawan --
+                                        </option>
                                         <?php foreach ($get_karyawan as $row) : ?>
-                                            <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> - <?= $row->NAMA_KARYAWAN; ?></option>
+                                        <option value="<?= $row->ID_KARYAWAN; ?>"><?= $row->ID_KARYAWAN; ?> -
+                                            <?= $row->NAMA_KARYAWAN; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Deskripsi Teknisi</label>
-                                    <textarea class="form-control" placeholder="Deskripsi" name="description_technician_edit" id="description_technician_edit"></textarea>
+                                    <textarea class="form-control" placeholder="Deskripsi"
+                                        name="description_technician_edit" id="description_technician_edit"></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer bg-whitesmoke br">
@@ -338,7 +367,8 @@
                         <form id="formHapusproduk">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <input type="hidden" id="id_technician_hapus" class="form-control" placeholder="ID" name="KODE_LOKASI">
+                                    <input type="hidden" id="id_technician_hapus" class="form-control" placeholder="ID"
+                                        name="KODE_LOKASI">
                                     <p class="text-center">Apakah anda yakin ingin menghapus data ini?</p>
                                 </div>
                             </div>
@@ -356,36 +386,37 @@
             </body>
 
             <script>
-                $(document).ready(function() {                   
+$(document).ready(function() {
 
-                    $('#formHapusproduk').on('submit', function(e) {
-                        e.preventDefault();
+    $('#formHapusproduk').on('submit', function(e) {
+        e.preventDefault();
 
-                        // Ambil data dari form
-                        let formData = $(this).serialize();
+        // Ambil data dari form
+        let formData = $(this).serialize();
 
-                        // Kirim data ke server melalui AJAX
-                        $.ajax({
-                            url: "<?php echo base_url(); ?>" + "maping_lokasi/hapus", // Endpoint untuk proses input
-                            type: 'POST',
-                            data: formData,
-                            success: function(response) {
-                                let res = JSON.parse(response);
-                                if (res.success) {
-                                    swal('Sukses', 'Hapus Data Berhasil!', 'success').then(function() {
-                                        $('#hapusModal').modal('hide');
-                                        location.reload();
-                                    });
-                                } else {
-                                    alert('Gagal menghapus data: ' + response.error);
-                                }
-                            },
-                            error: function() {
-                                alert('Gagal melakukan proses.');
-                            }
-                        });
+        // Kirim data ke server melalui AJAX
+        $.ajax({
+            url: "<?php echo base_url(); ?>" +
+            "maping_lokasi/hapus", // Endpoint untuk proses input
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                let res = JSON.parse(response);
+                if (res.success) {
+                    swal('Sukses', 'Hapus Data Berhasil!', 'success').then(function() {
+                        $('#hapusModal').modal('hide');
+                        location.reload();
                     });
-                });
+                } else {
+                    alert('Gagal menghapus data: ' + response.error);
+                }
+            },
+            error: function() {
+                alert('Gagal melakukan proses.');
+            }
+        });
+    });
+});
             </script>
 
             </html>

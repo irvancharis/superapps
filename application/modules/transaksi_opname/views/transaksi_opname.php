@@ -75,6 +75,11 @@
                                                         ?>
                                                         <span class="badge badge-danger">DITOLAK HEAD</span>
                                                         <?php
+                                                            }elseif($d->STATUS_OPNAME == 'SELESAI')
+                                                            {
+                                                        ?>
+                                                        <span class="badge badge-success">SELESAI</span>
+                                                        <?php
                                                             }
                                                         ?>
                                                     </td>
