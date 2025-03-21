@@ -649,14 +649,32 @@ class Ticket extends CI_Controller
         return null; // Jika tidak ditemukan
     }
 
-    public function cetak_progress_ticket($id_ticket)
+    public function cetak_progress_ticket($kode)
     {
+        $this->load->library('session');
+        // $SESSION_ROLE = $this->session->userdata('ROLE');
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TICKET', 'PROSES TICKET');
+        // if (!$CEK_ROLE) {
+        //     redirect('non_akses');
+        // }
+
+        $data['ticket'] = $this->M_TICKET->get_ticket($kode);
+        $data['ticket_detail'] = $this->M_TICKET->get_ticket_detail_view($kode);
+        $data['get_karyawan'] = $this->M_KARYAWAN->get_karyawan();
+        $data['get_area'] = $this->M_MAPING_AREA->get_area();
+        $data['get_ruangan'] = $this->M_MAPING_RUANGAN->get_maping_ruangan();
+        $data['get_lokasi'] = $this->M_MAPING_LOKASI->get_maping_lokasi();
+        $data['get_departemen'] = $this->M_DEPARTEMENT->get_departemen_single($data['ticket']->DEPARTEMENT);
+        $data['get_departemen_request'] = $this->M_DEPARTEMENT->get_departemen_single($data['ticket']->DEPARTEMENT_DIREQUEST);
+        $data['get_jabatan'] = $this->M_JABATAN->get_news();
+        $data['get_technician'] = $this->M_TECHNICIAN->get_teknisi_by_id($data['ticket']->TECHNICIAN);
+
         $this->load->library('pdfgenerator');
-        $data['title'] = "Data Random";
+        $data['title'] = "Laporan ticket";
         $file_pdf = $data['title'];
-        $paper = 'A4';
-        $orientation = "landscape";
-        $html = $this->load->view('ticket_laporan_progress', $data, true);
+        $paper = 'F4';
+        $orientation = "portrait";
+        $html = $this->load->view('ticket_laporan_progress_fix', $data, true);
         $this->pdfgenerator->generate($html, $file_pdf, $paper, $orientation);
     }
 }
