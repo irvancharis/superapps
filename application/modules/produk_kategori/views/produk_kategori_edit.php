@@ -10,23 +10,11 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="form-group col-12 col-md-12 col-lg-12">
-                                                <label>KODE KATEGORI</label>
-                                                <input required type="text" name="KODE_PRODUK_KATEGORI" id="KODE_PRODUK_KATEGORI" value="<?= $get_produk_kategori->KODE_PRODUK_KATEGORI; ?>" class="form-control">
-                                            </div>
+                                            <input required type="hidden" name="KODE_PRODUK_KATEGORI" id="KODE_PRODUK_KATEGORI" value="<?= $get_produk_kategori->KODE_PRODUK_KATEGORI; ?>" class="form-control">
                                             <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>NAMA KATEGORI</label>
                                                 <input required type="text" class="form-control" id="NAMA_PRODUK_KATEGORI" value="<?= $get_produk_kategori->NAMA_PRODUK_KATEGORI; ?>" name="NAMA_PRODUK_KATEGORI">
-                                            </div>
-                                            <div class="form-group col-12 col-md-12 col-lg-12">
-                                                <label>KATEGORI PRODUK</label>
-                                                <select name="KODE_PRODUK_KATEGORI" id="KODE_PRODUK_KATEGORI" class="form-control">
-                                                    <option value="<?= $get_produk_kategori->KODE_PRODUK_KATEGORI; ?>" class="text-center" selected disabled><?= $get_produk_kategori->NAMA_PRODUK_KATEGORI; ?></option>
-                                                    <?php foreach ($get_kategori_produk as $row) : ?>
-                                                        <option value="<?= $row->KODE_PRODUK_KATEGORI; ?>"><?= $row->NAMA_PRODUK_KATEGORI; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
+                                            </div>                                           
                                             
                                             <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <label>KETERANGAN PRODUK</label>
@@ -59,7 +47,7 @@
 
                         // Kirim data ke server melalui AJAX
                         $.ajax({
-                            url: "<?php echo base_url(); ?>" + "produk_kategori/update/"+ <?= $get_produk_kategori->KODE_PRODUK_KATEGORI; ?> , // Endpoint untuk proses input
+                            url: "<?php echo base_url(); ?>" + "produk_kategori/update/"+ "<?= $get_produk_kategori->KODE_PRODUK_KATEGORI; ?>" , // Endpoint untuk proses input
                             type: 'POST',
                             data: formData,
                             success: function(response) {
