@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- MODIFIKASI SEPTIAN SUPAYA SUPPORT ZROK (URL TUNNEL) -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+    <!-- MODIFIKASI SEPTIAN SUPAYA SUPPORT ZROK (URL TUNNEL) -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Login</title>
     <script src="<?php echo base_url('assets/css/login.js'); ?>"></script>
     <style>
@@ -19,14 +20,23 @@
         }
 
         @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
     </style>
 </head>
+
 <body>
-    <form class="w-full max-w-md p-6 text-white" id="loginForm" action="<?php echo base_url('login/'); ?>ceklogin" method="POST" >
+    <form class="w-full max-w-md p-6 text-white" id="loginForm" action="<?php echo base_url('login/'); ?>ceklogin" method="POST">
         <h2 class="text-4xl font-bold text-center">Login</h2>
         <div class="mt-6">
             <label class="block text-lg">Email</label>
@@ -40,4 +50,5 @@
     </form>
 
 </body>
+
 </html>

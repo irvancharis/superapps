@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <!-- MODIFIKASI SEPTIAN SUPAYA SUPPORT ZROK (URL TUNNEL) -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>SAGROUP</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/app.min.css'); ?>">
@@ -33,6 +33,24 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.css'); ?>"> -->
 
     <style>
+        .SA {
+            font-size: 1.2em;
+            color: #e91b31;
+            font-weight: bold;
+            font-family: 'Barlow Semi Condensed', sans-serif;
+            letter-spacing: 0;
+            font-style: italic;
+        }
+
+        .GROUP {
+            font-size: 1.2em;
+            color: #202d45;
+            font-weight: bold;
+            font-family: 'Barlow Semi Condensed', sans-serif;
+            letter-spacing: 0;
+            font-style: italic;
+        }
+
         /* Gaya dasar untuk watermark */
         .watermark-ditolak,
         .watermark-selesai {

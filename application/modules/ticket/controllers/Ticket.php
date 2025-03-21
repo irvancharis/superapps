@@ -34,7 +34,7 @@ class Ticket extends CI_Controller
             $data['M_TICKET_DITOLAK'] = $this->M_TICKET->get_ticket_by_approval(2);
             $data['JML_DITOLAK'] = $this->M_TICKET->count_ticket_by_approval(2);
             $data['M_TICKET_ALL'] = $this->M_TICKET->get_news();
-            $data['JML_ALL'] = $this->M_TICKET->count_ticket_by_approval();
+            $data['JML_ALL'] = $this->M_TICKET->count_ticket_all();
             $data['M_TICKET_SEDANG_DIKERJAKAN'] = $this->M_TICKET->get_ticket_by_status(25);
             $data['JML_SEDANG_DIKERJAKAN'] = $this->M_TICKET->count_ticket_by_status(25);
             $data['M_TICKET_MENUNGGU_VALIDASI'] = $this->M_TICKET->get_ticket_by_status(50);
@@ -350,6 +350,7 @@ class Ticket extends CI_Controller
         $id_technician = $this->input->post('id_technician');
         $status_ticket = $this->input->post('status_ticket');
         $approval_ticket = $this->input->post('approval_ticket');
+        $alasan_ditolak = $this->input->post('alasan_ditolak');
         $prosentase = $this->input->post('prosentase');
         $date_ticket_done = $this->input->post('date_ticket_done');
 
@@ -476,10 +477,23 @@ class Ticket extends CI_Controller
                 'TECHNICIAN' => $id_technician,
                 'STATUS_TICKET' => 200,
                 'APPROVAL_TICKET' => $approval_ticket,
-                'PROSENTASE' => 0
+                'PROSENTASE' => 0,
+                'ALASAN_DITOLAK' => $alasan_ditolak
             ];
 
             $result = $this->M_TICKET->update($id_ticket, $data);
+
+            // // Kirim Pesan ke WA (Client)
+            $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
+            $url_client = "https://lezyctjsalqe.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
+            $ms_wa_client =
+                "=====*TICKET PROGRESS*===== \n\n" .
+                "=====_INFORMASI TICKET_===== \n\n" .
+                "📌 MOHON MAAF TICKET ANDA KAMI TOLAK  \n" .
+                "👤 ALASAN: " . strtoupper($alasan_ditolak) . " \n\n" .
+
+                "🚨 JIKA ADA KENDALA MOHON KONFIRMASI LEBIH LANJUT";
+            $this->WHATSAPP->send_wa($telp_client, $ms_wa_client);
 
             if ($result) {
                 echo json_encode(['success' => true]);
@@ -633,5 +647,34 @@ class Ticket extends CI_Controller
         }
 
         return null; // Jika tidak ditemukan
+    }
+
+    public function cetak_progress_ticket($kode)
+    {
+        $this->load->library('session');
+        // $SESSION_ROLE = $this->session->userdata('ROLE');
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TICKET', 'PROSES TICKET');
+        // if (!$CEK_ROLE) {
+        //     redirect('non_akses');
+        // }
+
+        $data['ticket'] = $this->M_TICKET->get_ticket($kode);
+        $data['ticket_detail'] = $this->M_TICKET->get_ticket_detail_view($kode);
+        $data['get_karyawan'] = $this->M_KARYAWAN->get_karyawan();
+        $data['get_area'] = $this->M_MAPING_AREA->get_area();
+        $data['get_ruangan'] = $this->M_MAPING_RUANGAN->get_maping_ruangan();
+        $data['get_lokasi'] = $this->M_MAPING_LOKASI->get_maping_lokasi();
+        $data['get_departemen'] = $this->M_DEPARTEMENT->get_departemen_single($data['ticket']->DEPARTEMENT);
+        $data['get_departemen_request'] = $this->M_DEPARTEMENT->get_departemen_single($data['ticket']->DEPARTEMENT_DIREQUEST);
+        $data['get_jabatan'] = $this->M_JABATAN->get_news();
+        $data['get_technician'] = $this->M_TECHNICIAN->get_teknisi_by_id($data['ticket']->TECHNICIAN);
+
+        $this->load->library('pdfgenerator');
+        $data['title'] = "Laporan ticket";
+        $file_pdf = $data['title'];
+        $paper = 'F4';
+        $orientation = "portrait";
+        $html = $this->load->view('ticket_laporan_progress_fix', $data, true);
+        $this->pdfgenerator->generate($html, $file_pdf, $paper, $orientation);
     }
 }

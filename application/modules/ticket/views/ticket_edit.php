@@ -122,27 +122,38 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label class="form-label">PROGRESS</label>
-                                                <div class="progress">
-                                                    <input type="hidden" name="prosentase" id="prosentase">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $status_ticket; ?>" aria-valuemin="0"
-                                                        aria-valuemax="100" id="progress-bar" data-status="<?php echo $status_ticket; ?>"><?php echo $status_ticket; ?>%</div>
-                                                </div>
+                                                <?php if ($get_ticket->STATUS_TICKET != 200) : ?>
+                                                    <div class="progress">
+                                                        <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="<?php echo $get_ticket->STATUS_TICKET; ?>" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $get_ticket->IDTICKET; ?>" data-status="<?php echo $get_ticket->STATUS_TICKET; ?>"><?php echo $get_ticket->STATUS_TICKET; ?>%</div>
+                                                    </div>
+                                                <?php else : ?>
+                                                    <div class="progress">
+                                                        <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" data-id="<?php echo $get_ticket->IDTICKET; ?>" data-status="0">0%</div>
+                                                    </div>
+                                                <?php endif; ?>
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
-                                                <label class="form-label">APPROVAL <span style="font-style: italic; color: gray;font-size: 14px;font-weight: bold;color: red;">(Approve Di sini)</span></label>
+                                                <label class="form-label">APPROVAL <span class="hint-approval" style="font-style: italic; color: gray;font-size: 14px;font-weight: bold;color: red;">(Approve Di sini)</span></label>
                                                 <div class="selectgroup selectgroup-pills">
                                                     <label class="selectgroup-item">
-                                                        <input type="radio" name="approval_ticket" value="0" class="selectgroup-input-radio" id="approval0" <?= ($approval_ticket == 0) ? 'checked' : ''; ?>>
+                                                        <input type="radio" name="approval_ticket" value="0" class="selectgroup-input-radio" id="approval0" <?= ($approval_ticket == 0) ? 'checked' : ''; ?> <?php if ($get_ticket->APPROVAL_TICKET == 2 || $get_ticket->APPROVAL_TICKET == 1) echo 'disabled'; ?>>
                                                         <span class="selectgroup-button approval <?= $approval_ticket == 0 ? 'bg-warning text-white' : ''; ?>" id="label-approval0"><i class="fas fa-spinner"></i> DALAM ANTRIAN</span>
                                                     </label>
                                                     <label class="selectgroup-item">
-                                                        <input type="radio" name="approval_ticket" value="1" class="selectgroup-input-radio" id="approval1" <?= ($approval_ticket == 1) ? 'checked' : ''; ?>>
+                                                        <input type="radio" name="approval_ticket" value="1" class="selectgroup-input-radio" id="approval1" <?= ($approval_ticket == 1) ? 'checked' : ''; ?> <?php if ($get_ticket->APPROVAL_TICKET == 2 || $get_ticket->APPROVAL_TICKET == 1) echo 'disabled'; ?>>
                                                         <span class="selectgroup-button approval <?= $approval_ticket == 1 ? ' bg-success text-white' : ''; ?>" id="label-approval1"><i class="fas fa-check"></i> DISETUJUI</span>
                                                     </label>
                                                     <label class="selectgroup-item">
-                                                        <input type="radio" name="approval_ticket" value="2" class="selectgroup-input-radio" id="approval2" <?= ($approval_ticket == 2) ? 'checked' : ''; ?>>
+                                                        <input type="radio" name="approval_ticket" value="2" class="selectgroup-input-radio" id="approval2" <?= ($approval_ticket == 2) ? 'checked' : ''; ?> <?php if ($get_ticket->APPROVAL_TICKET == 2 || $get_ticket->APPROVAL_TICKET == 1) echo 'disabled'; ?>>
                                                         <span class="selectgroup-button approval <?= $approval_ticket == 2 ? ' bg-danger text-white' : ''; ?>" id="label-approval2"><i class="fas fa-times"></i> DITOLAK</span>
                                                     </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-6 col-lg-6 alasan-ditolak d-none">
+                                                <label>ALASAN DITOLAK</label>
+                                                <input type="text" name="alasan_ditolak" id="alasan_ditolak" class="form-control" value="<?= isset($get_ticket->ALASAN_DITOLAK) ? $get_ticket->ALASAN_DITOLAK : ''; ?>">
+                                                <div class="invalid-feedback">
+                                                    Di Request Oleh?
                                                 </div>
                                             </div>
                                         </div>
@@ -428,14 +439,25 @@
                         // Menambahkan kelas warna sesuai pilihan
                         if ($('#approval0').is(':checked')) {
                             $('#label-approval0').addClass('bg-warning text-white');
-                            $('#id_technician').prop('disabled', true);
+                            $('#id_technician').prop('disabled', true).next('small').remove();
+                            $('#alasan_ditolak').next('small').remove();
+                            $('#id_technician').val('');
+                            $('.alasan-ditolak').addClass('d-none');
                         } else if ($('#approval1').is(':checked')) {
                             $('#label-approval1').addClass('bg-success text-white');
                             $('#id_technician').prop('disabled', false);
+                            $('#id_technician').after('<small class="form-text text-danger font-14 font-italic font-bold">Silahkan Pilih Teknisi</small>');
+                            $('#alasan_ditolak').next('small').remove();
+                            $('.alasan-ditolak').addClass('d-none');
                         } else if ($('#approval2').is(':checked')) {
                             $('#label-approval2').addClass('bg-danger text-white');
-                            $('#id_technician').prop('disabled', true);
+                            $('#id_technician').prop('disabled', true).next('small').remove();
                             $('#id_technician').val('');
+                            $('.alasan-ditolak').removeClass('d-none');
+                            $('#alasan_ditolak').after('<small class="form-text text-danger font-14 font-italic font-bold">Silahkan Berikan Alasan</small>');
+                            if ($('#alasan_ditolak').val() != '') {
+                                $('#alasan_ditolak').prop('disabled', true);
+                            }
                         }
                     });
 
@@ -509,12 +531,28 @@
                     }
 
                     updateTypeTicket("<?php echo $id_ticket; ?>");
+
+                    // Ambil nilai approval_ticket dan Pengatuan hint small APPROVAL
+                    let approve = "<?php echo $approval_ticket; ?>";
+                    // Deteksi jika ticket disetujui atau ditolak tidak akan menampilkan tulisan hint di APPROVAL dan di bawah input teknisi
+                    if (approve == 1 || approve == 2) {
+                        // Remove element hint small
+                        $('.hint-approval').remove();
+                        $('small').remove();
+                        // Disable input teknisi
+                        $('#id_technician').prop('disabled', true);
+                    }
                 });
 
                 // Hapus semua data localStorage & sessionStorage ketika user meninggalkan halaman
                 $(window).on('beforeunload', function() {
                     localStorage.clear(); // Hapus semua data localStorage
                     sessionStorage.clear(); // Hapus semua data sessionStorage
+                });
+
+                // **Format input teks menjadi huruf kapital**
+                $(document).on('input', '#alasan_ditolak', function() {
+                    $(this).val($(this).val().toUpperCase());
                 });
             </script>
             </body>

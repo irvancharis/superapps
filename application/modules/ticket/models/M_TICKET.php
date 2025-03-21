@@ -56,6 +56,14 @@ class M_TICKET extends CI_Model
         }
     }
 
+    public function count_ticket_all()
+    {
+        $this->db->select('COUNT(IDTICKET) AS JUMLAH_TICKET');
+        $this->db->from('TICKET');
+        $query = $this->db->get();
+        return $query->row_object();
+    }
+
     public function count_ticket_by_approval_disetujui()
     {
         $this->db->select('COUNT(IDTICKET) AS JUMLAH_TICKET');
