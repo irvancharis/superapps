@@ -205,7 +205,7 @@
                                     ?>
                                     <button type="button" onclick="history.go(-1)" class="btn btn-secondary btn-icon icon-left"><i class="fas fa-arrow-left"></i> Kembali</button>
                                 </div>
-                                <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
+                                <a href="<?php echo base_url('ticket/cetak_progress_ticket/' . $ticket->IDTICKET); ?>" class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</a>
                             </div>
                         </div>
                     </div>

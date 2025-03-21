@@ -61,11 +61,11 @@
     <div class="loader"></div>
     <div id="app">
         <!-- Tombol Konfirmasi -->
-        <?php if ($status_ticket != '0' && $status_ticket != '100') : ?>
+        <!-- <?php if ($status_ticket != '0' && $status_ticket != '100') : ?>
             <div class="confirmation-button-container">
                 <button class="btn btn-success btn-confirm" data-id="<?php echo $id_ticket; ?>">Konfirmasi Selesai</button>
             </div>
-        <?php endif; ?>
+        <?php endif; ?> -->
 
         <div class="main-wrapper main-wrapper-1">
             <!-- Main Content -->
@@ -203,6 +203,14 @@
                             let activities = groupedData[date];
                             let sectionTitle = `<h2 class="section-title">${date}</h2>`;
                             let activityHtml = '<div class="activities">'; // Mulai kontainer activities
+
+                            // Tambahkan Tombol Konfirmasi pada sectionTitle
+                            if (latestData.STATUS_PROGRESS != '0' && latestData.STATUS_PROGRESS != '100') {
+                                $('.confirmation-button-container').remove(); // Hapus jika sudah ada sebelumnya
+                                sectionTitle += `<div class="confirmation-button-container"><button class="btn btn-success btn-confirm" data-id="<?php echo $id_ticket; ?>">Konfirmasi Selesai</button></div>`;
+                            } else {
+                                $('.confirmation-button-container').remove(); // Hapus jika sudah ada sebelumnya
+                            }
 
                             activities.forEach(function(d, index) {
                                 let iconClass = '';

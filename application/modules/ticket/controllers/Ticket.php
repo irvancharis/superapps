@@ -634,4 +634,15 @@ class Ticket extends CI_Controller
 
         return null; // Jika tidak ditemukan
     }
+
+    public function cetak_progress_ticket($id_ticket)
+    {
+        $this->load->library('pdfgenerator');
+        $data['title'] = "Data Random";
+        $file_pdf = $data['title'];
+        $paper = 'A4';
+        $orientation = "landscape";
+        $html = $this->load->view('ticket_laporan_progress', $data, true);
+        $this->pdfgenerator->generate($html, $file_pdf, $paper, $orientation);
+    }
 }

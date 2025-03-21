@@ -144,7 +144,11 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = FALSE;
+
+// Settingan BAWAAN
+// $config['composer_autoload'] = FALSE;
+// Settingan MODIFIKASI SEPTIAN untuk DOMPDF
+$config['composer_autoload'] = 'vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
