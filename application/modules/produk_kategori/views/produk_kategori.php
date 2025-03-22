@@ -7,7 +7,8 @@
                                 <div class="card-header">
                                     <h4>DATA PRODUK KATEGORI</h4>
                                     <div class="card-header-action">
-                                        <a href="<?php echo base_url('produk_kategori/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
+                                        <a href="<?php echo base_url('produk_kategori/tambah') ?>"
+                                            class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -22,22 +23,29 @@
                                             </thead>
                                             <tbody>
                                                 <?php foreach ($M_PRODUK_KATEGORI as $index => $d) : ?>
-                                                    <tr>
-                                                        <td><?php echo $d->KODE_PRODUK_KATEGORI; ?></td>
-                                                        <td><?php echo $d->NAMA_PRODUK_KATEGORI; ?></td>
-                                                        <td>
-                                                            <div class="dropdown">
-                                                                <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
-                                                                <div class="dropdown-menu">
-                                                                    <a href="#" class="dropdown-kategori has-icon view-btn"><i class="fas fa-eye"></i> View</a>
-                                                                    <a href="#" class="dropdown-kategori has-icon edit-btn"><i class="far fa-edit"></i> Edit</a>
-                                                                    <div class="dropdown-divider"></div>
-                                                                    <a href="#" class="dropdown-kategori has-icon text-danger hapus-btn" onclick="return confirm('Yakin akan menghapus data?')"><i class="far fa-trash-alt"></i>
-                                                                        Delete</a>
-                                                                </div>
+                                                <tr>
+                                                    <td><?php echo $d->KODE_PRODUK_KATEGORI; ?></td>
+                                                    <td><?php echo $d->NAMA_PRODUK_KATEGORI; ?></td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <a href="#" data-toggle="dropdown"
+                                                                class="btn btn-primary dropdown-toggle">Detail</a>
+                                                            <div class="dropdown-menu">
+                                                                <a href="<?php echo site_url('produk_kategori/detail/'.$d->KODE_PRODUK_KATEGORI);?>"
+                                                                    class="dropdown-item has-icon view-btn"><i
+                                                                        class="fas fa-eye"></i> View</a>
+                                                                <a href="<?php echo site_url('produk_kategori/edit/'.$d->KODE_PRODUK_KATEGORI);?>"
+                                                                    class="dropdown-item has-icon edit-btn"><i
+                                                                        class="far fa-edit"></i> Edit</a>
+                                                                <div class="dropdown-divider"></div>
+                                                                <a href="<?php echo site_url('produk_kategori/hapus/'.$d->KODE_PRODUK_KATEGORI);?>"
+                                                                    class="dropdown-item has-icon text-danger hapus-btn"><i
+                                                                        class="far fa-trash-alt"></i>Delete</a>
                                                             </div>
-                                                        </td>
-                                                    </tr>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
                                         </table>
@@ -46,13 +54,13 @@
                             </div>
                         </div>
                     </div>
-                </section>                
+                </section>
 
-            <?php $this->load->view('layout/footer'); ?>
+                <?php $this->load->view('layout/footer'); ?>
 
-            </body>
+                </body>
 
-            <script>
+                <script>
                 $(document).ready(function() {
 
                     $('#formHapusproduk').on('submit', function(e) {
@@ -63,16 +71,18 @@
 
                         // Kirim data ke server melalui AJAX
                         $.ajax({
-                            url: "<?php echo base_url(); ?>" + "produk_kategori/hapus", // Endpoint untuk proses input
+                            url: "<?php echo base_url(); ?>" +
+                            "produk_kategori/hapus", // Endpoint untuk proses input
                             type: 'POST',
                             data: formData,
                             success: function(response) {
                                 let res = JSON.parse(response);
                                 if (res.success) {
-                                    swal('Sukses', 'Hapus Data Berhasil!', 'success').then(function() {
-                                        $('#hapusModal').modal('hide');
-                                        location.reload();
-                                    });
+                                    swal('Sukses', 'Hapus Data Berhasil!', 'success').then(
+                                        function() {
+                                            $('#hapusModal').modal('hide');
+                                            location.reload();
+                                        });
                                 } else {
                                     alert('Gagal menghapus data: ' + response.error);
                                 }
@@ -83,6 +93,6 @@
                         });
                     });
                 });
-            </script>
+                </script>
 
-            </html>
+                </html>

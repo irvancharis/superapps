@@ -32,10 +32,10 @@ class M_TRANSAKSI_PENGHAPUSAN extends CI_Model
 
     public function get_data()
     {
-        $this->db->where('STATUS_PENGHAPUSAN !=', 'SELESAI');
-        $this->db->where('STATUS_PENGHAPUSAN !=', 'DITOLAK KABAG');
-        $this->db->where('STATUS_PENGHAPUSAN !=', 'DITOLAK GM');
-        $this->db->where('STATUS_PENGHAPUSAN !=', 'DITOLAK HEAD');
+        // $this->db->where('STATUS_PENGHAPUSAN !=', 'SELESAI');
+        // $this->db->where('STATUS_PENGHAPUSAN !=', 'DITOLAK KABAG');
+        // $this->db->where('STATUS_PENGHAPUSAN !=', 'DITOLAK GM');
+        // $this->db->where('STATUS_PENGHAPUSAN !=', 'DITOLAK HEAD');
         if ($this->session->userdata("ROLE") !== 'GM' && $this->session->userdata("ROLE") !== 'HEAD') {
             $this->db->where('KODE_DEPARTEMEN =' ,$this->session->userdata("ID_DEPARTEMEN"));
         }

@@ -1102,7 +1102,7 @@ Sejahtera Abadi Group'
             $this->M_TRANSAKSI_PENGADAAN->insert_detail($data_detail);
 
             // Update stok barang jika barang tidak ada di tabel Produk_Stok maka Insert jika ada maka Update
-            $cek_produk_stok = $this->M_PRODUK_STOK->get_produk_stok_single($item['id'])->row();
+            $cek_produk_stok = $this->M_PRODUK_STOK->get_produk_stok_single($item['id'], $form['AREA_PENEMPATAN'], $form['DEPARTEMEN_PENGAJUAN'], $form['RUANGAN_PENEMPATAN'], $form['LOKASI_PENEMPATAN'])->row();
             if ($cek_produk_stok) {
                 $data_update = [
                     'JUMLAH_STOK' => $cek_produk_stok->JUMLAH_STOK + $item['jumlah']
