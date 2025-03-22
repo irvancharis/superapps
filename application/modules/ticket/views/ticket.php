@@ -45,7 +45,7 @@
                                         <div class="tab-content" id="myTabContent2">
                                             <div class="tab-pane fade" id="all3" role="tabpanel" aria-labelledby="all-tab3">
                                                 <div class="table-responsive">
-                                                    <table class="table table-striped" id="table-ticket-all">
+                                                    <table class="table table-striped table-ticket" id="table-ticket-all">
                                                         <thead>
                                                             <tr>
                                                                 <th class="text-center pt-3">
@@ -154,7 +154,7 @@
                                             </div>
                                             <div class="tab-pane fade show active" id="home3" role="tabpanel" aria-labelledby="home-tab3">
                                                 <div class="table-responsive">
-                                                    <table class="table table-striped" id="table-ticket-dalam-antrian">
+                                                    <table class="table table-striped table-ticket" id="table-ticket-dalam-antrian">
                                                         <thead>
                                                             <tr>
                                                                 <th class="text-center pt-3">
@@ -259,7 +259,7 @@
                                             </div>
                                             <div class="tab-pane fade" id="profile3" role="tabpanel" aria-labelledby="profile-tab3">
                                                 <div class="table-responsive">
-                                                    <table class="table table-striped" id="table-ticket-disetujui">
+                                                    <table class="table table-striped table-ticket" id="table-ticket-disetujui">
                                                         <thead>
                                                             <tr>
                                                                 <th class="text-center pt-3">
@@ -364,7 +364,7 @@
                                             </div>
                                             <div class="tab-pane fade" id="contact3" role="tabpanel" aria-labelledby="contact-tab3">
                                                 <div class="table-responsive">
-                                                    <table class="table table-striped" id="table-ticket-ditolak">
+                                                    <table class="table table-striped table-ticket" id="table-ticket-ditolak">
                                                         <thead>
                                                             <tr>
                                                                 <th class="text-center pt-3">
@@ -473,7 +473,7 @@
                                             </div>
                                             <div class="tab-pane fade" id="sedang_dikerjakan3" role="tabpanel" aria-labelledby="sedang-dikerjakan-tab3">
                                                 <div class="table-responsive">
-                                                    <table class="table table-striped" id="table-ticket-sedang-dikerjakan">
+                                                    <table class="table table-striped table-ticket" id="table-ticket-sedang-dikerjakan">
                                                         <thead>
                                                             <tr>
                                                                 <th class="text-center pt-3">
@@ -578,7 +578,7 @@
                                             </div>
                                             <div class="tab-pane fade" id="menunggu_validasi3" role="tabpanel" aria-labelledby="menunggu-validasi-tab3">
                                                 <div class="table-responsive">
-                                                    <table class="table table-striped" id="table-ticket-menunggu-validasi">
+                                                    <table class="table table-striped table-ticket" id="table-ticket-menunggu-validasi">
                                                         <thead>
                                                             <tr>
                                                                 <th class="text-center pt-3">
@@ -683,7 +683,7 @@
                                             </div>
                                             <div class="tab-pane fade" id="selesai3" role="tabpanel" aria-labelledby="selesai-tab3">
                                                 <div class="table-responsive">
-                                                    <table class="table table-striped" id="table-ticket-selesai">
+                                                    <table class="table table-striped table-ticket" id="table-ticket-selesai">
                                                         <thead>
                                                             <tr>
                                                                 <th class="text-center pt-3">
@@ -815,7 +815,7 @@
                                         <div class="tab-content" id="myTabContent2">
                                             <div class="tab-pane fade" id="all3" role="tabpanel" aria-labelledby="all-tab3">
                                                 <div class="table-responsive">
-                                                    <table class="table table-striped" id="table-ticket-all">
+                                                    <table class="table table-striped table-ticket" id="table-ticket-all">
                                                         <thead>
                                                             <tr>
                                                                 <th class="text-center pt-3">
@@ -920,7 +920,7 @@
                                             </div>
                                             <div class="tab-pane fade show active" id="home3" role="tabpanel" aria-labelledby="home-tab3">
                                                 <div class="table-responsive">
-                                                    <table class="table table-striped" id="table-ticket-dalam-antrian">
+                                                    <table class="table table-striped table-ticket" id="table-ticket-dalam-antrian">
                                                         <thead>
                                                             <tr>
                                                                 <th class="text-center pt-3">
@@ -1025,7 +1025,7 @@
                                             </div>
                                             <div class="tab-pane fade" id="profile3" role="tabpanel" aria-labelledby="profile-tab3">
                                                 <div class="table-responsive">
-                                                    <table class="table table-striped" id="table-ticket-disetujui">
+                                                    <table class="table table-striped table-ticket" id="table-ticket-disetujui">
                                                         <thead>
                                                             <tr>
                                                                 <th class="text-center pt-3">
@@ -1130,7 +1130,7 @@
                                             </div>
                                             <div class="tab-pane fade" id="contact3" role="tabpanel" aria-labelledby="contact-tab3">
                                                 <div class="table-responsive">
-                                                    <table class="table table-striped" id="table-ticket-ditolak">
+                                                    <table class="table table-striped table-ticket" id="table-ticket-ditolak">
                                                         <thead>
                                                             <tr>
                                                                 <th class="text-center pt-3">
@@ -1235,7 +1235,7 @@
                                             </div>
                                             <div class="tab-pane fade" id="selesai3" role="tabpanel" aria-labelledby="selesai-tab3">
                                                 <div class="table-responsive">
-                                                    <table class="table table-striped" id="table-ticket-selesai">
+                                                    <table class="table table-striped table-ticket" id="table-ticket-selesai">
                                                         <thead>
                                                             <tr>
                                                                 <th class="text-center pt-3">
@@ -1474,13 +1474,7 @@
             <script>
                 $(document).ready(function() {
                     // DataTable
-                    $('#table-ticket-all').DataTable();
-                    $('#table-ticket-dalam-antrian').DataTable();
-                    $('#table-ticket-disetujui').DataTable();
-                    $('#table-ticket-ditolak').DataTable();
-                    $('#table-ticket-sedang-dikerjakan').DataTable();
-                    $('#table-ticket-menunggu-validasi').DataTable();
-                    $('#table-ticket-selesai').DataTable();
+                    let table = $('.table-ticket').DataTable();
 
                     $('.hapus-btn').on('click', function() {
                         const id = $(this).data('id');
@@ -1517,13 +1511,23 @@
                         });
                     });
 
-                    // 🚀 1. Inisialisasi Semua Progress Bar Saat Halaman Dimuat
-                    $(".progress-bar").each(function() {
-                        const id = $(this).data("id");
-                        const progressValue = $(this).data("status");
-                        if (progressValue !== undefined) {
-                            updateProgressBar(id, progressValue);
-                        }
+                    // Fungsi untuk inisialisasi Progress Bar
+                    function initializeProgressBars() {
+                        $(".progress-bar").each(function() {
+                            const id = $(this).data("id");
+                            const progressValue = $(this).data("status");
+                            if (progressValue !== undefined) {
+                                updateProgressBar(id, progressValue);
+                            }
+                        });
+                    }
+
+                    // Inisialisasi Progress Bar saat halaman pertama kali dimuat
+                    initializeProgressBars();
+
+                    // Inisialisasi ulang Progress Bar setiap kali DataTable mengganti halaman
+                    table.on('draw', function() {
+                        initializeProgressBars();
                     });
 
                     // Update Status Ticket

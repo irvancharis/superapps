@@ -243,7 +243,7 @@
                     let teknisi = "<?php echo $ticket->TECHNICIAN; ?>";
                     let approval = "<?php echo $ticket->APPROVAL_TICKET; ?>";
                     if (teknisi == "" && approval != 2) {
-                        swal("PERHATIAN!", "Ticket ini belum diberikan kepada teknisi.", "warning").then(function() {
+                        swal("PERHATIAN!", "Ticket ini belum diberikan kepada teknisi. Harap segera lakukan APPROVAL Ticket!", "warning").then(function() {
                             window.location.href = "<?php echo base_url('ticket'); ?>";
                         });
                     }
