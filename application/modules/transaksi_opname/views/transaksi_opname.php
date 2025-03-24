@@ -88,7 +88,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_opname/aproval_kabag/'.$d->UUID_TRANSAKSI_OPNAME);?>"
-                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-edit"></i>
                                                         </a>
                                                         <?php
                                                             }
@@ -96,7 +96,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_opname/aproval_gm/'.$d->UUID_TRANSAKSI_OPNAME);?>"
-                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-edit"></i>
                                                         </a>
 
                                                         <?php
@@ -105,7 +105,7 @@
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_opname/aproval_head/'.$d->UUID_TRANSAKSI_OPNAME);?>"
-                                                            class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-outline-primary"><i class="fas fa-edit"></i>
                                                         </a>
 
                                                         <?php

@@ -215,6 +215,11 @@ $(document).ready(function() {
     function saveFormData() {
         let formData = {
             NO_RESI: $('#NO_RESI').val(),
+            AREA: '<?php echo $m_kiriman_barang->KODE_AREA_DEFAULT; ?>',
+            DEPARTEMEN:'<?php echo $m_kiriman_barang->KODE_DEPARTEMEN_PENGAJUAN; ?>',
+            RUANGAN: '<?php echo $m_kiriman_barang->KODE_RUANGAN_DEFAULT; ?>',
+            LOKASI: '<?php echo $m_kiriman_barang->KODE_LOKASI_DEFAULT; ?>'
+
         };
 
         localStorage.setItem('formPengadaan', JSON.stringify(formData));
