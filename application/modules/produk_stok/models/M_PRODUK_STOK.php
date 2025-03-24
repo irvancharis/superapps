@@ -155,15 +155,15 @@ class M_PRODUK_STOK extends CI_Model
         return $this->db->insert($this->table, $data);
     }
 
-    public function update($KODE_ITEM, $data)
+    public function update($KODE, $data)
     {
-        $this->db->where('KODE_ITEM', $KODE_ITEM);
+        $this->db->where('UUID_STOK', $KODE);
         return $this->db->update($this->table, $data);
     }
 
-    public function hapus($KODE_ITEM)
+    public function delete($KODE)
     {
-        $this->db->where('KODE_ITEM', $KODE_ITEM);
+        $this->db->where('UUID_STOK', $KODE);
         return $this->db->delete($this->table);
     }
 }

@@ -49,8 +49,11 @@ defined( 'BASEPATH' ) or exit( 'No direct script access allowed' );
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'dashboard';
 
+
+
+$route['default_controller'] = 'dashboard';
+$route[ '404_override' ] = 'login/non_akses';
 
 $route['logout'] = 'login/logout';
 $route['non_akses'] = 'login/non_akses';
@@ -59,8 +62,3 @@ $route['appinkabag/(:any)'] = 'transaksi_pengadaan/approval_kabag_by_token/$1';
 $route['appingm/(:any)'] = 'transaksi_pengadaan/approval_gm_by_token/$1';
 $route['appinhead/(:any)'] = 'transaksi_pengadaan/approval_head_by_token/$1';
 
-
-
-
-
-// $route['( :any )'] = 'pages/view/$1';

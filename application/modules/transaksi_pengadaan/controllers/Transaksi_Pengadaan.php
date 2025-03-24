@@ -1035,7 +1035,6 @@ Sejahtera Abadi Group'
             'KODE_USER_PENERIMA_KIRIMAN' => $this->session->userdata('ID_KARYAWAN'),
             'TANGGAL_PENERIMAAN_KIRIMAN' => date('Y-m-d'),
             'STATUS_PENGADAAN' => 'MENUNGGU PENYERAHAN',
-
         ];
 
         $update = $this->M_TRANSAKSI_PENGADAAN->update_transaksi($id_transaksi, $data_update);
@@ -1054,7 +1053,35 @@ Sejahtera Abadi Group'
                 'JUMLAH_PENGADAAN' => $item['jumlah'],
                 'KEPERLUAN' => $item['keperluan']
             ];
-            $this->M_TRANSAKSI_PENGADAAN->insert_detail($data_detail);            
+            $this->M_TRANSAKSI_PENGADAAN->insert_detail($data_detail);   
+            
+            
+            $get_maping_default = $this->M_TRANSAKSI_PENGADAAN->get_maping_default($form['AREA']);  
+            
+            
+            
+            
+            // Update stok barang jika barang tidak ada di tabel Produk_Stok maka Insert jika ada maka Update
+            $cek_produk_stok = $this->M_PRODUK_STOK->get_produk_stok_single($item['id'], $get_maping_default->AREA,$get_maping_default->DEPARTEMEN, $get_maping_default->RUANGAN, $get_maping_default->LOKASI )->row();
+            
+            if ($cek_produk_stok) {
+                $data_update = [
+                    'JUMLAH_STOK' => $cek_produk_stok->JUMLAH_STOK + $item['jumlah']
+                ];
+                $this->M_PRODUK_STOK->update($item['id'], $data_update);
+            } else {
+                $data_insert = [
+                    'UUID_STOK' => $this->uuid->v4(),
+                    'KODE_ITEM' => $item['id'],
+                    'JUMLAH_STOK' => $item['jumlah'],
+                    'KODE_AREA' => $get_maping_default->AREA,
+                    'KODE_RUANGAN' => $get_maping_default->RUANGAN,
+                    'KODE_LOKASI' => $get_maping_default->LOKASI,
+                    'KODE_DEPARTEMEN' => $get_maping_default->DEPARTEMEN,
+                ];
+                $this->M_PRODUK_STOK->insert($data_insert);
+            }
+
         }
 
         echo json_encode(['success' => true]);
@@ -1107,7 +1134,7 @@ Sejahtera Abadi Group'
                 $data_update = [
                     'JUMLAH_STOK' => $cek_produk_stok->JUMLAH_STOK + $item['jumlah']
                 ];
-                $this->M_PRODUK_STOK->update($item['id'], $data_update);
+                $this->M_PRODUK_STOK->update($cek_produk_stok->UUID_STOK, $data_update);
             } else {
                 $data_insert = [
                     'UUID_STOK' => $this->uuid->v4(),
@@ -1119,6 +1146,25 @@ Sejahtera Abadi Group'
                     'KODE_DEPARTEMEN' => $form['DEPARTEMEN_PENGAJUAN'],
                 ];
                 $this->M_PRODUK_STOK->insert($data_insert);
+            }
+
+            $get_maping_default = $this->M_TRANSAKSI_PENGADAAN->get_maping_default($form['AREA_PENEMPATAN']);          
+            
+            // Update stok barang jika barang tidak ada di tabel Produk_Stok maka Insert jika ada maka Update
+            $cek_produk_stok_temp = $this->M_PRODUK_STOK->get_produk_stok_single($item['id'], $get_maping_default->AREA,$get_maping_default->DEPARTEMEN, $get_maping_default->RUANGAN, $get_maping_default->LOKASI)->row();
+
+            if ($cek_produk_stok_temp) {
+                
+                    $jumlah_stok = $cek_produk_stok_temp->JUMLAH_STOK - $item['jumlah'];
+                    
+                    if ($jumlah_stok > 0) {
+                        $data_update_temp = [
+                            'JUMLAH_STOK' => $jumlah_stok
+                        ];
+                        $this->M_PRODUK_STOK->update($cek_produk_stok_temp->UUID_STOK, $data_update_temp);    
+                    }else{
+                        $this->M_PRODUK_STOK->delete($cek_produk_stok_temp->UUID_STOK);
+                    }                    
             }
         }
 

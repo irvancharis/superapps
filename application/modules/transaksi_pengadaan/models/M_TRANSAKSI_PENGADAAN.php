@@ -31,6 +31,13 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
         return $query;
     }
 
+    public function get_maping_default($area)
+    {
+        $this->db->where('AREA', $area);
+        $query = $this->db->get('MAPING_DEFAULT');
+        return $query->row();
+    }
+
     // Read
     public function get_data_view()
     {
