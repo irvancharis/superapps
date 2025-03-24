@@ -620,7 +620,7 @@ class Ticket extends CI_Controller
     public function hapus()
     {
         // Ambil data dari POST
-        $id_ticket = $this->input->post('id_ticket_hapus');
+        $id_ticket = $this->input->post('id_ticket');
 
         // Proses hapus data
         $result = $this->M_TICKET->hapus($id_ticket);

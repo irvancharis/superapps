@@ -160,11 +160,11 @@
                                     </div>
                                     <div class="card-footer text-right">
                                         <?php if ($approval_ticket == 1 || $approval_ticket == 2) : ?>
-                                            <button type="submit" class="btn btn-primary" disabled>Simpan</button>
+                                            <button type="submit" class="btn btn-primary" disabled> <i class="fa fa-save"></i> Simpan</button>
                                         <?php else : ?>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                            <button type="submit" class="btn btn-primary"> <i class="fa fa-save"></i> Simpan</button>
                                         <?php endif; ?>
-                                        <button type="button" onclick="history.go(-1)" class="btn btn-secondary btn btn-secondary btn-icon icon-left">Kembali</button>
+                                        <button type="button" onclick="history.go(-1)" class="btn btn-secondary btn btn-secondary btn-icon icon-left"> <i class="fas fa-arrow-left"></i> Kembali</button>
                                     </div>
                                 </form>
                             </div>

@@ -105,7 +105,7 @@ class Ticket_client_view extends CI_Controller
         if ($data) {
             echo json_encode(['success' => true, 'data' => $data]);
         } else {
-            echo json_encode(['success' => false, 'error' => 'Tidak ada data joblist untuk departemen dan area yang dipilih.']);
+            echo json_encode(['success' => false, 'error' => 'Tidak ada data JOBLIST untuk DEPARTEMEN dan AREA yang dipilih.']);
         }
     }
 
