@@ -589,7 +589,7 @@ class Ticket extends CI_Controller
             $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
             $ms_wa_client =
                 "=====*TICKET PROGRESS*===== \n\n" .
-                "📌 PROGRESS: " . strtoupper($get_ticket_detail->KETERANGAN) . " \n" .
+                "📌 *PROGRESS: " . strtoupper($get_ticket_detail->KETERANGAN) . "* \n" .
                 "👤 TEKNISI: " . strtoupper($NAMA_TEKNISI) . " \n\n" .
 
                 "🚨 Lihat progress ticket anda dengan membuka link di bawah ini:\n" .
