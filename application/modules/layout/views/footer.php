@@ -1,7 +1,7 @@
     <!-- General JS Scripts -->
     <script src="<?php echo base_url('assets/js/app.min.js'); ?>"></script>
     <!-- Preview Gambar -->
-    <script src="<?php echo base_url('assets/bundles/summernote/summernote-bs4.js') ?>"></script>
+    <!-- <script src="<?php echo base_url('assets/bundles/summernote/summernote-bs4.js') ?>"></script> -->
     <script src="<?php echo base_url('assets/bundles/upload-preview/assets/js/jquery.uploadPreview.min.js') ?>"></script>
     <script src="<?php echo base_url('assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') ?>"></script>
     <!-- JS Libraies -->
