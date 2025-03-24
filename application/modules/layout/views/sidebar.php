@@ -126,18 +126,18 @@ if ($this->session->userdata('NAMA_ROLE') == 'IT') {
             </li>
         </ul>
         <ul class="sidebar-menu">
-            <li class="menu-header">Ticketing</li>
+
+            <li class="menu-header">TRANSAKSI</li>
+
             <li class="dropdown <?php (isset($page) && $page == 'ticket') ? print 'active' : ''; ?>">
                 <a href="<?php echo base_url('ticket'); ?>" class="nav-link"><i
-                        data-feather="mail"></i><span>Ticket</span><span class="badge badge-primary"
+                        data-feather="mail"></i><span>TICKET</span><span class="badge badge-primary"
                         style="width: auto;"><?php echo $jumlah_ticket; ?></span></a>
             </li>
-        </ul>
-        <ul class="sidebar-menu">
-            <li class="menu-header">TRANSAKSI</li>
+
             <li class="dropdown <?php (isset($page) && $page == 'transaksi') ? print 'active' : ''; ?>">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                        data-feather="dollar-sign"></i><span>INVENTORI</span></a>
+                        data-feather="package"></i><span>INVENTORI</span></a>
                 <ul class="dropdown-menu">
                     <li>
                         <a href="<?php echo base_url('transaksi_pengadaan'); ?>" class="nav-link"><i
@@ -157,6 +157,43 @@ if ($this->session->userdata('NAMA_ROLE') == 'IT') {
                     </li>
                 </ul>
             </li>
+
+            <li class="dropdown <?php (isset($page) && $page == 'checkup') ? print 'active' : ''; ?>">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="settings"></i><span>CHECK
+                        UP</span></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="<?php echo base_url('checkup_cctv'); ?>" class="nav-link"><i
+                                data-feather="settings"></i><span>CCTV</span></a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('checkup_server'); ?>" class="nav-link"><i
+                                data-feather="settings"></i><span>SERVER</span></a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('checkup_jaringan'); ?>" class="nav-link"><i
+                                data-feather="settings"></i><span>JARINGAN</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="dropdown <?php (isset($page) && $page == 'absensi') ? print 'active' : ''; ?>">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                        data-feather="settings"></i><span>ABSENSI</span></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="<?php echo base_url('checkup_cctv'); ?>" class="nav-link"><i
+                                data-feather="settings"></i><span>REKAP ABSENSI</span></a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('checkup_server'); ?>" class="nav-link"><i
+                                data-feather="settings"></i><span>SETTING ABSENSI</span></a>
+                    </li>
+                </ul>
+            </li>
+
         </ul>
+
+
     </aside>
 </div>
