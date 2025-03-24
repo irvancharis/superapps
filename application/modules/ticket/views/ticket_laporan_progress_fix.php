@@ -132,8 +132,8 @@
                             <td><?php echo strtoupper($ticket->REQUESTBY); ?></td>
                         </tr>
                         <tr>
-                            <td><strong>Email</strong></td>
-                            <td><?php echo strtoupper($ticket->EMAIL_TICKET); ?></td>
+                            <td><strong>No. WA</strong></td>
+                            <td><?php echo strtoupper($ticket->TELP); ?></td>
                         </tr>
                         <tr>
                             <td><strong>Departemen</strong></td>
@@ -192,9 +192,7 @@
                                         <?php if ($d->FOTO == null) {
                                             echo "-";
                                         } else { ?>
-                                            <a href="<?php echo base_url('assets/uploads/ticket/') . $d->FOTO; ?>" data-fancybox>
-                                                <img src="<?php echo base_url('assets/uploads/ticket/') . $d->FOTO; ?>" width="100px" class="img-thumbnail">
-                                            </a>
+                                            <img src="<?php echo base_url('assets/uploads/ticket/') . $d->FOTO; ?>" width="100px" class="img-thumbnail" />
                                         <?php } ?>
                                     </td>
                                 </tr>

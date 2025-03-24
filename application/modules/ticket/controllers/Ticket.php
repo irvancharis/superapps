@@ -405,8 +405,8 @@ class Ticket extends CI_Controller
             // $url_teknisi = "http://" . urlencode($get_IP) . "/superapps/ticket/ticket_technician/"  . urlencode($id_ticket);
 
             // Ticket History Versi ZROK
-            $url_client = "https://lezyctjsalqe.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
-            $url_teknisi = "https://lezyctjsalqe.share.zrok.io/superapps/ticket/ticket_technician/"  . urlencode($id_ticket);
+            $url_client = "https://1i7megashi4f.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
+            $url_teknisi = "https://1i7megashi4f.share.zrok.io/superapps/ticket/ticket_technician/"  . urlencode($id_ticket);
 
             // Membuat format pesan sesuai permintaan
             // // Kirim Pesan ke WA (Teknisi)
@@ -485,7 +485,7 @@ class Ticket extends CI_Controller
 
             // // Kirim Pesan ke WA (Client)
             $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
-            $url_client = "https://lezyctjsalqe.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
+            $url_client = "https://1i7megashi4f.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
             $ms_wa_client =
                 "=====*TICKET PROGRESS*===== \n\n" .
                 "=====_INFORMASI TICKET_===== \n\n" .
