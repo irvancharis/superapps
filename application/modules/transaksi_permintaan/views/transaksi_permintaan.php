@@ -68,6 +68,8 @@
                                                     </td>
 
                                                     <td class="text-center">
+                                                        <a href="<?=site_url('transaksi_permintaan/detail/'.$d->UUID_TRANSAKSI_PERMINTAAN);?>" class="btn btn-outline-secondary"><i
+                                                                class="fas fa-eye"></i></a>
 
                                                         <?php 
                                                         if($d->STATUS_PERMINTAAN == 'MENUNGGU APROVAL KABAG')
@@ -87,6 +89,7 @@
                                                         <?php
                                                             }
                                                         ?>
+
                                                         <a class="btn btn-outline-secondary"><i
                                                                 class="fas fa-print"></i></a>
                                                     </td>
