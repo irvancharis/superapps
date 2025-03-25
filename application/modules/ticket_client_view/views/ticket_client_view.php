@@ -244,17 +244,17 @@
                                             <div class="row">
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label>REQUEST BY</label>
-                                                    <input type="text" name="request_by" id="request_by" placeholder="ANDI" class="form-control">
+                                                    <input type="text" name="request_by" id="request_by" placeholder="ANDI" class="form-control" required>
                                                     <div class="invalid-feedback">
-                                                        Di Request Oleh?
+                                                        Masukkan NAMA anda
                                                     </div>
                                                 </div>
                                                 <!-- TELP -->
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label>NO. WHATSAPP</label>
-                                                    <input type="text" class="form-control" id="telp" placeholder="08123456789" name="telp">
+                                                    <input type="text" class="form-control" id="telp" placeholder="08123456789" name="telp" required>
                                                     <div class="invalid-feedback">
-                                                        Masukkan NO. TELEPON dengan benar!
+                                                        Masukkan NO. WHATSAPP dengan benar!
                                                     </div>
                                                 </div>
                                                 <!-- E-MAIL -->
@@ -266,8 +266,8 @@
                                                     </div>
                                                 </div> -->
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
-                                                    <label>DEPARTEMEN</label>
-                                                    <select name="id_departemen" id="id_departemen" class="form-control">
+                                                    <label>DEPARTEMEN ANDA</label>
+                                                    <select name="id_departemen" id="id_departemen" class="form-control" required>
                                                         <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
                                                         <?php foreach ($get_departement as $row) : ?>
                                                             <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
@@ -275,19 +275,19 @@
                                                     </select>
                                                     <p style="color:red;font-style: italic;">*). Jika DEPARTEMEN tidak terdaftar, pilih UMUM</p>
                                                     <div class="invalid-feedback">
-                                                        Silahkan masukkan departemen!
+                                                        Silahkan pilih DEPARTEMEN ANDA!
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label>AREA</label>
-                                                    <select name="id_area" id="id_area" class="form-control">
+                                                    <select name="id_area" id="id_area" class="form-control" required>
                                                         <option value="" class="text-center" selected disabled>-- Pilih Area --</option>
                                                         <?php foreach ($get_area as $row) : ?>
                                                             <option value="<?= $row->KODE_AREA; ?>"><?= $row->NAMA_AREA; ?></option>
                                                         <?php endforeach; ?>
                                                     </select>
                                                     <div class="invalid-feedback">
-                                                        Pilih Area!
+                                                        Silahkan pilih AREA!
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-12 col-md-6 col-lg-6 d-none">
@@ -300,7 +300,7 @@
                                                     </select>
                                                     <input type="hidden" name="id_departemen_request" id="select_id_departemen_request">
                                                     <div class="invalid-feedback">
-                                                        Silahkan masukkan departemen!
+                                                        Silahkan masukkan DEPARTEMEN DIREQUEST!
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
@@ -312,9 +312,9 @@
                                                 </div>
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label>DESKRIPSI KELUHAN</label>
-                                                    <textarea name="description_ticket" placeholder="KOMPUTERKU MATI" class="form-control" id="description_ticket"></textarea>
+                                                    <textarea name="description_ticket" placeholder="KOMPUTERKU MATI" class="form-control" id="description_ticket" required></textarea>
                                                     <div class="invalid-feedback">
-                                                        Silahkan masukkan deskripsi keluhan anda!
+                                                        Silahkan masukkan DESKRIPSI KELUHAN anda!
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-12 col-md-6 col-lg-6" id="image-container">
@@ -522,6 +522,15 @@
             $('#formTicketClient').on('submit', function(e) {
                 e.preventDefault();
 
+                // Pengecekan validitas form
+                const form = this;
+                if (!form.checkValidity()) {
+                    // Jika form tidak valid, tampilkan pesan error
+                    e.stopPropagation();
+                    form.classList.add('was-validated');
+                    return false;
+                }
+
                 // Tampilkan pop-up "Mohon Tunggu"
                 swal({
                     title: "Mohon Tunggu",
@@ -657,7 +666,7 @@
                             res.data.forEach(function(item) {
                                 $(".type-ticket").append(`
                             <label class="selectgroup-item">
-                                <input type="radio" name="type_ticket" value="${item.NAMA_JOBLIST}" class="selectgroup-input">
+                                <input type="radio" name="type_ticket" value="${item.NAMA_JOBLIST}" class="selectgroup-input" required>
                                 <span class="selectgroup-button">${item.NAMA_JOBLIST}</span>
                             </label>
                         `);
