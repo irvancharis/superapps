@@ -355,11 +355,11 @@ class Transaksi_penghapusan extends CI_Controller
 
     public function detail($KODE, $page = 'transaksi_penghapusan')
     {
-        $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGHAPUSAN', 'DETAIL PENGHAPUSAN');
-        if (!$CEK_ROLE) {
-            redirect('non_akses');
-        }
+        // $SESSION_ROLE = $this->session->userdata('ROLE');
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGHAPUSAN', 'DETAIL PENGHAPUSAN');
+        // if (!$CEK_ROLE) {
+        //     redirect('non_akses');
+        // }
 
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
@@ -370,7 +370,7 @@ class Transaksi_penghapusan extends CI_Controller
         $data['detail_transaksi'] = $query_detail_transaksi;
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
-            $this->load->view('transaksi_penghapusan_detail', $data);
+            $this->load->view('detail', $data);
     }
 
     public function insert()

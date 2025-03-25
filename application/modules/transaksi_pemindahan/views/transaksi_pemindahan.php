@@ -25,7 +25,7 @@
                                                     <th class="text-center">DEPARTEMEN</th>
                                                     <th class="text-center col-2">USER PENGAJUAN</th>
                                                     <th class="text-center col-1">STATUS</th>
-                                                    <th class="text-center col-1"></th>
+                                                    <th class="text-center col-2"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -95,6 +95,12 @@
                                                     </td>
 
                                                     <td class="text-center">
+
+                                                        <a href="<?=site_url('transaksi_pemindahan/detail/'.$d->UUID_TRANSAKSI_PEMINDAHAN);?>"
+                                                            class="btn btn-outline-secondary"><i
+                                                                class="fas fa-eye"></i></a>
+
+
                                                         <?php if($d->STATUS_PEMINDAHAN == 'MENUNGGU APROVAL KABAG')
                                                             {
                                                         ?>
@@ -165,7 +171,7 @@ $(document).ready(function() {
             details: {
                 type: 'column',
                 display: $.fn.dataTable.Responsive.display
-                .childRowImmediate, // Menampilkan detail langsung                
+                    .childRowImmediate, // Menampilkan detail langsung                
             }
         }
     });

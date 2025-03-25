@@ -62,6 +62,25 @@
                                     </tbody>
                                 </table>
                             </div><br><br>
+
+                            <div class="row justify-content-center align-items-center">
+                                <div class="form-group col-3 col-md-3 col-lg-3 text-center">
+                                    <label>PETUGAS OPNAME :</label><br>
+                                    <span><?php echo $get_single->NAMA_USER_PELAKSANA; ?></span>
+                                </div>
+                                <div class="form-group col-3 col-md-3 col-lg-3 text-center">
+                                    <label>KABAG :</label><br>
+                                    <span><?php echo $get_single->NAMA_APROVAL_KABAG; ?></span>
+                                </div>
+                                <div class="form-group col-3 col-md-3 col-lg3 text-center">
+                                    <label>GM :</label><br>
+                                    <span><?php echo $get_single->NAMA_APROVAL_GM; ?></span>
+                                </div>
+                                <div class="form-group col-3 col-md-3 col-lg-3 text-center">
+                                    <label>HEAD :</label><br>
+                                    <span><?php echo $get_single->NAMA_APROVAL_HEAD; ?></span>
+                                </div>                                
+                            </div>
                         </div>
                 </div>
             </div>

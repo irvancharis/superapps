@@ -280,22 +280,22 @@ class Transaksi_pemindahan extends CI_Controller
 
     public function detail($KODE, $page = 'transaksi_pemindahan')
     {
-        $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PEMINDAHAN', 'DETAIL PEMINDAHAN');
-        if (!$CEK_ROLE) {
-            redirect('non_akses');
-        }
+        // $SESSION_ROLE = $this->session->userdata('ROLE');
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PEMINDAHAN', 'DETAIL PEMINDAHAN');
+        // if (!$CEK_ROLE) {
+        //     redirect('non_akses');
+        // }
 
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $query_transaksi = $this->M_TRANSAKSI_PEMINDAHAN->get_single($KODE);
         $query_detail_transaksi = $this->M_TRANSAKSI_PEMINDAHAN->get_detail_single($KODE);
-        $data['transaksi'] = $query_transaksi->row();
+        $data['transaksi'] = $query_transaksi;
         $data['detail_transaksi'] = $query_detail_transaksi;
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
-            $this->load->view('transaksi_pemindahan_detail', $data);
+            $this->load->view('detail', $data);
     }
 
     public function insert()

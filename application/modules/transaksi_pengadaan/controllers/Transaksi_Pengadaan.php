@@ -450,14 +450,18 @@ class Transaksi_pengadaan extends CI_Controller
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
-        $query = $this->M_TRANSAKSI_PENGADAAN->get_single($KODE);
-        $data['get_single'] = $query->row();
+        $transaksi = $this->M_TRANSAKSI_PENGADAAN->get_single($KODE);
+        $data['transaksi'] = $transaksi;
+
+        $detail_transaksi = $this->M_TRANSAKSI_PENGADAAN->get_detail($KODE);
+        $data['detail_transaksi'] = $detail_transaksi;
+
         $data['get_area'] = $this->M_TRANSAKSI_PENGADAAN->get_area();
         $data['get_departemen'] = $this->M_TRANSAKSI_PENGADAAN->get_departemen();
         $data['get_jabatan'] = $this->M_TRANSAKSI_PENGADAAN->get_jabatan();
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
-            $this->load->view('karyawan_detail', $data);
+            $this->load->view('detail', $data);
     }
 
     public function kirim_wa($data)
