@@ -10,6 +10,7 @@ class Login extends CI_Controller
         parent::__construct();
         $this->load->helper('url_helper');
         $this->load->model('M_LOGIN');
+        $this->load->model('karyawan/M_KARYAWAN');
     }
 
     public function index()
@@ -24,6 +25,7 @@ class Login extends CI_Controller
         $username = $this->input->post('username');
         $password = $this->input->post('password');
         $user = $this->M_LOGIN->getuser($username);
+        $get_nik = $this->M_KARYAWAN->get_karyawan_by_id($user->ID_KARYAWAN);
 
         if ($user) {
             if (password_verify($password, $user->PASSWORD)) {
@@ -40,6 +42,7 @@ class Login extends CI_Controller
                 $this->session->set_userdata('NAMA_DEPARTEMEN', $user->NAMA_DEPARTEMEN);
                 $this->session->set_userdata('ROLE', $user->KODE_ROLE);
                 $this->session->set_userdata('NAMA_ROLE', $user->NAMA_ROLE);
+                $this->session->set_userdata('NIK', $get_nik->NIK);
 
                 return redirect()->to('/dashboard');
             } else {
@@ -52,7 +55,7 @@ class Login extends CI_Controller
 
     public function logout()
     {
-        $this->session->unset_userdata(array('isLoggedIn', 'UUID_USER','ID_AREA','NAMA_AREA','ID_JABATAN','NAMA_JABATAN','ID_KARYAWAN','NAMA_KARYAWAN','ID_DEPARTEMEN','NAMA_DEPARTEMEN','ROLE','NAMA_ROLE'));
+        $this->session->unset_userdata(array('isLoggedIn', 'UUID_USER', 'ID_AREA', 'NAMA_AREA', 'ID_JABATAN', 'NAMA_JABATAN', 'ID_KARYAWAN', 'NAMA_KARYAWAN', 'ID_DEPARTEMEN', 'NAMA_DEPARTEMEN', 'ROLE', 'NAMA_ROLE'));
         return redirect()->to('/login');
     }
 

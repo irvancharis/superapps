@@ -244,21 +244,17 @@
                                             <div class="row">
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label>REQUEST BY</label>
-                                                    <input type="text" name="request_by" id="request_by" class="form-control">
+                                                    <input type="text" name="request_by" id="request_by" placeholder="ANDI" class="form-control">
                                                     <div class="invalid-feedback">
                                                         Di Request Oleh?
                                                     </div>
                                                 </div>
+                                                <!-- TELP -->
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
-                                                    <label>DEPARTEMEN</label>
-                                                    <select name="id_departemen" id="id_departemen" class="form-control">
-                                                        <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
-                                                        <?php foreach ($get_departement as $row) : ?>
-                                                            <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
-                                                        <?php endforeach; ?>
-                                                    </select>
+                                                    <label>NO. WHATSAPP</label>
+                                                    <input type="text" class="form-control" id="telp" placeholder="08123456789" name="telp">
                                                     <div class="invalid-feedback">
-                                                        Silahkan masukkan departemen!
+                                                        Masukkan NO. TELEPON dengan benar!
                                                     </div>
                                                 </div>
                                                 <!-- E-MAIL -->
@@ -269,12 +265,17 @@
                                                         Masukkan Email dengan benar!
                                                     </div>
                                                 </div> -->
-                                                <!-- TELP -->
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
-                                                    <label>NO. WA</label>
-                                                    <input type="text" class="form-control" id="telp" name="telp">
+                                                    <label>DEPARTEMEN</label>
+                                                    <select name="id_departemen" id="id_departemen" class="form-control">
+                                                        <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
+                                                        <?php foreach ($get_departement as $row) : ?>
+                                                            <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <p style="color:red;font-style: italic;">*). Jika DEPARTEMEN tidak terdaftar, pilih UMUM</p>
                                                     <div class="invalid-feedback">
-                                                        Masukkan NO. TELEPON dengan benar!
+                                                        Silahkan masukkan departemen!
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
@@ -289,7 +290,7 @@
                                                         Pilih Area!
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <div class="form-group col-12 col-md-6 col-lg-6 d-none">
                                                     <label>DEPARTEMEN DIREQUEST</label>
                                                     <select id="id_departemen_request" class="form-control" disabled>
                                                         <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
@@ -311,7 +312,7 @@
                                                 </div>
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label>DESKRIPSI KELUHAN</label>
-                                                    <textarea name="description_ticket" placeholder="Masukkan deskripsi keluhan" class="form-control" id="description_ticket"></textarea>
+                                                    <textarea name="description_ticket" placeholder="KOMPUTERKU MATI" class="form-control" id="description_ticket"></textarea>
                                                     <div class="invalid-feedback">
                                                         Silahkan masukkan deskripsi keluhan anda!
                                                     </div>
@@ -340,7 +341,7 @@
                                         </div>
                                         <div class="card-footer text-right">
                                             <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Kirim</button>
-                                            <button type="reset" class="btn btn-secondary"><i class="fas fa-redo"></i> Reset</button>
+                                            <button type="reset" class="btn btn-danger"><i class="fas fa-redo"></i> Reset</button>
                                         </div>
                                     </form>
                                 </div>
@@ -550,7 +551,7 @@
                         let res = JSON.parse(response);
                         if (res.success) {
                             swal.close();
-                            swal('Sukses', 'Request Ticket Berhasil Dikirim!', 'success').then(function() {
+                            swal('Sukses', 'Request Ticket Berhasil Dikirim!. Tunggu konfirmasi selanjutnya via WHATSAPP', 'success').then(function() {
                                 location.href = "<?php echo base_url(); ?>" + "ticket_client_view/ticket_queue";
                             });
                         } else {

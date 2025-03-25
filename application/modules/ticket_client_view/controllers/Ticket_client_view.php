@@ -50,6 +50,17 @@ class Ticket_client_view extends CI_Controller
         $this->load->view('ticket_history', $ticket);
     }
 
+    public function ticket_confirm($kode)
+    {
+        // get ticket by id
+        $ticket['ticket_detail'] = $this->M_TICKET->get_ticket_detail_view($kode);
+        $ticket['id_ticket'] = $kode;
+        $ticket['status_ticket'] = $this->M_TICKET->get_ticket($kode)->STATUS_TICKET;
+        // get nama technician by id
+        // $ticket['technician'] = $this->M_TECHNICIAN->get_teknisi_by_id($ticket['ticket_detail']->TECHNICIAN);
+        $this->load->view('ticket_confirm', $ticket);
+    }
+
     // Fungsi untuk mengembalikan data JSON Ticket History
     public function get_ticket_progress($kode)
     {
@@ -105,7 +116,7 @@ class Ticket_client_view extends CI_Controller
         if ($data) {
             echo json_encode(['success' => true, 'data' => $data]);
         } else {
-            echo json_encode(['success' => false, 'error' => 'Tidak ada data joblist untuk departemen dan area yang dipilih.']);
+            echo json_encode(['success' => false, 'error' => 'Tidak ada data JOBLIST untuk DEPARTEMEN dan AREA yang dipilih.']);
         }
     }
 

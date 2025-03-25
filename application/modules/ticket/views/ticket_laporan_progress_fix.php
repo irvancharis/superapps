@@ -42,7 +42,7 @@
         .table td {
             border: 1px solid #ddd;
             padding: 8px;
-            text-align: left;
+            text-align: center;
         }
 
         .table th {
@@ -119,7 +119,7 @@
         <div class="invoice">
             <div class="invoice-print">
                 <div class="invoice-title text-center">
-                    <h2>Ticket</h2>
+                    <h2>Ticket Progress Report</h2>
                     <div class="invoice-number"><img width="50px" src="<?php echo base_url('assets/img/Logo SA X7.png'); ?>" alt=""></div>
                 </div>
                 <hr>
@@ -164,6 +164,16 @@
                                 ?>
                             </td>
                         </tr>
+                        <tr>
+                            <td><strong>Foto Bukti Keluhan</strong></td>
+                            <td>
+                                <?php if (!empty($ticket->FOTO)) : ?>
+                                    <img src="<?= base_url('assets/uploads/ticket/' . $ticket->FOTO); ?>" width="100px" class="img-thumbnail">
+                                <?php else : ?>
+                                    -
+                                <?php endif; ?>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
 
@@ -177,7 +187,6 @@
                                 <th>Objektif</th>
                                 <th>Keterangan</th>
                                 <th>Teknisi</th>
-                                <th class="text-center">Bukti</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -188,7 +197,12 @@
                                     <td><?php echo $d->OBJEK_DITANGANI; ?></td>
                                     <td><?php echo $d->KETERANGAN; ?></td>
                                     <td><?php echo $d->NAME_TECHNICIAN; ?></td>
-                                    <td class="text-center">
+                                </tr>
+                                <tr>
+                                    <th colspan="5" class="text-center">Foto Bukti Pengerjaan</th>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" colspan="5">
                                         <?php if ($d->FOTO == null) {
                                             echo "-";
                                         } else { ?>
