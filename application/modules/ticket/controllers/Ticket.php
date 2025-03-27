@@ -694,4 +694,36 @@ class Ticket extends CI_Controller
         $html = $this->load->view('ticket_laporan_progress_fix', $data, true);
         $this->pdfgenerator->generate($html, $file_pdf, $paper, $orientation);
     }
+
+    public function check_updates()
+    {
+        $this->load->database();
+        // Ambil data penting untuk di-hash
+        $data = $this->db->query("
+        SELECT 
+                COUNT(*) as total_tickets,
+                SUM(CASE WHEN STATUS_TICKET = 0 THEN 1 ELSE 0 END) as status_0,
+                SUM(CASE WHEN STATUS_TICKET = 25 THEN 1 ELSE 0 END) as status_25,
+                SUM(CASE WHEN STATUS_TICKET = 50 THEN 1 ELSE 0 END) as status_50,
+                SUM(CASE WHEN STATUS_TICKET = 100 THEN 1 ELSE 0 END) as status_100,
+                MAX(DATE_TICKET) as latest_date
+            FROM TICKET
+        ")->row_array();
+
+        // Buat hash unik dari data
+        $current_hash = md5(json_encode($data));
+        $session_hash = $this->session->userdata('ticket_data_hash');
+
+        $response = ['has_update' => false];
+
+        if (!$session_hash || $current_hash !== $session_hash) {
+            $response['has_update'] = true;
+            $this->session->set_userdata('ticket_data_hash', $current_hash);
+        }
+
+        // Tambahkan timestamp untuk debugging
+        $response['last_check'] = date('Y-m-d H:i:s');
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
 }
