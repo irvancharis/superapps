@@ -20,7 +20,7 @@
                                                     <th class="text-center">DEPARTEMEN</th>
                                                     <th class="text-center col-2">PELAKSANA</th>
                                                     <th class="text-center col-1">STATUS</th>
-                                                    <th class="text-center col-1"></th>
+                                                    <th class="text-center col-2"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -84,6 +84,11 @@
                                                         ?>
                                                     </td>
                                                     <td>
+                                                        <a href="<?=site_url('transaksi_opname/detail/'.$d->UUID_TRANSAKSI_OPNAME);?>"
+                                                            class="btn btn-outline-secondary"><i
+                                                                class="fas fa-eye"></i></a>
+
+
                                                         <?php if($d->STATUS_OPNAME == 'MENUNGGU APROVAL KABAG')
                                                             {
                                                         ?>

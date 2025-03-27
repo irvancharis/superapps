@@ -119,8 +119,7 @@
                             <div class="row justify-content-center align-items-center">
                                 <div class="form-group col-6 col-md-6 col-lg-6">
                                     <label>BARANG DISERAHKAN KEPADA :</label>
-                                    <select class="form-control" name="USER_PENERIMA"
-                                        id="USER_PENERIMA" required>
+                                    <select class="form-control" name="USER_PENERIMA" id="USER_PENERIMA" required>
                                         <option value="" class="text-center" selected disabled>---- Pilih Penerima
                                             ----</option>
                                         <?php foreach ($karyawan as $row) : ?>
@@ -229,45 +228,45 @@ $(document).ready(function() {
         let formData = JSON.parse(localStorage.getItem('list_maping')) || [];
 
         if (storedProdukItems.length == 0) {
-            swal('Error', 'Tidak ada produk yang dipilih.', 'error').then(function() {
-                console.log(storedProdukItems);
-            });
+            swal('Error', 'Tidak ada produk yang dipilih.', 'error');
         }
 
-        $.ajax({
-            url: "<?php echo base_url(); ?>" + "transaksi_pemindahan/update_proses_pemindahan",
-            type: "POST",
-            data: {
-                UUID_TRANSAKSI_PEMINDAHAN: '<?= $get_single->UUID_TRANSAKSI_PEMINDAHAN ?>',
-                items: storedProdukItems,
-                form: formData,
-                USER_PENERIMA: $('#USER_PENERIMA').val()
-            },
-            success: function(response) {
-                try {
-                    let res = JSON.parse(response);
-                    if (res.success) {
-                        swal('Sukses', 'Simpan Data Berhasil!', 'success').then(function() {
-                            localStorage.removeItem(
-                                'storedProdukItems'
-                            ); // Hapus localStorage setelah berhasil
-                            location.href = "<?php echo base_url(); ?>" +
-                                "transaksi_pemindahan";
-                        });
-                    } else {
-                        swal('Gagal', res.error, 'error');
+        if ($('#USER_PENERIMA').val() == '' || $('#USER_PENERIMA').val() == null) {
+            swal('Error', 'Masukkan USER PENERIMA!', 'error');
+        } else {
+            $.ajax({
+                url: "<?php echo base_url(); ?>" +
+                    "transaksi_pemindahan/update_proses_pemindahan",
+                type: "POST",
+                data: {
+                    UUID_TRANSAKSI_PEMINDAHAN: '<?= $get_single->UUID_TRANSAKSI_PEMINDAHAN ?>',
+                    items: storedProdukItems,
+                    form: formData,
+                    USER_PENERIMA: $('#USER_PENERIMA').val()
+                },
+                success: function(response) {
+                    try {
+                        let res = JSON.parse(response);
+                        if (res.success) {
+                            swal('Sukses', 'Simpan Data Berhasil!', 'success').then(
+                                function() {
+                                    localStorage.removeItem(
+                                        'storedProdukItems'
+                                    ); // Hapus localStorage setelah berhasil
+                                    location.href = "<?php echo base_url(); ?>" +
+                                        "transaksi_pemindahan";
+                                });
+                        } else {
+                            swal('Gagal', res.error, 'error');
+                        }
+                    } catch (error) {
+                        console.error('Parsing JSON gagal:', error);
+                        swal('Error', 'Terjadi kesalahan pada server.', 'error');
                     }
-                } catch (error) {
-                    console.error('Parsing JSON gagal:', error);
-                    swal('Error', 'Terjadi kesalahan pada server.', 'error');
                 }
-            }
-        });
+            });
+        }
     });
-
-
-
-
 });
 </script>
 </body>

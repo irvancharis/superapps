@@ -20,7 +20,7 @@
                                                     <th class="text-center">DEPARTEMEN</th>
                                                     <th class="text-center col-2">USER PENGAJUAN</th>
                                                     <th class="text-center col-2">STATUS</th>
-                                                    <th class="text-center col-1"></th>
+                                                    <th class="text-center col-2"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -34,7 +34,7 @@
                                                         <?php echo $d->NAMA_RUANGAN; ?><br> <i class="fa fa-users"></i>
                                                         <?php echo $d->NAMA_DEPARTEMEN; ?><br><i class="fa fa-box"></i>
                                                         <?php echo $d->NAMA_LOKASI; ?></td>
-                                                    <td class="text-center"><?php echo $d->NAMA_USER_PENGAJUAN; ?></td>                                                    
+                                                    <td class="text-center"><?php echo $d->NAMA_USER_PENGAJUAN; ?></td>
                                                     <td class="text-center">
                                                         <?php if($d->STATUS_PENGHAPUSAN == 'MENUNGGU APROVAL KABAG')
                                                             {
@@ -90,7 +90,7 @@
                                                             }elseif($d->STATUS_PENGHAPUSAN == 'DITOLAK GM')
                                                             {
                                                         ?>
-                                                        <span class="badge badge-danger">DITOLAK GM</span>                                                      
+                                                        <span class="badge badge-danger">DITOLAK GM</span>
                                                         <?php
                                                             }elseif($d->STATUS_PENGHAPUSAN == 'DITOLAK HEAD')
                                                             {
@@ -102,6 +102,12 @@
                                                     </td>
 
                                                     <td class="text-center">
+
+                                                        <a href="<?=site_url('transaksi_penghapusan/detail/'.$d->UUID_TRANSAKSI_PENGHAPUSAN);?>"
+                                                            class="btn btn-outline-secondary"><i
+                                                                class="fas fa-eye"></i></a>
+
+
                                                         <?php if($d->STATUS_PENGHAPUSAN == 'MENUNGGU APROVAL KABAG')
                                                             {
                                                         ?>
@@ -179,13 +185,14 @@ $(document).ready(function() {
     $('#TABEL').dataTable({
         paging: false,
         searching: true,
-        sorting: false,   
-        ordering: false,     
+        sorting: false,
+        ordering: false,
         info: false,
         responsive: {
             details: {
                 type: 'column',
-                display: $.fn.dataTable.Responsive.display.childRowImmediate, // Menampilkan detail langsung                
+                display: $.fn.dataTable.Responsive.display
+                .childRowImmediate, // Menampilkan detail langsung                
             }
         }
     });

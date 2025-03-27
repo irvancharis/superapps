@@ -62,6 +62,11 @@
                                                             ?>
                                                     </td>
                                                     <td class="text-center">
+
+                                                        <a href="<?=site_url('transaksi_pengadaan/detail/'.$d->UUID_TRANSAKSI_PENGADAAN);?>"
+                                                            class="btn btn-outline-secondary"><i
+                                                                class="fas fa-eye"></i></a>
+
                                                         <?php                                                                                                                    
                                                         if ($d->STATUS_PENGADAAN == "MENUNGGU APROVAL KABAG") {
                                                                 echo '<a href="' . base_url("transaksi_pengadaan/approval_kabag/" . $d->UUID_TRANSAKSI_PENGADAAN) . '" class="btn btn-outline-primary has-icon view-btn"> <i class="fas fa-edit"></i></a>';                                                                

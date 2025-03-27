@@ -20,7 +20,7 @@
                                                     <th class="">DEPARTEMEN</th>
                                                     <th class="text-center col-2">USER PENGAJUAN</th>
                                                     <th class="text-center col-1">STATUS</th>
-                                                    <th class="text-center col-1"></th>
+                                                    <th class="text-center col-2"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -28,7 +28,7 @@
                                                 <tr>
 
                                                     <td>
-                                                        <?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGAJUAN, 'l, d F Y'); ?>
+                                                        <?php echo $this->tanggalindo->formatTanggal($d->TANGGAL_PENGAJUAN, 'l, d F Y H:i:s'); ?>
                                                     </td>
                                                     <td><i class="fa fa-map-marker"></i>
                                                         <?php echo $d->NAMA_AREA_AKHIR; ?><br><i
@@ -68,13 +68,15 @@
                                                     </td>
 
                                                     <td class="text-center">
+                                                        <a href="<?=site_url('transaksi_permintaan/detail/'.$d->UUID_TRANSAKSI_PERMINTAAN);?>" class="btn btn-outline-secondary"><i
+                                                                class="fas fa-eye"></i></a>
 
                                                         <?php 
                                                         if($d->STATUS_PERMINTAAN == 'MENUNGGU APROVAL KABAG')
                                                             {
                                                         ?>
                                                         <a href="<?=site_url('transaksi_permintaan/aproval_kabag/'.$d->UUID_TRANSAKSI_PERMINTAAN);?>"
-                                                            class="btn btn-outline-primary"><i class="fas fa-edit"></i>
+                                                            class="btn btn-outline-secondary"><i class="fas fa-edit"></i>
                                                         </a>
                                                         <?php
                                                             }
@@ -87,6 +89,7 @@
                                                         <?php
                                                             }
                                                         ?>
+
                                                         <a class="btn btn-outline-secondary"><i
                                                                 class="fas fa-print"></i></a>
                                                     </td>
