@@ -206,7 +206,7 @@
                                 <div class="col-12 col-md-12 col-lg-12 p-0">
                                     <form class="needs-validation" novalidate="" id="formTicketClient" enctype="multipart/form-data">
                                         <div class="card-header">
-                                            <h4 class="judul-ticketing">TICKET PROGRESS</h4>
+                                            <h4 class="judul-ticketing">TICKET PROGRESS UPDATE</h4>
                                             <div class="card-header-action">
                                                 <div class="form-group row" style="display: none;">
                                                     <label class="col-sm-5 col-form-label">Tgl Request</label>
@@ -349,6 +349,53 @@
                                             <button type="button" onclick="history.go(-1)" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</button>
                                         </div>
                                     </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-danger">
+                            <div class="card-header">
+                                <h4 class="judul-ticketing mx-auto"><i class="fas fa-history"></i> HISTORY PENGERJAAN</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="table-2">
+                                        <thead>
+                                            <tr>
+                                                <th data-width="40">#</th>
+                                                <th>Tgl & Waktu Pengerjaan</th>
+                                                <th>Objektif Pengerjaan</th>
+                                                <th>Keterangan Pengerjaan</th>
+                                                <th>Dikerjakan Oleh</th>
+                                                <th class="text-center">Foto Bukti Pengerjaan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($M_TICKET_DETAIL_HISTORY as $index => $d) : ?>
+                                                <tr height="150">
+                                                    <td><?php echo $index + 1; ?></td>
+                                                    <td><?php echo date('d-m-Y H:i', strtotime($d->TGL_PENGERJAAN)); ?></td>
+                                                    <td><?php echo $d->OBJEK_DITANGANI; ?></td>
+                                                    <td><?php echo $d->KETERANGAN; ?></td>
+                                                    <td><?php echo $d->NAME_TECHNICIAN; ?></td>
+                                                    <td class="text-center">
+                                                        <?php
+                                                        if ($d->FOTO == null) {
+                                                            echo "-";
+                                                        } else {
+                                                        ?>
+                                                            <div class="d-flex justify-content-center">
+                                                                <a href="<?php echo base_url('assets/uploads/ticket/') . $d->FOTO; ?>" data-fancybox data-caption="Single image" data-image="<?php echo base_url('assets/uploads/ticket/') . $d->FOTO; ?>" data-title="<?= $d->KETERANGAN; ?>">
+                                                                    <img src="<?php echo base_url('assets/uploads/ticket/') . $d->FOTO; ?>" width="150px" alt="<?= $d->KETERANGAN; ?>" class="img-thumbnail">
+                                                                </a>
+                                                            </div>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -589,6 +636,79 @@
 
             // Inisialisasi Fancybox
             Fancybox.bind("[data-fancybox]");
+
+
+            // Auto Load Data Otomatis
+            // Config
+            const CHECK_INTERVAL = 15000; // 30 detik
+            const NOTIFICATION_TIMEOUT = 30000; // 60 detik
+
+            // Fungsi utama pengecekan update
+            function checkForUpdates() {
+                $.ajax({
+                    url: "<?php echo base_url(); ?>ticket/check_updates_technician",
+                    method: "POST",
+                    dataType: "json",
+                    success: function(response) {
+                        console.debug('Update check:', response);
+                        if (response.has_update) {
+                            showUpdateNotification();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error checking updates:", error);
+                    }
+                });
+            }
+
+            // Tampilkan notifikasi
+            function showUpdateNotification() {
+                const lastNotified = localStorage.getItem('lastNotified');
+                const now = new Date().getTime();
+
+                // Cek jika notifikasi sudah muncul dalam 1 menit terakhir
+                if (lastNotified && (now - lastNotified) < NOTIFICATION_TIMEOUT) {
+                    return;
+                }
+
+                swal({
+                    title: "Data Progress Ticket Diperbarui!",
+                    text: "Ada perubahan data terbaru pada progress ticketing.\n\nTerakhir diperiksa: " + new Date().toLocaleTimeString(),
+                    icon: "info",
+                    buttons: {
+                        confirm: {
+                            text: "Refresh",
+                            value: true,
+                            visible: true,
+                            className: "btn-refresh",
+                            closeModal: true
+                        },
+                        cancel: {
+                            text: "Nanti",
+                            value: false,
+                            visible: true,
+                            className: "btn-cancel",
+                            closeModal: true
+                        }
+                    }
+                }).then((result) => {
+                    if (result) {
+                        localStorage.setItem('lastNotified', now.toString());
+                        location.reload();
+                    } else {
+                        localStorage.setItem('lastNotified', now.toString());
+                    }
+                });
+            }
+            // Inisialisasi
+            // Jalankan segera saat halaman load
+            checkForUpdates();
+
+            // Jadwalkan pengecekan berkala
+            setInterval(checkForUpdates, CHECK_INTERVAL);
+
+            // Untuk debugging
+            window.debugCheckUpdate = checkForUpdates;
         });
 
         // Hapus semua data localStorage & sessionStorage ketika user meninggalkan halaman

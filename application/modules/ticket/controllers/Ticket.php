@@ -119,6 +119,7 @@ class Ticket extends CI_Controller
         $this->load->library('session');
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
+        $data['M_TICKET_DETAIL_HISTORY'] = $this->M_TICKET->get_ticket_detail_view($kode);
         $data['ticket'] = $this->M_TICKET->get_ticket($kode);
         $data['ticket_detail'] = $this->M_TICKET->get_selected_tickets($kode);
         $data['get_karyawan'] = $this->M_KARYAWAN->get_karyawan();
@@ -592,10 +593,8 @@ class Ticket extends CI_Controller
                 "📌 *PROGRESS: " . strtoupper($get_ticket_detail->KETERANGAN) . "* \n" .
                 "👤 TEKNISI: " . strtoupper($NAMA_TEKNISI) . " \n\n" .
 
-                "🚨 Lihat progress ticket anda dengan membuka link di bawah ini:\n" .
-                $url_client . "\n\n" .
                 "🚨 JIKA PROGRESS TICKET SUDAH SELESAI, KONFIRMASI DENGAN KLIK TAUTAN DI BAWAH.:\n" .
-                $url_client_confirm;
+                $url_client;
             $this->WHATSAPP->send_wa($telp_client, $ms_wa_client);
         }
 
@@ -719,6 +718,38 @@ class Ticket extends CI_Controller
         if (!$session_hash || $current_hash !== $session_hash) {
             $response['has_update'] = true;
             $this->session->set_userdata('ticket_data_hash', $current_hash);
+        }
+
+        // Tambahkan timestamp untuk debugging
+        $response['last_check'] = date('Y-m-d H:i:s');
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+
+    public function check_updates_technician()
+    {
+        $this->load->database();
+        // Ambil data penting untuk di-hash
+        $data = $this->db->query("
+        SELECT 
+                COUNT(*) as total_tickets,
+                SUM(CASE WHEN STATUS_PROGRESS = 0 THEN 1 ELSE 0 END) as status_0,
+                SUM(CASE WHEN STATUS_PROGRESS = 25 THEN 1 ELSE 0 END) as status_25,
+                SUM(CASE WHEN STATUS_PROGRESS = 50 THEN 1 ELSE 0 END) as status_50,
+                SUM(CASE WHEN STATUS_PROGRESS = 100 THEN 1 ELSE 0 END) as status_100,
+                MAX(TGL_PENGERJAAN) as latest_date
+            FROM TICKETDETAIL
+        ")->row_array();
+
+        // Buat hash unik dari data
+        $current_hash = md5(json_encode($data));
+        $session_hash = $this->session->userdata('ticket_data_hash_technician');
+
+        $response = ['has_update' => false];
+
+        if (!$session_hash || $current_hash !== $session_hash) {
+            $response['has_update'] = true;
+            $this->session->set_userdata('ticket_data_hash_technician', $current_hash);
         }
 
         // Tambahkan timestamp untuk debugging
