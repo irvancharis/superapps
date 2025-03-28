@@ -185,8 +185,28 @@ class Ticket_client_view extends CI_Controller
         // Konfigurasi upload Gambar
         $config['upload_path'] = APPPATH . '../assets/uploads/ticket/';
         $config['allowed_types'] = 'jpg|jpeg|png|pdf|doc|docx|xls|xlsx';
-        $config['max_size'] = 4096; // 4MB
+        $config['max_size'] = 2048; // 4MB
         $config['file_name'] = $id_ticket . '_' . $requestby;
+
+        // Fungsi untuk kompres gambar
+        function compress_image($source_path, $destination_path, $quality = 75)
+        {
+            $info = getimagesize($source_path);
+
+            if ($info['mime'] == 'image/jpeg') {
+                $image = imagecreatefromjpeg($source_path);
+                imagejpeg($image, $destination_path, $quality);
+            } elseif ($info['mime'] == 'image/png') {
+                $image = imagecreatefrompng($source_path);
+                imagepng($image, $destination_path, round(9 * $quality / 100)); // PNG quality is 0-9
+            }
+
+            if (isset($image)) {
+                imagedestroy($image);
+                return true;
+            }
+            return false;
+        }
 
         // Cek Apakah ada gambar yang diupload
         if (!empty($_FILES['image']['name'])) {
@@ -199,6 +219,18 @@ class Ticket_client_view extends CI_Controller
             $data_gambar = $this->upload->data();
             $extension = $data_gambar['file_ext'];
             $foto = $id_ticket . '_' . $requestby . $extension;
+
+            // Kompres gambar jika file adalah gambar (jpg/jpeg/png)
+            if (in_array(strtolower($data_gambar['file_ext']), ['.jpg', '.jpeg', '.png'])) {
+                $source_path = $data_gambar['full_path'];
+                $compressed_path = $source_path . '_compressed';
+
+                if (compress_image($source_path, $compressed_path)) {
+                    // Hapus file asli dan ganti dengan yang sudah dikompres
+                    unlink($source_path);
+                    rename($compressed_path, $source_path);
+                }
+            }
 
             // Jika validasi lolos, lanjutkan proses penyimpanan
             $data = [
