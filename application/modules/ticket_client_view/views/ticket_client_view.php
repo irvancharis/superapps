@@ -433,7 +433,7 @@
                     <abbr title="">PANDUAN TICKET</abbr>
                 </a>
             </li> -->
-            <li class="menu-header">Call Center</li>
+            <li class="menu-header">IT Administrator</li>
             <li>
                 <a href="https://wa.me/6287777176997" target="_blank">
                     <span class="icon-circle">
@@ -456,6 +456,31 @@
                         <img src="<?= base_url('assets/img/whatsapp.png'); ?>" alt="email">
                     </span>
                     <abbr title="">CHARIS</abbr>
+                </a>
+            </li>
+            <li class="menu-header">IT Support</li>
+            <li>
+                <a href="https://wa.me/6287777176997" target="_blank">
+                    <span class="icon-circle">
+                        <img src="<?= base_url('assets/img/whatsapp.png'); ?>" alt="whatsapp">
+                    </span>
+                    <abbr title="">JUNIYAR</abbr>
+                </a>
+            </li>
+            <li>
+                <a href="https://wa.me/628175766631" target="_blank">
+                    <span class="icon-circle">
+                        <img src="<?= base_url('assets/img/whatsapp.png'); ?>" alt="facebook">
+                    </span>
+                    <abbr title="">IHSAN</abbr>
+                </a>
+            </li>
+            <li>
+                <a href="https://wa.me/6281357501196" target="_blank">
+                    <span class="icon-circle">
+                        <img src="<?= base_url('assets/img/whatsapp.png'); ?>" alt="email">
+                    </span>
+                    <abbr title="">SEPTIAN</abbr>
                 </a>
             </li>
         </ul>
