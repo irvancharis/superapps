@@ -21,7 +21,7 @@ class Ticket_client_view extends CI_Controller
     {
         $this->load->library('session');
 
-        $data['M_TICKET'] = $this->M_TICKET->get_news();
+        // $data['M_TICKET'] = $this->M_TICKET->get_news();
         $this->session->set_userdata('page', $page);
         $data['page'] = $this->session->userdata('page');
         $data['get_departement'] = $this->M_TICKET->get_departement();
