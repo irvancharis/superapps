@@ -48,7 +48,8 @@ class Departement extends CI_Controller
         }
 
         // Ambil data dari POST
-        $id_departement = $this->uuid->v4();
+        // $id_departement = $this->uuid->v4();
+        $id_departement = $this->M_DEPARTEMENT->get_latest_data() ? $this->M_DEPARTEMENT->get_latest_data()[0]->KODE_DEPARTEMEN + 1 : 1;
         $nama_departement = $this->input->post('nama_departement');
         $keterangan = $this->input->post('keterangan');
 

@@ -28,6 +28,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/bundles/select2/dist/css/select2.min.css'); ?>">
     <style>
         .SA {
             font-size: 2em;
@@ -267,7 +269,7 @@
                                                 </div> -->
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label>DEPARTEMEN ANDA</label>
-                                                    <select name="id_departemen" id="id_departemen" class="form-control" required>
+                                                    <select name="id_departemen" id="id_departemen" class="form-control select2" required>
                                                         <option value="" class="text-center" selected disabled>-- Pilih Departemen --</option>
                                                         <?php foreach ($get_departement as $row) : ?>
                                                             <option value="<?= $row->KODE_DEPARTEMEN; ?>"><?= $row->NAMA_DEPARTEMEN; ?></option>
@@ -326,6 +328,7 @@
                                                                 accept="image/gif, image/jpeg, image/png, image/webp, application/pdf" />
                                                         </div>
                                                     </div>
+                                                    <p style="color:red;font-style: italic;">*). Boleh dikosongi</p>
                                                 </div>
                                                 <div class="form-group col-12 col-md-6 col-lg-6" id="dokumen-container" style="display: none;">
                                                     <label>UPLOAD DOKUMEN</label>
@@ -334,6 +337,15 @@
                                                             <label for="dokumen-upload" id="dokumen-label">Upload Dokumen</label>
                                                             <input type="file" name="dokumen" id="dokumen-upload"
                                                                 accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-12 col-md-12 col-lg-12">
+                                                    <div class="alert alert-light alert-has-icon">
+                                                        <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                                                        <div class="alert-body">
+                                                            <div class="alert-title">Informasi</div>
+                                                            Jika TICKET STUCK (MACET/ERROR) harap refresh halaman dan kirim ulang TICKET tanpa UPLOAD GAMBAR.
                                                         </div>
                                                     </div>
                                                 </div>
@@ -420,19 +432,12 @@
             </div>
         </section>
     </div>
-    <span class="chat-icon btnblickanim"></span>
+
+    <!-- Floating Button Chat -->
+    <!-- <span class="chat-icon btnblickanim"></span>
     <div class="main-chat-box">
         <span class="traingle-shadow"></span>
         <ul class="chatBox">
-            <!-- <li class="menu-header">Tutorial</li>
-            <li>
-                <a href="javascript:void(0);" id="guideButton">
-                    <span class="icon-circle">
-                        <img src="<?= base_url('assets/img/video-tutorials.png'); ?>" alt="whatsapp">
-                    </span>
-                    <abbr title="">PANDUAN TICKET</abbr>
-                </a>
-            </li> -->
             <li class="menu-header">IT Administrator</li>
             <li>
                 <a href="https://wa.me/6287777176997" target="_blank">
@@ -484,7 +489,8 @@
                 </a>
             </li>
         </ul>
-    </div>
+    </div> -->
+    <!-- Floating Button Chat End -->
 
     <!-- Modal Pilihan Desktop/Mobile -->
     <div id="videoGuideModal" style="display: none; text-align: center;">
@@ -530,6 +536,8 @@
     <!-- Sweetalert -->
     <script src="<?php echo base_url('assets/bundles/sweetalert/sweetalert.min.js'); ?>"></script>
     <script src="<?php echo base_url('assets/js/page/sweetalert.js'); ?>"></script>
+    <!-- Select2 -->
+    <script src="<?php echo base_url('assets/bundles/select2/dist/js/select2.full.min.js'); ?>"></script>
 
     <script>
         $(document).ready(function() {
@@ -809,6 +817,30 @@
                     src: "#videoGuideModal",
                     type: "inline",
                 }, ]);
+            });
+
+            // Reset Form
+            // Tangkap tombol reset
+            const resetButton = document.querySelector('button[type="reset"]');
+
+            // Tambahkan event listener untuk tombol reset
+            resetButton.addEventListener('click', function(e) {
+                // Reset Select2
+                $('#id_departemen').val(null).trigger('change');
+
+                // Reset input file
+                document.getElementById('image-upload').value = '';
+                document.getElementById('dokumen-upload').value = '';
+
+                // Reset preview gambar
+                const imagePreview = document.getElementById('image-preview');
+                imagePreview.style.backgroundImage = '';
+                document.getElementById('image-label').style.display = 'block';
+
+                // Reset preview dokumen
+                const dokumenPreview = document.getElementById('dokumen-preview');
+                dokumenPreview.style.backgroundImage = '';
+                document.getElementById('dokumen-label').style.display = 'block';
             });
         });
 
