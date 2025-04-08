@@ -22,7 +22,7 @@ class M_PRODUK_ITEM extends CI_Model
 
     public function getFilteredProduk($search)
     {
-        $query = "SELECT * FROM VIEW_PRODUK_ITEM WHERE NAMA_ITEM LIKE '%$search%' OR KODE_ITEM LIKE '%$search%' OR NAMA_PRODUK_KATEGORI LIKE '%$search%'";
+        $query = "SELECT * FROM VIEW_PRODUK_ITEM WHERE UPPER(NAMA_ITEM) LIKE '%$search%' OR KODE_ITEM LIKE '%$search%' OR UPPER(NAMA_PRODUK_KATEGORI) LIKE '%$search%'";
         $result = $this->db->query($query);
         return $result->result();
     }

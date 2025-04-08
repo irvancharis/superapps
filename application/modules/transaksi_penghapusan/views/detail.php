@@ -37,6 +37,8 @@
                                                     required value="<?= $transaksi->NAMA_RUANGAN; ?>" readonly>
                                             </tr>
                                             <tr>
+                                                <th>LOKASI</th>
+                                                <td><?= $transaksi->NAMA_LOKASI; ?></td>
                                                 <input type="hidden" class="form-control" name="lokasi" id="lokasi"
                                                     required value="<?= $transaksi->NAMA_LOKASI; ?>" readonly>
                                             </tr>
