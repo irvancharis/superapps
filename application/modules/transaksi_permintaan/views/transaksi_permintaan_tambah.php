@@ -56,14 +56,9 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DEPARTEMEN</label>
-                                                <select required name="DEPARTEMEN_AKHIR" id="DEPARTEMEN_AKHIR"
+                                                <select required disabled name="DEPARTEMEN_AKHIR" id="DEPARTEMEN_AKHIR"
                                                     class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih
-                                                        Departemen --</option>
-                                                    <?php foreach ($get_departemen as $row) : ?>
-                                                    <option value="<?= $row->KODE_DEPARTEMEN; ?>">
-                                                        <?= $row->NAMA_DEPARTEMEN; ?></option>
-                                                    <?php endforeach; ?>
+                                                    <option value="<?php echo $this->session->userdata('ID_DEPARTEMEN'); ?>" class="text-center" selected><?php echo $this->session->userdata('NAMA_DEPARTEMEN'); ?></option>                                                    
                                                 </select>
                                                 <div class="invalid-feedback">
                                                     Silahkan masukkan DEPARTEMENT!

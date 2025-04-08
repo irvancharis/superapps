@@ -581,8 +581,6 @@ class Transaksi_penghapusan extends CI_Controller
             return;
         }
 
-
-
         echo json_encode(['success' => true]);
     }
 

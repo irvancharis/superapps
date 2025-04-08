@@ -112,8 +112,7 @@ class Transaksi_pengadaan extends CI_Controller
         }
 
         $search = $this->input->post('search')['value'];
-        $search = strtoupper($search);
-
+        
         log_message('error', 'Search query: ' . $search); // Tambahkan log ini
 
         if (empty($search)) {

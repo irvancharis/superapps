@@ -159,7 +159,7 @@ if ($this->session->userdata('NAMA_ROLE') == 'IT') {
                         <a href="<?php echo base_url('transaksi_penghapusan'); ?>" class="nav-link"><i
                                 data-feather="dollar-sign"></i><span>Penghapusan</span></a>
                     </li>
-                    
+
                 </ul>
             </li>
 
@@ -196,9 +196,15 @@ if ($this->session->userdata('NAMA_ROLE') == 'IT') {
                     </li>
                 </ul>
             </li>
-
         </ul>
 
+        <ul class="sidebar-menu">
+            <li class="menu-header">Report</li>
+            <li>
+                <a href="<?php echo base_url('checkup_server'); ?>" class="nav-link"><i
+                        data-feather="settings"></i><span>REKAP BARANG</span></a>
+            </li>
+        </ul>
 
     </aside>
 </div>

@@ -122,15 +122,15 @@
                                     <span><?php echo $transaksi->NAMA_USER_PENGAJUAN; ?></span>
                                 </div>
                                 <div class="form-group col-2 col-md-2 col-lg-3 text-center">
-                                    <label>DISETUJUI :</label><br>
+                                    <label>DISETUJUI KABAG :</label><br>
                                     <span><?php echo $transaksi->NAMA_APROVAL_KABAG; ?></span>
                                 </div>
                                 <div class="form-group col-2 col-md-2 col-lg-3 text-center">
-                                    <label>MENGETAHUI :</label><br>
+                                    <label>MENGETAHUI GM :</label><br>
                                     <span><?php echo $transaksi->NAMA_APROVAL_GM; ?></span>
                                 </div>
                                 <div class="form-group col-2 col-md-2 col-lg-3 text-center">
-                                    <label>MENGETAHUI :</label><br>
+                                    <label>MENGETAHUI HEAD :</label><br>
                                     <span><?php echo $transaksi->NAMA_APROVAL_HEAD; ?></span>
                                 </div>
                                 <div class="form-group col-2 col-md-2 col-lg-3 text-center">
