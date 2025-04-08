@@ -153,7 +153,7 @@ class Transaksi_opname extends CI_Controller
     public function detail($KODE, $page = 'transaksi_opname')
     {
         $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI OPNAME','APROVAL KABAG');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'TRANSAKSI OPNAME','DETAIL OPNAME');
         if (!$CEK_ROLE) { redirect('non_akses'); }
 
 
