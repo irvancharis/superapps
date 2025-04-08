@@ -2,6 +2,7 @@
 <?php
 $CI = &get_instance();
 $CI->load->model('ticket/M_TICKET'); // Load model dari module "ticket"
+$jumlah_ticket = 0;
 if ($this->session->userdata('NAMA_ROLE') == 'IT') {
     $jumlah_ticket = $CI->M_TICKET->count_ticket_by_approval(0)->JUMLAH_TICKET;
     if ($jumlah_ticket > 0) {
