@@ -362,7 +362,7 @@ class Transaksi_pengadaan extends CI_Controller
         $data['get_departemen'] = $this->M_TRANSAKSI_PENGADAAN->get_departemen();
         $data['id_transaksi_pengadaan'] = $id_transaksi_pengadaan;
         $data['karyawan'] = $this->M_KARYAWAN->get_karyawan();
-        $data['karyawan_departemen'] = $this->M_KARYAWAN->get_karyawan_by_departemen($data['penyerahan_barang']->KODE_DEPARTEMEN_PENGAJUAN);
+        $data['karyawan_departemen'] = $this->M_KARYAWAN->get_karyawan_by_area_n_departemen($data['penyerahan_barang']->KODE_AREA_DEFAULT, $data['penyerahan_barang']->KODE_DEPARTEMEN_PENGAJUAN);
         log_message('error', 'Data returned: ' . json_encode($data['karyawan']));
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
