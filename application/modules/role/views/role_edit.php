@@ -11,7 +11,7 @@
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <form id="FORM_DATA">
-                                            <table class="table table-striped table-bordered">
+                                            <table class="table table-striped table-bordered table-sm">
                                                 <tbody>
 
                                                     <?php foreach ($M_FITUR as $index => $FITUR) : ?>

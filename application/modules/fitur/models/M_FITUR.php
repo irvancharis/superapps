@@ -15,6 +15,7 @@ class M_FITUR extends CI_Model
 
     public function get_fitur()
     {
+        $this->db->order_by('NAMA_FITUR', 'ASC');
         $query = $this->db->get('FITUR_');
         return $query->result_object();
     }
@@ -24,6 +25,7 @@ class M_FITUR extends CI_Model
         $this->db->select('*');
         $this->db->from('VIEW_FITUR');
         $this->db->where('KODE_FITUR', $KODE);
+        $this->db->order_by('NAMA_DETAIL_FITUR', 'ASC');
         $query = $this->db->get();
         return$query->result_object();
     }
