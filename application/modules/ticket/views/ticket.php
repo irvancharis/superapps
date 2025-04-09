@@ -10,7 +10,7 @@
                                         <span class="d-inline-block" data-toggle="tooltip" data-title="Sementara Dinonaktifkan"><a href="<?php echo base_url('ticket/tambah_view') ?>" class="btn btn-primary disabled"><i class="fas fa-plus"></i> Tambah Data</a></span>
                                     </div>
                                 </div>
-                                <?php if ($this->session->userdata('NAMA_ROLE') == 'IT'): ?>
+                                <?php if ($this->session->userdata('NAMA_ROLE') == 'IT' || $this->session->userdata('NAMA_ROLE') == 'IT KABAG'): ?>
                                     <div class="card-body">
                                         <ul class="nav nav-pills mb-4" id="myTab3" role="tablist">
                                             <li class="nav-item">
