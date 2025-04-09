@@ -367,6 +367,25 @@ class Ticket_client_view extends CI_Controller
 
         $this->TELEGRAM->send_message('8007581238', $ms_telegram);
 
+        // Kirim Pesan ke WA Group IT TICKETING
+        $url_group_it = "https://qsch2nssom6w.share.zrok.io/superapps/login";
+        $ms_wa_group_it =
+            "=====*REQUEST TICKETING*===== \n\n" .
+
+            "=====*INFORMASI PEREQUEST*===== \n" .
+            "   👤 NAMA: `" . strtoupper($requestby) . "` \n" .
+            "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
+            "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
+
+            "=====*DETAIL KELUHAN*===== \n" .
+            "   📂 TIPE KELUHAN: `" . strtoupper($type_ticket) . "` \n" .
+            "   📝 DESKRIPSI KELUHAN: `" . strtoupper($description_ticket) . "` \n\n" .
+
+            "🚨 *HARAP SEGERA PROSES TICKET DENGAN MEMBUKA URL DI BAWAH INI:* \n" .
+            "$url_group_it";
+
+        $this->WHATSAPP->send_wa_group_it($ms_wa_group_it);
+
         if ($result) {
             echo json_encode(['success' => true]);
         } else {

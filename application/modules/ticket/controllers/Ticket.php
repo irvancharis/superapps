@@ -407,7 +407,7 @@ class Ticket extends CI_Controller
 
             // Ticket History Versi ZROK
             $url_client = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
-            $url_teknisi = "https://qsch2nssom6w.share.zrok.io/superapps/login"  . urlencode($id_ticket);
+            $url_teknisi = "https://qsch2nssom6w.share.zrok.io/superapps/login";
 
             // Membuat format pesan sesuai permintaan
             // // Kirim Pesan ke WA (Teknisi)
