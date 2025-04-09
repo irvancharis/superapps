@@ -406,8 +406,8 @@ class Ticket extends CI_Controller
             // $url_teknisi = "http://" . urlencode($get_IP) . "/superapps/ticket/ticket_technician/"  . urlencode($id_ticket);
 
             // Ticket History Versi ZROK
-            $url_client = "https://kl6qf8gg5lj8.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
-            $url_teknisi = "https://kl6qf8gg5lj8.share.zrok.io/superapps/login"  . urlencode($id_ticket);
+            $url_client = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
+            $url_teknisi = "https://qsch2nssom6w.share.zrok.io/superapps/login"  . urlencode($id_ticket);
 
             // Membuat format pesan sesuai permintaan
             // // Kirim Pesan ke WA (Teknisi)
@@ -483,7 +483,7 @@ class Ticket extends CI_Controller
 
             // // Kirim Pesan ke WA (Client)
             $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
-            $url_client = "https://kl6qf8gg5lj8.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
+            $url_client = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
             $ms_wa_client =
                 "=====*TICKET PROGRESS*===== \n\n" .
                 "=====_INFORMASI TICKET_===== \n\n" .
@@ -585,8 +585,8 @@ class Ticket extends CI_Controller
             $get_teknisi = $this->M_TECHNICIAN->get_teknisi_by_id($get_ticket->TECHNICIAN);
             $get_karyawan = $this->M_KARYAWAN->get_karyawan_by_id($get_teknisi->IDKARYAWAN);
             $NAMA_TEKNISI = $get_karyawan->NAMA_KARYAWAN;
-            $url_client = "https://kl6qf8gg5lj8.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
-            $url_client_confirm = "https://kl6qf8gg5lj8.share.zrok.io/superapps/ticket_client_view/ticket_confirm/" . urlencode($id_ticket);
+            $url_client = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
+            $url_client_confirm = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_confirm/" . urlencode($id_ticket);
             $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
             $ms_wa_client =
                 "=====*TICKET PROGRESS*===== \n\n" .
