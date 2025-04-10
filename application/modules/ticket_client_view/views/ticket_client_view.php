@@ -245,7 +245,7 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
-                                                    <label>REQUEST BY</label>
+                                                    <label>NAMA</label>
                                                     <input type="text" name="request_by" id="request_by" placeholder="ANDI" class="form-control" required>
                                                     <div class="invalid-feedback">
                                                         Masukkan NAMA anda
@@ -305,21 +305,21 @@
                                                         Silahkan masukkan DEPARTEMEN DIREQUEST!
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <div class="form-group col-12 col-md-12 col-lg-12">
                                                     <label class="form-label">PILIH TYPE KELUHAN</label>
                                                     <div class="selectgroup selectgroup-pills type-ticket">
                                                         <!-- <p style="color:red;font-style: italic;">*). Muncul setelah memilih DEPARTEMEN DIREQUEST</p> -->
                                                         <p style="color:red;font-style: italic;">*). Muncul setelah memilih AREA</p>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <div class="form-group col-12 col-md-12 col-lg-12">
                                                     <label>DESKRIPSI KELUHAN</label>
                                                     <textarea name="description_ticket" placeholder="KOMPUTERKU MATI" class="form-control" id="description_ticket" required></textarea>
                                                     <div class="invalid-feedback">
                                                         Silahkan masukkan DESKRIPSI KELUHAN anda!
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-12 col-md-6 col-lg-6" id="image-container">
+                                                <div class="form-group col-12 col-md-12 col-lg-12" id="image-container">
                                                     <label>FOTO BUKTI KELUHAN</label>
                                                     <div class="d-flex justify-content-center align-items-center">
                                                         <div id="image-preview" class="image-preview">

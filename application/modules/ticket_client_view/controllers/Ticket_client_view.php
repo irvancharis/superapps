@@ -368,7 +368,8 @@ class Ticket_client_view extends CI_Controller
         $this->TELEGRAM->send_message('8007581238', $ms_telegram);
 
         // Kirim Pesan ke WA Group IT TICKETING
-        $url_group_it = "https://qsch2nssom6w.share.zrok.io/superapps/login";
+        // $url_group_it = "https://qsch2nssom6w.share.zrok.io/superapps/login";
+        $url_group_it = "https://ticketing.sagroup.id/superapps/login";
         $ms_wa_group_it =
             "=====*REQUEST TICKETING*===== \n\n" .
 
