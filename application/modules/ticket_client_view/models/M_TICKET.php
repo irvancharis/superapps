@@ -24,6 +24,34 @@ class M_TICKET extends CI_Model
         return $query->result_object();
     }
 
+    public function get_ticket_queue()
+    {
+        $this->db->select('TICKET.*, DEPARTEMEN.*, TECHNICIAN.*, MAPING_AREA.*');
+        $this->db->from('TICKET');
+        $this->db->join('DEPARTEMEN', 'TICKET.DEPARTEMENT = DEPARTEMEN.KODE_DEPARTEMEN', 'left');
+        $this->db->join('TECHNICIAN', 'TICKET.TECHNICIAN = TECHNICIAN.IDTECH', 'left');
+        $this->db->join('MAPING_AREA', 'TICKET.SITE_TICKET = MAPING_AREA.KODE_AREA', 'left');
+        $this->db->where('TICKET.STATUS_TICKET !=', '100');
+        $this->db->where('TICKET.APPROVAL_TICKET !=', '2');
+        $this->db->order_by('TICKET.DATE_TICKET', 'ASC');
+
+        $query = $this->db->get();
+        $results = $query->result_object();
+
+        // Urutkan secara manual di PHP
+        usort($results, function ($a, $b) {
+            if ($a->STATUS_TICKET == 0 && $b->STATUS_TICKET != 0) {
+                return -1;
+            } elseif ($a->STATUS_TICKET != 0 && $b->STATUS_TICKET == 0) {
+                return 1;
+            } else {
+                return strtotime($a->DATE_TICKET) - strtotime($b->DATE_TICKET);
+            }
+        });
+
+        return $results;
+    }
+
     public function get_ticket($id_ticket)
     {
         $this->db->select('TICKET.*, DEPARTEMEN.*, TECHNICIAN.*, MAPING_AREA.*');

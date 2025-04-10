@@ -296,7 +296,9 @@
             </div>
         </section>
     </div>
-    <span class="chat-icon btnblickanim"></span>
+
+    <!-- Floating Button Chat -->
+    <!-- <span class="chat-icon btnblickanim"></span>
     <div class="main-chat-box">
         <span class="traingle-shadow"></span>
         <ul class="chatBox">
@@ -325,7 +327,9 @@
                 </a>
             </li>
         </ul>
-    </div>
+    </div> -->
+    <!-- Floating Button Chat End -->
+
     <!-- General JS Scripts -->
     <script src="<?php echo base_url('assets/js/app.min.js') ?>"></script>
     <!-- Preview Gambar -->
