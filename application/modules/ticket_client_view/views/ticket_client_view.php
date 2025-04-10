@@ -246,7 +246,7 @@
                                             <div class="row">
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label>NAMA</label>
-                                                    <input type="text" name="request_by" id="request_by" placeholder="ANDI" class="form-control" required>
+                                                    <input type="text" name="request_by" id="request_by" placeholder="" class="form-control" required>
                                                     <div class="invalid-feedback">
                                                         Masukkan NAMA anda
                                                     </div>
@@ -254,7 +254,7 @@
                                                 <!-- TELP -->
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label>NO. WHATSAPP</label>
-                                                    <input type="text" class="form-control" id="telp" placeholder="08123456789" name="telp" required>
+                                                    <input type="text" class="form-control" id="telp" placeholder="" name="telp" required>
                                                     <div class="invalid-feedback">
                                                         Masukkan NO. WHATSAPP dengan benar!
                                                     </div>
@@ -314,7 +314,7 @@
                                                 </div>
                                                 <div class="form-group col-12 col-md-12 col-lg-12">
                                                     <label>DESKRIPSI KELUHAN</label>
-                                                    <textarea name="description_ticket" placeholder="KOMPUTERKU MATI" class="form-control" id="description_ticket" required></textarea>
+                                                    <textarea name="description_ticket" placeholder="" class="form-control" id="description_ticket" required></textarea>
                                                     <div class="invalid-feedback">
                                                         Silahkan masukkan DESKRIPSI KELUHAN anda!
                                                     </div>
