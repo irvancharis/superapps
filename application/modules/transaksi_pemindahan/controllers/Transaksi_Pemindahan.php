@@ -29,7 +29,7 @@ class Transaksi_pemindahan extends CI_Controller
     {
 
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PEMINDAHAN', 'LIST PEMINDAHAN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PEMINDAHAN', 'LIST');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
