@@ -18,8 +18,8 @@
                                                 <tr>
                                                     <th>AREA</th>
                                                     <th>KODE RUANGAN</th>
-                                                    <th>NAMA RUANGAN</th>
-                                                    <th>Action</th>
+                                                    <th class="text-center col-3">NAMA RUANGAN</th>
+                                                    <th class="text-center col-1">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -28,7 +28,7 @@
                                                     <td><?php echo $d->NAMA_AREA; ?></td>
                                                     <td><?php echo $d->KODE_RUANGAN; ?></td>
                                                     <td><?php echo $d->NAMA_RUANGAN; ?></td>
-                                                    <td>
+                                                    <td class="text-center">
                                                         <div class="dropdown">
                                                             <a href="#" data-toggle="dropdown"
                                                                 class="btn btn-primary dropdown-toggle">Detail</a>

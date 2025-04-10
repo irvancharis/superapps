@@ -16,10 +16,10 @@
                                         <table class="table table-striped table-sm" id="table-2">
                                             <thead>
                                                 <tr>
-                                                    <th>Kode</th>
+                                                    <th class="text-center col-3">Kode</th>
                                                     <th>Nama Area</th>
                                                     <th>Keterangan</th>
-                                                    <th>Action</th>
+                                                    <th class="text-center col-1">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -28,7 +28,7 @@
                                                     <td><?php echo $d->KODE_AREA; ?></td>
                                                     <td><?php echo $d->NAMA_AREA; ?></td>
                                                     <td><?php echo $d->KETERANGAN_AREA; ?></td>
-                                                    <td>
+                                                    <td class="text-center">
                                                         <div class="dropdown">
                                                             <a href="#" data-toggle="dropdown"
                                                                 class="btn btn-primary dropdown-toggle">Detail</a>

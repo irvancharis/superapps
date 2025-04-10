@@ -30,7 +30,7 @@ class Transaksi_penghapusan extends CI_Controller
     {
 
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGHAPUSAN', 'LIST PENGHAPUSAN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGHAPUSAN', 'LIST');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }

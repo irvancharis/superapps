@@ -17,7 +17,7 @@ class Karyawan extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'LIST KARYAWAN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'LIST');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -50,7 +50,7 @@ class Karyawan extends CI_Controller
     {
         $this->load->library( 'session' );
         $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'KARYAWAN','TAMBAH KARYAWAN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'KARYAWAN','TAMBAH');
         if (!$CEK_ROLE) { redirect('non_akses'); }
 
 
@@ -69,7 +69,7 @@ class Karyawan extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'EDIT KARYAWAN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'EDIT');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -97,7 +97,7 @@ class Karyawan extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'DETAIL KARYAWAN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'DETAIL');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -121,7 +121,7 @@ class Karyawan extends CI_Controller
 
         $this->load->library( 'session' );
         $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'KARYAWAN','TAMBAH KARYAWAN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'KARYAWAN','TAMBAH');
         if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $KODE = $this->uuid->v4();
@@ -160,7 +160,7 @@ class Karyawan extends CI_Controller
 
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'EDIT KARYAWAN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'EDIT');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -187,7 +187,7 @@ class Karyawan extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'HAPUS KARYAWAN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'HAPUS');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }

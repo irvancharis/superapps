@@ -22,7 +22,7 @@ class Departement extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'DEPARTEMEN', 'LIST DEPARTEMEN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'DEPARTEMEN', 'LIST');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -42,7 +42,7 @@ class Departement extends CI_Controller
 
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'DEPARTEMEN', 'TAMBAH DEPARTEMEN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'DEPARTEMEN', 'TAMBAH');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -80,7 +80,7 @@ class Departement extends CI_Controller
 
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'DEPARTEMEN', 'EDIT DEPARTEMEN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'DEPARTEMEN', 'EDIT');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -117,7 +117,7 @@ class Departement extends CI_Controller
 
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'DEPARTEMEN', 'HAPUS DEPARTEMEN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'DEPARTEMEN', 'HAPUS');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }

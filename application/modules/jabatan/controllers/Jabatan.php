@@ -16,7 +16,7 @@ class Jabatan extends CI_Controller
     {
         $this->load->library( 'session' );
         $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'JABATAN','LIST JABATAN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'JABATAN','LIST');
         if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $data['M_JABATAN'] = $this->M_JABATAN->get_news();
@@ -33,7 +33,7 @@ class Jabatan extends CI_Controller
 
         $this->load->library( 'session' );
         $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'JABATAN','TAMBAH JABATAN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'JABATAN','TAMBAH');
         if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $id_jabatan = $this->uuid->v4();
@@ -67,7 +67,7 @@ class Jabatan extends CI_Controller
 
         $this->load->library( 'session' );
         $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'JABATAN','EDIT JABATAN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'JABATAN','EDIT');
         if (!$CEK_ROLE) { redirect('non_akses'); }
 
 
@@ -102,7 +102,7 @@ class Jabatan extends CI_Controller
 
         $this->load->library( 'session' );
         $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'JABATAN','HAPUS JABATAN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'JABATAN','HAPUS');
         if (!$CEK_ROLE) { redirect('non_akses'); }
 
 
