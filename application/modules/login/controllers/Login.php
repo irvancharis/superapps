@@ -44,19 +44,19 @@ class Login extends CI_Controller
                 $this->session->set_userdata('NAMA_ROLE', $user->NAMA_ROLE);
                 $this->session->set_userdata('NIK', $get_nik->NIK);
 
-                return redirect()->to('/dashboard');
+                return redirect('/dashboard');
             } else {
-                return redirect()->to('/login');
+                return redirect('/login');
             }
         } else {
-            return redirect()->to('/login');
+            return redirect('/login');
         }
     }
 
     public function logout()
     {
         $this->session->unset_userdata(array('isLoggedIn', 'UUID_USER', 'ID_AREA', 'NAMA_AREA', 'ID_JABATAN', 'NAMA_JABATAN', 'ID_KARYAWAN', 'NAMA_KARYAWAN', 'ID_DEPARTEMEN', 'NAMA_DEPARTEMEN', 'ROLE', 'NAMA_ROLE'));
-        return redirect()->to('/login');
+        return redirect('/login');
     }
 
 
