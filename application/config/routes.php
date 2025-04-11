@@ -1,5 +1,5 @@
 <?php
-defined( 'BASEPATH' ) or exit( 'No direct script access allowed' );
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -52,8 +52,8 @@ defined( 'BASEPATH' ) or exit( 'No direct script access allowed' );
 
 
 
-$route['default_controller'] = 'dashboard';
-$route[ '404_override' ] = 'login/non_akses';
+$route['default_controller'] = 'ticket_client_view';
+$route['404_override'] = 'login/non_akses';
 
 $route['logout'] = 'login/logout';
 $route['non_akses'] = 'login/non_akses';
@@ -61,4 +61,3 @@ $route['non_akses'] = 'login/non_akses';
 $route['appinkabag/(:any)'] = 'transaksi_pengadaan/approval_kabag_by_token/$1';
 $route['appingm/(:any)'] = 'transaksi_pengadaan/approval_gm_by_token/$1';
 $route['appinhead/(:any)'] = 'transaksi_pengadaan/approval_head_by_token/$1';
-
