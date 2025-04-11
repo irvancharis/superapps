@@ -336,6 +336,7 @@ class Ticket_client_view extends CI_Controller
 
                 "=====*INFORMASI PEREQUEST*===== \n" .
                 "   👤 NAMA: `" . strtoupper($requestby) . "` \n" .
+                "   📞 NO. WHATSAPP: `" . strtoupper($telp) . "` \n" .
                 "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
                 "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
 
