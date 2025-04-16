@@ -3,9 +3,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class WHATSAPP extends CI_Model
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->database();
+    }
 
     public function send_wa($phone, $message)
     {
+        $setting = $this->db->get('SETTING')->row();
+        $token_wa = $setting->TOKEN_WA;
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -23,7 +31,7 @@ class WHATSAPP extends CI_Model
                 'countryCode' => '62', //optional
             ),
             CURLOPT_HTTPHEADER => array(
-                'Authorization: 7ns7GPzxMXHcBUJ4jY9e' //change TOKEN to your actual token
+                'Authorization: ' . $token_wa . '' //change TOKEN to your actual token
             ),
         ));
 
