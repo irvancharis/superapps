@@ -23,7 +23,7 @@ class WHATSAPP extends CI_Model
                 'countryCode' => '62', //optional
             ),
             CURLOPT_HTTPHEADER => array(
-                'Authorization: 6GCwLNwRZzPZGh7e87Gg' //change TOKEN to your actual token
+                'Authorization: 7ns7GPzxMXHcBUJ4jY9e' //change TOKEN to your actual token
             ),
         ));
 
@@ -83,7 +83,7 @@ class WHATSAPP extends CI_Model
                 'countryCode' => '62', //optional
             ),
             CURLOPT_HTTPHEADER => array(
-                'Authorization: 6GCwLNwRZzPZGh7e87Gg' //change TOKEN to your actual token
+                'Authorization: 7ns7GPzxMXHcBUJ4jY9e' //change TOKEN to your actual token
             ),
         ));
 
