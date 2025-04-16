@@ -622,7 +622,7 @@ class Ticket_client_view extends CI_Controller
         $nama_departemen = $get_nama_departement->NAMA_DEPARTEMEN;
         $lokasi_ticket = $this->M_MAPING_AREA->get_maping_area_single($get_ticket->SITE_TICKET)->row()->NAMA_AREA;
         $nama_departemen_request = $this->M_DEPARTEMENT->get_departemen_single($get_ticket->DEPARTEMENT_DIREQUEST)->NAMA_DEPARTEMEN;
-        $get_teknisi = $this->M_TECHNICIAN->get_teknisi_by_id($id_technician);
+        $get_teknisi = $this->M_TECHNICIAN->get_teknisi_by_id($get_ticket->TECHNICIAN);
         $get_karyawan = $this->M_KARYAWAN->get_karyawan_by_id($get_teknisi->IDKARYAWAN);
         $NAMA_TEKNISI = $get_karyawan->NAMA_KARYAWAN;
         if ($nama_departemen != "UMUM") {
