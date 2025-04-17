@@ -647,7 +647,7 @@ class Ticket_client_view extends CI_Controller
                 "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen_request) . "` \n\n" .
 
                 "=====*Pemberitahuan*===== \n" .
-                "   PROGRESS TICKET `" . strtoupper($get_ticket->ID_TICKET) . "` SELESAI. \n" .
+                "   PROGRESS TICKET `" . strtoupper($get_ticket->IDTICKET) . "` SELESAI. \n" .
                 "   TEKNISI: `" . strtoupper($NAMA_TEKNISI) . "` \n";
 
             $this->WHATSAPP->send_wa($KABAG, $message);
@@ -655,7 +655,7 @@ class Ticket_client_view extends CI_Controller
             // Kirim pesan WA ke CLIENT bersangkutan bahwa ticket telah selesai
             $message_client =
                 "=====*Pemberitahuan PROGRESS TICKET SELESAI*===== \n\n" .
-                "   PROGRESS TICKET `" . strtoupper($get_ticket->ID_TICKET) . "` SELESAI. \n" .
+                "   PROGRESS TICKET `" . strtoupper($get_ticket->IDTICKET) . "` SELESAI. \n" .
                 "   TEKNISI: `" . strtoupper($NAMA_TEKNISI) . "` \n";
 
             $this->WHATSAPP->send_wa($get_ticket->TELP, $message_client);
@@ -675,6 +675,7 @@ class Ticket_client_view extends CI_Controller
                 "   📝 DESKRIPSI KELUHAN: `" . strtoupper($get_ticket->DESCRIPTION_TICKET) . "` \n\n" .
 
                 "🚨 *PROGRESS TICKETING SELESAI:* \n" .
+                "   ID TICKET `" . strtoupper($get_ticket->IDTICKET) . "` SELESAI. \n" .
                 "   TEKNISI: `" . strtoupper($NAMA_TEKNISI) . "` \n";
 
             $this->WHATSAPP->send_wa_group_it($ms_wa_group_it);
