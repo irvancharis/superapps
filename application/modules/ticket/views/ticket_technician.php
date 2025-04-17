@@ -290,7 +290,7 @@
                                                                     <address>
                                                                         <strong>Status Ticket:</strong><br>
                                                                         <?php if ($ticket->STATUS_TICKET == 0) {
-                                                                            echo "<span class='badge badge-warning' style='font-size: small;'>DALAM ANTRIAN</span><br>";
+                                                                            echo "<span class='badge badge-warning' style='font-size: small;'>BELUM DIKERJAKAN</span><br>";
                                                                         } elseif ($ticket->STATUS_TICKET == 25) {
                                                                             echo "<span class='badge badge-primary' style='font-size: small;'>SEDANG DIKERJAKAN</span><br>";
                                                                         } elseif ($ticket->STATUS_TICKET == 50) {
