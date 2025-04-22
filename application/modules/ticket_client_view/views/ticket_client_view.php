@@ -506,7 +506,7 @@
     <!-- Video Desktop -->
     <div id="desktopVideo" style="display: none;">
         <video controls>
-            <source src="<?php echo base_url('assets/img/Tutorial/Desktop.mp4'); ?>" type="video/mp4">
+            <source src="<?php echo base_url('assets/img/Tutorial/Desktop_Revisi.mp4'); ?>" type="video/mp4">
             Browser Anda tidak mendukung tag video.
         </video>
     </div>
@@ -514,7 +514,7 @@
     <!-- Video Mobile -->
     <div id="mobileVideo" style="display: none;">
         <video controls>
-            <source src="<?php echo base_url('assets/img/Tutorial/Mobile.mp4'); ?>" type="video/mp4">
+            <source src="<?php echo base_url('assets/img/Tutorial/Mobile_Revisi.mp4'); ?>" type="video/mp4">
             Browser Anda tidak mendukung tag video.
         </video>
     </div>
