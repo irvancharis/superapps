@@ -1088,7 +1088,7 @@ Sejahtera Abadi Group'
                 'RUANGAN' => $get_maping_default->RUANGAN,
                 'LOKASI' => $get_maping_default->LOKASI,
                 'DEPARTEMEN' => $get_maping_default->DEPARTEMEN,
-                'JUMLAH' => $item['jumlah'],                
+                'JUMLAH' => $item['jumlah'],
                 'JENIS_TRANSAKSI' => 'PENGADAAN - PENERIMAAN KIRIMAN BARANG',
                 'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
                 'IN_OUT' => 'IN',
