@@ -1181,7 +1181,22 @@ Sejahtera Abadi Group'
                     }                    
             }
 
-            $data_jurnal = [
+            $data_jurnal_out = [
+                'KODE_ITEM' => $item['id'],
+                'KODE_TRANSAKSI' => $id_transaksi,
+                'AREA' => $get_maping_default->AREA,
+                'RUANGAN' => $get_maping_default->RUANGAN,
+                'LOKASI' => $get_maping_default->LOKASI,
+                'DEPARTEMEN' => $get_maping_default->DEPARTEMEN,
+                'JUMLAH' => $item['jumlah'],
+                'JENIS_TRANSAKSI' => 'PENGADAAN - PENYERAHAN BARANG KE USER',
+                'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
+                'IN_OUT' => 'OUT',
+
+            ];
+             $this->M_TRANSAKSI_PENGADAAN->insert_produk_item_jurnal($data_jurnal_out);
+
+            $data_jurnal_in = [
                 'KODE_ITEM' => $item['id'],
                 'KODE_TRANSAKSI' => $id_transaksi,
                 'AREA' => $form['AREA_PENEMPATAN'],
@@ -1191,10 +1206,10 @@ Sejahtera Abadi Group'
                 'JUMLAH' => $item['jumlah'],
                 'JENIS_TRANSAKSI' => 'PENGADAAN - PENYERAHAN BARANG KE USER',
                 'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
-                'IN_OUT' => 'OUT',
+                'IN_OUT' => 'IN',
 
             ];
-             $this->M_TRANSAKSI_PENGADAAN->insert_produk_item_jurnal($data_jurnal);  
+             $this->M_TRANSAKSI_PENGADAAN->insert_produk_item_jurnal($data_jurnal_in);  
         }
 
         echo json_encode(['success' => true]);

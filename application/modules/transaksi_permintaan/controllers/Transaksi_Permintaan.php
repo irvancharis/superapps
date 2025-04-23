@@ -437,7 +437,7 @@ class Transaksi_permintaan extends CI_Controller
                 'RUANGAN' => $list_maping['RUANGAN_AKHIR'],
                 'LOKASI' => $list_maping['LOKASI_AKHIR'],
                 'DEPARTEMEN' => $list_maping['DEPARTEMEN_AKHIR'],
-                'JUMLAH' => $item['JUMLAH_PERMINTAAN'],                
+                'JUMLAH' => $item['JUMLAH_PERMINTAAN'],
                 'JENIS_TRANSAKSI' => 'PENERIMAAN - PENYERAHAN BARANG',
                 'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
                 'IN_OUT' => 'IN',
