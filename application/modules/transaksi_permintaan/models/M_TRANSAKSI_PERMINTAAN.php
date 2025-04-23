@@ -193,4 +193,9 @@ public function cek_stok($KODE_ITEM,$KODE_AREA, $KODE_RUANGAN, $KODE_LOKASI, $KO
         return $this->db->insert('PRODUK_STOK', $data);
     }
 
+    public function insert_produk_item_jurnal($data)
+    {
+        return $this->db->insert('PRODUK_ITEM_JURNAL', $data);
+    }
+
 }

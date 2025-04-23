@@ -429,6 +429,37 @@ class Transaksi_permintaan extends CI_Controller
                 ];
                 $this->M_PRODUK_STOK->insert($data_insert);
             }
+
+            $data_jurnal_in = [
+                'KODE_ITEM' => $item['KODE_ITEM'],
+                'KODE_TRANSAKSI' => $list_maping['UUID_TRANSAKSI_PERMINTAAN'],
+                'AREA' => $list_maping['AREA_AKHIR'],
+                'RUANGAN' => $list_maping['RUANGAN_AKHIR'],
+                'LOKASI' => $list_maping['LOKASI_AKHIR'],
+                'DEPARTEMEN' => $list_maping['DEPARTEMEN_AKHIR'],
+                'JUMLAH' => $item['JUMLAH_PERMINTAAN'],                
+                'JENIS_TRANSAKSI' => 'PENERIMAAN - PENYERAHAN BARANG',
+                'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
+                'IN_OUT' => 'IN',
+
+            ];
+             $this->M_TRANSAKSI_PERMINTAAN->insert_produk_item_jurnal($data_jurnal_in);
+
+             $data_jurnal_out = [
+                'KODE_ITEM' => $item['KODE_ITEM'],
+                'KODE_TRANSAKSI' => $list_maping['UUID_TRANSAKSI_PERMINTAAN'],
+                'AREA' => $list_maping['AREA_AWAL'],
+                'RUANGAN' => $list_maping['RUANGAN_AWAL'],
+                'LOKASI' => $list_maping['LOKASI_AWAL'],
+                'DEPARTEMEN' => $list_maping['DEPARTEMEN_AWAL'],
+                'JUMLAH' => $item['JUMLAH_PERMINTAAN'],                
+                'JENIS_TRANSAKSI' => 'PENERIMAAN - PENGELUARAN BARANG',
+                'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
+                'IN_OUT' => 'OUT',
+
+            ];
+             $this->M_TRANSAKSI_PERMINTAAN->insert_produk_item_jurnal($data_jurnal_out);
+
         }
 
         
