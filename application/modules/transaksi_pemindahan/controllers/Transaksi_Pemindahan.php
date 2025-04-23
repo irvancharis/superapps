@@ -29,7 +29,7 @@ class Transaksi_pemindahan extends CI_Controller
     {
 
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PEMINDAHAN', 'LIST');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PEMINDAHAN', 'LIST PEMINDAHAN');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -63,7 +63,6 @@ class Transaksi_pemindahan extends CI_Controller
         $kode = $this->input->post('kode_aset');
         $result = $this->M_TRANSAKSI_PEMINDAHAN->get_produk_by_aset($kode);
         echo json_encode($result);
-
     }
 
     public function get_produk_maping()
@@ -76,7 +75,6 @@ class Transaksi_pemindahan extends CI_Controller
         $departemen = $this->uri->segment(6);
         $data['produk'] = $this->M_TRANSAKSI_PEMINDAHAN->list_produk_maping($area, $ruangan, $lokasi, $departemen);
         $this->load->view('list_produk', $data);
-
     }
 
     public function get_produk()
@@ -256,9 +254,9 @@ class Transaksi_pemindahan extends CI_Controller
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_TRANSAKSI_PEMINDAHAN->get_single($KODE);
         $data['get_single'] = $query;
-        
-        $KODE_DEPARTEMEN = $query->DEPARTEMEN_AKHIR;     
-        $karyawan = $this->M_KARYAWAN->get_karyawan_by_departemen($KODE_DEPARTEMEN);        
+
+        $KODE_DEPARTEMEN = $query->DEPARTEMEN_AKHIR;
+        $karyawan = $this->M_KARYAWAN->get_karyawan_by_departemen($KODE_DEPARTEMEN);
         $data['karyawan'] = $karyawan;
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
@@ -310,13 +308,13 @@ class Transaksi_pemindahan extends CI_Controller
             'DEPARTEMEN_AWAL' => $this->session->userdata('ID_DEPARTEMEN'),
             'TANGGAL_PENGAJUAN' => date('Y-m-d'),
             'KETERANGAN_PEMINDAHAN' => $inputan['KETERANGAN_PEMINDAHAN'],
-            'AREA_AWAL' => $this->session->userdata('ID_AREA'),       
+            'AREA_AWAL' => $this->session->userdata('ID_AREA'),
             'RUANGAN_AWAL' => $inputan['RUANGAN_AWAL'],
             'LOKASI_AWAL' => $inputan['LOKASI_AWAL'],
-            'AREA_AKHIR' => $inputan['AREA_AKHIR'],            
+            'AREA_AKHIR' => $inputan['AREA_AKHIR'],
             'RUANGAN_AKHIR' => $inputan['RUANGAN_AKHIR'],
             'LOKASI_AKHIR' => $inputan['LOKASI_AKHIR'],
-            'DEPARTEMEN_AKHIR' => $inputan['DEPARTEMEN_AKHIR'],            
+            'DEPARTEMEN_AKHIR' => $inputan['DEPARTEMEN_AKHIR'],
             'STATUS_PEMINDAHAN' => 'MENUNGGU APROVAL KABAG',
         ];
 
@@ -325,7 +323,7 @@ class Transaksi_pemindahan extends CI_Controller
         // Cek apakah ada file yang diunggah
         if (!empty($_FILES['FOTO_AWAL']['name'][0])) {
             $files = $_FILES;
-            $count = count($_FILES['FOTO_AWAL']['name']);            
+            $count = count($_FILES['FOTO_AWAL']['name']);
             for ($i = 0; $i < $count; $i++) {
                 $FOTO_NAME = $this->uuid->v4();
 
@@ -356,16 +354,13 @@ class Transaksi_pemindahan extends CI_Controller
                         'KEPERLUAN' => $inputan['KETERANGAN_ITEM'][$i],
                     ];
                     $this->db->insert('TRANSAKSI_PEMINDAHAN_DETAIL', $data_produk);
-
                 }
             }
 
             echo json_encode(['success' => true]);
-        }else{
+        } else {
             echo json_encode(['success' => false, 'error' => 'Gagal memperbarui data.']);
         }
-
-        
     }
 
 
@@ -512,7 +507,7 @@ class Transaksi_pemindahan extends CI_Controller
         if (!$update) {
             echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
             return;
-        }        
+        }
 
         echo json_encode(['success' => true]);
     }
@@ -538,7 +533,7 @@ class Transaksi_pemindahan extends CI_Controller
         }
 
         $items = $this->input->post('items');
-        $list_maping = $this->input->post('form');        
+        $list_maping = $this->input->post('form');
 
         foreach ($items as $item) {
             //pengurangan stok
@@ -556,17 +551,17 @@ class Transaksi_pemindahan extends CI_Controller
 
             $UUID_ASET = $item['UUID_ASET'];
 
-            
 
-            $cek_stok = $this->M_TRANSAKSI_PEMINDAHAN->cek_stok($KODE_ITEM,$AREA,$RUANGAN,$LOKASI,$DEPARTEMEN);
+
+            $cek_stok = $this->M_TRANSAKSI_PEMINDAHAN->cek_stok($KODE_ITEM, $AREA, $RUANGAN, $LOKASI, $DEPARTEMEN);
             if ($cek_stok) {
-                $this->M_TRANSAKSI_PEMINDAHAN->penambahan_real_stok($cek_stok->UUID_STOK,$JUMLAH_PEMINDAHAN);
-                if($UUID_ASET != null){
-                $data = [
-                    'UUID_STOK' => $cek_stok->UUID_STOK
-                ];
-                $this->M_TRANSAKSI_PEMINDAHAN->update_aset($UUID_ASET,$data);
-            }
+                $this->M_TRANSAKSI_PEMINDAHAN->penambahan_real_stok($cek_stok->UUID_STOK, $JUMLAH_PEMINDAHAN);
+                if ($UUID_ASET != null) {
+                    $data = [
+                        'UUID_STOK' => $cek_stok->UUID_STOK
+                    ];
+                    $this->M_TRANSAKSI_PEMINDAHAN->update_aset($UUID_ASET, $data);
+                }
             } else {
                 $uuid_stok_baru = $this->uuid->v4();
                 $data = [
@@ -580,14 +575,13 @@ class Transaksi_pemindahan extends CI_Controller
                 ];
                 $this->M_TRANSAKSI_PEMINDAHAN->insert_stok($data);
 
-                if($UUID_ASET != null){
-                $data = [
-                    'UUID_STOK' => $uuid_stok_baru
-                ];
-                $this->M_TRANSAKSI_PEMINDAHAN->update_aset($UUID_ASET,$data);
+                if ($UUID_ASET != null) {
+                    $data = [
+                        'UUID_STOK' => $uuid_stok_baru
+                    ];
+                    $this->M_TRANSAKSI_PEMINDAHAN->update_aset($UUID_ASET, $data);
+                }
             }
-            }
-            
         }
 
 
