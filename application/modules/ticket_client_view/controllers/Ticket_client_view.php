@@ -332,18 +332,19 @@ class Ticket_client_view extends CI_Controller
 
             // Kirim pesan WA ke KABAG bersangkutan
             $message =
-                "=====*REQUEST TICKETING*===== \n\n" .
+                "===== *REQUEST TICKETING* ===== \n\n" .
 
-                "=====*INFORMASI PEREQUEST*===== \n" .
+                "===== *INFORMASI PEREQUEST* ===== \n" .
                 "   👤 NAMA: `" . strtoupper($requestby) . "` \n" .
+                "   📞 NO. WHATSAPP: `" . strtoupper($telp) . "` \n" .
                 "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
                 "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
 
-                "=====*DETAIL KELUHAN*===== \n" .
+                "===== *DETAIL KELUHAN* ===== \n" .
                 "   📂 TIPE KELUHAN: `" . strtoupper($type_ticket) . "` \n" .
                 "   📝 DESKRIPSI KELUHAN: `" . strtoupper($description_ticket) . "` \n\n" .
 
-                "=====*DEPARTEMEN DIREQUEST*===== \n" .
+                "===== *DEPARTEMEN DIREQUEST* ===== \n" .
                 "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen_request) . "`";
 
             $this->WHATSAPP->send_wa($KABAG, $message);
@@ -351,14 +352,14 @@ class Ticket_client_view extends CI_Controller
 
         // Kirim Pesan ke Telegram Tim IT
         $ms_telegram =
-            "=====*REQUEST TICKETING*===== \n\n" .
+            "===== *REQUEST TICKETING* ===== \n\n" .
 
-            "=====*INFORMASI PEREQUEST*===== \n" .
+            "===== *INFORMASI PEREQUEST* ===== \n" .
             "   👤 NAMA: `" . strtoupper($requestby) . "` \n" .
             "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
             "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
 
-            "=====*DETAIL KELUHAN*===== \n" .
+            "===== *DETAIL KELUHAN* ===== \n" .
             "   📂 TIPE KELUHAN: `" . strtoupper($type_ticket) . "` \n" .
             "   📝 DESKRIPSI KELUHAN: `" . strtoupper($description_ticket) . "` \n\n" .
 
@@ -368,16 +369,18 @@ class Ticket_client_view extends CI_Controller
         $this->TELEGRAM->send_message('8007581238', $ms_telegram);
 
         // Kirim Pesan ke WA Group IT TICKETING
-        $url_group_it = "https://qsch2nssom6w.share.zrok.io/superapps/login";
+        // $url_group_it = "https://qsch2nssom6w.share.zrok.io/superapps/login";
+        $url_group_it = "https://ticketing.sagroup.id/";
         $ms_wa_group_it =
-            "=====*REQUEST TICKETING*===== \n\n" .
+            "===== *REQUEST TICKETING* ===== \n\n" .
 
-            "=====*INFORMASI PEREQUEST*===== \n" .
+            "===== *INFORMASI PEREQUEST* ===== \n" .
             "   👤 NAMA: `" . strtoupper($requestby) . "` \n" .
+            "   📞 NO. WHATSAPP: `" . strtoupper($telp) . "` \n" .
             "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
             "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
 
-            "=====*DETAIL KELUHAN*===== \n" .
+            "===== *DETAIL KELUHAN* ===== \n" .
             "   📂 TIPE KELUHAN: `" . strtoupper($type_ticket) . "` \n" .
             "   📝 DESKRIPSI KELUHAN: `" . strtoupper($description_ticket) . "` \n\n" .
 
@@ -614,6 +617,97 @@ class Ticket_client_view extends CI_Controller
             'STATUS_PROGRESS' => 100
         ];
         $this->M_TICKET->insert_detail($data_detail);
+
+        $get_nama_departement = $this->M_DEPARTEMENT->get_departemen_single($get_ticket->DEPARTEMENT);
+        $nama_departemen = $get_nama_departement->NAMA_DEPARTEMEN;
+        $lokasi_ticket = $this->M_MAPING_AREA->get_maping_area_single($get_ticket->SITE_TICKET)->row()->NAMA_AREA;
+        $nama_departemen_request = $this->M_DEPARTEMENT->get_departemen_single($get_ticket->DEPARTEMENT_DIREQUEST)->NAMA_DEPARTEMEN;
+        $get_teknisi = $this->M_TECHNICIAN->get_teknisi_by_id($get_ticket->TECHNICIAN);
+        $get_karyawan = $this->M_KARYAWAN->get_karyawan_by_id($get_teknisi->IDKARYAWAN);
+        $NAMA_TEKNISI = $get_karyawan->NAMA_KARYAWAN;
+        if ($nama_departemen != "UMUM") {
+            $get_kabag = $this->M_KARYAWAN->get_kabag_by_departemen($get_ticket->DEPARTEMENT);
+            $KABAG = $get_kabag->TELEPON;
+
+            // Kirim pesan WA ke KABAG bersangkutan bahwa ticket telah selesai
+            $message =
+                "===== *Pemberitahuan PROGRESS TICKET SELESAI* ===== \n\n" .
+
+                "===== *INFORMASI PEREQUEST* ===== \n" .
+                "   👤 NAMA: `" . strtoupper($get_ticket->REQUESTBY) . "` \n" .
+                "   📞 NO. WHATSAPP: `" . strtoupper($get_ticket->TELP) . "` \n" .
+                "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
+                "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
+
+                "===== *DETAIL KELUHAN* ===== \n" .
+                "   📂 TIPE KELUHAN: `" . strtoupper($get_ticket->TYPE_TICKET) . "` \n" .
+                "   📝 DESKRIPSI KELUHAN: `" . strtoupper($get_ticket->DESCRIPTION_TICKET) . "` \n\n" .
+
+                "===== *DEPARTEMEN DIREQUEST* ===== \n" .
+                "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen_request) . "` \n\n" .
+
+                "===== *Pemberitahuan* ===== \n" .
+                "   PROGRESS TICKET `" . strtoupper($get_ticket->IDTICKET) . "` SELESAI. \n" .
+                "   TEKNISI: `" . strtoupper($NAMA_TEKNISI) . "` \n";
+
+            $this->WHATSAPP->send_wa($KABAG, $message);
+
+            // Kirim pesan WA ke CLIENT bersangkutan bahwa ticket telah selesai
+            $message_client =
+                "===== *Pemberitahuan PROGRESS TICKET SELESAI* ===== \n\n" .
+                "   PROGRESS TICKET `" . strtoupper($get_ticket->IDTICKET) . "` SELESAI. \n" .
+                "   TEKNISI: `" . strtoupper($NAMA_TEKNISI) . "` \n";
+
+            $this->WHATSAPP->send_wa($get_ticket->TELP, $message_client);
+
+            // Kirim Pesan ke WA Group IT TICKETING bahwa ticket silah selesai
+            $ms_wa_group_it =
+                "===== *REQUEST TICKETING* ===== \n\n" .
+
+                "===== *INFORMASI PEREQUEST* ===== \n" .
+                "   👤 NAMA: `" . strtoupper($get_ticket->REQUESTBY) . "` \n" .
+                "   📞 NO. WHATSAPP: `" . strtoupper($get_ticket->TELP) . "` \n" .
+                "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
+                "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
+
+                "===== *DETAIL KELUHAN* ===== \n" .
+                "   📂 TIPE KELUHAN: `" . strtoupper($get_ticket->TYPE_TICKET) . "` \n" .
+                "   📝 DESKRIPSI KELUHAN: `" . strtoupper($get_ticket->DESCRIPTION_TICKET) . "` \n\n" .
+
+                "🚨 *PROGRESS TICKETING SELESAI:* \n" .
+                "   ID TICKET `" . strtoupper($get_ticket->IDTICKET) . "` SELESAI. \n" .
+                "   TEKNISI: `" . strtoupper($NAMA_TEKNISI) . "` \n";
+
+            $this->WHATSAPP->send_wa_group_it($ms_wa_group_it);
+        } else {
+            // Kirim pesan WA ke CLIENT bersangkutan bahwa ticket telah selesai
+            $message_client =
+                "===== *Pemberitahuan PROGRESS TICKET SELESAI* ===== \n\n" .
+                "   PROGRESS TICKET `" . strtoupper($get_ticket->IDTICKET) . "` SELESAI. \n" .
+                "   TEKNISI: `" . strtoupper($NAMA_TEKNISI) . "` \n";
+
+            $this->WHATSAPP->send_wa($get_ticket->TELP, $message_client);
+
+            // Kirim Pesan ke WA Group IT TICKETING bahwa ticket silah selesai
+            $ms_wa_group_it =
+                "===== *REQUEST TICKETING* ===== \n\n" .
+
+                "===== *INFORMASI PEREQUEST* ===== \n" .
+                "   👤 NAMA: `" . strtoupper($get_ticket->REQUESTBY) . "` \n" .
+                "   📞 NO. WHATSAPP: `" . strtoupper($get_ticket->TELP) . "` \n" .
+                "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
+                "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
+
+                "===== *DETAIL KELUHAN* ===== \n" .
+                "   📂 TIPE KELUHAN: `" . strtoupper($get_ticket->TYPE_TICKET) . "` \n" .
+                "   📝 DESKRIPSI KELUHAN: `" . strtoupper($get_ticket->DESCRIPTION_TICKET) . "` \n\n" .
+
+                "🚨 *PROGRESS TICKETING SELESAI:* \n" .
+                "   ID TICKET `" . strtoupper($get_ticket->IDTICKET) . "` SELESAI. \n" .
+                "   TEKNISI: `" . strtoupper($NAMA_TEKNISI) . "` \n";
+
+            $this->WHATSAPP->send_wa_group_it($ms_wa_group_it);
+        }
 
         if ($result) {
             echo json_encode(['success' => true, 'message' => 'Ticket berhasil dikonfirmasi selesai.']);

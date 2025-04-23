@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <!-- MODIFIKASI SEPTIAN SUPAYA SUPPORT ZROK (URL TUNNEL) -->
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
     <title>SAGROUP TICKETING</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/app.min.css'); ?>">
@@ -245,8 +245,8 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
-                                                    <label>REQUEST BY</label>
-                                                    <input type="text" name="request_by" id="request_by" placeholder="ANDI" class="form-control" required>
+                                                    <label>NAMA</label>
+                                                    <input type="text" name="request_by" id="request_by" placeholder="" class="form-control" required>
                                                     <div class="invalid-feedback">
                                                         Masukkan NAMA anda
                                                     </div>
@@ -254,7 +254,7 @@
                                                 <!-- TELP -->
                                                 <div class="form-group col-12 col-md-6 col-lg-6">
                                                     <label>NO. WHATSAPP</label>
-                                                    <input type="text" class="form-control" id="telp" placeholder="08123456789" name="telp" required>
+                                                    <input type="text" class="form-control" id="telp" placeholder="" name="telp" required>
                                                     <div class="invalid-feedback">
                                                         Masukkan NO. WHATSAPP dengan benar!
                                                     </div>
@@ -305,21 +305,21 @@
                                                         Silahkan masukkan DEPARTEMEN DIREQUEST!
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <div class="form-group col-12 col-md-12 col-lg-12">
                                                     <label class="form-label">PILIH TYPE KELUHAN</label>
                                                     <div class="selectgroup selectgroup-pills type-ticket">
                                                         <!-- <p style="color:red;font-style: italic;">*). Muncul setelah memilih DEPARTEMEN DIREQUEST</p> -->
                                                         <p style="color:red;font-style: italic;">*). Muncul setelah memilih AREA</p>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-12 col-md-6 col-lg-6">
+                                                <div class="form-group col-12 col-md-12 col-lg-12">
                                                     <label>DESKRIPSI KELUHAN</label>
-                                                    <textarea name="description_ticket" placeholder="KOMPUTERKU MATI" class="form-control" id="description_ticket" required></textarea>
+                                                    <textarea name="description_ticket" placeholder="" class="form-control" id="description_ticket" required></textarea>
                                                     <div class="invalid-feedback">
                                                         Silahkan masukkan DESKRIPSI KELUHAN anda!
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-12 col-md-6 col-lg-6" id="image-container">
+                                                <div class="form-group col-12 col-md-12 col-lg-12" id="image-container">
                                                     <label>FOTO BUKTI KELUHAN</label>
                                                     <div class="d-flex justify-content-center align-items-center">
                                                         <div id="image-preview" class="image-preview">
@@ -506,7 +506,7 @@
     <!-- Video Desktop -->
     <div id="desktopVideo" style="display: none;">
         <video controls>
-            <source src="<?php echo base_url('assets/img/Tutorial/Desktop.mp4'); ?>" type="video/mp4">
+            <source src="<?php echo base_url('assets/img/Tutorial/Desktop_Revisi.mp4'); ?>" type="video/mp4">
             Browser Anda tidak mendukung tag video.
         </video>
     </div>
@@ -514,7 +514,7 @@
     <!-- Video Mobile -->
     <div id="mobileVideo" style="display: none;">
         <video controls>
-            <source src="<?php echo base_url('assets/img/Tutorial/Mobile.mp4'); ?>" type="video/mp4">
+            <source src="<?php echo base_url('assets/img/Tutorial/Mobile_Revisi.mp4'); ?>" type="video/mp4">
             Browser Anda tidak mendukung tag video.
         </video>
     </div>

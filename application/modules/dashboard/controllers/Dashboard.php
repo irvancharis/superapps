@@ -13,7 +13,6 @@ class Dashboard extends CI_Controller
         $this->load->model('transaksi_opname/M_TRANSAKSI_OPNAME');
         $this->load->model('transaksi_pemindahan/M_TRANSAKSI_PEMINDAHAN');
         $this->load->model('transaksi_penghapusan/M_TRANSAKSI_PENGHAPUSAN');
-
     }
 
     public function index($page = 'dashboard')
@@ -22,9 +21,9 @@ class Dashboard extends CI_Controller
         $SESSION_ROLE = $this->session->userdata('ROLE');
         $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'DASHBOARD', 'DASHBOARD');
         if (!$CEK_ROLE) {
-            redirect('login');
+            redirect('/login');
         }
-        
+
         $this->load->library('session');
 
         $this->session->set_userdata('page', $page);
@@ -41,5 +40,5 @@ class Dashboard extends CI_Controller
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
             $this->load->view('dashboard', $data);
-    }    
+    }
 }

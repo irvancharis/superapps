@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <!-- MODIFIKASI SEPTIAN SUPAYA SUPPORT ZROK (URL TUNNEL) -->
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
     <title>SAGROUP TICKETING</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/app.min.css'); ?>">
@@ -290,7 +290,7 @@
                                                                     <address>
                                                                         <strong>Status Ticket:</strong><br>
                                                                         <?php if ($ticket->STATUS_TICKET == 0) {
-                                                                            echo "<span class='badge badge-warning' style='font-size: small;'>DALAM ANTRIAN</span><br>";
+                                                                            echo "<span class='badge badge-warning' style='font-size: small;'>BELUM DIKERJAKAN</span><br>";
                                                                         } elseif ($ticket->STATUS_TICKET == 25) {
                                                                             echo "<span class='badge badge-primary' style='font-size: small;'>SEDANG DIKERJAKAN</span><br>";
                                                                         } elseif ($ticket->STATUS_TICKET == 50) {
@@ -638,77 +638,77 @@
             Fancybox.bind("[data-fancybox]");
 
 
-            // Auto Load Data Otomatis
-            // Config
-            const CHECK_INTERVAL = 15000; // 30 detik
-            const NOTIFICATION_TIMEOUT = 30000; // 60 detik
+            // // Auto Load Data Otomatis
+            // // Config
+            // const CHECK_INTERVAL = 15000; // 30 detik
+            // const NOTIFICATION_TIMEOUT = 30000; // 60 detik
 
-            // Fungsi utama pengecekan update
-            function checkForUpdates() {
-                $.ajax({
-                    url: "<?php echo base_url(); ?>ticket/check_updates_technician",
-                    method: "POST",
-                    dataType: "json",
-                    success: function(response) {
-                        console.debug('Update check:', response);
-                        if (response.has_update) {
-                            showUpdateNotification();
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Error checking updates:", error);
-                    }
-                });
-            }
+            // // Fungsi utama pengecekan update
+            // function checkForUpdates() {
+            //     $.ajax({
+            //         url: "<?php echo base_url(); ?>ticket/check_updates_technician",
+            //         method: "POST",
+            //         dataType: "json",
+            //         success: function(response) {
+            //             console.debug('Update check:', response);
+            //             if (response.has_update) {
+            //                 showUpdateNotification();
+            //             }
+            //         },
+            //         error: function(xhr, status, error) {
+            //             console.error("Error checking updates:", error);
+            //         }
+            //     });
+            // }
 
-            // Tampilkan notifikasi
-            function showUpdateNotification() {
-                const lastNotified = localStorage.getItem('lastNotified');
-                const now = new Date().getTime();
+            // // Tampilkan notifikasi
+            // function showUpdateNotification() {
+            //     const lastNotified = localStorage.getItem('lastNotified');
+            //     const now = new Date().getTime();
 
-                // Cek jika notifikasi sudah muncul dalam 1 menit terakhir
-                if (lastNotified && (now - lastNotified) < NOTIFICATION_TIMEOUT) {
-                    return;
-                }
+            //     // Cek jika notifikasi sudah muncul dalam 1 menit terakhir
+            //     if (lastNotified && (now - lastNotified) < NOTIFICATION_TIMEOUT) {
+            //         return;
+            //     }
 
-                swal({
-                    title: "Data Progress Ticket Diperbarui!",
-                    text: "Ada perubahan data terbaru pada progress ticketing.\n\nTerakhir diperiksa: " + new Date().toLocaleTimeString(),
-                    icon: "info",
-                    buttons: {
-                        confirm: {
-                            text: "Refresh",
-                            value: true,
-                            visible: true,
-                            className: "btn-refresh",
-                            closeModal: true
-                        },
-                        cancel: {
-                            text: "Nanti",
-                            value: false,
-                            visible: true,
-                            className: "btn-cancel",
-                            closeModal: true
-                        }
-                    }
-                }).then((result) => {
-                    if (result) {
-                        localStorage.setItem('lastNotified', now.toString());
-                        location.reload();
-                    } else {
-                        localStorage.setItem('lastNotified', now.toString());
-                    }
-                });
-            }
-            // Inisialisasi
-            // Jalankan segera saat halaman load
-            checkForUpdates();
+            //     swal({
+            //         title: "Data Progress Ticket Diperbarui!",
+            //         text: "Ada perubahan data terbaru pada progress ticketing.\n\nTerakhir diperiksa: " + new Date().toLocaleTimeString(),
+            //         icon: "info",
+            //         buttons: {
+            //             confirm: {
+            //                 text: "Refresh",
+            //                 value: true,
+            //                 visible: true,
+            //                 className: "btn-refresh",
+            //                 closeModal: true
+            //             },
+            //             cancel: {
+            //                 text: "Nanti",
+            //                 value: false,
+            //                 visible: true,
+            //                 className: "btn-cancel",
+            //                 closeModal: true
+            //             }
+            //         }
+            //     }).then((result) => {
+            //         if (result) {
+            //             localStorage.setItem('lastNotified', now.toString());
+            //             location.reload();
+            //         } else {
+            //             localStorage.setItem('lastNotified', now.toString());
+            //         }
+            //     });
+            // }
+            // // Inisialisasi
+            // // Jalankan segera saat halaman load
+            // checkForUpdates();
 
-            // Jadwalkan pengecekan berkala
-            setInterval(checkForUpdates, CHECK_INTERVAL);
+            // // Jadwalkan pengecekan berkala
+            // setInterval(checkForUpdates, CHECK_INTERVAL);
 
-            // Untuk debugging
-            window.debugCheckUpdate = checkForUpdates;
+            // // Untuk debugging
+            // window.debugCheckUpdate = checkForUpdates;
         });
 
         // Hapus semua data localStorage & sessionStorage ketika user meninggalkan halaman
