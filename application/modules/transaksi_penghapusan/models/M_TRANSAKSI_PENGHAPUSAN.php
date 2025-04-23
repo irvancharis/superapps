@@ -149,4 +149,9 @@ class M_TRANSAKSI_PENGHAPUSAN extends CI_Model
         $this->db->set('JUMLAH_STOK', 'JUMLAH_STOK - '.(int)$data, FALSE);
         return $this->db->update('PRODUK_STOK');
     }
+
+    public function insert_produk_item_jurnal($data)
+    {
+        return $this->db->insert('PRODUK_ITEM_JURNAL', $data);
+    }
 }

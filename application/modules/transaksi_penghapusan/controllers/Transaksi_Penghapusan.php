@@ -30,7 +30,7 @@ class Transaksi_penghapusan extends CI_Controller
     {
 
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGHAPUSAN', 'LIST PENGHAPUSAN');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PENGHAPUSAN', 'LIST');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -340,6 +340,22 @@ class Transaksi_penghapusan extends CI_Controller
                     $UUID_STOK = $item['UUID_STOK'];
                     $data_produk = $item['JUMLAH_PENGHAPUSAN'];
                     $this->M_TRANSAKSI_PENGHAPUSAN->update_real_stok($UUID_STOK, $data_produk);
+
+
+                    $data_jurnal_out = [
+                        'KODE_ITEM' => $item['KODE_ITEM'],
+                        'KODE_TRANSAKSI' => $uuid,
+                        'AREA' => $item['KODE_AREA'],
+                        'RUANGAN' => $item['KODE_RUANGAN'],
+                        'LOKASI' => $item['KODE_LOKASI'],
+                        'DEPARTEMEN' => $item['KODE_DEPARTEMEN'],
+                        'JUMLAH' => $item['JUMLAH_PENGHAPUSAN'],                
+                        'JENIS_TRANSAKSI' => 'PENGHAPUSAN - REALISASI PENGHAPUSAN',
+                        'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
+                        'IN_OUT' => 'OUT',
+
+                    ];
+                    $this->M_TRANSAKSI_PENGHAPUSAN->insert_produk_item_jurnal($data_jurnal_out);
                 }
             }
             echo json_encode(['success' => true]);
