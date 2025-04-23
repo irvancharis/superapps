@@ -56,7 +56,7 @@ if ($this->session->userdata('NAMA_ROLE') == 'IT') {
                 </ul>
             </li>
             <li
-                class="dropdown <?php (isset($page) && $page == 'produk_item') || (isset($page) && $page == 'produk_kategori') || (isset($page) && $page == 'produk_stok') ? print 'active' : ''; ?>">
+                class="dropdown <?php (isset($page) && $page == 'produk_item') || (isset($page) && $page == 'produk_kategori')  ? print 'active' : ''; ?>">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="box"></i><span>Produk</span></a>
                 <ul class="dropdown-menu">
                     <li>
@@ -67,10 +67,7 @@ if ($this->session->userdata('NAMA_ROLE') == 'IT') {
                         <a href="<?php echo base_url('produk_item'); ?>" class="nav-link"><i
                                 data-feather="box"></i><span>Item</span></a>
                     </li>
-                    <li>
-                        <a href="<?php echo base_url('produk_stok'); ?>" class="nav-link"><i
-                                data-feather="box"></i><span>Stok</span></a>
-                    </li>
+
                 </ul>
             </li>
             <li
@@ -149,6 +146,10 @@ if ($this->session->userdata('NAMA_ROLE') == 'IT') {
                                 data-feather="dollar-sign"></i><span>Permintaan</span></a>
                     </li>
                     <li>
+                        <a href="<?php echo base_url('transaksi_produksi'); ?>" class="nav-link"><i
+                                data-feather="dollar-sign"></i><span>Produksi</span></a>
+                    </li>
+                    <li>
                         <a href="<?php echo base_url('transaksi_pemindahan'); ?>" class="nav-link"><i
                                 data-feather="dollar-sign"></i><span>Pemindahan</span></a>
                     </li>
@@ -201,11 +202,24 @@ if ($this->session->userdata('NAMA_ROLE') == 'IT') {
 
         <ul class="sidebar-menu">
             <li class="menu-header">Report</li>
-            <li>
-                <a href="<?php echo base_url('checkup_server'); ?>" class="nav-link"><i
-                        data-feather="settings"></i><span>REKAP BARANG</span></a>
+            <li
+                class="dropdown <?php (isset($page) && $page == 'produk_stok') ? print 'active' : ''; ?>">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="box"></i><span>REKAP
+                        BARANG</span></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="<?php echo base_url('produk_stok'); ?>" class="nav-link"><i
+                                data-feather="box"></i><span>Stok</span></a>
+                    </li>
+                </ul>
             </li>
+
         </ul>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
 
     </aside>
 </div>

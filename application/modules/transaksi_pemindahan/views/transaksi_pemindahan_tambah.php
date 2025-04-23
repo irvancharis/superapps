@@ -348,18 +348,18 @@
                         });
                     });
 
-                    $('#AREA_AKHIR').on('change', function() {
-                        let area = $(this).val();
-                        $.ajax({
-                            url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_ruangan_by_area",
-                            type: "POST",
-                            data: {
-                                AREA_PENEMPATAN: area
-                            },
-                            success: function(response) {
-                                var ruangan = JSON.parse(response);
-                                var data_ruangan = ruangan.data;
-                                var $ruanganPenempatan = $('#RUANGAN_AKHIR');
+    $('#AREA_AKHIR').on('change', function() {
+        let area = $(this).val();
+        $.ajax({
+            url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_ruangan_by_area",
+            type: "POST",
+            data: {
+                AREA_PENEMPATAN: area
+            },
+            success: function(response) {
+                var ruangan = JSON.parse(response);
+                var data_ruangan = ruangan.data;
+                var $ruanganPenempatan = $('#RUANGAN_AKHIR');
 
                                 $ruanganPenempatan.empty().append(
                                     '<option value="" class="text-center" selected disabled>-- Pilih Ruangan --</option>'

@@ -53,7 +53,7 @@ class M_TRANSAKSI_PERMINTAAN extends CI_Model
         // $this->db->where('STATUS_PERMINTAAN !=' ,'DITOLAK KABAG');
         // $this->db->where('STATUS_PERMINTAAN !=' ,'DITOLAK GM');
         // $this->db->where('STATUS_PERMINTAAN !=' ,'DITOLAK HEAD');
-        if ($this->session->userdata("ROLE") !== 'GM' && $this->session->userdata("ROLE") !== 'HEAD') {
+        if ($this->session->userdata("NAMA_ROLE") !== 'GM' && $this->session->userdata("NAMA_ROLE") !== 'HEAD' && $this->session->userdata("NAMA_ROLE") !== 'gudang') {
             $this->db->where('DEPARTEMEN_AKHIR =' ,$this->session->userdata("ID_DEPARTEMEN"));
         }
         $this->db->order_by('TANGGAL_PENGAJUAN', 'DESC');   
@@ -191,6 +191,11 @@ public function cek_stok($KODE_ITEM,$KODE_AREA, $KODE_RUANGAN, $KODE_LOKASI, $KO
     public function insert_stok($data)
     {
         return $this->db->insert('PRODUK_STOK', $data);
+    }
+
+    public function insert_produk_item_jurnal($data)
+    {
+        return $this->db->insert('PRODUK_ITEM_JURNAL', $data);
     }
 
 }

@@ -1058,11 +1058,7 @@ Sejahtera Abadi Group'
             ];
             $this->M_TRANSAKSI_PENGADAAN->insert_detail($data_detail);   
             
-            
             $get_maping_default = $this->M_TRANSAKSI_PENGADAAN->get_maping_default($form['AREA']);  
-            
-            
-            
             
             // Update stok barang jika barang tidak ada di tabel Produk_Stok maka Insert jika ada maka Update
             $cek_produk_stok = $this->M_PRODUK_STOK->get_produk_stok_single($item['id'], $get_maping_default->AREA,$get_maping_default->DEPARTEMEN, $get_maping_default->RUANGAN, $get_maping_default->LOKASI )->row();
@@ -1084,6 +1080,21 @@ Sejahtera Abadi Group'
                 ];
                 $this->M_PRODUK_STOK->insert($data_insert);
             }
+
+            $data_jurnal = [
+                'KODE_ITEM' => $item['id'],
+                'KODE_TRANSAKSI' => $id_transaksi,
+                'AREA' => $get_maping_default->AREA,
+                'RUANGAN' => $get_maping_default->RUANGAN,
+                'LOKASI' => $get_maping_default->LOKASI,
+                'DEPARTEMEN' => $get_maping_default->DEPARTEMEN,
+                'JUMLAH' => $item['jumlah'],                
+                'JENIS_TRANSAKSI' => 'PENGADAAN - PENERIMAAN KIRIMAN BARANG',
+                'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
+                'IN_OUT' => 'IN',
+
+            ];
+             $this->M_TRANSAKSI_PENGADAAN->insert_produk_item_jurnal($data_jurnal);   
 
         }
 
@@ -1169,6 +1180,36 @@ Sejahtera Abadi Group'
                         $this->M_PRODUK_STOK->delete($cek_produk_stok_temp->UUID_STOK);
                     }                    
             }
+
+            $data_jurnal_out = [
+                'KODE_ITEM' => $item['id'],
+                'KODE_TRANSAKSI' => $id_transaksi,
+                'AREA' => $get_maping_default->AREA,
+                'RUANGAN' => $get_maping_default->RUANGAN,
+                'LOKASI' => $get_maping_default->LOKASI,
+                'DEPARTEMEN' => $get_maping_default->DEPARTEMEN,
+                'JUMLAH' => $item['jumlah'],
+                'JENIS_TRANSAKSI' => 'PENGADAAN - PENYERAHAN BARANG KE USER',
+                'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
+                'IN_OUT' => 'OUT',
+
+            ];
+             $this->M_TRANSAKSI_PENGADAAN->insert_produk_item_jurnal($data_jurnal_out);
+
+            $data_jurnal_in = [
+                'KODE_ITEM' => $item['id'],
+                'KODE_TRANSAKSI' => $id_transaksi,
+                'AREA' => $form['AREA_PENEMPATAN'],
+                'RUANGAN' => $form['RUANGAN_PENEMPATAN'],
+                'LOKASI' => $form['LOKASI_PENEMPATAN'],
+                'DEPARTEMEN' => $form['DEPARTEMEN_PENGAJUAN'],
+                'JUMLAH' => $item['jumlah'],
+                'JENIS_TRANSAKSI' => 'PENGADAAN - PENYERAHAN BARANG KE USER',
+                'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
+                'IN_OUT' => 'IN',
+
+            ];
+             $this->M_TRANSAKSI_PENGADAAN->insert_produk_item_jurnal($data_jurnal_in);  
         }
 
         echo json_encode(['success' => true]);

@@ -56,7 +56,7 @@
                                             </div>
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>DEPARTEMEN</label>
-                                                <select required disabled name="DEPARTEMEN_AKHIR" id="DEPARTEMEN_AKHIR"
+                                                <select required read_only name="DEPARTEMEN_AKHIR" id="DEPARTEMEN_AKHIR"
                                                     class="form-control">
                                                     <option value="<?php echo $this->session->userdata('ID_DEPARTEMEN'); ?>" class="text-center" selected><?php echo $this->session->userdata('NAMA_DEPARTEMEN'); ?></option>
                                                 </select>
@@ -133,7 +133,7 @@
                     loadFormData();
 
 
-                    $('#btnshowproduk').on('click', function() {
+    $('#btnshowproduk').on('click', function() {
 
                         $.ajax({
                             url: "<?php echo base_url(); ?>" + "transaksi_permintaan/get_maping_default",
