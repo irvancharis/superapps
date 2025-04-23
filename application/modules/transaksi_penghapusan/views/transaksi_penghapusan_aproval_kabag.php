@@ -84,48 +84,58 @@
 <?php $this->load->view('layout/footer'); ?>
 
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
 
 
-    $('#dataprodukitem').dataTable({
-        paging: false,
-        searching: false
-    });    
+        $('#dataprodukitem').dataTable({
+            paging: false,
+            searching: false
+        });
 
-    simpan_list_produk_ke_localstorage();
-
-
-    async function simpan_list_produk_ke_localstorage() {
-        const response = await fetch(
-            '<?=site_url('transaksi_penghapusan/list_produk/').$get_single->UUID_TRANSAKSI_PENGHAPUSAN;?>');
-        const products = await response.json();
-        localStorage.setItem('storedProdukItems', JSON.stringify(products));
-
-        tampilkan_data_ke_tabel();
-    }
+        simpan_list_produk_ke_localstorage();
 
 
-    function tampilkan_data_ke_tabel() {
-        selectedItems = JSON.parse(localStorage.getItem("storedProdukItems")) || [];
-        var tbody = $("#selected-items-body");
-        tbody.empty();
+        async function simpan_list_produk_ke_localstorage() {
+            const response = await fetch(
+                '<?= site_url('transaksi_penghapusan/list_produk/') . $get_single->UUID_TRANSAKSI_PENGHAPUSAN; ?>');
+            const products = await response.json();
+            localStorage.setItem('storedProdukItems', JSON.stringify(products));
 
-        selectedItems.forEach(function(item, index) {
+            tampilkan_data_ke_tabel();
+        }
+
+
+        function tampilkan_data_ke_tabel() {
+            selectedItems = JSON.parse(localStorage.getItem("storedProdukItems")) || [];
+            var tbody = $("#selected-items-body");
+            tbody.empty();
+
+            selectedItems.forEach(function(item, index) {
                 tbody.append(`
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.KODE_ITEM}">
-                                    <td class="text-center col-1"><center><img width="100px" src="<?php echo base_url('assets/uploads/transaksi_penghapusan/')?>${item.FOTO_KONDISI_AWAL}" alt=""></center></td>
+                                    <td class="text-center col-1"><center><img width="100px" src="<?php echo base_url('assets/uploads/transaksi_penghapusan/') ?>${item.FOTO_KONDISI_AWAL}" alt=""></center></td>
                                     <td>${item.NAMA_PRODUK}</td>
                                     <td class="text-center col-1">${item.JUMLAH_PENGHAPUSAN}</td>
                                     <td class="col-4">${item.KETERANGAN_ITEM}</td>
                                 </tr>
                             `);
-        });
-        // Perbarui listener input setelah render ulang
-        attachInputListeners();
-    }
+            });
+            // Perbarui listener input setelah render ulang
+            attachInputListeners();
+        }
 
-    function attachInputListeners() {
+        function attachInputListeners() {
+            $('#selected-items-body').on('input', '.stok-real', function() {
+                let rowIndex = $(this).closest('tr').data('index');
+                let stokReal = $(this).val();
+
+                let storedItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
+                storedItems[rowIndex].STOK_AKTUAL = stokReal;
+                localStorage.setItem('storedProdukItems', JSON.stringify(storedItems));
+            });
+        }
+
         $('#selected-items-body').on('input', '.stok-real', function() {
             let rowIndex = $(this).closest('tr').data('index');
             let stokReal = $(this).val();
@@ -134,99 +144,136 @@ $(document).ready(function() {
             storedItems[rowIndex].STOK_AKTUAL = stokReal;
             localStorage.setItem('storedProdukItems', JSON.stringify(storedItems));
         });
-    }
-
-    $('#selected-items-body').on('input', '.stok-real', function() {
-        let rowIndex = $(this).closest('tr').data('index');
-        let stokReal = $(this).val();
-
-        let storedItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
-        storedItems[rowIndex].STOK_AKTUAL = stokReal;
-        localStorage.setItem('storedProdukItems', JSON.stringify(storedItems));
-    });
 
 
-    $('#FORM_TRANSAKSI_PENGHAPUSAN').on('submit', function(e) {
-        e.preventDefault();
+        $('#FORM_TRANSAKSI_PENGHAPUSAN').on('submit', function(e) {
+            e.preventDefault();
 
-        let storedProdukItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
-        let formData = JSON.parse(localStorage.getItem('FormPenghapusan')) || {};
-        formData['KETERANGAN_PENGHAPUSAN'] = $('#KETERANGAN_PENGHAPUSAN').val();
+            swal({
+                title: 'KONFIRMASI',
+                text: 'Yakin Ingin Disetujui?',
+                icon: 'warning',
+                buttons: {
+                    cancel: {
+                        text: 'Tidak',
+                        value: false,
+                        visible: true,
+                        closeModal: true
+                    },
+                    confirm: {
+                        text: 'Ya',
+                        value: true,
+                        visible: true,
+                        closeModal: true
+                    }
+                },
+                dangerMode: true
+            }).then((confirm) => {
+                if (confirm) {
+                    let storedProdukItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
+                    let formData = JSON.parse(localStorage.getItem('FormPenghapusan')) || {};
+                    formData['KETERANGAN_PENGHAPUSAN'] = $('#KETERANGAN_PENGHAPUSAN').val();
 
-        if (storedProdukItems.length == 0) {
-            swal('Error', 'Tidak ada produk yang dipilih.', 'error').then(function() {
-                console.log(storedProdukItems);
+                    if (storedProdukItems.length == 0) {
+                        swal('Error', 'Tidak ada produk yang dipilih.', 'error').then(function() {
+                            console.log(storedProdukItems);
+                        });
+                    }
+
+                    $.ajax({
+                        url: "<?php echo base_url(); ?>" + "transaksi_penghapusan/update_approval_kabag",
+                        type: "POST",
+                        data: {
+                            UUID_TRANSAKSI_PENGHAPUSAN: '<?= $get_single->UUID_TRANSAKSI_PENGHAPUSAN ?>',
+                            items: storedProdukItems,
+                            form: formData
+                        },
+                        success: function(response) {
+                            try {
+                                let res = JSON.parse(response);
+                                if (res.success) {
+                                    swal('Sukses', 'Simpan Data Berhasil!', 'success').then(function() {
+                                        localStorage.removeItem(
+                                            'storedProdukItems'
+                                        ); // Hapus localStorage setelah berhasil
+                                        location.href = "<?php echo base_url(); ?>" +
+                                            "transaksi_penghapusan";
+                                    });
+                                } else {
+                                    swal('Gagal', res.error, 'error');
+                                }
+                            } catch (error) {
+                                console.error('Parsing JSON gagal:', error);
+                                swal('Error', 'Terjadi kesalahan pada server.', 'error');
+                            }
+                        }
+                    });
+                }
             });
-        }
-
-        $.ajax({
-            url: "<?php echo base_url(); ?>" + "transaksi_penghapusan/update_approval_kabag",
-            type: "POST",
-            data: {
-                UUID_TRANSAKSI_PENGHAPUSAN: '<?= $get_single->UUID_TRANSAKSI_PENGHAPUSAN ?>',
-                items: storedProdukItems,
-                form: formData
-            },
-            success: function(response) {
-                try {
-                    let res = JSON.parse(response);
-                    if (res.success) {
-                        swal('Sukses', 'Simpan Data Berhasil!', 'success').then(function() {
-                            localStorage.removeItem(
-                                'storedProdukItems'
-                            ); // Hapus localStorage setelah berhasil
-                            location.href = "<?php echo base_url(); ?>" +
-                                "transaksi_penghapusan";
-                        });
-                    } else {
-                        swal('Gagal', res.error, 'error');
-                    }
-                } catch (error) {
-                    console.error('Parsing JSON gagal:', error);
-                    swal('Error', 'Terjadi kesalahan pada server.', 'error');
-                }
-            }
         });
-    });
 
 
 
-    // Kirim data untuk disapprove
-    $('#btn-disapprove').on('click', function() {
-        swal({
-            title: 'Masukkan Keterangan Cancel',
-            content: {
-                element: 'input',
-                attributes: {
-                    placeholder: 'Keterangan',
-                    type: 'text',
-                },
-            },
-        }).then((data) => {
-            $.ajax({
-                url: "<?php echo base_url(); ?>transaksi_penghapusan/disapprove_kabag/",
-                type: "POST",
-                data: {
-                    UUID_TRANSAKSI_PENGHAPUSAN: '<?= $get_single->UUID_TRANSAKSI_PENGHAPUSAN ?>',
-                    KETERANGAN_CANCEL: data
-                },
-                success: function(response) {
-                    let res = JSON.parse(response);
-                    if (res.success) {
-                        swal('Sukses', 'Transaksi Penghapusan Berhasil Ditolak!',
-                            'success').then(function() {
-                            location.href = "<?php echo base_url(); ?>" +
-                                "transaksi_penghapusan";
-                        });
-                    } else {
-                        swal('Gagal', res.error, 'error');
+        // Kirim data untuk disapprove
+        $('#btn-disapprove').on('click', function() {
+
+            swal({
+                title: 'KONFIRMASI',
+                text: 'Yakin Ingin Ditolak?',
+                icon: 'warning',
+                buttons: {
+                    cancel: {
+                        text: 'Tidak',
+                        value: false,
+                        visible: true,
+                        closeModal: true
+                    },
+                    confirm: {
+                        text: 'Ya',
+                        value: true,
+                        visible: true,
+                        closeModal: true
                     }
+                },
+                dangerMode: true
+            }).then((confirm) => {
+                if (confirm) {
+                    swal({
+                        title: 'Masukkan Keterangan Cancel',
+                        content: {
+                            element: 'input',
+                            attributes: {
+                                placeholder: 'Keterangan',
+                                type: 'text',
+                            },
+                        },
+                    }).then((data) => {
+                        $.ajax({
+                            url: "<?php echo base_url(); ?>transaksi_penghapusan/disapprove_kabag/",
+                            type: "POST",
+                            data: {
+                                UUID_TRANSAKSI_PENGHAPUSAN: '<?= $get_single->UUID_TRANSAKSI_PENGHAPUSAN ?>',
+                                KETERANGAN_CANCEL: data
+                            },
+                            success: function(response) {
+                                let res = JSON.parse(response);
+                                if (res.success) {
+                                    swal('Sukses', 'Transaksi Penghapusan Berhasil Ditolak!',
+                                        'success').then(function() {
+                                        location.href = "<?php echo base_url(); ?>" +
+                                            "transaksi_penghapusan";
+                                    });
+                                } else {
+                                    swal('Gagal', res.error, 'error');
+                                }
+                            }
+                        })
+                    });
                 }
-            })
+            });
         });
-    });
 
-});
+    });
 </script>
 </body>
 
