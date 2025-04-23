@@ -148,24 +148,24 @@
             <?php $this->load->view('layout/footer'); ?>
 
             <script>
-$(document).ready(function() {
-    $('#table-approval-produk').DataTable({
-        paging: false,
-        searching: false,
-        info: false,
-        sorting: false,
-        ordering: false
-    });
+                $(document).ready(function() {
+                    $('#table-approval-produk').DataTable({
+                        paging: false,
+                        searching: false,
+                        info: false,
+                        sorting: false,
+                        ordering: false
+                    });
 
-    let idTransaksi = "<?php echo $id_transaksi_pengadaan; ?>"; // ID transaksi dari PHP
+                    let idTransaksi = "<?php echo $id_transaksi_pengadaan; ?>"; // ID transaksi dari PHP
 
-    function loadSelectedItems() {
-        let selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
-        let tbody = $("#selected-items-body");
-        tbody.empty();
+                    function loadSelectedItems() {
+                        let selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
+                        let tbody = $("#selected-items-body");
+                        tbody.empty();
 
-        selectedItems.forEach(function(item, index) {
-            tbody.append(`
+                        selectedItems.forEach(function(item, index) {
+                            tbody.append(`
                                 <tr data-index="${index}">
                                     <input type="hidden" name="KODE_PRODUK_ITEM[${index}]" value="${item.id}">
                                     <td class="text-center">
@@ -181,201 +181,247 @@ $(document).ready(function() {
                                     <td class="text-center col-1"><button class="btn btn-danger remove-item" data-index="${index}">Hapus</button></td>
                                 </tr>
                             `);
-        });
-        attachInputListeners();
+                        });
+                        attachInputListeners();
 
-        // Initialize Chocolate JS
-        if (jQuery().Chocolat) {
-            $(".gallery").Chocolat({
-                className: 'gallery',
-                imageSelector: '.gallery-item',
-                imageSize: 'contain', // Menyesuaikan gambar agar pas dalam layar
-                fullScreen: false, // Tidak otomatis fullscreen
-                backgroundColor: 'rgba(0,0,0,0.9)', // Background gelap
-            });
-        }
-    }
-
-    function loadDataFromDB() {
-        // Cek apakah sudah ada flag bahwa data sudah di-load dari DB
-        if (sessionStorage.getItem("dbDataLoaded")) {
-            console.log("Data dari database sudah dimuat sebelumnya. Skip pengambilan ulang.");
-            loadSelectedItems();
-            return;
-        }
-
-        $.ajax({
-            url: "<?php echo base_url(); ?>transaksi_pengadaan/get_data_transaksi_detail/" +
-                idTransaksi,
-            type: "GET",
-            success: function(response) {
-                let res = JSON.parse(response);
-                if (res.success) {
-                    let storedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
-                    let dbItems = res.data.map(item => ({
-                        id: item.KODE_PRODUK_ITEM,
-                        nama: item.NAMA_ITEM,
-                        jumlah: item.JUMLAH_PENGADAAN,
-                        keperluan: item.KEPERLUAN,
-                        foto: item.FOTO_ITEM
-                    }));
-
-                    // Gabungkan data, tetapi hanya simpan yang tidak duplikat
-                    let mergedItems = [...dbItems, ...storedItems].reduce((acc, curr) => {
-                        if (!acc.some(item => item.id === curr.id)) {
-                            acc.push(curr);
+                        // Initialize Chocolate JS
+                        if (jQuery().Chocolat) {
+                            $(".gallery").Chocolat({
+                                className: 'gallery',
+                                imageSelector: '.gallery-item',
+                                imageSize: 'contain', // Menyesuaikan gambar agar pas dalam layar
+                                fullScreen: false, // Tidak otomatis fullscreen
+                                backgroundColor: 'rgba(0,0,0,0.9)', // Background gelap
+                            });
                         }
-                        return acc;
-                    }, []);
-
-                    localStorage.setItem("selectedItems", JSON.stringify(mergedItems));
-
-                    // Tandai bahwa data dari database sudah dimasukkan ke localStorage
-                    sessionStorage.setItem("dbDataLoaded", "true");
-
-                    loadSelectedItems();
-                }
-            }
-        });
-    }
-
-    loadDataFromDB();
-
-    // Fungsi untuk menangani input perubahan data
-    function attachInputListeners() {
-        $('.jumlah, .keperluan').on('input', function() {
-            let rowIndex = $(this).closest('tr').data('index');
-            let fieldName = $(this).hasClass('jumlah') ? 'jumlah' : 'keperluan';
-
-            let selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
-            selectedItems[rowIndex][fieldName] = $(this).val();
-            localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
-        });
-    }
-
-    // Simpan data ketika input KETERANGAN_PENGAJUAN berubah
-    $('#KETERANGAN_PENGAJUAN').on('change', function() {
-        saveFormData();
-    });
-
-    // Form Data Save to Local Storage
-    function saveFormData() {
-        let formData = {
-            KETERANGAN_PENGAJUAN: $('#KETERANGAN_PENGAJUAN').val()
-        };
-
-        localStorage.setItem('formPengadaan', JSON.stringify(formData));
-    }
-
-    // Fungsi untuk menghapus data dari localStorage
-    $('#selected-items-body').on('click', '.remove-item', function() {
-        var index = $(this).data("index");
-        let selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
-        selectedItems.splice(index, 1);
-        localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
-        loadSelectedItems();
-    });
-
-    // Update data ke database
-    $('#FORM_TRANSAKSI_PENGADAAN_APPROVAL_KABAG').on('submit', function(e) {
-        e.preventDefault();
-
-        let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
-        let formData = JSON.parse(localStorage.getItem('formPengadaan')) || {};
-
-        if (selectedItems.length == 0) {
-            swal('Error', 'Tidak ada produk yang dipilih.', 'error');
-            return;
-        }
-
-        if (!formData.KETERANGAN_PENGAJUAN) {
-            swal('Error', 'Lengkapi Keterangan Pengajuan.', 'error');
-            return;
-        }
-
-        // Kirim data untuk update
-        $.ajax({
-            url: "<?php echo base_url(); ?>transaksi_pengadaan/update_approval_kabag", // Ubah menjadi update
-            type: "POST",
-            data: {
-                id_transaksi: idTransaksi, // Kirim ID transaksi agar dapat diupdate
-                items: selectedItems,
-                form: formData
-            },
-            success: function(response) {
-                let res = JSON.parse(response);
-                if (res.success) {
-                    swal('Sukses', 'Pengajuan Pengadaan Di Setujui!', 'success').then(
-                        function() {
-                            localStorage.removeItem(
-                                'selectedItems'); // Hapus localStorage setelah disimpan
-                            localStorage.removeItem(
-                                'formPengadaan'); // Hapus localStorage setelah disimpan
-                            sessionStorage.removeItem(
-                                "dbDataLoaded"); // Hapus localStorage setelah disimpan
-                            location.href = "<?php echo base_url(); ?>" +
-                                "transaksi_pengadaan";
-                        });
-                } else {
-                    swal('Gagal', res.error, 'error');
-                }
-            },
-            error: function() {
-                swal('Error', 'Terjadi kesalahan pada server.', 'error');
-            }
-        });
-    });
-
-    // Kirim data untuk disapprove
-    $('#btn-disapprove').on('click', function() {
-        swal({
-            title: 'Masukkan Keterangan Cancel',
-            content: {
-                element: 'input',
-                attributes: {
-                    placeholder: 'Keterangan',
-                    type: 'text',
-                },
-            },
-        }).then((data) => {
-            // swal('Keterangan Cancel :  ' + data + '!');
-            let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
-            $.ajax({
-                url: "<?php echo base_url(); ?>transaksi_pengadaan/disapprove_kabag/",
-                type: "POST",
-                data: {
-                    id_transaksi: idTransaksi,
-                    KETERANGAN_CANCEL_KABAG: data,
-                    items: selectedItems
-                },
-                success: function(response) {
-                    let res = JSON.parse(response);
-                    if (res.success) {
-                        swal('Sukses', 'Pengajuan Pengadaan Berhasil Ditolak!',
-                            'success').then(function() {
-                            localStorage.removeItem(
-                                'selectedItems'
-                                ); // Hapus localStorage setelah disimpan
-                            sessionStorage.removeItem(
-                                "dbDataLoaded"
-                                ); // Hapus localStorage setelah disimpan
-                            location.href = "<?php echo base_url(); ?>" +
-                                "transaksi_pengadaan";
-                        });
-                    } else {
-                        swal('Gagal', res.error, 'error');
                     }
-                }
-            })
-        });
-    });
-});
 
-// Hapus semua data localStorage & sessionStorage ketika user meninggalkan halaman
-$(window).on('beforeunload', function() {
-    localStorage.clear(); // Hapus semua data localStorage
-    sessionStorage.clear(); // Hapus semua data sessionStorage
-});
+                    function loadDataFromDB() {
+                        // Cek apakah sudah ada flag bahwa data sudah di-load dari DB
+                        if (sessionStorage.getItem("dbDataLoaded")) {
+                            console.log("Data dari database sudah dimuat sebelumnya. Skip pengambilan ulang.");
+                            loadSelectedItems();
+                            return;
+                        }
+
+                        $.ajax({
+                            url: "<?php echo base_url(); ?>transaksi_pengadaan/get_data_transaksi_detail/" +
+                                idTransaksi,
+                            type: "GET",
+                            success: function(response) {
+                                let res = JSON.parse(response);
+                                if (res.success) {
+                                    let storedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
+                                    let dbItems = res.data.map(item => ({
+                                        id: item.KODE_PRODUK_ITEM,
+                                        nama: item.NAMA_ITEM,
+                                        jumlah: item.JUMLAH_PENGADAAN,
+                                        keperluan: item.KEPERLUAN,
+                                        foto: item.FOTO_ITEM
+                                    }));
+
+                                    // Gabungkan data, tetapi hanya simpan yang tidak duplikat
+                                    let mergedItems = [...dbItems, ...storedItems].reduce((acc, curr) => {
+                                        if (!acc.some(item => item.id === curr.id)) {
+                                            acc.push(curr);
+                                        }
+                                        return acc;
+                                    }, []);
+
+                                    localStorage.setItem("selectedItems", JSON.stringify(mergedItems));
+
+                                    // Tandai bahwa data dari database sudah dimasukkan ke localStorage
+                                    sessionStorage.setItem("dbDataLoaded", "true");
+
+                                    loadSelectedItems();
+                                }
+                            }
+                        });
+                    }
+
+                    loadDataFromDB();
+
+                    // Fungsi untuk menangani input perubahan data
+                    function attachInputListeners() {
+                        $('.jumlah, .keperluan').on('input', function() {
+                            let rowIndex = $(this).closest('tr').data('index');
+                            let fieldName = $(this).hasClass('jumlah') ? 'jumlah' : 'keperluan';
+
+                            let selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
+                            selectedItems[rowIndex][fieldName] = $(this).val();
+                            localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+                        });
+                    }
+
+                    // Simpan data ketika input KETERANGAN_PENGAJUAN berubah
+                    $('#KETERANGAN_PENGAJUAN').on('change', function() {
+                        saveFormData();
+                    });
+
+                    // Form Data Save to Local Storage
+                    function saveFormData() {
+                        let formData = {
+                            KETERANGAN_PENGAJUAN: $('#KETERANGAN_PENGAJUAN').val()
+                        };
+
+                        localStorage.setItem('formPengadaan', JSON.stringify(formData));
+                    }
+
+                    // Fungsi untuk menghapus data dari localStorage
+                    $('#selected-items-body').on('click', '.remove-item', function() {
+                        var index = $(this).data("index");
+                        let selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
+                        selectedItems.splice(index, 1);
+                        localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
+                        loadSelectedItems();
+                    });
+
+                    // Update data ke database
+                    $('#FORM_TRANSAKSI_PENGADAAN_APPROVAL_KABAG').on('submit', function(e) {
+                        e.preventDefault();
+
+                        swal({
+                            title: 'KONFIRMASI',
+                            text: 'Yakin Ingin Disetujui?',
+                            icon: 'warning',
+                            buttons: {
+                                cancel: {
+                                    text: 'Tidak',
+                                    value: false,
+                                    visible: true,
+                                    closeModal: true
+                                },
+                                confirm: {
+                                    text: 'Ya',
+                                    value: true,
+                                    visible: true,
+                                    closeModal: true
+                                }
+                            },
+                            dangerMode: true
+                        }).then((confirm) => {
+                            if (confirm) {
+                                let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
+                                let formData = JSON.parse(localStorage.getItem('formPengadaan')) || {};
+
+                                if (selectedItems.length == 0) {
+                                    swal('Error', 'Tidak ada produk yang dipilih.', 'error');
+                                    return;
+                                }
+
+                                if (!formData.KETERANGAN_PENGAJUAN) {
+                                    swal('Error', 'Lengkapi Keterangan Pengajuan.', 'error');
+                                    return;
+                                }
+
+                                // Kirim data untuk update
+                                $.ajax({
+                                    url: "<?php echo base_url(); ?>transaksi_pengadaan/update_approval_kabag", // Ubah menjadi update
+                                    type: "POST",
+                                    data: {
+                                        id_transaksi: idTransaksi, // Kirim ID transaksi agar dapat diupdate
+                                        items: selectedItems,
+                                        form: formData
+                                    },
+                                    success: function(response) {
+                                        let res = JSON.parse(response);
+                                        if (res.success) {
+                                            swal('Sukses', 'Pengajuan Pengadaan Di Setujui!', 'success').then(
+                                                function() {
+                                                    localStorage.removeItem(
+                                                        'selectedItems'); // Hapus localStorage setelah disimpan
+                                                    localStorage.removeItem(
+                                                        'formPengadaan'); // Hapus localStorage setelah disimpan
+                                                    sessionStorage.removeItem(
+                                                        "dbDataLoaded"); // Hapus localStorage setelah disimpan
+                                                    location.href = "<?php echo base_url(); ?>" +
+                                                        "transaksi_pengadaan";
+                                                });
+                                        } else {
+                                            swal('Gagal', res.error, 'error');
+                                        }
+                                    },
+                                    error: function() {
+                                        swal('Error', 'Terjadi kesalahan pada server.', 'error');
+                                    }
+                                });
+                            }
+                        });
+                    });
+
+                    // Kirim data untuk disapprove
+                    $('#btn-disapprove').on('click', function() {
+                        swal({
+                            title: 'KONFIRMASI',
+                            text: 'Yakin Ingin Ditolak?',
+                            icon: 'warning',
+                            buttons: {
+                                cancel: {
+                                    text: 'Tidak',
+                                    value: false,
+                                    visible: true,
+                                    closeModal: true
+                                },
+                                confirm: {
+                                    text: 'Ya',
+                                    value: true,
+                                    visible: true,
+                                    closeModal: true
+                                }
+                            },
+                            dangerMode: true
+                        }).then((confirm) => {
+                            if (confirm) {
+                                swal({
+                                    title: 'Masukkan Keterangan Cancel',
+                                    content: {
+                                        element: 'input',
+                                        attributes: {
+                                            placeholder: 'Keterangan',
+                                            type: 'text',
+                                        },
+                                    },
+                                }).then((data) => {
+                                    // swal('Keterangan Cancel :  ' + data + '!');
+                                    let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
+                                    $.ajax({
+                                        url: "<?php echo base_url(); ?>transaksi_pengadaan/disapprove_kabag/",
+                                        type: "POST",
+                                        data: {
+                                            id_transaksi: idTransaksi,
+                                            KETERANGAN_CANCEL_KABAG: data,
+                                            items: selectedItems
+                                        },
+                                        success: function(response) {
+                                            let res = JSON.parse(response);
+                                            if (res.success) {
+                                                swal('Sukses', 'Pengajuan Pengadaan Berhasil Ditolak!',
+                                                    'success').then(function() {
+                                                    localStorage.removeItem(
+                                                        'selectedItems'
+                                                    ); // Hapus localStorage setelah disimpan
+                                                    sessionStorage.removeItem(
+                                                        "dbDataLoaded"
+                                                    ); // Hapus localStorage setelah disimpan
+                                                    location.href = "<?php echo base_url(); ?>" +
+                                                        "transaksi_pengadaan";
+                                                });
+                                            } else {
+                                                swal('Gagal', res.error, 'error');
+                                            }
+                                        }
+                                    })
+                                });
+                            }
+                        });
+                    });
+                });
+
+                // Hapus semua data localStorage & sessionStorage ketika user meninggalkan halaman
+                $(window).on('beforeunload', function() {
+                    localStorage.clear(); // Hapus semua data localStorage
+                    sessionStorage.clear(); // Hapus semua data sessionStorage
+                });
             </script>
             </body>
 

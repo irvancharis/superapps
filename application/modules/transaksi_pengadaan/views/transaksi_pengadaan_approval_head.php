@@ -99,14 +99,14 @@
                                                 </thead>
                                                 <tbody id="selected-items-body">
                                                     <?php
-                                                        foreach ($item as $item) {
-                                                            echo '<tr >';
-                                                            echo '<td class="text-left" style="width: 3%;"><img style="width: 100px;" src="' . base_url('assets/uploads/item/' . $item->FOTO_ITEM) . '"  alt="Foto Produk"></td>';
-                                                            echo '<td class="text-left col-2">' . $item->NAMA_ITEM . '</td>';
-                                                            echo '<td class="text-center col-1">' . $item->JUMLAH_PENGADAAN . '</td>';
-                                                            echo '<td class="text-left col-3">' . $item->KEPERLUAN . '</td>';
-                                                            echo '</tr>';
-                                                        }
+                                                    foreach ($item as $item) {
+                                                        echo '<tr >';
+                                                        echo '<td class="text-left" style="width: 3%;"><img style="width: 100px;" src="' . base_url('assets/uploads/item/' . $item->FOTO_ITEM) . '"  alt="Foto Produk"></td>';
+                                                        echo '<td class="text-left col-2">' . $item->NAMA_ITEM . '</td>';
+                                                        echo '<td class="text-center col-1">' . $item->JUMLAH_PENGADAAN . '</td>';
+                                                        echo '<td class="text-left col-3">' . $item->KEPERLUAN . '</td>';
+                                                        echo '</tr>';
+                                                    }
                                                     ?>
                                                 </tbody>
                                             </table>
@@ -130,7 +130,7 @@
                                             <button type="button" class="btn btn-danger mx-1" id="btn-disapprove">
                                                 <i class="fa fa-times"></i> DISAPPROVE
                                             </button>
-                                        </div>                                        
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -143,160 +143,207 @@
             <?php $this->load->view('layout/footer'); ?>
 
             <script>
-$(document).ready(function() {
-    $('#table-approval-produk').DataTable({
-        paging: false,
-        searching: false,
-        sorting: false,
-        ordering: false,
-        info: false,
-        responsive: {
-            details: {
-                type: 'column',
-                display: $.fn.dataTable.Responsive.display
-                    .childRowImmediate, // Menampilkan detail langsung                
-            }
-        }
-    });
-
-    let idTransaksi = "<?php echo $id_transaksi_pengadaan; ?>"; // ID transaksi dari PHP    
-
-    function loadDataFromDB() {
-        // Cek apakah sudah ada flag bahwa data sudah di-load dari DB
-        if (sessionStorage.getItem("dbDataLoaded")) {
-            console.log("Data dari database sudah dimuat sebelumnya. Skip pengambilan ulang.");
-            
-            return;
-        }
-
-        $.ajax({
-            url: "<?php echo base_url(); ?>transaksi_pengadaan/get_data_transaksi_detail/" +
-                idTransaksi,
-            type: "GET",
-            success: function(response) {
-                let res = JSON.parse(response);
-                if (res.success) {
-                    let storedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
-                    let dbItems = res.data.map(item => ({
-                        id: item.KODE_PRODUK_ITEM,
-                        nama: item.NAMA_ITEM,
-                        jumlah: item.JUMLAH_PENGADAAN,
-                        keperluan: item.KEPERLUAN,
-                        foto: item.FOTO_ITEM
-                    }));
-
-                    // Gabungkan data, tetapi hanya simpan yang tidak duplikat
-                    let mergedItems = [...dbItems, ...storedItems].reduce((acc, curr) => {
-                        if (!acc.some(item => item.id === curr.id)) {
-                            acc.push(curr);
+                $(document).ready(function() {
+                    $('#table-approval-produk').DataTable({
+                        paging: false,
+                        searching: false,
+                        sorting: false,
+                        ordering: false,
+                        info: false,
+                        responsive: {
+                            details: {
+                                type: 'column',
+                                display: $.fn.dataTable.Responsive.display
+                                    .childRowImmediate, // Menampilkan detail langsung                
+                            }
                         }
-                        return acc;
-                    }, []);
+                    });
 
-                    localStorage.setItem("selectedItems", JSON.stringify(mergedItems));
+                    let idTransaksi = "<?php echo $id_transaksi_pengadaan; ?>"; // ID transaksi dari PHP    
 
-                    // Tandai bahwa data dari database sudah dimasukkan ke localStorage
-                    sessionStorage.setItem("dbDataLoaded", "true");
+                    function loadDataFromDB() {
+                        // Cek apakah sudah ada flag bahwa data sudah di-load dari DB
+                        if (sessionStorage.getItem("dbDataLoaded")) {
+                            console.log("Data dari database sudah dimuat sebelumnya. Skip pengambilan ulang.");
 
-                    
-                }
-            }
-        });
-    }
+                            return;
+                        }
 
-    loadDataFromDB();
+                        $.ajax({
+                            url: "<?php echo base_url(); ?>transaksi_pengadaan/get_data_transaksi_detail/" +
+                                idTransaksi,
+                            type: "GET",
+                            success: function(response) {
+                                let res = JSON.parse(response);
+                                if (res.success) {
+                                    let storedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
+                                    let dbItems = res.data.map(item => ({
+                                        id: item.KODE_PRODUK_ITEM,
+                                        nama: item.NAMA_ITEM,
+                                        jumlah: item.JUMLAH_PENGADAAN,
+                                        keperluan: item.KEPERLUAN,
+                                        foto: item.FOTO_ITEM
+                                    }));
 
-    // Update data ke database
-    $('#FORM_TRANSAKSI_PENGADAAN_APPROVAL_HEAD').on('submit', function(e) {
-        e.preventDefault();
+                                    // Gabungkan data, tetapi hanya simpan yang tidak duplikat
+                                    let mergedItems = [...dbItems, ...storedItems].reduce((acc, curr) => {
+                                        if (!acc.some(item => item.id === curr.id)) {
+                                            acc.push(curr);
+                                        }
+                                        return acc;
+                                    }, []);
 
-        let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
+                                    localStorage.setItem("selectedItems", JSON.stringify(mergedItems));
 
-        if (selectedItems.length == 0) {
-            swal('Error', 'Tidak ada produk yang dipilih.', 'error');
-            return;
-        }
+                                    // Tandai bahwa data dari database sudah dimasukkan ke localStorage
+                                    sessionStorage.setItem("dbDataLoaded", "true");
 
-        // Kirim data untuk update
-        $.ajax({
-            url: "<?php echo base_url(); ?>transaksi_pengadaan/update_approval_head", // Ubah menjadi update
-            type: "POST",
-            data: {
-                id_transaksi: idTransaksi, // Kirim ID transaksi agar dapat diupdate
-                items: selectedItems
-            },
-            success: function(response) {
-                let res = JSON.parse(response);
-                if (res.success) {
-                    swal('Sukses', 'Pengajuan Pengadaan Di Setujui!', 'success').then(
-                        function() {
-                            localStorage.removeItem(
-                                'selectedItems'); // Hapus localStorage setelah disimpan
-                            sessionStorage.removeItem(
-                                "dbDataLoaded"); // Hapus localStorage setelah disimpan
-                            location.href = "<?php echo base_url(); ?>" +
-                                "transaksi_pengadaan";
+
+                                }
+                            }
                         });
-                } else {
-                    swal('Gagal', res.error, 'error');
-                }
-            },
-            error: function() {
-                swal('Error', 'Terjadi kesalahan pada server.', 'error');
-            }
-        });
-    });
-
-    // Kirim data untuk disapprove
-    $('#btn-disapprove').on('click', function() {
-        swal({
-            title: 'Masukkan Keterangan Cancel',
-            content: {
-                element: 'textarea',
-                attributes: {
-                    placeholder: 'Keterangan',
-                    id: 'KETERANGAN_CANCEL_HEAD',
-                },
-            },
-        }).then((data) => {
-            // swal('Keterangan Cancel :  ' + $('#KETERANGAN_CANCEL_GM').val() + '!');
-            let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
-            $.ajax({
-                url: "<?php echo base_url(); ?>transaksi_pengadaan/disapprove_head/",
-                type: "POST",
-                data: {
-                    id_transaksi: idTransaksi,
-                    KETERANGAN_CANCEL_HEAD: $('#KETERANGAN_CANCEL_HEAD').val(),
-                    items: selectedItems
-                },
-                success: function(response) {
-                    let res = JSON.parse(response);
-                    if (res.success) {
-                        swal('Sukses', 'Pengajuan Pengadaan Berhasil Ditolak!',
-                            'success').then(function() {
-                            localStorage.removeItem(
-                                'selectedItems'
-                                ); // Hapus localStorage setelah disimpan
-                            sessionStorage.removeItem(
-                                "dbDataLoaded"
-                                ); // Hapus localStorage setelah disimpan
-                            location.href = "<?php echo base_url(); ?>" +
-                                "transaksi_pengadaan";
-                        });
-                    } else {
-                        swal('Gagal', res.error, 'error');
                     }
-                }
-            })
-        });
-    });
-});
 
-// Hapus semua data localStorage & sessionStorage ketika user meninggalkan halaman
-$(window).on('beforeunload', function() {
-    localStorage.clear(); // Hapus semua data localStorage
-    sessionStorage.clear(); // Hapus semua data sessionStorage
-});
+                    loadDataFromDB();
+
+                    // Update data ke database
+                    $('#FORM_TRANSAKSI_PENGADAAN_APPROVAL_HEAD').on('submit', function(e) {
+                        e.preventDefault();
+
+                        swal({
+                            title: 'KONFIRMASI',
+                            text: 'Yakin Ingin Disetujui?',
+                            icon: 'warning',
+                            buttons: {
+                                cancel: {
+                                    text: 'Tidak',
+                                    value: false,
+                                    visible: true,
+                                    closeModal: true
+                                },
+                                confirm: {
+                                    text: 'Ya',
+                                    value: true,
+                                    visible: true,
+                                    closeModal: true
+                                }
+                            },
+                            dangerMode: true
+                        }).then((confirm) => {
+                            if (confirm) {
+                                let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
+
+                                if (selectedItems.length == 0) {
+                                    swal('Error', 'Tidak ada produk yang dipilih.', 'error');
+                                    return;
+                                }
+
+                                // Kirim data untuk update
+                                $.ajax({
+                                    url: "<?php echo base_url(); ?>transaksi_pengadaan/update_approval_head", // Ubah menjadi update
+                                    type: "POST",
+                                    data: {
+                                        id_transaksi: idTransaksi, // Kirim ID transaksi agar dapat diupdate
+                                        items: selectedItems
+                                    },
+                                    success: function(response) {
+                                        let res = JSON.parse(response);
+                                        if (res.success) {
+                                            swal('Sukses', 'Pengajuan Pengadaan Di Setujui!', 'success').then(
+                                                function() {
+                                                    localStorage.removeItem(
+                                                        'selectedItems'); // Hapus localStorage setelah disimpan
+                                                    sessionStorage.removeItem(
+                                                        "dbDataLoaded"); // Hapus localStorage setelah disimpan
+                                                    location.href = "<?php echo base_url(); ?>" +
+                                                        "transaksi_pengadaan";
+                                                });
+                                        } else {
+                                            swal('Gagal', res.error, 'error');
+                                        }
+                                    },
+                                    error: function() {
+                                        swal('Error', 'Terjadi kesalahan pada server.', 'error');
+                                    }
+                                });
+                            }
+                        });
+                    });
+
+                    // Kirim data untuk disapprove
+                    $('#btn-disapprove').on('click', function() {
+
+                        swal({
+                            title: 'KONFIRMASI',
+                            text: 'Yakin Ingin Ditolak?',
+                            icon: 'warning',
+                            buttons: {
+                                cancel: {
+                                    text: 'Tidak',
+                                    value: false,
+                                    visible: true,
+                                    closeModal: true
+                                },
+                                confirm: {
+                                    text: 'Ya',
+                                    value: true,
+                                    visible: true,
+                                    closeModal: true
+                                }
+                            },
+                            dangerMode: true
+                        }).then((confirm) => {
+                            if (confirm) {
+                                swal({
+                                    title: 'Masukkan Keterangan Cancel',
+                                    content: {
+                                        element: 'textarea',
+                                        attributes: {
+                                            placeholder: 'Keterangan',
+                                            id: 'KETERANGAN_CANCEL_HEAD',
+                                        },
+                                    },
+                                }).then((data) => {
+                                    // swal('Keterangan Cancel :  ' + $('#KETERANGAN_CANCEL_GM').val() + '!');
+                                    let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
+                                    $.ajax({
+                                        url: "<?php echo base_url(); ?>transaksi_pengadaan/disapprove_head/",
+                                        type: "POST",
+                                        data: {
+                                            id_transaksi: idTransaksi,
+                                            KETERANGAN_CANCEL_HEAD: $('#KETERANGAN_CANCEL_HEAD').val(),
+                                            items: selectedItems
+                                        },
+                                        success: function(response) {
+                                            let res = JSON.parse(response);
+                                            if (res.success) {
+                                                swal('Sukses', 'Pengajuan Pengadaan Berhasil Ditolak!',
+                                                    'success').then(function() {
+                                                    localStorage.removeItem(
+                                                        'selectedItems'
+                                                    ); // Hapus localStorage setelah disimpan
+                                                    sessionStorage.removeItem(
+                                                        "dbDataLoaded"
+                                                    ); // Hapus localStorage setelah disimpan
+                                                    location.href = "<?php echo base_url(); ?>" +
+                                                        "transaksi_pengadaan";
+                                                });
+                                            } else {
+                                                swal('Gagal', res.error, 'error');
+                                            }
+                                        }
+                                    })
+                                });
+                            }
+                        });
+                    });
+                });
+
+                // Hapus semua data localStorage & sessionStorage ketika user meninggalkan halaman
+                $(window).on('beforeunload', function() {
+                    localStorage.clear(); // Hapus semua data localStorage
+                    sessionStorage.clear(); // Hapus semua data sessionStorage
+                });
             </script>
             </body>
 
