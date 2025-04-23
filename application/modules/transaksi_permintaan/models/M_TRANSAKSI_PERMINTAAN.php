@@ -53,7 +53,7 @@ class M_TRANSAKSI_PERMINTAAN extends CI_Model
         // $this->db->where('STATUS_PERMINTAAN !=' ,'DITOLAK KABAG');
         // $this->db->where('STATUS_PERMINTAAN !=' ,'DITOLAK GM');
         // $this->db->where('STATUS_PERMINTAAN !=' ,'DITOLAK HEAD');
-        if ($this->session->userdata("ROLE") !== 'GM' && $this->session->userdata("ROLE") !== 'HEAD') {
+        if ($this->session->userdata("NAMA_ROLE") !== 'GM' && $this->session->userdata("NAMA_ROLE") !== 'HEAD' && $this->session->userdata("NAMA_ROLE") !== 'gudang') {
             $this->db->where('DEPARTEMEN_AKHIR =' ,$this->session->userdata("ID_DEPARTEMEN"));
         }
         $this->db->order_by('TANGGAL_PENGAJUAN', 'DESC');   

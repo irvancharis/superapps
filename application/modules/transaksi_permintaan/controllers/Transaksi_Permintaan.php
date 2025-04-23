@@ -16,6 +16,7 @@ class Transaksi_permintaan extends CI_Controller
         $this->load->model('maping_lokasi/M_MAPING_LOKASI');
         $this->load->model('karyawan/M_KARYAWAN');
         $this->load->model('produk_item/M_PRODUK_ITEM');
+        $this->load->model('produk_stok/M_PRODUK_STOK');
         $this->load->helper('url_helper');
         $this->load->library('Uuid');
         $this->load->library('TanggalIndo');
@@ -225,7 +226,7 @@ class Transaksi_permintaan extends CI_Controller
     public function proses_penyerahan($KODE, $page = 'transaksi_permintaan')
     {
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PERMINTAAN', 'APROVAL KABAG');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PERMINTAAN', 'PENYERAHAN');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -304,8 +305,6 @@ class Transaksi_permintaan extends CI_Controller
 
         $this->db->insert('TRANSAKSI_PERMINTAAN', $data_transaksi);
 
-        // Cek apakah ada file yang diunggah
-        
             $count = count($KODE_ITEM);            
             for ($i = 0; $i < $count; $i++) {
                     $data_produk = [
@@ -326,8 +325,6 @@ class Transaksi_permintaan extends CI_Controller
             }
         
     }
-
-
 
 
     public function disapprove_kabag()
@@ -401,14 +398,40 @@ class Transaksi_permintaan extends CI_Controller
         }
 
         $items = $this->input->post('items');
-        $list_maping = $this->input->post('form');        
-
+        $list_maping = $this->input->post('form');  
+                
         foreach ($items as $item) {
             //pengurangan stok
             $UUID_STOK = $item['UUID_STOK'];
             $data_produk = $item['JUMLAH_PERMINTAAN'];
             $this->M_TRANSAKSI_PERMINTAAN->pengurangan_real_stok($UUID_STOK, $data_produk);
+
+
+            // Update stok barang jika barang tidak ada di tabel Produk_Stok maka Insert jika ada maka Update
+            $cek_produk_stok = $this->M_PRODUK_STOK->get_produk_stok_single($item['KODE_ITEM'], $list_maping['AREA_AKHIR'],$list_maping['DEPARTEMEN_AKHIR'],$list_maping['RUANGAN_AKHIR'],$list_maping['LOKASI_AKHIR'] )->row();
+            // echo json_encode($cek_produk_stok);
+            // exit();
+            
+            if ($cek_produk_stok) {
+                $data_update = [
+                    'JUMLAH_STOK' => $cek_produk_stok->JUMLAH_STOK + $item['JUMLAH_PERMINTAAN']
+                ];
+                $this->M_PRODUK_STOK->update($cek_produk_stok->UUID_STOK, $data_update);
+            } else {
+                $data_insert = [
+                    'UUID_STOK' => $this->uuid->v4(),
+                    'KODE_ITEM' => $item['KODE_ITEM'],
+                    'JUMLAH_STOK' => $item['JUMLAH_PERMINTAAN'],
+                    'KODE_AREA' => $list_maping['AREA_AKHIR'],
+                    'KODE_RUANGAN' => $list_maping['RUANGAN_AKHIR'],
+                    'KODE_LOKASI' => $list_maping['LOKASI_AKHIR'],
+                    'KODE_DEPARTEMEN' => $list_maping['DEPARTEMEN_AKHIR'],
+                ];
+                $this->M_PRODUK_STOK->insert($data_insert);
+            }
         }
+
+        
 
 
         echo json_encode(['success' => true]);

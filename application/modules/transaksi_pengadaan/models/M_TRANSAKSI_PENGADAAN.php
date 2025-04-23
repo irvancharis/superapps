@@ -45,7 +45,7 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
         // $this->db->where('STATUS_PENGADAAN !=' ,'DITOLAK KABAG');
         // $this->db->where('STATUS_PENGADAAN !=' ,'DITOLAK GM');
         // $this->db->where('STATUS_PENGADAAN !=' ,'DITOLAK HEAD');
-        if ($this->session->userdata("ROLE") !== 'GM' && $this->session->userdata("ROLE") !== 'HEAD') {
+        if ($this->session->userdata("NAMA_ROLE") !== 'GM' && $this->session->userdata("NAMA_ROLE") !== 'HEAD' && $this->session->userdata("NAMA_ROLE") !== 'pengadaan') {
             $this->db->where('KODE_DEPARTEMEN_PENGAJUAN =' ,$this->session->userdata("ID_DEPARTEMEN"));
         }        
         $this->db->order_by('TANGGAL_PENGAJUAN', 'DESC');        
@@ -230,5 +230,10 @@ class M_TRANSAKSI_PENGADAAN extends CI_Model
     public function insert_detail($data)
     {
         return $this->db->insert('TRANSAKSI_PENGADAAN_DETAIL', $data);
+    }
+
+    public function insert_produk_item_jurnal($data)
+    {
+        return $this->db->insert('PRODUK_ITEM_JURNAL', $data);
     }
 }

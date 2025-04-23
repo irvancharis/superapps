@@ -69,6 +69,15 @@ class M_TRANSAKSI_PEMINDAHAN extends CI_Model
         return $query->result_object();
     }
 
+    public function get_ruangan_by_area($KODE_AREA)
+    {
+        $this->db->select("*");
+        $this->db->from('VIEW_RUANGAN');
+        $this->db->where('KODE_AREA', $KODE_AREA);
+        $query = $this->db->get();
+        return $query->result_object();
+    }
+
     public function get_latest_data()
     {
         $this->db->order_by('IDTICKET', 'DESC');

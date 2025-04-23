@@ -186,6 +186,18 @@ class Transaksi_pemindahan extends CI_Controller
             $this->load->view('transaksi_pemindahan_by_aset', $data);
     }
 
+
+    public function get_ruangan_by_area()
+    {        
+        $KODE_AREA = $this->input->post('AREA_PENEMPATAN');
+        $result = $this->M_TRANSAKSI_PEMINDAHAN->get_ruangan_by_area($KODE_AREA);
+        if ($result) {
+            echo json_encode(['success' => true, 'data' => $result]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Gagal memperbarui data.']);
+        }
+    }
+
     public function aproval_kabag($KODE, $page = 'transaksi_pemindahan')
     {
         $SESSION_ROLE = $this->session->userdata('ROLE');
