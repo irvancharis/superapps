@@ -27,6 +27,9 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/fancybox.css'); ?>" />
     <!-- Toast -->
     <link rel="stylesheet" href="<?php echo base_url('assets/bundles/izitoast/css/iziToast.min.css'); ?>">
+    <!-- Select2 -->
+    <!-- <link rel="stylesheet" href="<?php echo base_url('assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.css'); ?>"> -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/bundles/select2/dist/css/select2.min.css'); ?>">
     <!-- Preview Image -->
     <!-- <link rel="stylesheet" href="<?php echo base_url('assets/bundles/summernote/summernote-bs4.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/bundles/jquery-selectric/selectric.css'); ?>">
