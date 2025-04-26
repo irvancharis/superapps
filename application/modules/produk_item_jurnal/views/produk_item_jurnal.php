@@ -314,12 +314,12 @@
 
                         // Validasi minimal satu inputan diisi
                         if (!AREA_PENEMPATAN && !DEPARTEMEN_PENEMPATAN && !RUANGAN_PENEMPATAN && !LOKASI_PENEMPATAN) {
-                            $('#selected-items-body').html('<tr><td colspan="6" class="text-center text-warning">Harap isi minimal satu filter (Area, Departemen, Ruangan, atau Lokasi)</td></tr>');
+                            $('#selected-items-body').html('<tr><td colspan="10" class="text-center text-warning">Harap isi minimal satu filter (Area, Departemen, Ruangan, atau Lokasi)</td></tr>');
                             return false;
                         }
 
                         // Tampilkan loading
-                        $('#selected-items-body').html('<tr><td colspan="6" class="text-center">Loading data...</td></tr>');
+                        $('#selected-items-body').html('<tr><td colspan="10" class="text-center">Loading data...</td></tr>');
 
                         // Ajax request ke controller
                         $.ajax({
@@ -334,33 +334,17 @@
                                 KODE_ITEM: PRODUK_ITEM
                             },
                             success: function(response) {
-                                // Buat header tabel dinamis berdasarkan input yang dipilih
+                                // Header tabel tetap menampilkan semua kolom
                                 var headerHtml = '<tr>' +
                                     '<th class="text-center">#</th>' +
                                     '<th class="text-center">KODE TRANSAKSI</th>' +
                                     '<th class="text-center">TGL TRANSAKSI</th>' +
-                                    '<th class="text-center">JENIS TRANSAKSI</th>';
-
-                                // Tambahkan kolom untuk input yang dipilih
-                                var dynamicColumns = [];
-                                if (AREA_PENEMPATAN) {
-                                    headerHtml += '<th class="text-center">AREA</th>';
-                                    dynamicColumns.push('AREA');
-                                }
-                                if (DEPARTEMEN_PENEMPATAN) {
-                                    headerHtml += '<th class="text-center">DEPARTEMEN</th>';
-                                    dynamicColumns.push('DEPARTEMEN');
-                                }
-                                if (RUANGAN_PENEMPATAN) {
-                                    headerHtml += '<th class="text-center">RUANGAN</th>';
-                                    dynamicColumns.push('RUANGAN');
-                                }
-                                if (LOKASI_PENEMPATAN) {
-                                    headerHtml += '<th class="text-center">LOKASI</th>';
-                                    dynamicColumns.push('LOKASI');
-                                }
-
-                                headerHtml += '<th class="text-center">JML</th>' +
+                                    '<th class="text-center">JENIS TRANSAKSI</th>' +
+                                    '<th class="text-center">AREA</th>' +
+                                    '<th class="text-center">DEPARTEMEN</th>' +
+                                    '<th class="text-center">RUANGAN</th>' +
+                                    '<th class="text-center">LOKASI</th>' +
+                                    '<th class="text-center">JML</th>' +
                                     '<th class="text-center">IN/OUT</th>' +
                                     '</tr>';
 
@@ -375,19 +359,14 @@
                                             (index + 1),
                                             '<a href="javascript:void(0)" data-toggle="tooltip" title="' + item.KODE_TRANSAKSI + '">' + item.KODE_TRANSAKSI.substring(0, 5) + '</a>',
                                             item.TANGGAL_TRANSAKSI,
-                                            item.JENIS_TRANSAKSI
-                                        ];
-
-                                        // Tambahkan kolom dinamis
-                                        if (AREA_PENEMPATAN) rowData.push(item.AREA || '-');
-                                        if (DEPARTEMEN_PENEMPATAN) rowData.push(item.DEPARTEMEN || '-');
-                                        if (RUANGAN_PENEMPATAN) rowData.push(item.RUANGAN || '-');
-                                        if (LOKASI_PENEMPATAN) rowData.push(item.LOKASI || '-');
-
-                                        rowData.push(
+                                            item.JENIS_TRANSAKSI,
+                                            item.AREA || '-',
+                                            item.DEPARTEMEN || '-',
+                                            item.RUANGAN || '-',
+                                            item.LOKASI || '-',
                                             item.JUMLAH,
                                             (item.IN_OUT == 'IN' ? '<span class="badge bg-success">IN</span>' : '<span class="badge bg-danger">OUT</span>')
-                                        );
+                                        ];
 
                                         tableData.push(rowData);
                                     });
@@ -397,10 +376,51 @@
                                         $('#TABEL').DataTable().destroy();
                                     }
 
-                                    // Inisialisasi DataTables
+                                    // Inisialisasi DataTables dengan kolom tetap
                                     var dataTable = $('#TABEL').DataTable({
                                         data: tableData,
-                                        columns: buildColumnsDefinition(dynamicColumns),
+                                        columns: [{
+                                                data: 0,
+                                                className: 'text-center',
+                                                orderable: false
+                                            }, // #
+                                            {
+                                                data: 1,
+                                                className: 'text-center'
+                                            }, // KODE TRANSAKSI
+                                            {
+                                                data: 2,
+                                                className: 'text-center'
+                                            }, // TGL TRANSAKSI
+                                            {
+                                                data: 3,
+                                                className: 'text-center'
+                                            }, // JENIS TRANSAKSI
+                                            {
+                                                data: 4,
+                                                className: 'text-center'
+                                            }, // AREA
+                                            {
+                                                data: 5,
+                                                className: 'text-center'
+                                            }, // DEPARTEMEN
+                                            {
+                                                data: 6,
+                                                className: 'text-center'
+                                            }, // RUANGAN
+                                            {
+                                                data: 7,
+                                                className: 'text-center'
+                                            }, // LOKASI
+                                            {
+                                                data: 8,
+                                                className: 'text-center'
+                                            }, // JML
+                                            {
+                                                data: 9,
+                                                className: 'text-center'
+                                            } // IN/OUT
+                                        ],
                                         order: [
                                             [2, 'desc']
                                         ], // Default sorting by tanggal desc
@@ -419,12 +439,11 @@
                                     // Inisialisasi tooltip
                                     $('[data-toggle="tooltip"]').tooltip();
                                 } else {
-                                    var colspan = 6 + dynamicColumns.length;
-                                    $('#selected-items-body').html('<tr><td colspan="' + colspan + '" class="text-center">Tidak ada data ditemukan</td></tr>');
+                                    $('#selected-items-body').html('<tr><td colspan="10" class="text-center">Tidak ada data ditemukan</td></tr>');
                                 }
                             },
                             error: function(xhr, status, error) {
-                                $('#selected-items-body').html('<tr><td colspan="6" class="text-center text-danger">Error: ' + xhr.responseText + '</td></tr>');
+                                $('#selected-items-body').html('<tr><td colspan="10" class="text-center text-danger">Error: ' + xhr.responseText + '</td></tr>');
                             }
                         });
                     });
