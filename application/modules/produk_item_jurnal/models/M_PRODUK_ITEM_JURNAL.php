@@ -53,7 +53,7 @@ class M_PRODUK_ITEM_JURNAL extends CI_Model
         // $query = $this->db->get();
         // return $query->result_object();
 
-        $this->db->select('KODE_ITEM, TANGGAL_TRANSAKSI, JENIS_TRANSAKSI, JUMLAH, IN_OUT');
+        $this->db->select('KODE_TRANSAKSI, KODE_ITEM, TANGGAL_TRANSAKSI, JENIS_TRANSAKSI, JUMLAH, IN_OUT');
         $this->db->from('VIEW_PRODUK_JURNAL');
 
         if (!empty($params['AREA'])) {

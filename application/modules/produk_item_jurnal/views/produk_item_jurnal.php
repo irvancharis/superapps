@@ -156,6 +156,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="text-center col-1">#</th>
+                                                    <th class="text-center col-1">KODE TRANSAKSI</th>
                                                     <th class="text-center col-2">TGL TRANSAKSI</th>
                                                     <th class="text-center col-3">JENIS TRANSAKSI</th>
                                                     <th class="text-center col-1">JML</th>
@@ -332,6 +333,7 @@
                                     $.each(response.data, function(index, item) {
                                         html += '<tr>';
                                         html += '<td class="text-center">' + (index + 1) + '</td>';
+                                        html += '<td class="text-center"><a href="javascript:void(0)" data-toggle="tooltip" title="' + item.KODE_TRANSAKSI + '">' + item.KODE_TRANSAKSI.substring(0, 5) + '</a></td>';
                                         html += '<td class="text-center">' + item.TANGGAL_TRANSAKSI + '</td>';
                                         html += '<td class="text-center">' + item.JENIS_TRANSAKSI + '</td>';
                                         html += '<td class="text-center">' + item.JUMLAH + '</td>';
