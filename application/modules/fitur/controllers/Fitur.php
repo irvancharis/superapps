@@ -8,17 +8,19 @@ class Fitur extends CI_Controller
         parent::__construct();
         $this->load->model('M_FITUR');
         $this->load->helper('url_helper');
-        $this->load->library( 'Uuid' );
+        $this->load->library('Uuid');
         $this->load->library('TanggalIndo');
         $this->load->model('role/M_ROLE');
     }
 
     public function index($page = 'user')
     {
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'FITUR','LIST');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $this->load->library('session');
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'LIST FITUR');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
         $data['M_FITUR'] = $this->M_FITUR->get_fitur();
         $this->session->set_userdata('page', $page);
@@ -38,10 +40,12 @@ class Fitur extends CI_Controller
 
     public function tambah_fitur($page = 'user')
     {
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'FITUR','TAMBAH');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $this->load->library('session');
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'TAMBAH FITUR');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
 
         $this->session->set_userdata('page', $page);
@@ -51,12 +55,14 @@ class Fitur extends CI_Controller
             $this->load->view('fitur_tambah', $data);
     }
 
-    public function tambah_detail_fitur($KODE_FITUR,$page = 'user')
+    public function tambah_detail_fitur($KODE_FITUR, $page = 'user')
     {
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'FITUR','TAMBAH DETAIL');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $this->load->library('session');
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'TAMBAH DETAIL FITUR');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
 
         $this->session->set_userdata('page', $page);
@@ -70,10 +76,12 @@ class Fitur extends CI_Controller
 
     public function edit($KODE_FITUR, $page = 'user')
     {
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'FITUR','EDIT');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $this->load->library('session');
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'EDIT FITUR');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
 
         $this->session->set_userdata('page', $page);
@@ -88,10 +96,12 @@ class Fitur extends CI_Controller
 
     public function detail($KODE_FITUR, $page = 'user')
     {
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'FITUR','LIST');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $this->load->library('session');
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'LIST DETAIL FITUR');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
 
         $this->session->set_userdata('page', $page);
@@ -107,10 +117,12 @@ class Fitur extends CI_Controller
     public function insert_fitur()
     {
 
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'FITUR','TAMBAH');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $this->load->library('session');
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'TAMBAH FITUR');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
 
         // Ambil data dari POST
@@ -128,12 +140,14 @@ class Fitur extends CI_Controller
 
     public function insert_detail_fitur()
     {
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'FITUR','TAMBAH DETAIL');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $this->load->library('session');
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'TAMBAH DETAIL FITUR');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
-        
+
         // Ambil data dari POST
         $data = $this->input->post();
         $data['KODE_DETAIL_FITUR'] = $this->uuid->v4();
@@ -149,10 +163,12 @@ class Fitur extends CI_Controller
 
     public function update()
     {
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'FITUR','EDIT');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $this->load->library('session');
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'EDIT FITUR');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
 
         $KODE_FITUR = $this->input->post('KODE_FITUR');
@@ -187,10 +203,12 @@ class Fitur extends CI_Controller
     public function hapus($KODE_FITUR)
     {
 
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'FITUR','HAPUS');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $this->load->library('session');
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'HAPUS FITUR');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
 
         // Proses hapus data
@@ -202,10 +220,12 @@ class Fitur extends CI_Controller
     public function hapus_detail_fitur($KODE_FITUR)
     {
 
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'FITUR','HAPUS DETAIL');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        $this->load->library('session');
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'HAPUS DETAIL FITUR');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
 
 
         // Proses hapus data

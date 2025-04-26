@@ -26,5 +26,7 @@
     <script src="<?php echo base_url('assets/bundles/izitoast/js/iziToast.min.js') ?>"></script>
     <!-- JS Libraies -->
     <script src="<?php echo base_url('assets/bundles/chocolat/dist/js/jquery.chocolat.min.js') ?>"></script>
+    <!-- Select2 -->
+    <script src="<?php echo base_url('assets/bundles/select2/dist/js/select2.full.min.js'); ?>"></script>
     <!-- Page Specific JS File -->
     <!-- <script src="<?php echo base_url('assets/js/page/gallery1.js') ?>"></script> -->

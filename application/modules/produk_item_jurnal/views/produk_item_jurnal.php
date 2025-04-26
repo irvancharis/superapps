@@ -1,0 +1,476 @@
+            <!-- Main Content -->
+            <div class="main-content">
+                <section class="section">
+                    <div class="row mx-1 mx-md-0 mx-lg-0">
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>JURNAL ITEM - AREA</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="form-group col-12">
+                                            <label>AREA</label>
+                                            <select required name="AREA_PENEMPATAN" id="AREA_PENEMPATAN"
+                                                class="form-control">
+                                                <option value="" class="text-center" selected disabled>-- Pilih Area --
+                                                </option>
+                                                <?php foreach ($get_area as $row) : ?>
+                                                    <option value="<?= $row->KODE_AREA; ?>"><?= $row->NAMA_AREA; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Silahkan masukkan area!
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <label>RUANGAN</label>
+                                            <select required name="RUANGAN_PENEMPATAN" id="RUANGAN_PENEMPATAN"
+                                                class="form-control select2">
+                                                <option value="" class="text-center" selected disabled>-- Pilih Ruangan
+                                                    --</option>
+                                                <?php foreach ($get_ruangan as $row) : ?>
+                                                    <option value="<?= $row->KODE_RUANGAN; ?>"><?= $row->NAMA_RUANGAN; ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Silahkan masukkan ruangan!
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <label>LOKASI</label>
+                                            <select required name="LOKASI_PENEMPATAN" id="LOKASI_PENEMPATAN"
+                                                class="form-control select2">
+                                                <option value="" class="text-center" selected disabled>-- Pilih Lokasi
+                                                    --</option>
+                                                <?php foreach ($get_lokasi as $row) : ?>
+                                                    <option value="<?= $row->KODE_LOKASI; ?>"><?= $row->NAMA_LOKASI; ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Silahkan masukkan ruangan!
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <label>DEPARTEMEN</label>
+                                            <select required name="DEPARTEMEN_PENEMPATAN" id="DEPARTEMEN_PENEMPATAN"
+                                                class="form-control select2">
+                                                <option value="" class="text-center" selected disabled>-- Pilih
+                                                    Departemen --</option>
+                                                <?php foreach ($get_departemen as $row) : ?>
+                                                    <option value="<?= $row->KODE_DEPARTEMEN; ?>">
+                                                        <?= $row->NAMA_DEPARTEMEN; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Silahkan masukkan ruangan!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-8 col-lg-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>JURNAL ITEM - PRODUK</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="form-group col-12">
+                                            <label>KODE ITEM</label>
+                                            <select required name="PRODUK_ITEM" id="PRODUK_ITEM"
+                                                class="form-control select2">
+                                                <option value="" class="text-center" selected disabled>-- Pilih Item --
+                                                </option>
+                                                <?php foreach ($M_PRODUK_ITEM as $row) : ?>
+                                                    <option value="<?= $row->KODE_ITEM; ?>"><?= $row->NAMA_ITEM; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Silahkan masukkan KODE ITEM!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="py-4">
+                                        <p class="clearfix">
+                                            <span class="float-left">
+                                                NAMA ITEM
+                                            </span>
+                                            <span class="float-right text-muted" id="NAMA_ITEM">
+                                                -
+                                            </span>
+                                        </p>
+                                        <p class="clearfix">
+                                            <span class="float-left">
+                                                KATEGORI
+                                            </span>
+                                            <span class="float-right text-muted" id="KATEGORI">
+                                                -
+                                            </span>
+                                        </p>
+                                        <p class="clearfix">
+                                            <span class="float-left">
+                                                KETERANGAN ITEM
+                                            </span>
+                                            <span class="float-right text-muted" id="KETERANGAN_ITEM">
+                                                -
+                                            </span>
+                                        </p>
+                                        <p class="clearfix">
+                                            <span class="float-left">
+                                                SATUAN
+                                            </span>
+                                            <span class="float-right text-muted" id="SATUAN">
+                                                <a href="#">-</a>
+                                            </span>
+                                        </p>
+                                        <p class="clearfix">
+                                            <span class="float-left">
+                                                FOTO
+                                            </span>
+                                            <span class="float-right text-muted foto-item" id="FOTO">
+                                                -
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary d-block mx-auto mb-4" id="btn-show-produk"> <i
+                            class="fa fa-search"></i> SHOW PRODUK</button>
+
+                    <div class="row mx-1 mx-md-0 mx-lg-0">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-center">
+                                    <h4>DETAIL INFO PRODUK/ITEM JURNAL</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" id="TABEL">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center col-1">#</th>
+                                                    <th class="text-center col-2">TGL TRANSAKSI</th>
+                                                    <th class="text-center col-3">JENIS TRANSAKSI</th>
+                                                    <th class="text-center col-1">JML</th>
+                                                    <th class="text-center col-1">IN/OUT</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="selected-items-body">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <?php $this->load->view('layout/footer'); ?>
+
+            </body>
+
+
+            <script>
+                $(document).ready(function() {
+                    $('#TABEL').dataTable({
+                        paging: false
+                    });
+
+                    localStorage.removeItem(
+                        'FormMapping');
+
+
+
+                    $('select').on('change', function() {
+                        saveFormData();
+                    });
+
+                    // Form Data Save to Local Storage
+                    function saveFormData() {
+                        let formData = {
+                            AREA: $('#AREA_PENEMPATAN').val(),
+                            DEPARTEMEN: $('#DEPARTEMEN_PENEMPATAN').val(),
+                            RUANGAN: $('#RUANGAN_PENEMPATAN').val(),
+                            LOKASI: $('#LOKASI_PENEMPATAN').val(),
+                        };
+
+                        localStorage.setItem('FormMapping', JSON.stringify(formData));
+                    }
+
+                    $('#formHapusproduk').on('submit', function(e) {
+                        e.preventDefault();
+
+                        // Ambil data dari form
+                        let formData = $(this).serialize();
+
+                        // Kirim data ke server melalui AJAX
+                        $.ajax({
+                            url: "<?php echo base_url(); ?>" +
+                                "produk_item/hapus", // Endpoint untuk proses input
+                            type: 'POST',
+                            data: formData,
+                            success: function(response) {
+                                let res = JSON.parse(response);
+                                if (res.success) {
+                                    swal('Sukses', 'Hapus Data Berhasil!', 'success').then(function() {
+                                        $('#hapusModal').modal('hide');
+                                        location.reload();
+                                    });
+                                } else {
+                                    alert('Gagal menghapus data: ' + response.error);
+                                }
+                            },
+                            error: function() {
+                                alert('Gagal melakukan proses.');
+                            }
+                        });
+                    });
+
+                    // Get Ruangan By Area
+                    $('#AREA_PENEMPATAN').on('change', function() {
+                        let area = $(this).val();
+                        $.ajax({
+                            url: "<?php echo base_url(); ?>" + "maping_ruangan/get_maping_ruangan_by_area/" + $(this).val(),
+                            type: "POST",
+                            data: {
+                                AREA_PENEMPATAN: area
+                            },
+                            success: function(response) {
+                                var ruangan = JSON.parse(response);
+                                var data_ruangan = ruangan;
+                                var $ruanganPenempatan = $('#RUANGAN_PENEMPATAN');
+                                var $lokasiPenempatan = $('#LOKASI_PENEMPATAN');
+
+                                $ruanganPenempatan.empty().append(
+                                    '<option value="" class="text-center" selected disabled>-- Pilih Ruangan --</option>'
+                                );
+                                $lokasiPenempatan.empty().append(
+                                    '<option value="" class="text-center" selected disabled>-- Pilih Lokasi --</option>'
+                                );
+
+                                $.each(data_ruangan, function(index, lokasi) {
+                                    $ruanganPenempatan.append($('<option>', {
+                                        value: lokasi.KODE_RUANGAN,
+                                        text: lokasi.NAMA_RUANGAN
+                                    }));
+                                });
+
+                            },
+                            error: function() {
+                                swal('Error', 'Tidak dapat terhubung ke server.', 'error');
+                            }
+                        });
+                    });
+
+                    // Get Lokasi By Ruangan
+                    $('#RUANGAN_PENEMPATAN').on('change', function() {
+                        let ruangan = $(this).val();
+                        $.ajax({
+                            url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_lokasi_by_ruangan",
+                            type: "POST",
+                            data: {
+                                RUANGAN_PENEMPATAN: ruangan
+                            },
+                            success: function(response) {
+                                var lokasi = JSON.parse(response);
+                                var data_lokasi = lokasi.data;
+                                var $lokasiPenempatan = $('#LOKASI_PENEMPATAN');
+
+                                $lokasiPenempatan.empty().append(
+                                    '<option value="" class="text-center" selected disabled>-- Pilih Lokasi --</option>'
+                                );
+
+                                $.each(data_lokasi, function(index, lokasi) {
+                                    $lokasiPenempatan.append($('<option>', {
+                                        value: lokasi.KODE_LOKASI,
+                                        text: lokasi.NAMA_LOKASI
+                                    }));
+                                });
+
+                            },
+                            error: function() {
+                                swal('Error', 'Tidak dapat terhubung ke server.', 'error');
+                            }
+                        });
+                    });
+
+
+                    // Get Data Produk Lock
+                    $('#btn-show-produk').on('click', function() {
+                        var AREA_PENEMPATAN = $('#AREA_PENEMPATAN').val();
+                        var DEPARTEMEN_PENEMPATAN = $('#DEPARTEMEN_PENEMPATAN').val();
+                        var RUANGAN_PENEMPATAN = $('#RUANGAN_PENEMPATAN').val();
+                        var LOKASI_PENEMPATAN = $('#LOKASI_PENEMPATAN').val();
+                        var PRODUK_ITEM = $('#PRODUK_ITEM').val();
+
+                        // Tampilkan loading
+                        $('#selected-items-body').html('<tr><td colspan="5" class="text-center">Loading data...</td></tr>');
+
+                        // Ajax request ke controller
+                        $.ajax({
+                            url: '<?php echo site_url("produk_item_jurnal/get_produk_item_jurnal_detail"); ?>',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                AREA: AREA_PENEMPATAN,
+                                DEPARTEMEN: DEPARTEMEN_PENEMPATAN,
+                                RUANGAN: RUANGAN_PENEMPATAN,
+                                LOKASI: LOKASI_PENEMPATAN,
+                                KODE_ITEM: PRODUK_ITEM
+                            },
+                            success: function(response) {
+                                if (response.status == 'success' && response.data.length > 0) {
+                                    var html = '';
+                                    $.each(response.data, function(index, item) {
+                                        html += '<tr>';
+                                        html += '<td class="text-center">' + (index + 1) + '</td>';
+                                        html += '<td class="text-center">' + item.TANGGAL_TRANSAKSI + '</td>';
+                                        html += '<td class="text-center">' + item.JENIS_TRANSAKSI + '</td>';
+                                        html += '<td class="text-center">' + item.JUMLAH + '</td>';
+                                        html += '<td class="text-center">' + (item.IN_OUT == 'IN' ? '<span class="badge bg-success">IN</span>' : '<span class="badge bg-danger">OUT</span>') + '</td>';
+                                        html += '</tr>';
+                                    });
+                                    $('#selected-items-body').html(html);
+                                } else {
+                                    $('#selected-items-body').html('<tr><td colspan="5" class="text-center">Tidak ada data ditemukan</td></tr>');
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                $('#selected-items-body').html('<tr><td colspan="5" class="text-center text-danger">Error: ' + xhr.responseText + '</td></tr>');
+                            }
+                        });
+                    });
+
+                    // Ambil data Produk untuk ditampilkan di field #PRODUK_ITEM berdasarkan AREA_PENEMPATAN, DEPARTEMEN_PENEMPATAN, RUANGAN_PENEMPATAN, LOKASI_PENEMPATAN
+                    $('#AREA_PENEMPATAN, #DEPARTEMEN_PENEMPATAN, #RUANGAN_PENEMPATAN, #LOKASI_PENEMPATAN').on('change', function() {
+                        var area = $('#AREA_PENEMPATAN').val();
+                        var departemen = $('#DEPARTEMEN_PENEMPATAN').val();
+                        var ruangan = $('#RUANGAN_PENEMPATAN').val();
+                        var lokasi = $('#LOKASI_PENEMPATAN').val();
+
+                        $.ajax({
+                            url: "<?php echo base_url(); ?>" + "produk_item_jurnal/get_produk_stok_by_area",
+                            type: "POST",
+                            dataType: "json",
+                            data: {
+                                AREA_PENEMPATAN: area,
+                                DEPARTEMEN_PENEMPATAN: departemen,
+                                RUANGAN_PENEMPATAN: ruangan,
+                                LOKASI_PENEMPATAN: lokasi
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    console.log(response.data);
+                                    var $produkItem = $('#PRODUK_ITEM');
+                                    $produkItem.empty().append(
+                                        '<option value="" class="text-center" selected disabled>-- Pilih Item --</option>'
+                                    );
+
+                                    $.each(response.data, function(index, item) {
+                                        $produkItem.append($('<option>', {
+                                            value: item.KODE_ITEM,
+                                            text: item.NAMA_PRODUK
+                                        }));
+                                    });
+                                } else {
+                                    var $produkItem = $('#PRODUK_ITEM');
+                                    $produkItem.empty().append(
+                                        '<option value="" class="text-center" selected disabled>-- Data tidak ditemukan --</option>'
+                                    );
+
+                                    $('#NAMA_ITEM').text('-');
+                                    $('#KATEGORI').text('-');
+                                    $('#KETERANGAN_ITEM').text('-');
+                                    $('#SATUAN').text('-');
+                                    $('#FOTO').html('-');
+                                }
+                            },
+                            error: function() {
+                                swal('Error', 'Tidak dapat terhubung ke server.', 'error');
+                            }
+                        });
+                    });
+
+                    // Set Detail Info Produk dengan mengambil data Produk dari field #PRODUK_ITEM
+                    $('#PRODUK_ITEM').on('change', function() {
+                        let produkItem = $(this).val();
+                        $.ajax({
+                            url: "<?php echo base_url(); ?>" + "produk_item_jurnal/get_produk_by_kode_item",
+                            type: "POST",
+                            dataType: "json",
+                            data: {
+                                KODE_ITEM: produkItem
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    let data = response.data;
+                                    $('#NAMA_ITEM').text('');
+                                    $('#KATEGORI').text('');
+                                    $('#KETERANGAN_ITEM').text('');
+                                    $('#SATUAN').text('');
+                                    $('#FOTO').html('');
+
+                                    if (response.data) {
+                                        $('#NAMA_ITEM').text(data.NAMA_ITEM);
+                                        $('#KATEGORI').text(data.NAMA_PRODUK_KATEGORI);
+                                        $('#KETERANGAN_ITEM').text(data.KETERANGAN_ITEM);
+                                        $('#SATUAN').text(data.SATUAN);
+                                        $('#FOTO').html('<a class="gallery-item w-25" href="<?php echo base_url('assets/uploads/item/'); ?>' + data.FOTO_ITEM + '" data-fancybox data-caption="Single image" data-image="<?php echo base_url('assets/uploads/item/'); ?>' + data.FOTO_ITEM + '" data-title="' + data.NAMA_ITEM + '"><img style="width: 100px;" src="<?php echo base_url('assets/uploads/item/'); ?>' + data.FOTO_ITEM + '" alt=""></a>');
+                                    }
+
+                                    // Inisialisasi Fancybox
+                                    Fancybox.bind("[data-fancybox]");
+                                }
+                            },
+                            error: function() {
+                                swal('Error', 'Tidak dapat terhubung ke server.', 'error');
+                            }
+                        });
+                    });
+                });
+
+                function generate_aset(uuid) {
+                    $.ajax({
+                        url: "<?php echo base_url(); ?>" + "produk_stok/generate_aset/" + uuid,
+                        type: "POST",
+                        success: function(response) {
+                            let res = JSON.parse(response);
+                            if (res.success) {
+                                swal('Sukses', 'Simpan Data Berhasil!', 'success').then(function() {
+                                    location.href = "<?php echo base_url(); ?>" +
+                                        "produk_stok";
+                                });
+                            } else {
+                                swal('Error', 'Tidak dapat terhubung ke server.', 'error');
+                            }
+                        }
+                    });
+                }
+
+
+                function detail_stok(uuid) {
+
+                    $.ajax({
+                        url: "<?php echo base_url(); ?>" + "produk_stok/cek_aset/" + uuid,
+                        type: "POST",
+                        success: function(response) {
+                            let res = JSON.parse(response);
+                            if (res.length > 0) {
+                                window.location.href = "<?php echo base_url(); ?>produk_stok/detail_stok/" + uuid;
+                            } else {
+                                swal('Data aset tidak ditemukan', 'Lakukan generate aset terlebih dahulu', 'warning');
+                            }
+                        }
+                    });
+                }
+            </script>
+
+            </html>
