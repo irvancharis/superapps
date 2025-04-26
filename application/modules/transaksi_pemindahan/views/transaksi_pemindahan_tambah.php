@@ -351,7 +351,7 @@
     $('#AREA_AKHIR').on('change', function() {
         let area = $(this).val();
         $.ajax({
-            url: "<?php echo base_url(); ?>" + "transaksi_pengadaan/get_ruangan_by_area",
+            url: "<?php echo base_url(); ?>" + "transaksi_pemindahan/get_ruangan_by_area",
             type: "POST",
             data: {
                 AREA_PENEMPATAN: area
