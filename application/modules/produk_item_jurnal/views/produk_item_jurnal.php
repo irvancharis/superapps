@@ -312,8 +312,14 @@
                         var LOKASI_PENEMPATAN = $('#LOKASI_PENEMPATAN').val();
                         var PRODUK_ITEM = $('#PRODUK_ITEM').val();
 
+                        // Validasi minimal satu inputan diisi
+                        if (!AREA_PENEMPATAN && !DEPARTEMEN_PENEMPATAN && !RUANGAN_PENEMPATAN && !LOKASI_PENEMPATAN) {
+                            $('#selected-items-body').html('<tr><td colspan="6" class="text-center text-warning">Harap isi minimal satu filter (Area, Departemen, Ruangan, atau Lokasi)</td></tr>');
+                            return false;
+                        }
+
                         // Tampilkan loading
-                        $('#selected-items-body').html('<tr><td colspan="5" class="text-center">Loading data...</td></tr>');
+                        $('#selected-items-body').html('<tr><td colspan="6" class="text-center">Loading data...</td></tr>');
 
                         // Ajax request ke controller
                         $.ajax({
@@ -328,6 +334,34 @@
                                 KODE_ITEM: PRODUK_ITEM
                             },
                             success: function(response) {
+                                // Buat header tabel dinamis berdasarkan input yang dipilih
+                                var headerHtml = '<tr>' +
+                                    '<th class="text-center col-1">#</th>' +
+                                    '<th class="text-center col-1">KODE TRANSAKSI</th>' +
+                                    '<th class="text-center col-2">TGL TRANSAKSI</th>' +
+                                    '<th class="text-center col-3">JENIS TRANSAKSI</th>';
+
+                                // Tambahkan kolom untuk input yang dipilih
+                                if (AREA_PENEMPATAN) {
+                                    headerHtml += '<th class="text-center col-1">AREA</th>';
+                                }
+                                if (DEPARTEMEN_PENEMPATAN) {
+                                    headerHtml += '<th class="text-center col-1">DEPARTEMEN</th>';
+                                }
+                                if (RUANGAN_PENEMPATAN) {
+                                    headerHtml += '<th class="text-center col-1">RUANGAN</th>';
+                                }
+                                if (LOKASI_PENEMPATAN) {
+                                    headerHtml += '<th class="text-center col-1">LOKASI</th>';
+                                }
+
+                                headerHtml += '<th class="text-center col-1">JML</th>' +
+                                    '<th class="text-center col-1">IN/OUT</th>' +
+                                    '</tr>';
+
+                                // Update header tabel
+                                $('#TABEL thead').html(headerHtml);
+
                                 if (response.status == 'success' && response.data.length > 0) {
                                     var html = '';
                                     $.each(response.data, function(index, item) {
@@ -336,17 +370,35 @@
                                         html += '<td class="text-center"><a href="javascript:void(0)" data-toggle="tooltip" title="' + item.KODE_TRANSAKSI + '">' + item.KODE_TRANSAKSI.substring(0, 5) + '</a></td>';
                                         html += '<td class="text-center">' + item.TANGGAL_TRANSAKSI + '</td>';
                                         html += '<td class="text-center">' + item.JENIS_TRANSAKSI + '</td>';
+
+                                        // Tambahkan kolom untuk input yang dipilih
+                                        if (AREA_PENEMPATAN) {
+                                            html += '<td class="text-center">' + (item.AREA || '-') + '</td>';
+                                        }
+                                        if (DEPARTEMEN_PENEMPATAN) {
+                                            html += '<td class="text-center">' + (item.DEPARTEMEN || '-') + '</td>';
+                                        }
+                                        if (RUANGAN_PENEMPATAN) {
+                                            html += '<td class="text-center">' + (item.RUANGAN || '-') + '</td>';
+                                        }
+                                        if (LOKASI_PENEMPATAN) {
+                                            html += '<td class="text-center">' + (item.LOKASI || '-') + '</td>';
+                                        }
+
                                         html += '<td class="text-center">' + item.JUMLAH + '</td>';
                                         html += '<td class="text-center">' + (item.IN_OUT == 'IN' ? '<span class="badge bg-success">IN</span>' : '<span class="badge bg-danger">OUT</span>') + '</td>';
                                         html += '</tr>';
                                     });
                                     $('#selected-items-body').html(html);
+
+                                    // Inisialisasi tooltip untuk elemen yang baru dibuat
+                                    $('[data-toggle="tooltip"]').tooltip();
                                 } else {
-                                    $('#selected-items-body').html('<tr><td colspan="5" class="text-center">Tidak ada data ditemukan</td></tr>');
+                                    $('#selected-items-body').html('<tr><td colspan="' + (6 + [AREA_PENEMPATAN, DEPARTEMEN_PENEMPATAN, RUANGAN_PENEMPATAN, LOKASI_PENEMPATAN].filter(Boolean).length) + '" class="text-center">Tidak ada data ditemukan</td></tr>');
                                 }
                             },
                             error: function(xhr, status, error) {
-                                $('#selected-items-body').html('<tr><td colspan="5" class="text-center text-danger">Error: ' + xhr.responseText + '</td></tr>');
+                                $('#selected-items-body').html('<tr><td colspan="6" class="text-center text-danger">Error: ' + xhr.responseText + '</td></tr>');
                             }
                         });
                     });

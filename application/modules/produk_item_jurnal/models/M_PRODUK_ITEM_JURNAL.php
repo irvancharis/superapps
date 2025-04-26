@@ -43,35 +43,28 @@ class M_PRODUK_ITEM_JURNAL extends CI_Model
 
     public function get_produk_item_jurnal_detail($params)
     {
-        // $this->db->select('*');
-        // $this->db->from('VIEW_PRODUK_JURNAL');
-        // $this->db->where('KODE_ITEM', $KODE_ITEM);
-        // $this->db->where('DEPARTEMEN', $DEPARTEMEN);
-        // $this->db->where('AREA', $AREA);
-        // $this->db->where('RUANGAN', $RUANGAN);
-        // $this->db->where('LOKASI', $LOKASI);
-        // $query = $this->db->get();
-        // return $query->result_object();
-
-        $this->db->select('KODE_TRANSAKSI, KODE_ITEM, TANGGAL_TRANSAKSI, JENIS_TRANSAKSI, JUMLAH, IN_OUT');
-        $this->db->from('VIEW_PRODUK_JURNAL');
+        $this->db->select('pj.KODE_TRANSAKSI, pj.KODE_ITEM, pj.TANGGAL_TRANSAKSI, pj.JENIS_TRANSAKSI, ma.NAMA_AREA as AREA, md.NAMA_DEPARTEMEN as DEPARTEMEN, mr.NAMA_RUANGAN as RUANGAN, ml.NAMA_LOKASI as LOKASI, pj.JUMLAH, pj.IN_OUT');
+        $this->db->from('VIEW_PRODUK_JURNAL pj');
+        $this->db->join('MAPING_AREA ma', 'pj.AREA = ma.KODE_AREA', 'left');
+        $this->db->join('MAPING_RUANGAN mr', 'pj.RUANGAN = mr.KODE_RUANGAN', 'left');
+        $this->db->join('MAPING_LOKASI ml', 'pj.LOKASI = ml.KODE_LOKASI', 'left');
+        $this->db->join('DEPARTEMEN md', 'pj.DEPARTEMEN = md.KODE_DEPARTEMEN', 'left');
 
         if (!empty($params['AREA'])) {
-            $this->db->where('AREA', $params['AREA']);
+            $this->db->where('ma.KODE_AREA', $params['AREA']);
         }
         if (!empty($params['DEPARTEMEN'])) {
-            $this->db->where('DEPARTEMEN', $params['DEPARTEMEN']);
+            $this->db->where('md.KODE_DEPARTEMEN', $params['DEPARTEMEN']);
         }
         if (!empty($params['RUANGAN'])) {
-            $this->db->where('RUANGAN', $params['RUANGAN']);
+            $this->db->where('mr.KODE_RUANGAN', $params['RUANGAN']);
         }
         if (!empty($params['LOKASI'])) {
-            $this->db->where('LOKASI', $params['LOKASI']);
+            $this->db->where('ml.KODE_LOKASI', $params['LOKASI']);
         }
         if (!empty($params['KODE_ITEM'])) {
-            $this->db->where('KODE_ITEM', $params['KODE_ITEM']);
+            $this->db->where('pj.KODE_ITEM', $params['KODE_ITEM']);
         }
-        // ... filter lainnya
 
         $query = $this->db->get();
         return $query->result_array();
