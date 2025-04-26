@@ -341,7 +341,6 @@ class Transaksi_penghapusan extends CI_Controller
                     $data_produk = $item['JUMLAH_PENGHAPUSAN'];
                     $this->M_TRANSAKSI_PENGHAPUSAN->update_real_stok($UUID_STOK, $data_produk);
 
-
                     $data_jurnal_out = [
                         'KODE_ITEM' => $item['KODE_ITEM'],
                         'KODE_TRANSAKSI' => $uuid,
