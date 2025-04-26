@@ -336,65 +336,91 @@
                             success: function(response) {
                                 // Buat header tabel dinamis berdasarkan input yang dipilih
                                 var headerHtml = '<tr>' +
-                                    '<th class="text-center col-1">#</th>' +
-                                    '<th class="text-center col-1">KODE TRANSAKSI</th>' +
-                                    '<th class="text-center col-2">TGL TRANSAKSI</th>' +
-                                    '<th class="text-center col-3">JENIS TRANSAKSI</th>';
+                                    '<th class="text-center">#</th>' +
+                                    '<th class="text-center">KODE TRANSAKSI</th>' +
+                                    '<th class="text-center">TGL TRANSAKSI</th>' +
+                                    '<th class="text-center">JENIS TRANSAKSI</th>';
 
                                 // Tambahkan kolom untuk input yang dipilih
+                                var dynamicColumns = [];
                                 if (AREA_PENEMPATAN) {
-                                    headerHtml += '<th class="text-center col-1">AREA</th>';
+                                    headerHtml += '<th class="text-center">AREA</th>';
+                                    dynamicColumns.push('AREA');
                                 }
                                 if (DEPARTEMEN_PENEMPATAN) {
-                                    headerHtml += '<th class="text-center col-1">DEPARTEMEN</th>';
+                                    headerHtml += '<th class="text-center">DEPARTEMEN</th>';
+                                    dynamicColumns.push('DEPARTEMEN');
                                 }
                                 if (RUANGAN_PENEMPATAN) {
-                                    headerHtml += '<th class="text-center col-1">RUANGAN</th>';
+                                    headerHtml += '<th class="text-center">RUANGAN</th>';
+                                    dynamicColumns.push('RUANGAN');
                                 }
                                 if (LOKASI_PENEMPATAN) {
-                                    headerHtml += '<th class="text-center col-1">LOKASI</th>';
+                                    headerHtml += '<th class="text-center">LOKASI</th>';
+                                    dynamicColumns.push('LOKASI');
                                 }
 
-                                headerHtml += '<th class="text-center col-1">JML</th>' +
-                                    '<th class="text-center col-1">IN/OUT</th>' +
+                                headerHtml += '<th class="text-center">JML</th>' +
+                                    '<th class="text-center">IN/OUT</th>' +
                                     '</tr>';
 
                                 // Update header tabel
                                 $('#TABEL thead').html(headerHtml);
 
                                 if (response.status == 'success' && response.data.length > 0) {
-                                    var html = '';
+                                    // Siapkan data untuk DataTables
+                                    var tableData = [];
                                     $.each(response.data, function(index, item) {
-                                        html += '<tr>';
-                                        html += '<td class="text-center">' + (index + 1) + '</td>';
-                                        html += '<td class="text-center"><a href="javascript:void(0)" data-toggle="tooltip" title="' + item.KODE_TRANSAKSI + '">' + item.KODE_TRANSAKSI.substring(0, 5) + '</a></td>';
-                                        html += '<td class="text-center">' + item.TANGGAL_TRANSAKSI + '</td>';
-                                        html += '<td class="text-center">' + item.JENIS_TRANSAKSI + '</td>';
+                                        var rowData = [
+                                            (index + 1),
+                                            '<a href="javascript:void(0)" data-toggle="tooltip" title="' + item.KODE_TRANSAKSI + '">' + item.KODE_TRANSAKSI.substring(0, 5) + '</a>',
+                                            item.TANGGAL_TRANSAKSI,
+                                            item.JENIS_TRANSAKSI
+                                        ];
 
-                                        // Tambahkan kolom untuk input yang dipilih
-                                        if (AREA_PENEMPATAN) {
-                                            html += '<td class="text-center">' + (item.AREA || '-') + '</td>';
-                                        }
-                                        if (DEPARTEMEN_PENEMPATAN) {
-                                            html += '<td class="text-center">' + (item.DEPARTEMEN || '-') + '</td>';
-                                        }
-                                        if (RUANGAN_PENEMPATAN) {
-                                            html += '<td class="text-center">' + (item.RUANGAN || '-') + '</td>';
-                                        }
-                                        if (LOKASI_PENEMPATAN) {
-                                            html += '<td class="text-center">' + (item.LOKASI || '-') + '</td>';
-                                        }
+                                        // Tambahkan kolom dinamis
+                                        if (AREA_PENEMPATAN) rowData.push(item.AREA || '-');
+                                        if (DEPARTEMEN_PENEMPATAN) rowData.push(item.DEPARTEMEN || '-');
+                                        if (RUANGAN_PENEMPATAN) rowData.push(item.RUANGAN || '-');
+                                        if (LOKASI_PENEMPATAN) rowData.push(item.LOKASI || '-');
 
-                                        html += '<td class="text-center">' + item.JUMLAH + '</td>';
-                                        html += '<td class="text-center">' + (item.IN_OUT == 'IN' ? '<span class="badge bg-success">IN</span>' : '<span class="badge bg-danger">OUT</span>') + '</td>';
-                                        html += '</tr>';
+                                        rowData.push(
+                                            item.JUMLAH,
+                                            (item.IN_OUT == 'IN' ? '<span class="badge bg-success">IN</span>' : '<span class="badge bg-danger">OUT</span>')
+                                        );
+
+                                        tableData.push(rowData);
                                     });
-                                    $('#selected-items-body').html(html);
 
-                                    // Inisialisasi tooltip untuk elemen yang baru dibuat
+                                    // Hancurkan DataTable jika sudah ada
+                                    if ($.fn.DataTable.isDataTable('#TABEL')) {
+                                        $('#TABEL').DataTable().destroy();
+                                    }
+
+                                    // Inisialisasi DataTables
+                                    var dataTable = $('#TABEL').DataTable({
+                                        data: tableData,
+                                        columns: buildColumnsDefinition(dynamicColumns),
+                                        order: [
+                                            [2, 'desc']
+                                        ], // Default sorting by tanggal desc
+                                        responsive: true,
+                                        language: {
+                                            search: "Cari:",
+                                            lengthMenu: "Tampilkan _MENU_ data per halaman",
+                                            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                                            paginate: {
+                                                previous: "Sebelumnya",
+                                                next: "Selanjutnya"
+                                            }
+                                        }
+                                    });
+
+                                    // Inisialisasi tooltip
                                     $('[data-toggle="tooltip"]').tooltip();
                                 } else {
-                                    $('#selected-items-body').html('<tr><td colspan="' + (6 + [AREA_PENEMPATAN, DEPARTEMEN_PENEMPATAN, RUANGAN_PENEMPATAN, LOKASI_PENEMPATAN].filter(Boolean).length) + '" class="text-center">Tidak ada data ditemukan</td></tr>');
+                                    var colspan = 6 + dynamicColumns.length;
+                                    $('#selected-items-body').html('<tr><td colspan="' + colspan + '" class="text-center">Tidak ada data ditemukan</td></tr>');
                                 }
                             },
                             error: function(xhr, status, error) {
@@ -402,6 +428,48 @@
                             }
                         });
                     });
+
+                    // Fungsi untuk membangun definisi kolom dinamis (DataTable)
+                    function buildColumnsDefinition(dynamicColumns) {
+                        var columns = [{
+                                data: 0,
+                                className: 'text-center',
+                                orderable: false
+                            },
+                            {
+                                data: 1,
+                                className: 'text-center'
+                            },
+                            {
+                                data: 2,
+                                className: 'text-center'
+                            },
+                            {
+                                data: 3,
+                                className: 'text-center'
+                            }
+                        ];
+
+                        // Tambahkan kolom dinamis
+                        var dynamicIndex = 4;
+                        dynamicColumns.forEach(function(col) {
+                            columns.push({
+                                data: dynamicIndex++,
+                                className: 'text-center'
+                            });
+                        });
+
+                        // Tambahkan kolom tetap terakhir
+                        columns.push({
+                            data: dynamicIndex++,
+                            className: 'text-center'
+                        }, {
+                            data: dynamicIndex,
+                            className: 'text-center'
+                        });
+
+                        return columns;
+                    }
 
                     // Ambil data Produk untuk ditampilkan di field #PRODUK_ITEM berdasarkan AREA_PENEMPATAN, DEPARTEMEN_PENEMPATAN, RUANGAN_PENEMPATAN, LOKASI_PENEMPATAN
                     $('#AREA_PENEMPATAN, #DEPARTEMEN_PENEMPATAN, #RUANGAN_PENEMPATAN, #LOKASI_PENEMPATAN').on('change', function() {
