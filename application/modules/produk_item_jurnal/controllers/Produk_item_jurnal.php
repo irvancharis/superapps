@@ -297,4 +297,40 @@ class Produk_item_jurnal extends CI_Controller
     //     $produk_item = $this->M_PRODUK_ITEM->get_produk_item_single($KODE);
     //     echo json_encode($produk_item);
     // }
+
+    // Untuk Print Jurnal Per Item
+    public function print_jurnal_per_item($kode_transaksi)
+    {
+        // Ambil data transaksi berdasarkan kode transaksi
+        $transaksi = $this->M_PRODUK_ITEM_JURNAL->get_jurnal_produk_by_kode($kode_transaksi);
+
+        // Ambil data item terkait
+        $item = $this->M_PRODUK_ITEM->get_produk_item_single($transaksi->KODE_ITEM);
+
+        // Ambil semua transaksi untuk item ini di lokasi yang sama
+        $all_transaksi = $this->M_PRODUK_ITEM_JURNAL->get_all_jurnal_for_item(
+            $transaksi->KODE_ITEM,
+            $transaksi->AREA,
+            $transaksi->DEPARTEMEN,
+            $transaksi->RUANGAN,
+            $transaksi->LOKASI
+        );
+
+        // Siapkan data untuk view
+        $data = [
+            'kode_item' => $item->KODE_ITEM,
+            'nama_item' => $item->NAMA_ITEM,
+            'kategori' => $item->NAMA_PRODUK_KATEGORI,
+            'satuan' => $item->SATUAN,
+            'area' => $transaksi->NAMA_AREA,
+            'departemen' => $transaksi->NAMA_DEPARTEMEN,
+            'ruangan' => $transaksi->NAMA_RUANGAN,
+            'lokasi' => $transaksi->NAMA_LOKASI,
+            'foto_item' => $item->FOTO_ITEM ? base_url('assets/uploads/item/' . $item->FOTO_ITEM) : null,
+            'transaksi' => $all_transaksi
+        ];
+
+        // Load view print
+        $this->load->view('produk_item_jurnal/print_jurnal', $data);
+    }
 }
