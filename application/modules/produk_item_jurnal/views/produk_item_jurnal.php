@@ -161,6 +161,7 @@
                                                     <th class="text-center col-3">JENIS TRANSAKSI</th>
                                                     <th class="text-center col-1">JML</th>
                                                     <th class="text-center col-1">IN/OUT</th>
+                                                    <th class="text-center col-1">ACTION</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="selected-items-body">
@@ -340,12 +341,18 @@
                                     '<th class="text-center">KODE TRANSAKSI</th>' +
                                     '<th class="text-center">TGL TRANSAKSI</th>' +
                                     '<th class="text-center">JENIS TRANSAKSI</th>' +
+                                    '<th class="text-center">ITEM</th>' +
+                                    '<th class="text-center">KATEGORI</th>' +
+                                    '<th class="text-center">KETERANGAN</th>' +
+                                    '<th class="text-center">SATUAN</th>' +
+                                    '<th class="text-center">FOTO</th>' +
                                     '<th class="text-center">AREA</th>' +
                                     '<th class="text-center">DEPARTEMEN</th>' +
                                     '<th class="text-center">RUANGAN</th>' +
                                     '<th class="text-center">LOKASI</th>' +
                                     '<th class="text-center">JML</th>' +
                                     '<th class="text-center">IN/OUT</th>' +
+                                    '<th class="text-center">ACTION</th>' +
                                     '</tr>';
 
                                 // Update header tabel
@@ -355,20 +362,48 @@
                                     // Siapkan data untuk DataTables
                                     var tableData = [];
                                     $.each(response.data, function(index, item) {
+                                        var fotoHtml = item.FOTO_ITEM ?
+                                            '<a class="gallery-item" href="<?php echo base_url("assets/uploads/item/"); ?>' + item.FOTO_ITEM +
+                                            '" data-fancybox data-caption="' + item.NAMA_ITEM +
+                                            '"><img style="width: 50px; height: 50px; object-fit: cover;" src="<?php echo base_url("assets/uploads/item/"); ?>' +
+                                            item.FOTO_ITEM + '" alt="' + item.NAMA_ITEM + '"></a>' :
+                                            '<span class="text-muted">No Image</span>';
+
                                         var rowData = [
                                             (index + 1),
                                             '<a href="javascript:void(0)" data-toggle="tooltip" title="' + item.KODE_TRANSAKSI + '">' + item.KODE_TRANSAKSI.substring(0, 5) + '</a>',
                                             item.TANGGAL_TRANSAKSI,
                                             item.JENIS_TRANSAKSI,
+                                            item.NAMA_ITEM || '-',
+                                            item.NAMA_PRODUK_KATEGORI || '-',
+                                            item.KETERANGAN_ITEM || '-',
+                                            item.SATUAN || '-',
+                                            fotoHtml,
                                             item.AREA || '-',
                                             item.DEPARTEMEN || '-',
                                             item.RUANGAN || '-',
                                             item.LOKASI || '-',
                                             item.JUMLAH,
-                                            (item.IN_OUT == 'IN' ? '<span class="badge bg-success">IN</span>' : '<span class="badge bg-danger">OUT</span>')
+                                            (item.IN_OUT == 'IN' ? '<span class="badge bg-success text-white">IN</span>' : '<span class="badge bg-danger text-white">OUT</span>'),
+                                            '<button type="button" class="btn btn-sm btn-primary btn-print" data-id="' + item.KODE_TRANSAKSI + '" data-toggle="tooltip" title="Cetak"><i class="fas fa-print"></i></button>'
                                         ];
 
                                         tableData.push(rowData);
+
+                                        // Inisialisasi Fancybox untuk gambar
+                                        Fancybox.bind("[data-fancybox]", {
+                                            // Opsi Fancybox
+                                            Thumbs: {
+                                                autoStart: false,
+                                            },
+                                            Toolbar: {
+                                                display: {
+                                                    left: [],
+                                                    middle: [],
+                                                    right: ["close"],
+                                                },
+                                            },
+                                        });
                                     });
 
                                     // Hancurkan DataTable jika sudah ada
@@ -380,9 +415,13 @@
                                     var dataTable = $('#TABEL').DataTable({
                                         data: tableData,
                                         columns: [{
-                                                data: 0,
                                                 className: 'text-center',
-                                                orderable: false
+                                                orderable: false,
+                                                searchable: false,
+                                                render: function(data, type, row, meta) {
+                                                    // Menggunakan meta.row untuk nomor urut yang konsisten
+                                                    return meta.row + 1;
+                                                }
                                             }, // #
                                             {
                                                 data: 1,
@@ -399,31 +438,59 @@
                                             {
                                                 data: 4,
                                                 className: 'text-center'
-                                            }, // AREA
+                                            }, // NAMA ITEM
                                             {
                                                 data: 5,
                                                 className: 'text-center'
-                                            }, // DEPARTEMEN
+                                            }, // KATEGORI
                                             {
                                                 data: 6,
                                                 className: 'text-center'
-                                            }, // RUANGAN
+                                            }, // KETERANGAN
                                             {
                                                 data: 7,
                                                 className: 'text-center'
-                                            }, // LOKASI
+                                            }, // SATUAN
                                             {
                                                 data: 8,
-                                                className: 'text-center'
-                                            }, // JML
+                                                className: 'text-center',
+                                                orderable: false,
+                                                searchable: false,
+                                                render: function(data, type, row) {
+                                                    return type === 'display' ? data : '';
+                                                }
+                                            }, // FOTO
                                             {
                                                 data: 9,
                                                 className: 'text-center'
-                                            } // IN/OUT
+                                            }, // AREA
+                                            {
+                                                data: 10,
+                                                className: 'text-center'
+                                            }, // DEPARTEMEN
+                                            {
+                                                data: 11,
+                                                className: 'text-center'
+                                            }, // RUANGAN
+                                            {
+                                                data: 12,
+                                                className: 'text-center'
+                                            }, // LOKASI
+                                            {
+                                                data: 13,
+                                                className: 'text-center'
+                                            }, // JML
+                                            {
+                                                data: 14,
+                                                className: 'text-center'
+                                            }, // IN/OUT
+                                            {
+                                                data: 15,
+                                                className: 'text-center',
+                                                orderable: false,
+                                                searchable: false
+                                            } // ACTION
                                         ],
-                                        order: [
-                                            [2, 'desc']
-                                        ], // Default sorting by tanggal desc
                                         responsive: true,
                                         language: {
                                             search: "Cari:",
@@ -433,17 +500,35 @@
                                                 previous: "Sebelumnya",
                                                 next: "Selanjutnya"
                                             }
-                                        }
+                                        },
+                                        dom: 'Bfrtip',
+                                        buttons: [
+                                            'copy', 'csv', 'excel', 'pdf', 'print'
+                                        ]
                                     });
 
                                     // Inisialisasi tooltip
                                     $('[data-toggle="tooltip"]').tooltip();
+
+                                    // Event handler untuk tombol print
+                                    $('#TABEL').on('click', '.btn-print', function() {
+                                        var kodeTransaksi = $(this).data('id');
+                                        // Panggil fungsi print disini
+                                        printJurnalPerItem(kodeTransaksi);
+                                    });
+
+                                    // Tooltip aktif juga untuk child rows saat tombol + ditekan:
+                                    $('#TABEL').on('responsive-display.dt', function(e, datatable, row, showHide, update) {
+                                        if (showHide) {
+                                            $('[data-toggle="tooltip"]').tooltip();
+                                        }
+                                    });
                                 } else {
-                                    $('#selected-items-body').html('<tr><td colspan="10" class="text-center">Tidak ada data ditemukan</td></tr>');
+                                    $('#selected-items-body').html('<tr><td colspan="16" class="text-center">Tidak ada data ditemukan</td></tr>');
                                 }
                             },
                             error: function(xhr, status, error) {
-                                $('#selected-items-body').html('<tr><td colspan="10" class="text-center text-danger">Error: ' + xhr.responseText + '</td></tr>');
+                                $('#selected-items-body').html('<tr><td colspan="16" class="text-center text-danger">Error: ' + xhr.responseText + '</td></tr>');
                             }
                         });
                     });
@@ -488,6 +573,25 @@
                         });
 
                         return columns;
+                    }
+
+                    // Fungsi untuk print jurnal per item
+                    function printJurnalPerItem(kodeTransaksi) {
+                        // Anda bisa menggunakan window.open untuk membuka halaman print
+                        // atau menggunakan AJAX untuk mendapatkan data print terlebih dahulu
+                        window.open('<?php echo site_url("produk_item_jurnal/print_jurnal_per_item/"); ?>' + kodeTransaksi, '_blank');
+
+                        // Atau jika ingin menggunakan modal:
+                        // $('#modal-print').modal('show');
+                        // $.ajax({
+                        //     url: '<?php echo site_url("produk_item_jurnal/get_data_print"); ?>',
+                        //     type: 'POST',
+                        //     data: {KODE_TRANSAKSI: kodeTransaksi},
+                        //     success: function(response) {
+                        //         // Isi modal dengan data print
+                        //         $('#print-content').html(response);
+                        //     }
+                        // });
                     }
 
                     // Ambil data Produk untuk ditampilkan di field #PRODUK_ITEM berdasarkan AREA_PENEMPATAN, DEPARTEMEN_PENEMPATAN, RUANGAN_PENEMPATAN, LOKASI_PENEMPATAN
@@ -553,18 +657,18 @@
                             success: function(response) {
                                 if (response.success) {
                                     let data = response.data;
-                                    $('#NAMA_ITEM').text('');
-                                    $('#KATEGORI').text('');
-                                    $('#KETERANGAN_ITEM').text('');
-                                    $('#SATUAN').text('');
-                                    $('#FOTO').html('');
+                                    $('#NAMA_ITEM').text('Tidak Tersedia');
+                                    $('#KATEGORI').text('Tidak Tersedia');
+                                    $('#KETERANGAN_ITEM').text('Tidak Tersedia');
+                                    $('#SATUAN').text('Tidak Tersedia');
+                                    $('#FOTO').html('<span class="text-muted">Tidak Ada Foto</span>');
 
-                                    if (response.data) {
-                                        $('#NAMA_ITEM').text(data.NAMA_ITEM);
-                                        $('#KATEGORI').text(data.NAMA_PRODUK_KATEGORI);
-                                        $('#KETERANGAN_ITEM').text(data.KETERANGAN_ITEM);
-                                        $('#SATUAN').text(data.SATUAN);
-                                        $('#FOTO').html('<a class="gallery-item w-25" href="<?php echo base_url('assets/uploads/item/'); ?>' + data.FOTO_ITEM + '" data-fancybox data-caption="Single image" data-image="<?php echo base_url('assets/uploads/item/'); ?>' + data.FOTO_ITEM + '" data-title="' + data.NAMA_ITEM + '"><img style="width: 100px;" src="<?php echo base_url('assets/uploads/item/'); ?>' + data.FOTO_ITEM + '" alt=""></a>');
+                                    if (data) {
+                                        $('#NAMA_ITEM').html('<strong>' + data.NAMA_ITEM + '</strong>');
+                                        $('#KATEGORI').html('<em>' + data.NAMA_PRODUK_KATEGORI + '</em>');
+                                        $('#KETERANGAN_ITEM').html('<span class="text-info">' + data.KETERANGAN_ITEM + '</span>');
+                                        $('#SATUAN').html('<span class="badge bg-primary text-white">' + data.SATUAN + '</span>');
+                                        $('#FOTO').html('<a class="gallery-item w-25" href="<?php echo base_url('assets/uploads/item/'); ?>' + data.FOTO_ITEM + '" data-fancybox data-caption="Single image" data-image="<?php echo base_url('assets/uploads/item/'); ?>' + data.FOTO_ITEM + '" data-title="' + data.NAMA_ITEM + '"><img style="width: 100px; padding: 5px;" src="<?php echo base_url('assets/uploads/item/'); ?>' + data.FOTO_ITEM + '" alt="' + data.NAMA_ITEM + '"></a>');
                                     }
 
                                     // Inisialisasi Fancybox
