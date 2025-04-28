@@ -279,8 +279,47 @@ class Transaksi_permintaan extends CI_Controller
             $this->load->view('detail', $data);
     }
 
-    public function insert()
+
+    public function kirim_wa($data)
     {
+        $setting = $this->db->get('SETTING')->row();
+        $token_wa = $setting->TOKEN_WA;
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'target' => $data['target'],
+                'message' => $data['message'],
+                'countryCode' => '62', //optional
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: ' . $token_wa
+            ),
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false,
+        ));
+
+        $response = curl_exec($curl);
+        if (curl_errno($curl)) {
+            $error_msg = curl_error($curl);
+        }
+        curl_close($curl);
+
+        if (isset($error_msg)) {
+            echo $error_msg;
+        }
+    }
+
+    public function insert()
+    {        
         $inputan = $this->input->post(null, TRUE);
         $KODE_ITEM = $this->input->post('KODE_ITEM');
         $uuid_transaksi = $this->uuid->v4();
@@ -291,7 +330,7 @@ class Transaksi_permintaan extends CI_Controller
             'USER_PENGAJUAN' => $this->session->userdata('ID_KARYAWAN'),
             'UUID_TRANSAKSI_PERMINTAAN' => $uuid_transaksi,
             'DEPARTEMEN_AWAL' => $get_maping_default->DEPARTEMEN,
-            'TANGGAL_PENGAJUAN' => date('Y-m-d'),
+            'TANGGAL_PENGAJUAN' => date('Y-m-d H:i:s'),
             'KETERANGAN_PERMINTAAN' => $inputan['KETERANGAN_PERMINTAAN'],
             'AREA_AWAL' => $get_maping_default->AREA,      
             'RUANGAN_AWAL' => $get_maping_default->RUANGAN,
@@ -304,6 +343,7 @@ class Transaksi_permintaan extends CI_Controller
         ];
 
         $this->db->insert('TRANSAKSI_PERMINTAAN', $data_transaksi);
+        $get_transaksi = $this->db->get_where('VIEW_TRANSAKSI_PERMINTAAN', ['UUID_TRANSAKSI_PERMINTAAN' => $uuid_transaksi])->row();
 
             $count = count($KODE_ITEM);            
             for ($i = 0; $i < $count; $i++) {
@@ -319,6 +359,29 @@ class Transaksi_permintaan extends CI_Controller
                 }
 
             if ($insert) {
+
+                $get_kontak_kabag = $this->M_TRANSAKSI_PERMINTAAN->get_karyawan_by_departemen($inputan['DEPARTEMEN_AKHIR'], 'KABAG');                
+
+                $data = [
+                "target" => $get_kontak_kabag->TELEPON,
+                "message" => '📢 PEMBERITAHUAN!
+Transaksi Permintaan Baru dengan detail berikut:
+
+Nomor Transaksi: ' . $uuid_transaksi . '
+Departemen : ' . $get_transaksi->NAMA_DEPARTEMEN_AKHIR . '
+User Pengajuan: ' . $this->session->userdata('NAMA_KARYAWAN') . '
+Tanggal Pengajuan: ' . $get_transaksi->TANGGAL_PENGAJUAN . '
+Total Item: ' . $count . '
+Keterangan: ' . $get_transaksi->KETERANGAN_PERMINTAAN . '
+
+Mohon segera ditindaklanjuti untuk kelancaran proses permintaan. Terima kasih!
+
+Salam,
+Sejahtera Abadi Group'
+            ];
+
+            //send message
+            $this->kirim_wa($data);
                 echo json_encode(['success' => true]);
             } else {
                 echo json_encode(['success' => false, 'error' => 'Gagal memperbarui data.']);
@@ -392,6 +455,8 @@ class Transaksi_permintaan extends CI_Controller
 
         $update = $this->M_TRANSAKSI_PERMINTAAN->update_transaksi($id_transaksi, $data_update);
 
+        $get_transaksi = $this->db->get_where('VIEW_TRANSAKSI_PERMINTAAN', ['UUID_TRANSAKSI_PERMINTAAN' => $id_transaksi])->row();
+
         if (!$update) {
             echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
             return;
@@ -399,6 +464,8 @@ class Transaksi_permintaan extends CI_Controller
 
         $items = $this->input->post('items');
         $list_maping = $this->input->post('form');  
+
+        $count = count($items);
                 
         foreach ($items as $item) {
             //pengurangan stok
@@ -462,8 +529,31 @@ class Transaksi_permintaan extends CI_Controller
 
         }
 
-        
+        $get_kontak_kabag = $this->M_TRANSAKSI_PERMINTAAN->get_karyawan_by_departemen($list_maping['DEPARTEMEN_AKHIR'], 'KABAG');                
 
+                $data = [
+                "target" => $get_kontak_kabag->TELEPON,
+                "message" => '📢 PEMBERITAHUAN!
+Transaksi Permintaan sudah diterima dengan detail berikut:
+
+Nomor Transaksi : ' . $id_transaksi . '
+Departemen : ' . $get_transaksi->NAMA_DEPARTEMEN_AKHIR . '
+User Pengajuan : ' . $this->session->userdata('NAMA_KARYAWAN') . '
+Tanggal Pengajuan : ' . $get_transaksi->TANGGAL_PENGAJUAN . '
+User Realisasi : ' . $get_transaksi->NAMA_PENYERAHAN . '
+User Penerima : ' . $get_transaksi->NAMA_PENERIMA . '
+Tanggal Realisasi : ' . $get_transaksi->TANGGAL_REALISASI . '
+Total Item : ' . $count . '
+Keterangan : ' . $get_transaksi->KETERANGAN_PERMINTAAN . '
+
+Terimakasih
+
+Salam,
+Sejahtera Abadi Group'
+            ];
+
+            //send message
+            $this->kirim_wa($data);
 
         echo json_encode(['success' => true]);
     }

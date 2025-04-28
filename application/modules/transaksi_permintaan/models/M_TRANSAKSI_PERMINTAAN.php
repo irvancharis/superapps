@@ -198,4 +198,12 @@ public function cek_stok($KODE_ITEM,$KODE_AREA, $KODE_RUANGAN, $KODE_LOKASI, $KO
         return $this->db->insert('PRODUK_ITEM_JURNAL', $data);
     }
 
+    public function get_karyawan_by_departemen($kode,$key)
+    {
+        $this->db->where('ID_DEPARTEMENT', $kode);
+        $this->db->where('NAMA_JABATAN', $key);
+        $query = $this->db->get('VIEW_KARYAWAN');
+        return $query->row();
+    }
+
 }
