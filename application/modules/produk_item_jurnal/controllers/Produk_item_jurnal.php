@@ -339,4 +339,35 @@ class Produk_item_jurnal extends CI_Controller
         // Load view print
         $this->load->view('produk_item_jurnal/print_jurnal', $data);
     }
+
+    // MAS JUNIYAR
+    public function print_jurnal_item_grouped_by_area()
+    {
+        // Ambil semua data jurnal yang sudah dikelompokkan
+        $jurnal_data = $this->M_PRODUK_ITEM_JURNAL->get_all_jurnal_grouped_by_area();
+
+        // Kelompokkan data berdasarkan area
+        $grouped_data = [];
+        foreach ($jurnal_data as $item) {
+            $area_key = $item->AREA;
+            if (!isset($grouped_data[$area_key])) {
+                $grouped_data[$area_key] = [
+                    'nama_area' => $item->NAMA_AREA,
+                    'items' => []
+                ];
+            }
+            $grouped_data[$area_key]['items'][] = $item;
+        }
+
+        // Siapkan data untuk view
+        $data = [
+            'grouped_data' => $grouped_data,
+            'total_areas' => count($grouped_data),
+            'total_items' => count($jurnal_data)
+        ];
+
+        // Load view
+        $this->load->view('produk_item_jurnal/jurnal_item_report_v2', $data);
+    }
+    // MAS JUNIYAR
 }

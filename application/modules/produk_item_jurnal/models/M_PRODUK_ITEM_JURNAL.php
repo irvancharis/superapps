@@ -146,4 +146,22 @@ class M_PRODUK_ITEM_JURNAL extends CI_Model
         $this->db->order_by('t.TANGGAL_TRANSAKSI', 'ASC');
         return $this->db->get()->result();
     }
+
+    // MAS JUNIYAR
+    public function get_all_jurnal_grouped_by_area()
+    {
+        // Query untuk mendapatkan semua data jurnal dikelompokkan by area
+        $this->db->select('t.*, pi.NAMA_ITEM, pi.SATUAN, pi.KETERANGAN_ITEM, pi.FOTO_ITEM, 
+                      a.NAMA_AREA, d.NAMA_DEPARTEMEN, r.NAMA_RUANGAN, l.NAMA_LOKASI, pk.NAMA_PRODUK_KATEGORI AS KATEGORI');
+        $this->db->from('PRODUK_ITEM_JURNAL t');
+        $this->db->join('PRODUK_ITEM pi', 'pi.KODE_ITEM = t.KODE_ITEM', 'left');
+        $this->db->join('PRODUK_KATEGORI pk', 'pk.KODE_PRODUK_KATEGORI = pi.KODE_KATEGORI', 'left');
+        $this->db->join('MAPING_AREA a', 'a.KODE_AREA = t.AREA', 'left');
+        $this->db->join('DEPARTEMEN d', 'd.KODE_DEPARTEMEN = t.DEPARTEMEN', 'left');
+        $this->db->join('MAPING_RUANGAN r', 'r.KODE_RUANGAN = t.RUANGAN', 'left');
+        $this->db->join('MAPING_LOKASI l', 'l.KODE_LOKASI = t.LOKASI', 'left');
+        $this->db->order_by('t.AREA, t.TANGGAL_TRANSAKSI', 'ASC');
+        return $this->db->get()->result();
+    }
+    // MAS JUNIYAR
 }
