@@ -19,13 +19,7 @@ class Produk_item_jurnal extends CI_Controller
 
     public function index($page = 'produk_stok')
     {
-        $this->load->library('session');
-        $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'PRODUK_ITEM_JURNAL', 'LIST PRODUK ITEM JURNAL');
-        if (!$CEK_ROLE) {
-            redirect('non_akses');
-        }
-
+        
         $data['M_PRODUK_ITEM_JURNAL'] = $this->M_PRODUK_ITEM_JURNAL->get_produk_stok();
         $data['M_PRODUK_STOK'] = $this->M_PRODUK_STOK->get_produk_stok();
         $data['get_area'] = $this->M_MAPING_AREA->get_area();
@@ -108,7 +102,7 @@ class Produk_item_jurnal extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'PRODUK_ITEM_JURNAL', 'TAMBAH');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'PRODUK ITEM JURNAL', 'TAMBAH');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -126,7 +120,7 @@ class Produk_item_jurnal extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'PRODUK_ITEM_JURNAL', 'EDIT');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'PRODUK ITEM JURNAL', 'EDIT');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -146,7 +140,7 @@ class Produk_item_jurnal extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'PRODUK_ITEM_JURNAL', 'DETAIL');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'PRODUK ITEM JURNAL', 'DETAIL');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -166,7 +160,7 @@ class Produk_item_jurnal extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'PRODUK_ITEM_JURNAL', 'TAMBAH');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'PRODUK ITEM JURNAL', 'TAMBAH');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -206,7 +200,7 @@ class Produk_item_jurnal extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'PRODUK_ITEM_JURNAL', 'EDIT');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'PRODUK ITEM JURNAL', 'EDIT');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -287,7 +281,7 @@ class Produk_item_jurnal extends CI_Controller
 
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'PRODUK_ITEM_JURNAL', 'HAPUS');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'PRODUK ITEM JURNAL', 'HAPUS');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }

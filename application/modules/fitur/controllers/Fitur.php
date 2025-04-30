@@ -17,7 +17,7 @@ class Fitur extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'LIST FITUR');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'LIST');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -42,7 +42,7 @@ class Fitur extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'TAMBAH FITUR');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'TAMBAH');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -59,7 +59,7 @@ class Fitur extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'TAMBAH DETAIL FITUR');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'TAMBAH DETAIL');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -78,7 +78,7 @@ class Fitur extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'EDIT FITUR');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'EDIT');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -98,7 +98,7 @@ class Fitur extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'LIST DETAIL FITUR');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'LIST DETAIL');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -119,7 +119,7 @@ class Fitur extends CI_Controller
 
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'TAMBAH FITUR');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'TAMBAH');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -142,7 +142,7 @@ class Fitur extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'TAMBAH DETAIL FITUR');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'TAMBAH DETAIL');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -165,7 +165,7 @@ class Fitur extends CI_Controller
     {
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'EDIT FITUR');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'EDIT');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -205,7 +205,7 @@ class Fitur extends CI_Controller
 
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'HAPUS FITUR');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'HAPUS');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }
@@ -222,7 +222,7 @@ class Fitur extends CI_Controller
 
         $this->load->library('session');
         $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'HAPUS DETAIL FITUR');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'FITUR', 'HAPUS DETAIL');
         if (!$CEK_ROLE) {
             redirect('non_akses');
         }

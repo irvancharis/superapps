@@ -563,7 +563,33 @@ class Transaksi_pemindahan extends CI_Controller
 
             $UUID_ASET = $item['UUID_ASET'];
 
-
+            $data_jurnal_out = [
+                'KODE_ITEM' => $KODE_ITEM,
+                'KODE_TRANSAKSI' => $id_transaksi,
+                'AREA' => $list_maping['AREA_AWAL'],
+                'RUANGAN' => $list_maping['RUANGAN_AWAL'],
+                'LOKASI' => $list_maping['LOKASI_AWAL'],
+                'DEPARTEMEN' => $list_maping['DEPARTEMEN_AWAL'],
+                'JUMLAH' => $JUMLAH_PEMINDAHAN,
+                'JENIS_TRANSAKSI' => 'PEMINDAHAN - PROSES PEMINDAHAN',
+                'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
+                'IN_OUT' => 'OUT',
+            ];
+             $this->M_TRANSAKSI_PEMINDAHAN->insert_produk_item_jurnal($data_jurnal_out); 
+             
+             $data_jurnal_in = [
+                'KODE_ITEM' => $KODE_ITEM,
+                'KODE_TRANSAKSI' => $id_transaksi,
+                'AREA' => $list_maping['AREA_AKHIR'],
+                'RUANGAN' => $list_maping['RUANGAN_AKHIR'],
+                'LOKASI' => $list_maping['LOKASI_AKHIR'],
+                'DEPARTEMEN' => $list_maping['DEPARTEMEN_AKHIR'],
+                'JUMLAH' => $JUMLAH_PEMINDAHAN,
+                'JENIS_TRANSAKSI' => 'PEMINDAHAN - PROSES PEMINDAHAN',
+                'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
+                'IN_OUT' => 'IN',
+            ];
+             $this->M_TRANSAKSI_PEMINDAHAN->insert_produk_item_jurnal($data_jurnal_in);  
 
             $cek_stok = $this->M_TRANSAKSI_PEMINDAHAN->cek_stok($KODE_ITEM, $AREA, $RUANGAN, $LOKASI, $DEPARTEMEN);
             if ($cek_stok) {
