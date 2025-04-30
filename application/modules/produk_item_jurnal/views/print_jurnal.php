@@ -114,37 +114,39 @@
 
     <div class="info-box">
         <div class="info-item">
-            <strong>Kode Item:</strong> <span id="print-kode-item">-</span>
+            <strong>Kode Item:</strong> <?= $kode_item ?>
         </div>
         <div class="info-item">
-            <strong>Nama Item:</strong> <span id="print-nama-item">-</span>
+            <strong>Nama Item:</strong> <?= $nama_item ?>
         </div>
         <div class="info-item">
-            <strong>Kategori:</strong> <span id="print-kategori">-</span>
+            <strong>Kategori:</strong> <?= $kategori ?>
         </div>
         <div class="info-item">
-            <strong>Satuan:</strong> <span id="print-satuan">-</span>
+            <strong>Satuan:</strong> <?= $satuan ?>
         </div>
     </div>
 
     <div class="info-box">
         <div class="info-item">
-            <strong>Area:</strong> <span id="print-area">-</span>
+            <strong>Area:</strong> <?= $area ?>
         </div>
         <div class="info-item">
-            <strong>Departemen:</strong> <span id="print-departemen">-</span>
+            <strong>Departemen:</strong> <?= $departemen ?>
         </div>
         <div class="info-item">
-            <strong>Ruangan:</strong> <span id="print-ruangan">-</span>
+            <strong>Ruangan:</strong> <?= $ruangan ?>
         </div>
         <div class="info-item">
-            <strong>Lokasi:</strong> <span id="print-lokasi">-</span>
+            <strong>Lokasi:</strong> <?= $lokasi ?>
         </div>
     </div>
 
-    <div style="text-align: center; margin: 15px 0;">
-        <img id="print-foto-item" src="" class="item-photo" style="display: none;">
-    </div>
+    <?php if ($foto_item): ?>
+        <div style="text-align: center; margin: 15px 0;">
+            <img src="<?= $foto_item ?>" class="item-photo">
+        </div>
+    <?php endif; ?>
 
     <table>
         <thead>
@@ -156,11 +158,41 @@
                 <th>Jumlah</th>
                 <th>IN/OUT</th>
                 <th>Stok Akhir</th>
-                <th>Keterangan</th>
             </tr>
         </thead>
-        <tbody id="print-transaksi-body">
-            <!-- Data transaksi akan diisi oleh JavaScript -->
+        <tbody>
+            <?php
+            $stok_akhir = 0;
+            if (!empty($transaksi)):
+                foreach ($transaksi as $index => $item):
+                    // Hitung stok akhir
+                    if ($item->IN_OUT == 'IN') {
+                        $stok_akhir += $item->JUMLAH;
+                    } else {
+                        $stok_akhir -= $item->JUMLAH;
+                    }
+            ?>
+                    <tr>
+                        <td class="text-center"><?= $index + 1 ?></td>
+                        <td><?= $item->KODE_TRANSAKSI ?></td>
+                        <td><?= $item->TANGGAL_TRANSAKSI ?></td>
+                        <td><?= $item->JENIS_TRANSAKSI ?></td>
+                        <td class="text-right"><?= $item->JUMLAH ?></td>
+                        <td class="text-center">
+                            <span class="badge <?= $item->IN_OUT == 'IN' ? 'badge-success' : 'badge-danger' ?>">
+                                <?= $item->IN_OUT ?>
+                            </span>
+                        </td>
+                        <td class="text-right"><?= $stok_akhir ?></td>
+                    </tr>
+                <?php
+                endforeach;
+            else:
+                ?>
+                <tr>
+                    <td colspan="8" class="text-center">Tidak ada data transaksi</td>
+                </tr>
+            <?php endif; ?>
         </tbody>
     </table>
 
@@ -170,68 +202,10 @@
     </div>
 
     <script>
-        // Fungsi ini akan diisi dengan data dari controller
-        function fillPrintData(data) {
-            // Isi informasi item
-            document.getElementById('print-kode-item').textContent = data.kode_item || '-';
-            document.getElementById('print-nama-item').textContent = data.nama_item || '-';
-            document.getElementById('print-kategori').textContent = data.kategori || '-';
-            document.getElementById('print-satuan').textContent = data.satuan || '-';
-
-            // Isi informasi lokasi
-            document.getElementById('print-area').textContent = data.area || '-';
-            document.getElementById('print-departemen').textContent = data.departemen || '-';
-            document.getElementById('print-ruangan').textContent = data.ruangan || '-';
-            document.getElementById('print-lokasi').textContent = data.lokasi || '-';
-
-            // Isi foto jika ada
-            if (data.foto_item) {
-                const fotoElement = document.getElementById('print-foto-item');
-                fotoElement.src = data.foto_item;
-                fotoElement.style.display = 'block';
-            }
-
-            // Isi data transaksi
-            const tbody = document.getElementById('print-transaksi-body');
-            tbody.innerHTML = '';
-
-            if (data.transaksi && data.transaksi.length > 0) {
-                let stokAkhir = 0;
-
-                data.transaksi.forEach((item, index) => {
-                    // Hitung stok akhir
-                    if (item.in_out === 'IN') {
-                        stokAkhir += parseInt(item.jumlah);
-                    } else {
-                        stokAkhir -= parseInt(item.jumlah);
-                    }
-
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td class="text-center">${index + 1}</td>
-                        <td>${item.kode_transaksi}</td>
-                        <td>${item.tanggal_transaksi}</td>
-                        <td>${item.jenis_transaksi}</td>
-                        <td class="text-right">${item.jumlah}</td>
-                        <td class="text-center">
-                            <span class="badge ${item.in_out === 'IN' ? 'badge-success' : 'badge-danger'}">
-                                ${item.in_out}
-                            </span>
-                        </td>
-                        <td class="text-right">${stokAkhir}</td>
-                        <td>${item.keterangan || '-'}</td>
-                    `;
-                    tbody.appendChild(row);
-                });
-            } else {
-                const row = document.createElement('tr');
-                row.innerHTML = '<td colspan="8" class="text-center">Tidak ada data transaksi</td>';
-                tbody.appendChild(row);
-            }
-
-            // Cetak otomatis
+        // Cetak otomatis saat halaman selesai dimuat
+        window.onload = function() {
             window.print();
-        }
+        };
     </script>
 </body>
 

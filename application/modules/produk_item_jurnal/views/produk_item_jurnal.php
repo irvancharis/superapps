@@ -587,10 +587,10 @@
                     function printJurnalPerItem(kodeTransaksi) {
                         // Anda bisa menggunakan window.open untuk membuka halaman print
                         // atau menggunakan AJAX untuk mendapatkan data print terlebih dahulu
-                        // window.open('<?php echo site_url("produk_item_jurnal/print_jurnal_per_item/"); ?>' + kodeTransaksi, '_blank');
+                        window.open('<?php echo site_url("produk_item_jurnal/print_jurnal_per_item/"); ?>' + kodeTransaksi, '_blank');
 
                         // MAS JUNIYAR
-                        window.open('<?php echo site_url("produk_item_jurnal/print_jurnal_item_grouped_by_area/"); ?>', '_blank');
+                        // window.open('<?php echo site_url("produk_item_jurnal/print_jurnal_item_grouped_by_area/"); ?>', '_blank');
                         // MAS JUNIYAR
 
                         // Atau jika ingin menggunakan modal:

@@ -115,7 +115,7 @@ class M_PRODUK_STOK extends CI_Model
     public function get_produk_stok_single($KODE_ITEM, $area, $departemen, $ruangan, $lokasi)
     {
         $this->db->select('*');
-        $this->db->from('VIEW_PRODUK_STOK');        
+        $this->db->from('VIEW_PRODUK_STOK');
         $this->db->where('KODE_ITEM', $KODE_ITEM);
         $this->db->where('KODE_AREA', $area);
         $this->db->where('KODE_DEPARTEMEN', $departemen);
@@ -123,6 +123,15 @@ class M_PRODUK_STOK extends CI_Model
         $this->db->where('KODE_LOKASI', $lokasi);
         $query = $this->db->get();
         return $query;
+    }
+
+    public function get_produk_stok_single_by_kode_item($KODE_ITEM)
+    {
+        $this->db->select('*');
+        $this->db->from('VIEW_PRODUK_STOK');
+        $this->db->where('KODE_ITEM', $KODE_ITEM);
+        $query = $this->db->get();
+        return $query->row();
     }
 
     public function get_kategori_produk()

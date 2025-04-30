@@ -19,7 +19,7 @@ class Produk_item_jurnal extends CI_Controller
 
     public function index($page = 'produk_stok')
     {
-        
+
         $data['M_PRODUK_ITEM_JURNAL'] = $this->M_PRODUK_ITEM_JURNAL->get_produk_stok();
         $data['M_PRODUK_STOK'] = $this->M_PRODUK_STOK->get_produk_stok();
         $data['get_area'] = $this->M_MAPING_AREA->get_area();
@@ -306,6 +306,7 @@ class Produk_item_jurnal extends CI_Controller
 
         // Ambil data item terkait
         $item = $this->M_PRODUK_ITEM->get_produk_item_single($transaksi->KODE_ITEM);
+        $stok_akhir = $this->M_PRODUK_STOK->get_produk_stok_single_by_kode_item($transaksi->KODE_ITEM);
 
         // Ambil semua transaksi untuk item ini di lokasi yang sama
         $all_transaksi = $this->M_PRODUK_ITEM_JURNAL->get_all_jurnal_for_item(
@@ -322,8 +323,12 @@ class Produk_item_jurnal extends CI_Controller
             'nama_item' => $item->NAMA_ITEM,
             'kategori' => $item->NAMA_PRODUK_KATEGORI,
             'satuan' => $item->SATUAN,
+            'keterangan_item' => $item->KETERANGAN_ITEM,
+            'in_out' => $transaksi->IN_OUT,
+            'jumlah' => $transaksi->JUMLAH,
             'area' => $transaksi->NAMA_AREA,
             'departemen' => $transaksi->NAMA_DEPARTEMEN,
+            'stok_akhir' => $stok_akhir->JUMLAH_STOK,
             'ruangan' => $transaksi->NAMA_RUANGAN,
             'lokasi' => $transaksi->NAMA_LOKASI,
             'foto_item' => $item->FOTO_ITEM ? base_url('assets/uploads/item/' . $item->FOTO_ITEM) : null,
@@ -331,7 +336,7 @@ class Produk_item_jurnal extends CI_Controller
         ];
 
         // Load view print
-        $this->load->view('produk_item_jurnal/print_jurnal', $data);
+        $this->load->view('produk_item_jurnal/print_jurnal_item_per_item', $data);
     }
 
     // MAS JUNIYAR
