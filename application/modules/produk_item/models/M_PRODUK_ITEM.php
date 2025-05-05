@@ -20,6 +20,13 @@ class M_PRODUK_ITEM extends CI_Model
         return $query->result_object();
     }
 
+    public function get_produk_custom()
+    {
+        $this->db->where('CUSTOM', '1');
+        $query = $this->db->get('PRODUK_ITEM');
+        return $query->result_object();
+    }
+
     public function getFilteredProduk($search)
     {
         $query = "SELECT * FROM VIEW_PRODUK_ITEM WHERE UPPER(NAMA_ITEM) LIKE '%$search%' OR KODE_ITEM LIKE '%$search%' OR UPPER(NAMA_PRODUK_KATEGORI) LIKE '%$search%'";
