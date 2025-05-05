@@ -137,7 +137,7 @@ class M_PRODUK_ITEM_JURNAL extends CI_Model
     public function get_all_jurnal_for_item($kode_item, $kode_area, $kode_departemen, $kode_ruangan, $kode_lokasi)
     {
         $this->db->select('t.*, ps.JUMLAH_STOK ');
-        $this->db->from('PRODUK_ITEM_JURNAL t');
+        $this->db->from('VIEW_PRODUK_JURNAL t');
         $this->db->join('PRODUK_STOK ps', 'ps.KODE_ITEM = t.KODE_ITEM AND ps.KODE_AREA = t.AREA AND ps.KODE_DEPARTEMEN = t.DEPARTEMEN AND ps.KODE_RUANGAN = t.RUANGAN AND ps.KODE_LOKASI = t.LOKASI', 'left');
         $this->db->where('t.KODE_ITEM', $kode_item);
         $this->db->where('t.AREA', $kode_area);
