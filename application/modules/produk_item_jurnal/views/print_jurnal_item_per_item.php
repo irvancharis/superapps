@@ -269,10 +269,10 @@
                     echo '<td>' . $row->KODE_TRANSAKSI . '</td>';
                     echo '<td>' . date('d/m/Y', strtotime($row->TANGGAL_TRANSAKSI)) . '</td>';
                     echo '<td>' . $row->JENIS_TRANSAKSI . '</td>';
-                    echo '<td>' . $row->AREA . '</td>';
-                    echo '<td>' . $row->DEPARTEMEN . '</td>';
-                    echo '<td>' . $row->RUANGAN . '</td>';
-                    echo '<td>' . $row->LOKASI . '</td>';
+                    echo '<td>' . $row->NAMA_AREA . '</td>';
+                    echo '<td>' . $row->NAMA_DEPARTEMEN . '</td>';
+                    echo '<td>' . $row->NAMA_RUANGAN . '</td>';
+                    echo '<td>' . $row->NAMA_LOKASI . '</td>';
                     echo '<td>' . $row->JUMLAH . '</td>';
                     echo '<td><span class="badge ' . ($row->IN_OUT == 'IN' ? 'badge-in' : 'badge-out') . '">';
                     echo ($row->IN_OUT == 'IN' ? '<i class="fas fa-arrow-down"></i> ' : '<i class="fas fa-arrow-up"></i> ');
