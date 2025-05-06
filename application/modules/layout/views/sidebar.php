@@ -106,7 +106,7 @@ if ($this->session->userdata('NAMA_ROLE') == 'IT') {
             </li>
             <li class="dropdown <?php (isset($page) && $page == 'user') ? print 'active' : ''; ?>">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                        data-feather="settings"></i><span>User</span></a>
+                        data-feather="user"></i><span>User</span></a>
                 <ul class="dropdown-menu">
                     <li>
                         <a href="<?php echo base_url('fitur'); ?>" class="nav-link"><i
@@ -121,6 +121,10 @@ if ($this->session->userdata('NAMA_ROLE') == 'IT') {
                                 data-feather="settings"></i><span>User</span></a>
                     </li>
                 </ul>
+            </li>
+            <li class="dropdown <?php (isset($page) && $page == 'setting') ? print 'active' : ''; ?>">
+                <a href="<?php echo base_url('setting'); ?>" class="nav-link"><i
+                        data-feather="settings"></i><span>SETTING</span></a>
             </li>
         </ul>
         <ul class="sidebar-menu">

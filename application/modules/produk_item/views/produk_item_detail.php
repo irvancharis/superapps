@@ -12,7 +12,7 @@
                                         <div class="row">
                                             <div class="form-group col-12 col-md-12 col-lg-12">
                                                 <center>
-                                                    <img src="<?php echo base_url('assets/uploads/item/').$get_produk_item->FOTO_ITEM; ?>"
+                                                    <img src="<?php echo base_url('assets/uploads/item/') . $get_produk_item->FOTO_ITEM; ?>"
                                                         alt="">
                                                 </center>
                                             </div>
@@ -41,6 +41,16 @@
                                                             <th>KETERANGAN</th>
                                                             <td><?= $get_produk_item->KETERANGAN_ITEM; ?></td>
                                                         </tr>
+                                                        <tr>
+                                                            <th>CUSTOM</th>
+                                                            <td>
+                                                                <?php if ($get_produk_item->CUSTOM == 1) {
+                                                                    echo 'Ya';
+                                                                } else {
+                                                                    echo 'Tidak';
+                                                                } ?>
+                                                            </td>
+                                                        </tr>
 
                                                     </tbody>
                                                 </table>
@@ -48,7 +58,7 @@
                                         </div>
                                     </div>
                                     <div class="card-footer text-right">
-                                        <a href="<?=site_url('produk_item');?>" class="btn btn-primary">Kembali</a>
+                                        <a href="<?= site_url('produk_item'); ?>" class="btn btn-primary">Kembali</a>
                                     </div>
                                 </form>
                             </div>

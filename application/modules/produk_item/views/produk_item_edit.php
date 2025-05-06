@@ -10,15 +10,15 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="form-group col-12 col-md-12 col-lg-12">
+                                            <div class="form-group col-12 col-md-3 col-lg-3">
                                                 <label>KODE PRODUK</label>
                                                 <input disabled type="text" name="KODE_ITEM" id="KODE_ITEM" value="<?= $get_produk_item->KODE_ITEM; ?>" class="form-control">
                                             </div>
-                                            <div class="form-group col-12 col-md-12 col-lg-12">
+                                            <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>NAMA PRODUK</label>
                                                 <input required type="text" class="form-control" id="NAMA_ITEM" value="<?= $get_produk_item->NAMA_ITEM; ?>" name="NAMA_ITEM">
                                             </div>
-                                            <div class="form-group col-12 col-md-12 col-lg-12">
+                                            <div class="form-group col-12 col-md-3 col-lg-3">
                                                 <label>KATEGORI PRODUK</label>
                                                 <select required name="KODE_KATEGORI" id="KODE_KATEGORI" class="form-control">
                                                     <option value="<?= $get_produk_item->KODE_KATEGORI; ?>" class="text-center" selected disabled><?= $get_produk_item->NAMA_PRODUK_KATEGORI; ?></option>
@@ -27,14 +27,14 @@
                                                     <?php endforeach; ?>
                                                 </select>
                                             </div>
-                                            <div class="form-group col-12 col-md-12 col-lg-12">
+                                            <div class="form-group col-12 col-md-3 col-lg-3">
                                                 <label>SATUAN</label>
                                                 <input required type="text" class="form-control" id="SATUAN" name="SATUAN" value="<?= $get_produk_item->SATUAN; ?>">
                                                 <div class="invalid-feedback">
                                                     Masukkan nama produk !
                                                 </div>
                                             </div>
-                                            <div class="form-group col-12 col-md-12 col-lg-12">
+                                            <div class="form-group col-12 col-md-9 col-lg-9">
                                                 <label>KETERANGAN PRODUK</label>
                                                 <textarea required name="KETERANGAN_ITEM" placeholder="Masukkan keterangan produk" class="form-control" id="description_ticket"><?= $get_produk_item->KETERANGAN_ITEM; ?></textarea>
                                             </div>
@@ -45,6 +45,14 @@
                                                 <div class="invalid-feedback">
                                                     Masukkan FOTO !
                                                 </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-12 col-lg-12">
+                                                <div class="control-label">Apakah Produk Item Ini Bisa Custom ?</div>
+                                                <label class="custom-switch mt-2">
+                                                    <input type="checkbox" name="CUSTOM" id="CUSTOM" class="custom-switch-input" <?php echo ($get_produk_item->CUSTOM == 1) ? 'checked' : ''; ?>>
+                                                    <span class="custom-switch-indicator"></span>
+                                                    <span class="custom-switch-description">YA (ON) / TIDAK (OFF)</span>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
