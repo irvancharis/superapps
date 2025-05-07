@@ -69,18 +69,18 @@
                                                                 class="fas fa-eye"></i></a>
 
                                                         <?php 
-                                                        if($d->STATUS_TRANSAKSI_PRODUKSI == 'MENUNGGU APROVAL KABAG')
+                                                        if($d->STATUS_TRANSAKSI_PRODUKSI == 'MENUNGGU PENYERAHAN BAHAN')
                                                             {
                                                         ?>
-                                                        <a href="<?=site_url('transaksi_produksi/aproval_kabag/'.$d->UUID_TRANSAKSI_PRODUKSI);?>"
+                                                        <a href="<?=site_url('transaksi_produksi/proses_penyerahan_bahan/'.$d->UUID_TRANSAKSI_PRODUKSI);?>"
                                                             class="btn btn-outline-secondary"><i class="fas fa-edit"></i>
                                                         </a>
                                                         <?php
                                                             }
-                                                            elseif($d->STATUS_TRANSAKSI_PRODUKSI == 'MENUNGGU PENYERAHAN')
+                                                            elseif($d->STATUS_TRANSAKSI_PRODUKSI == 'PROSES PRODUKSI')
                                                             {
                                                         ?>
-                                                        <a href="<?=site_url('transaksi_produksi/proses_penyerahan/'.$d->UUID_TRANSAKSI_PRODUKSI);?>"
+                                                        <a href="<?=site_url('transaksi_produksi/proses_penyerahan_hasil/'.$d->UUID_TRANSAKSI_PRODUKSI);?>"
                                                             class="btn btn-outline-primary"><i class="fas fa-edit"></i>
                                                         </a>
                                                         <?php
