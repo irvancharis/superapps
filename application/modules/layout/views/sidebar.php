@@ -53,6 +53,10 @@ if ($this->session->userdata('NAMA_ROLE') == 'IT') {
                         <a href="<?php echo base_url('maping_lokasi'); ?>" class="nav-link"><i
                                 data-feather="map"></i><span>Lokasi</span></a>
                     </li>
+                    <li>
+                        <a href="<?php echo base_url('maping_default'); ?>" class="nav-link"><i
+                                data-feather="map"></i><span>Default</span></a>
+                    </li>
                 </ul>
             </li>
             <li
