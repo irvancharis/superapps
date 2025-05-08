@@ -12,19 +12,20 @@
                                     </div>
 
 
-                                    
+
                                     <div class="card-body">
 
 
-                                    <div class="row mt-2">
+                                        <div class="row mt-2">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>PRODUKSI ITEM / PRODUK </label>
-                                                <select required name="PRODUKSI_ITEM" id="PRODUKSI_ITEM" class="form-control">
-                                                    <option value="" class="text-center" selected disabled>-- Pilih
-                                                        Item / Produk
-                                                        --</option>
+                                                <select required name="PRODUKSI_ITEM" id="PRODUKSI_ITEM" class="form-control select2">
+                                                    <option value="" class="text-center" selected disabled>-- Pilih Item / Produk --</option>
                                                     <?php foreach ($get_produk as $row) : ?>
-                                                        <option value="<?= $row->KODE_ITEM; ?>"><?= $row->NAMA_ITEM; ?>
+                                                        <option
+                                                            value="<?= $row->KODE_ITEM; ?>"
+                                                            data-image="<?= base_url('assets/uploads/item/') . $row->FOTO_ITEM; ?>">
+                                                            <?= $row->NAMA_ITEM; ?>
                                                         </option>
                                                     <?php endforeach; ?>
                                                 </select>
@@ -40,7 +41,7 @@
                                                     Silahkan masukkan DEPARTEMENT!
                                                 </div>
                                             </div>
-                                        </div>                                            
+                                        </div>
 
                                         <br><br>
                                         <h4 class="text-center" style="border-bottom:1px solid rgb(228, 228, 228)">
@@ -91,7 +92,7 @@
                                                     Silahkan masukkan DEPARTEMENT!
                                                 </div>
                                             </div>
-                                        </div>                                        
+                                        </div>
 
                                         <div class="form-group col-12 col-md-12 col-lg-12">
                                             <label>KETERANGAN</label>
@@ -122,10 +123,34 @@
             <script>
                 $(document).ready(function() {
 
+                    function formatOptionWithImage(state) {
+                        if (!state.id) return state.text;
+
+                        var imageUrl = $(state.element).data('image');
+
+                        if (!imageUrl) return state.text;
+
+                        var $state = $(`
+                            <span>
+                                <img src="${imageUrl}" class="img-flag" style="width:90px; height:90px; object-fit:cover; margin-right:10px;" />
+                                ${state.text}
+                            </span>
+                        `);
+
+                        return $state;
+                    }
+
+                    $('#PRODUKSI_ITEM').select2({
+                        templateResult: formatOptionWithImage,
+                        templateSelection: formatOptionWithImage,
+                        escapeMarkup: function(m) {
+                            return m;
+                        } // allow HTML in select
+                    });
+
                     let formData = JSON.parse(localStorage.getItem('FormProduksi'));
 
                     loadFormData();
-
 
                     $('#btnshowproduk').on('click', function() {
 
@@ -176,7 +201,7 @@
                         localStorage.removeItem('FormProduksi');
                         location.reload();
                     });
-                    
+
                     // Simpan data ketika input berubah
                     $('select').on('change', function() {
                         saveFormData();
@@ -278,7 +303,7 @@
 
                             let storedProdukItems = JSON.parse(localStorage.getItem('storedProdukItems')) || [];
 
-                            if (storedProdukItems.length == 0 || storedProdukItems.some(item => !item.JUMLAH_KEBUTUHAN )) {
+                            if (storedProdukItems.length == 0 || storedProdukItems.some(item => !item.JUMLAH_KEBUTUHAN)) {
                                 swal('Error', 'Lengkapi data produk.', 'error').then(function() {
                                     console.log(storedProdukItems);
                                 });
@@ -332,7 +357,7 @@
                         $('#AREA').val(formData.AREA);
                         $('#DEPARTEMEN').val(formData.DEPARTEMEN);
                         $('#PRODUKSI_ITEM').val(formData.PRODUKSI_ITEM);
-                        $('#JUMLAH_PRODUKSI').val(formData.JUMLAH_PRODUKSI);                       
+                        $('#JUMLAH_PRODUKSI').val(formData.JUMLAH_PRODUKSI);
                         $('#KETERANGAN').val(formData.KETERANGAN);
                     }
                 }
