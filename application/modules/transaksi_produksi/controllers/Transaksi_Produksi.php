@@ -221,7 +221,30 @@ class Transaksi_produksi extends CI_Controller
 
 
 
-    public function proses_penyerahan($KODE, $page = 'transaksi_produksi')
+    public function proses_penyerahan_bahan($KODE, $page = 'transaksi_produksi')
+    {
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PRODUKSI', 'PENYERAHAN');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
+
+
+        $this->load->library('session');
+        $this->session->set_userdata('page', $page);
+        $data['page'] = $this->session->userdata('page');
+        $query = $this->M_TRANSAKSI_PRODUKSI->get_single($KODE);
+        $data['get_single'] = $query;
+        
+        $KODE_DEPARTEMEN = $query->DEPARTEMEN_AKHIR;     
+        $karyawan = $this->M_KARYAWAN->get_karyawan_by_departemen($KODE_DEPARTEMEN);        
+        $data['karyawan'] = $karyawan;
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('transaksi_produksi_proses', $data);
+    }
+
+    public function proses_penyerahan_hasil($KODE, $page = 'transaksi_produksi')
     {
         $SESSION_ROLE = $this->session->userdata('ROLE');
         $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TRANSAKSI PRODUKSI', 'PENYERAHAN');

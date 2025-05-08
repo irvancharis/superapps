@@ -216,8 +216,6 @@
 
                     }
 
-
-
                     // Hapus data local Storage
                     $('#selected-items-body').on('click', '.remove-item', function() {
                         let selectedItems = JSON.parse(localStorage.getItem("storedProdukItems")) || [];
@@ -231,8 +229,6 @@
 
                         loadSelectedItems();
                     });
-
-
 
 
                     function attachInputListeners() {
