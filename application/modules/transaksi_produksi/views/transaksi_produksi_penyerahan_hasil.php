@@ -7,7 +7,7 @@
                 <div class="card">
                     <form class="needs-validation" novalidate="" id="FORM_TRANSAKSI_PRODUKSI">
                         <div class="card-header">
-                            <h4>PROSES PEYERAHAN BARANG</h4>
+                            <h4>PENYERAHAN HASIL PRODUKSI</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -83,7 +83,7 @@
                                     <table class="table table-striped table-sm ">
                                         <tbody>
                                             <tr>
-                                                <th class="text-left col-3">KETERANGAN : KETERANGAN_PRODUKSI</th>
+                                                <th class="text-left col-3">KETERANGAN : <?php echo $get_single->KETERANGAN; ?></th>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -105,10 +105,18 @@
                                 </table>
                             </div><br><br>
 
+                            <h6 class="text-danger font-italic">*) ISI DATA DI BAWAH :</h6>
                             <div class="row justify-content-center align-items-center">
                                 <div class="form-group col-6 col-md-6 col-lg-6">
-                                    <label>BARANG DISERAHKAN KEPADA :</label>
-                                    <select class="form-control" name="USER_PENERIMA_BAHAN" id="USER_PENERIMA_BAHAN" required>
+                                    <label>JUMLAH HASIL PRODUKSI :</label>
+                                    <input type="number" class="form-control" name="JUMLAH_HASIL_PRODUKSI" id="JUMLAH_HASIL_PRODUKSI" required>
+                                    <div class="invalid-feedback">
+                                        Masukkan JUMLAH HASIL PRODUKSI !
+                                    </div>
+                                </div>
+                                <div class="form-group col-6 col-md-6 col-lg-6">
+                                    <label>HASIL PRODUKSI DISERAHKAN KEPADA :</label>
+                                    <select class="form-control select2" name="USER_PENERIMA_HASIL_PRODUKSI" id="USER_PENERIMA_HASIL_PRODUKSI" required>
                                         <option required value="" class="text-center" selected disabled>---- Pilih Penerima ----</option>
                                         <?php foreach ($karyawan as $kr) : ?>
                                             <option value="<?php echo $kr->ID_KARYAWAN ?>"> <?php echo $kr->NAMA_KARYAWAN; ?> </option>
@@ -229,21 +237,21 @@
                 });
             }
 
-            if ($('#USER_PENERIMA_BAHAN').val() == '' || $('#USER_PENERIMA_BAHAN').val() == null) {
+            if ($('#USER_PENERIMA_HASIL_PRODUKSI').val() == '' || $('#USER_PENERIMA_HASIL_PRODUKSI').val() == null) {
                 swal('Error', 'Tidak ada penerima yang dipilih.', 'error').then(function() {
                     console.log(formData);
                 });
             } else {
                 $.ajax({
                     url: "<?php echo base_url(); ?>" +
-                        "transaksi_produksi/update_proses_penyerahan",
+                        "transaksi_produksi/update_proses_penyerahan_hasil",
                     type: "POST",
                     data: {
                         UUID_TRANSAKSI_PRODUKSI: '<?= $get_single->UUID_TRANSAKSI_PRODUKSI ?>',
                         items: storedProdukItems,
                         form: formData,
                         lokasiAsal: lokasiAsal,
-                        USER_PENERIMA_BAHAN: $('#USER_PENERIMA_BAHAN').val()
+                        USER_PENERIMA_HASIL_PRODUKSI: $('#USER_PENERIMA_HASIL_PRODUKSI').val()
                     },
                     success: function(response) {
                         try {

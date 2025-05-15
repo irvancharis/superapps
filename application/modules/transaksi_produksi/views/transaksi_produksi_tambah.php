@@ -7,7 +7,7 @@
                                 <form class="needs-validation" enctype="multipart/form-data" novalidate=""
                                     id="FORM_TRANSAKSI_PRODUKSI_TAMBAH">
                                     <div class="card-header">
-                                        <h4>INPUT TRANSAKSI PRODUKSI</h4>
+                                        <h4>INPUT TRANSAKSI PRODUKSI - PENGAJUAN</h4>
 
                                     </div>
 

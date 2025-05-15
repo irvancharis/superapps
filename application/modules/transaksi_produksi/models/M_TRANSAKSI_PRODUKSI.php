@@ -7,6 +7,7 @@ class M_TRANSAKSI_PRODUKSI extends CI_Model
     protected $table = 'TRANSAKSI_PRODUKSI';
     protected $table_detail = 'TRANSAKSI_PRODUKSI_DETAIL';
     protected $VIEW_TRANSAKSI_PRODUKSI = 'VIEW_TRANSAKSI_PRODUKSI';
+    protected $VIEW_TRANSAKSI_PRODUKSI_DTL = 'VIEW_TRANSAKSI_PRODUKSI_DTL';
 
     public function __construct()
     {
@@ -42,7 +43,7 @@ class M_TRANSAKSI_PRODUKSI extends CI_Model
         $this->db->where('STATUS_PRODUKSI !=', 'SELESAI');
         $this->db->where('STATUS_PRODUKSI !=', 'DITOLAK KABAG');
         $this->db->where('STATUS_PRODUKSI !=', 'DITOLAK GM');
-        $this->db->where('STATUS_PRODUKSI !=', 'DITOLAK HEAD');        
+        $this->db->where('STATUS_PRODUKSI !=', 'DITOLAK HEAD');
         $query = $this->db->count_all_results('VIEW_TRANSAKSI_PRODUKSI');
         return $query;
     }
@@ -54,9 +55,9 @@ class M_TRANSAKSI_PRODUKSI extends CI_Model
         // $this->db->where('STATUS_PRODUKSI !=' ,'DITOLAK GM');
         // $this->db->where('STATUS_PRODUKSI !=' ,'DITOLAK HEAD');
         if ($this->session->userdata("NAMA_ROLE") !== 'GM' && $this->session->userdata("NAMA_ROLE") !== 'HEAD' && $this->session->userdata("NAMA_ROLE") !== 'gudang') {
-            $this->db->where('DEPARTEMEN =' ,$this->session->userdata("ID_DEPARTEMEN"));
+            $this->db->where('DEPARTEMEN =', $this->session->userdata("ID_DEPARTEMEN"));
         }
-        $this->db->order_by('TANGGAL_PENGAJUAN', 'DESC');   
+        $this->db->order_by('TANGGAL_PENGAJUAN', 'DESC');
         $query = $this->db->get('VIEW_TRANSAKSI_PRODUKSI');
         return $query->result_object();
     }
@@ -80,7 +81,7 @@ class M_TRANSAKSI_PRODUKSI extends CI_Model
     public function get_detail_single($KODE)
     {
         $this->db->select('*');
-        $this->db->from('VIEW_TRANSAKSI_PRODUKSI_DTL');
+        $this->db->from($this->VIEW_TRANSAKSI_PRODUKSI_DTL);
         $this->db->where('UUID_TRANSAKSI_PRODUKSI', $KODE);
         $query = $this->db->get();
         return $query->result_object();
@@ -144,8 +145,8 @@ class M_TRANSAKSI_PRODUKSI extends CI_Model
 
     public function pengurangan_real_stok($KODE, $data)
     {
-        $this->db->where('UUID_STOK',$KODE);
-        $this->db->set('JUMLAH_STOK', 'JUMLAH_STOK - '.(int)$data, FALSE);
+        $this->db->where('UUID_STOK', $KODE);
+        $this->db->set('JUMLAH_STOK', 'JUMLAH_STOK - ' . (int)$data, FALSE);
         return $this->db->update('PRODUK_STOK');
     }
 
@@ -169,13 +170,13 @@ class M_TRANSAKSI_PRODUKSI extends CI_Model
 
     public function penambahan_real_stok($KODE, $data)
     {
-        $this->db->where('UUID_STOK',$KODE);
-        $this->db->set('JUMLAH_STOK', 'JUMLAH_STOK + '.(int)$data, FALSE);
+        $this->db->where('UUID_STOK', $KODE);
+        $this->db->set('JUMLAH_STOK', 'JUMLAH_STOK + ' . (int)$data, FALSE);
         return $this->db->update('PRODUK_STOK');
     }
 
 
-public function cek_stok($KODE_ITEM,$KODE_AREA, $KODE_RUANGAN, $KODE_LOKASI, $KODE_DEPARTEMEN)
+    public function cek_stok($KODE_ITEM, $KODE_AREA, $KODE_RUANGAN, $KODE_LOKASI, $KODE_DEPARTEMEN)
     {
         $this->db->select('*');
         $this->db->from('VIEW_PRODUK_STOK');
@@ -198,12 +199,11 @@ public function cek_stok($KODE_ITEM,$KODE_AREA, $KODE_RUANGAN, $KODE_LOKASI, $KO
         return $this->db->insert('PRODUK_ITEM_JURNAL', $data);
     }
 
-    public function get_karyawan_by_departemen($kode,$key)
+    public function get_karyawan_by_departemen($kode, $key)
     {
         $this->db->where('ID_DEPARTEMENT', $kode);
         $this->db->where('NAMA_JABATAN', $key);
         $query = $this->db->get('VIEW_KARYAWAN');
         return $query->row();
     }
-
 }

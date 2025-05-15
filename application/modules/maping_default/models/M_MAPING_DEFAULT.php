@@ -4,6 +4,7 @@ class M_MAPING_DEFAULT extends CI_Model
 
     // Nama tabel
     protected $table = 'MAPING_DEFAULT';
+    protected $view = 'VIEW_MAPING_DEFAULT';
 
     public function __construct()
     {
@@ -26,10 +27,10 @@ class M_MAPING_DEFAULT extends CI_Model
     public function get_maping_default_single($AREA)
     {
         $this->db->select('*');
-        $this->db->from($this->table);
+        $this->db->from($this->view);
         $this->db->where('AREA', $AREA);
         $query = $this->db->get();
-        return $query;
+        return $query->row();
     }
 
     public function get_latest_data()
