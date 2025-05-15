@@ -114,18 +114,6 @@
                                         Masukkan JUMLAH HASIL PRODUKSI !
                                     </div>
                                 </div>
-                                <div class="form-group col-6 col-md-6 col-lg-6">
-                                    <label>HASIL PRODUKSI DISERAHKAN KEPADA :</label>
-                                    <select class="form-control select2" name="USER_PENERIMA_HASIL_PRODUKSI" id="USER_PENERIMA_HASIL_PRODUKSI" required>
-                                        <option required value="" class="text-center" selected disabled>---- Pilih Penerima ----</option>
-                                        <?php foreach ($karyawan as $kr) : ?>
-                                            <option value="<?php echo $kr->ID_KARYAWAN ?>"> <?php echo $kr->NAMA_KARYAWAN; ?> </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                    <div class="invalid-feedback">
-                                        Masukkan USER PENERIMA !
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="card-footer text-center">
@@ -237,8 +225,8 @@
                 });
             }
 
-            if ($('#USER_PENERIMA_HASIL_PRODUKSI').val() == '' || $('#USER_PENERIMA_HASIL_PRODUKSI').val() == null) {
-                swal('Error', 'Tidak ada penerima yang dipilih.', 'error').then(function() {
+            if ($('#JUMLAH_HASIL_PRODUKSI').val() == '' || $('#JUMLAH_HASIL_PRODUKSI').val() == null) {
+                swal('Error', 'Masukkan jumlah hasil produksi.', 'error').then(function() {
                     console.log(formData);
                 });
             } else {
@@ -251,7 +239,7 @@
                         items: storedProdukItems,
                         form: formData,
                         lokasiAsal: lokasiAsal,
-                        USER_PENERIMA_HASIL_PRODUKSI: $('#USER_PENERIMA_HASIL_PRODUKSI').val()
+                        JUMLAH_HASIL_PRODUKSI: $('#JUMLAH_HASIL_PRODUKSI').val()
                     },
                     success: function(response) {
                         try {
