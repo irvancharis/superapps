@@ -378,7 +378,7 @@ class Transaksi_produksi extends CI_Controller
 
             //                 $data = [
             //                 "target" => $get_kontak_kabag->TELEPON,
-            //                 "message" => '📢 PEMBERITAHUAN!
+            //                 "message" => 'PEMBERITAHUAN!
             // Transaksi Produksi Baru dengan detail berikut:
 
             // Nomor Transaksi: ' . $uuid_transaksi . '
@@ -419,7 +419,7 @@ class Transaksi_produksi extends CI_Controller
         $update = $this->M_TRANSAKSI_PRODUKSI->update_transaksi($id_transaksi, $data_update);
 
         if ($update) {
-            echo json_encode(['success' => true]);
+            echo json_encode(['success' => true]); 
         } else {
             echo json_encode(['success' => false, 'error' => 'Gagal memperbarui data.']);
         }
