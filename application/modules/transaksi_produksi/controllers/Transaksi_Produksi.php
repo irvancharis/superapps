@@ -14,12 +14,14 @@ class Transaksi_produksi extends CI_Controller
         $this->load->model('maping_area/M_MAPING_AREA');
         $this->load->model('maping_ruangan/M_MAPING_RUANGAN');
         $this->load->model('maping_lokasi/M_MAPING_LOKASI');
+        $this->load->model('maping_default/M_MAPING_DEFAULT');
         $this->load->model('karyawan/M_KARYAWAN');
         $this->load->model('produk_item/M_PRODUK_ITEM');
         $this->load->model('produk_stok/M_PRODUK_STOK');
         $this->load->helper('url_helper');
         $this->load->library('Uuid');
         $this->load->library('TanggalIndo');
+        $this->load->database();
 
         if (!$this->session->userdata('isLoggedIn')) {
             redirect('login');
@@ -235,9 +237,10 @@ class Transaksi_produksi extends CI_Controller
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_TRANSAKSI_PRODUKSI->get_single($KODE);
         $data['get_single'] = $query;
-        
-        $KODE_DEPARTEMEN = $query->DEPARTEMEN_AKHIR;     
-        $karyawan = $this->M_KARYAWAN->get_karyawan_by_departemen($KODE_DEPARTEMEN);        
+        $data['lokasi_asal'] = $this->M_MAPING_DEFAULT->get_maping_default_single($this->session->userdata('ID_AREA'));
+
+        $KODE_DEPARTEMEN = $query->DEPARTEMEN;
+        $karyawan = $this->M_KARYAWAN->get_karyawan_by_departemen($KODE_DEPARTEMEN);
         $data['karyawan'] = $karyawan;
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
@@ -258,13 +261,14 @@ class Transaksi_produksi extends CI_Controller
         $data['page'] = $this->session->userdata('page');
         $query = $this->M_TRANSAKSI_PRODUKSI->get_single($KODE);
         $data['get_single'] = $query;
+        $data['lokasi_asal'] = $this->M_MAPING_DEFAULT->get_maping_default_single($this->session->userdata('ID_AREA'));
 
-        $KODE_DEPARTEMEN = $query->DEPARTEMEN_AKHIR;
-        $karyawan = $this->M_KARYAWAN->get_karyawan_by_departemen($KODE_DEPARTEMEN);
+        $KODE_DEPARTEMEN_AKHIR = $query->DEPARTEMEN;
+        $karyawan = $this->M_KARYAWAN->get_karyawan();
         $data['karyawan'] = $karyawan;
         $this->load->view('layout/navbar') .
             $this->load->view('layout/sidebar', $data) .
-            $this->load->view('transaksi_produksi_proses', $data);
+            $this->load->view('transaksi_produksi_penyerahan_hasil', $data);
     }
 
 
@@ -456,14 +460,14 @@ class Transaksi_produksi extends CI_Controller
     public function update_proses_penyerahan()
     {
         $id_transaksi = $this->input->post('UUID_TRANSAKSI_PRODUKSI'); // Ambil ID transaksi
-        $USER_PENERIMA = $this->input->post('USER_PENERIMA');
+        $USER_PENERIMA_BAHAN = $this->input->post('USER_PENERIMA_BAHAN');
 
         // Update tabel transaksi_pengadaan
         $data_update = [
-            'USER_PENYERAHAN' => $this->session->userdata('ID_KARYAWAN'),
-            'USER_PENERIMA' => $USER_PENERIMA,
-            'TANGGAL_REALISASI' => date('Y-m-d H:i:s'),
-            'STATUS_PRODUKSI' => 'SELESAI',
+            'USER_PENYERAHAN_BAHAN' => $this->session->userdata('ID_KARYAWAN'),
+            'USER_PENERIMA_BAHAN' => $USER_PENERIMA_BAHAN,
+            'TANGGAL_PENYERAHAN_BAHAN' => date('Y-m-d H:i:s'),
+            'STATUS_TRANSAKSI_PRODUKSI' => 'PROSES PRODUKSI',
         ];
 
         $update = $this->M_TRANSAKSI_PRODUKSI->update_transaksi($id_transaksi, $data_update);
@@ -477,35 +481,36 @@ class Transaksi_produksi extends CI_Controller
 
         $items = $this->input->post('items');
         $list_maping = $this->input->post('form');
+        $lokasiAsal = $this->input->post('lokasiAsal');
 
         $count = count($items);
 
         foreach ($items as $item) {
             //pengurangan stok
-            $UUID_STOK = $item['UUID_STOK'];
-            $data_produk = $item['JUMLAH_PRODUKSI'];
+            $UUID_STOK = $item['UUID_PRODUK_STOK'];
+            $data_produk = $item['JUMLAH_KEBUTUHAN'];
             $this->M_TRANSAKSI_PRODUKSI->pengurangan_real_stok($UUID_STOK, $data_produk);
 
 
             // Update stok barang jika barang tidak ada di tabel Produk_Stok maka Insert jika ada maka Update
-            $cek_produk_stok = $this->M_PRODUK_STOK->get_produk_stok_single($item['KODE_ITEM'], $list_maping['AREA_AKHIR'], $list_maping['DEPARTEMEN_AKHIR'], $list_maping['RUANGAN_AKHIR'], $list_maping['LOKASI_AKHIR'])->row();
+            $cek_produk_stok = $this->M_PRODUK_STOK->get_produk_stok_single($item['KODE_ITEM'], $list_maping['AREA'], $list_maping['DEPARTEMEN'], $list_maping['RUANGAN'], $list_maping['LOKASI'])->row();
             // echo json_encode($cek_produk_stok);
             // exit();
 
             if ($cek_produk_stok) {
                 $data_update = [
-                    'JUMLAH_STOK' => $cek_produk_stok->JUMLAH_STOK + $item['JUMLAH_PRODUKSI']
+                    'JUMLAH_STOK' => $cek_produk_stok->JUMLAH_STOK + $item['JUMLAH_KEBUTUHAN'],
                 ];
                 $this->M_PRODUK_STOK->update($cek_produk_stok->UUID_STOK, $data_update);
             } else {
                 $data_insert = [
                     'UUID_STOK' => $this->uuid->v4(),
                     'KODE_ITEM' => $item['KODE_ITEM'],
-                    'JUMLAH_STOK' => $item['JUMLAH_PRODUKSI'],
-                    'KODE_AREA' => $list_maping['AREA_AKHIR'],
-                    'KODE_RUANGAN' => $list_maping['RUANGAN_AKHIR'],
-                    'KODE_LOKASI' => $list_maping['LOKASI_AKHIR'],
-                    'KODE_DEPARTEMEN' => $list_maping['DEPARTEMEN_AKHIR'],
+                    'JUMLAH_STOK' => $item['JUMLAH_KEBUTUHAN'],
+                    'KODE_AREA' => $list_maping['AREA'],
+                    'KODE_RUANGAN' => $list_maping['RUANGAN'],
+                    'KODE_LOKASI' => $list_maping['LOKASI'],
+                    'KODE_DEPARTEMEN' => $list_maping['DEPARTEMEN'],
                 ];
                 $this->M_PRODUK_STOK->insert($data_insert);
             }
@@ -513,11 +518,11 @@ class Transaksi_produksi extends CI_Controller
             $data_jurnal_in = [
                 'KODE_ITEM' => $item['KODE_ITEM'],
                 'KODE_TRANSAKSI' => $list_maping['UUID_TRANSAKSI_PRODUKSI'],
-                'AREA' => $list_maping['AREA_AKHIR'],
-                'RUANGAN' => $list_maping['RUANGAN_AKHIR'],
-                'LOKASI' => $list_maping['LOKASI_AKHIR'],
-                'DEPARTEMEN' => $list_maping['DEPARTEMEN_AKHIR'],
-                'JUMLAH' => $item['JUMLAH_PRODUKSI'],
+                'AREA' => $list_maping['AREA'],
+                'RUANGAN' => $list_maping['RUANGAN'],
+                'LOKASI' => $list_maping['LOKASI'],
+                'DEPARTEMEN' => $list_maping['DEPARTEMEN'],
+                'JUMLAH' => $item['JUMLAH_KEBUTUHAN'],
                 'JENIS_TRANSAKSI' => 'PENERIMAAN - PENYERAHAN BARANG',
                 'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
                 'IN_OUT' => 'IN',
@@ -528,11 +533,11 @@ class Transaksi_produksi extends CI_Controller
             $data_jurnal_out = [
                 'KODE_ITEM' => $item['KODE_ITEM'],
                 'KODE_TRANSAKSI' => $list_maping['UUID_TRANSAKSI_PRODUKSI'],
-                'AREA' => $list_maping['AREA_AWAL'],
-                'RUANGAN' => $list_maping['RUANGAN_AWAL'],
-                'LOKASI' => $list_maping['LOKASI_AWAL'],
-                'DEPARTEMEN' => $list_maping['DEPARTEMEN_AWAL'],
-                'JUMLAH' => $item['JUMLAH_PRODUKSI'],
+                'AREA' => $lokasiAsal['AREA'],
+                'RUANGAN' => $lokasiAsal['RUANGAN'],
+                'LOKASI' => $lokasiAsal['LOKASI'],
+                'DEPARTEMEN' => $lokasiAsal['DEPARTEMEN'],
+                'JUMLAH' => $item['JUMLAH_KEBUTUHAN'],
                 'JENIS_TRANSAKSI' => 'PENERIMAAN - PENGELUARAN BARANG',
                 'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
                 'IN_OUT' => 'OUT',
@@ -541,27 +546,149 @@ class Transaksi_produksi extends CI_Controller
             $this->M_TRANSAKSI_PRODUKSI->insert_produk_item_jurnal($data_jurnal_out);
         }
 
-        $get_kontak_kabag = $this->M_TRANSAKSI_PRODUKSI->get_karyawan_by_departemen($list_maping['DEPARTEMEN_AKHIR'], 'KABAG');
+        $get_kontak_kabag = $this->M_TRANSAKSI_PRODUKSI->get_karyawan_by_departemen($list_maping['DEPARTEMEN'], 'KABAG');
+        $get_user_penyerahan_bahan = $this->M_KARYAWAN->get_karyawan_by_id($get_transaksi->USER_PENYERAHAN_BAHAN);
+        $get_user_penerima_bahan = $this->M_KARYAWAN->get_karyawan_by_id($get_transaksi->USER_PENERIMA_BAHAN);
 
         $data = [
             "target" => $get_kontak_kabag->TELEPON,
             "message" => 'PEMBERITAHUAN!
-Transaksi Produksi sudah diterima dengan detail berikut:
+                        Transaksi Produksi sudah diterima dengan detail berikut:
 
-Nomor Transaksi : ' . $id_transaksi . '
-Departemen : ' . $get_transaksi->NAMA_DEPARTEMEN_AKHIR . '
-User Pengajuan : ' . $this->session->userdata('NAMA_KARYAWAN') . '
-Tanggal Pengajuan : ' . $get_transaksi->TANGGAL_PENGAJUAN . '
-User Realisasi : ' . $get_transaksi->NAMA_PENYERAHAN . '
-User Penerima : ' . $get_transaksi->NAMA_PENERIMA . '
-Tanggal Realisasi : ' . $get_transaksi->TANGGAL_REALISASI . '
-Total Item : ' . $count . '
-Keterangan : ' . $get_transaksi->KETERANGAN_PRODUKSI . '
+                        Nomor Transaksi : ' . $id_transaksi . '
+                        Departemen : ' . $get_transaksi->NAMA_DEPARTEMEN . '
+                        User Pengajuan : ' . $get_transaksi->NAMA_PENGAJUAN . '
+                        Tanggal Pengajuan : ' . $get_transaksi->TANGGAL_PENGAJUAN . '
+                        User Realisasi : ' . $get_user_penyerahan_bahan->NAMA_KARYAWAN . '
+                        User Penerima : ' . $get_user_penerima_bahan->NAMA_KARYAWAN . '
+                        Tanggal Realisasi : ' . $get_transaksi->TANGGAL_PENYERAHAN_BAHAN . '
+                        Total Item : ' . $count . '
+                        Keterangan : ' . $get_transaksi->KETERANGAN . '
 
-Terimakasih
+                        Terimakasih
 
-Salam,
-Sejahtera Abadi Group'
+                        Salam,
+                        Sejahtera Abadi Group'
+        ];
+
+        //send message
+        $this->kirim_wa($data);
+
+        echo json_encode(['success' => true]);
+    }
+
+    public function update_proses_penyerahan_hasil()
+    {
+        $id_transaksi = $this->input->post('UUID_TRANSAKSI_PRODUKSI'); // Ambil ID transaksi
+        $USER_PENERIMA_HASIL_PRODUKSI = $this->input->post('USER_PENERIMA_HASIL_PRODUKSI');
+
+        // Update tabel transaksi_pengadaan
+        $data_update = [
+            'USER_PENYERAHAN_HASIL_PRODUKSI' => $this->session->userdata('ID_KARYAWAN'),
+            'USER_PENERIMA_HASIL_PRODUKSI' => $USER_PENERIMA_HASIL_PRODUKSI,
+            'TGL_PENYERAHAN_HASIL_PRODUKSI' => date('Y-m-d H:i:s'),
+            'STATUS_TRANSAKSI_PRODUKSI' => 'SELESAI',
+        ];
+
+        $update = $this->M_TRANSAKSI_PRODUKSI->update_transaksi($id_transaksi, $data_update);
+
+        $get_transaksi = $this->db->get_where('VIEW_TRANSAKSI_PRODUKSI', ['UUID_TRANSAKSI_PRODUKSI' => $id_transaksi])->row();
+
+        if (!$update) {
+            echo json_encode(['success' => false, 'error' => 'Gagal update transaksi_pengadaan!']);
+            return;
+        }
+
+        $items = $this->input->post('items');
+        $list_maping = $this->input->post('form');
+        $lokasiAsal = $this->input->post('lokasiAsal');
+
+        $count = count($items);
+
+        foreach ($items as $item) {
+            //pengurangan stok
+            $UUID_STOK = $item['UUID_PRODUK_STOK'];
+            $data_produk = $item['JUMLAH_KEBUTUHAN'];
+            $this->M_TRANSAKSI_PRODUKSI->pengurangan_real_stok($UUID_STOK, $data_produk);
+
+
+            // Update stok barang jika barang tidak ada di tabel Produk_Stok maka Insert jika ada maka Update
+            $cek_produk_stok = $this->M_PRODUK_STOK->get_produk_stok_single($item['KODE_ITEM'], $list_maping['AREA'], $list_maping['DEPARTEMEN'], $list_maping['RUANGAN'], $list_maping['LOKASI'])->row();
+            // echo json_encode($cek_produk_stok);
+            // exit();
+
+            if ($cek_produk_stok) {
+                $data_update = [
+                    'JUMLAH_STOK' => $cek_produk_stok->JUMLAH_STOK + $item['JUMLAH_KEBUTUHAN'],
+                ];
+                $this->M_PRODUK_STOK->update($cek_produk_stok->UUID_STOK, $data_update);
+            } else {
+                $data_insert = [
+                    'UUID_STOK' => $this->uuid->v4(),
+                    'KODE_ITEM' => $item['KODE_ITEM'],
+                    'JUMLAH_STOK' => $item['JUMLAH_KEBUTUHAN'],
+                    'KODE_AREA' => $list_maping['AREA'],
+                    'KODE_RUANGAN' => $list_maping['RUANGAN'],
+                    'KODE_LOKASI' => $list_maping['LOKASI'],
+                    'KODE_DEPARTEMEN' => $list_maping['DEPARTEMEN'],
+                ];
+                $this->M_PRODUK_STOK->insert($data_insert);
+            }
+
+            $data_jurnal_in = [
+                'KODE_ITEM' => $item['KODE_ITEM'],
+                'KODE_TRANSAKSI' => $list_maping['UUID_TRANSAKSI_PRODUKSI'],
+                'AREA' => $list_maping['AREA'],
+                'RUANGAN' => $list_maping['RUANGAN'],
+                'LOKASI' => $list_maping['LOKASI'],
+                'DEPARTEMEN' => $list_maping['DEPARTEMEN'],
+                'JUMLAH' => $item['JUMLAH_KEBUTUHAN'],
+                'JENIS_TRANSAKSI' => 'PENERIMAAN - PENYERAHAN BARANG',
+                'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
+                'IN_OUT' => 'IN',
+
+            ];
+            $this->M_TRANSAKSI_PRODUKSI->insert_produk_item_jurnal($data_jurnal_in);
+
+            $data_jurnal_out = [
+                'KODE_ITEM' => $item['KODE_ITEM'],
+                'KODE_TRANSAKSI' => $list_maping['UUID_TRANSAKSI_PRODUKSI'],
+                'AREA' => $lokasiAsal['AREA'],
+                'RUANGAN' => $lokasiAsal['RUANGAN'],
+                'LOKASI' => $lokasiAsal['LOKASI'],
+                'DEPARTEMEN' => $lokasiAsal['DEPARTEMEN'],
+                'JUMLAH' => $item['JUMLAH_KEBUTUHAN'],
+                'JENIS_TRANSAKSI' => 'PENERIMAAN - PENGELUARAN BARANG',
+                'TANGGAL_TRANSAKSI' => date('Y-m-d H:i:s'),
+                'IN_OUT' => 'OUT',
+
+            ];
+            $this->M_TRANSAKSI_PRODUKSI->insert_produk_item_jurnal($data_jurnal_out);
+        }
+
+        $get_kontak_kabag = $this->M_TRANSAKSI_PRODUKSI->get_karyawan_by_departemen($list_maping['DEPARTEMEN'], 'KABAG');
+        $get_user_penyerahan_hasil_produksi = $this->M_KARYAWAN->get_karyawan_by_id($get_transaksi->USER_PENYERAHAN_HASIL_PRODUKSI);
+        $get_user_penerima_hasil_produksi = $this->M_KARYAWAN->get_karyawan_by_id($get_transaksi->USER_PENERIMA_HASIL_PRODUKSI);
+
+        $data = [
+            "target" => $get_kontak_kabag->TELEPON,
+            "message" => 'PEMBERITAHUAN!
+                        Transaksi Produksi sudah diterima dengan detail berikut:
+
+                        Nomor Transaksi : ' . $id_transaksi . '
+                        Departemen : ' . $get_transaksi->NAMA_DEPARTEMEN . '
+                        User Pengajuan : ' . $get_transaksi->NAMA_PENGAJUAN . '
+                        Tanggal Pengajuan : ' . $get_transaksi->TANGGAL_PENGAJUAN . '
+                        User Realisasi : ' . $get_user_penyerahan_hasil_produksi->NAMA_KARYAWAN . '
+                        User Penerima : ' . $get_user_penerima_hasil_produksi->NAMA_KARYAWAN . '
+                        Tanggal Realisasi : ' . $get_transaksi->TANGGAL_PENYERAHAN_BAHAN . '
+                        Total Item : ' . $count . '
+                        Keterangan : ' . $get_transaksi->KETERANGAN . '
+
+                        Terimakasih
+
+                        Salam,
+                        Sejahtera Abadi Group'
         ];
 
         //send message
