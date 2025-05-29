@@ -381,28 +381,28 @@ class Transaksi_produksi extends CI_Controller
 
         if ($insert) {
 
-            $get_kontak_kabag = $this->M_TRANSAKSI_PRODUKSI->get_karyawan_by_departemen($inputan['DEPARTEMEN_AKHIR'], 'KABAG');
+            // $get_kontak_kabag = $this->M_TRANSAKSI_PRODUKSI->get_karyawan_by_departemen($inputan['DEPARTEMEN_AKHIR'], 'KABAG');
 
-            $data = [
-                "target" => $get_kontak_kabag->TELEPON,
-                "message" => 'PEMBERITAHUAN!
-            Transaksi Produksi Baru dengan detail berikut:
+            // $data = [
+            //     "target" => $get_kontak_kabag->TELEPON,
+            //     "message" => 'PEMBERITAHUAN!
+            // Transaksi Produksi Baru dengan detail berikut:
 
-            Nomor Transaksi: ' . $uuid_transaksi . '
-            Departemen : ' . $get_transaksi->NAMA_DEPARTEMEN_AKHIR . '
-            User Pengajuan: ' . $this->session->userdata('NAMA_KARYAWAN') . '
-            Tanggal Pengajuan: ' . $get_transaksi->TANGGAL_PENGAJUAN . '
-            Total Item: ' . $count . '
-            Keterangan: ' . $get_transaksi->KETERANGAN_PRODUKSI . '
+            // Nomor Transaksi: ' . $uuid_transaksi . '
+            // Departemen : ' . $get_transaksi->NAMA_DEPARTEMEN_AKHIR . '
+            // User Pengajuan: ' . $this->session->userdata('NAMA_KARYAWAN') . '
+            // Tanggal Pengajuan: ' . $get_transaksi->TANGGAL_PENGAJUAN . '
+            // Total Item: ' . $count . '
+            // Keterangan: ' . $get_transaksi->KETERANGAN_PRODUKSI . '
 
-            Mohon segera ditindaklanjuti untuk kelancaran proses produksi. Terima kasih!
+            // Mohon segera ditindaklanjuti untuk kelancaran proses produksi. Terima kasih!
 
-            Salam,
-            Sejahtera Abadi Group'
-            ];
+            // Salam,
+            // Sejahtera Abadi Group'
+            // ];
 
-            //send message
-            $this->kirim_wa($data);
+            // //send message
+            // $this->kirim_wa($data);
             echo json_encode(['success' => true]);
         } else {
             echo json_encode(['success' => false, 'error' => 'Gagal memperbarui data.']);
@@ -549,33 +549,33 @@ class Transaksi_produksi extends CI_Controller
             $this->M_TRANSAKSI_PRODUKSI->insert_produk_item_jurnal($data_jurnal_out);
         }
 
-        $get_kontak_kabag = $this->M_TRANSAKSI_PRODUKSI->get_karyawan_by_departemen($list_maping['DEPARTEMEN'], 'KABAG');
-        $get_user_penyerahan_bahan = $this->M_KARYAWAN->get_karyawan_by_id($get_transaksi->USER_PENYERAHAN_BAHAN);
-        $get_user_penerima_bahan = $this->M_KARYAWAN->get_karyawan_by_id($get_transaksi->USER_PENERIMA_BAHAN);
+        // $get_kontak_kabag = $this->M_TRANSAKSI_PRODUKSI->get_karyawan_by_departemen($list_maping['DEPARTEMEN'], 'KABAG');
+        // $get_user_penyerahan_bahan = $this->M_KARYAWAN->get_karyawan_by_id($get_transaksi->USER_PENYERAHAN_BAHAN);
+        // $get_user_penerima_bahan = $this->M_KARYAWAN->get_karyawan_by_id($get_transaksi->USER_PENERIMA_BAHAN);
 
-        $data = [
-            "target" => $get_kontak_kabag->TELEPON,
-            "message" => 'PEMBERITAHUAN!
-                        Transaksi Produksi sudah diterima dengan detail berikut:
+        // $data = [
+        //     "target" => $get_kontak_kabag->TELEPON,
+        //     "message" => 'PEMBERITAHUAN!
+        //                 Transaksi Produksi sudah diterima dengan detail berikut:
 
-                        Nomor Transaksi : ' . $id_transaksi . '
-                        Departemen : ' . $get_transaksi->NAMA_DEPARTEMEN . '
-                        User Pengajuan : ' . $get_transaksi->NAMA_PENGAJUAN . '
-                        Tanggal Pengajuan : ' . $get_transaksi->TANGGAL_PENGAJUAN . '
-                        User Realisasi : ' . $get_user_penyerahan_bahan->NAMA_KARYAWAN . '
-                        User Penerima : ' . $get_user_penerima_bahan->NAMA_KARYAWAN . '
-                        Tanggal Realisasi : ' . $get_transaksi->TANGGAL_PENYERAHAN_BAHAN . '
-                        Total Item : ' . $count . '
-                        Keterangan : ' . $get_transaksi->KETERANGAN . '
+        //                 Nomor Transaksi : ' . $id_transaksi . '
+        //                 Departemen : ' . $get_transaksi->NAMA_DEPARTEMEN . '
+        //                 User Pengajuan : ' . $get_transaksi->NAMA_PENGAJUAN . '
+        //                 Tanggal Pengajuan : ' . $get_transaksi->TANGGAL_PENGAJUAN . '
+        //                 User Realisasi : ' . $get_user_penyerahan_bahan->NAMA_KARYAWAN . '
+        //                 User Penerima : ' . $get_user_penerima_bahan->NAMA_KARYAWAN . '
+        //                 Tanggal Realisasi : ' . $get_transaksi->TANGGAL_PENYERAHAN_BAHAN . '
+        //                 Total Item : ' . $count . '
+        //                 Keterangan : ' . $get_transaksi->KETERANGAN . '
 
-                        Terimakasih
+        //                 Terimakasih
 
-                        Salam,
-                        Sejahtera Abadi Group'
-        ];
+        //                 Salam,
+        //                 Sejahtera Abadi Group'
+        // ];
 
-        //send message
-        $this->kirim_wa($data);
+        // //send message
+        // $this->kirim_wa($data);
 
         echo json_encode(['success' => true]);
     }
@@ -668,33 +668,33 @@ class Transaksi_produksi extends CI_Controller
             $this->M_TRANSAKSI_PRODUKSI->insert_produk_item_jurnal($data_jurnal_out);
         }
 
-        $get_kontak_kabag = $this->M_TRANSAKSI_PRODUKSI->get_karyawan_by_departemen($list_maping['DEPARTEMEN'], 'KABAG');
-        $get_user_penyerahan_hasil_produksi = $this->M_KARYAWAN->get_karyawan_by_id($get_transaksi->USER_PENYERAHAN_HASIL_PRODUKSI);
-        $get_user_penerima_hasil_produksi = $this->M_KARYAWAN->get_karyawan_by_id($get_transaksi->USER_PENERIMA_HASIL_PRODUKSI);
+        // $get_kontak_kabag = $this->M_TRANSAKSI_PRODUKSI->get_karyawan_by_departemen($list_maping['DEPARTEMEN'], 'KABAG');
+        // $get_user_penyerahan_hasil_produksi = $this->M_KARYAWAN->get_karyawan_by_id($get_transaksi->USER_PENYERAHAN_HASIL_PRODUKSI);
+        // $get_user_penerima_hasil_produksi = $this->M_KARYAWAN->get_karyawan_by_id($get_transaksi->USER_PENERIMA_HASIL_PRODUKSI);
 
-        $data = [
-            "target" => $get_kontak_kabag->TELEPON,
-            "message" => 'PEMBERITAHUAN!
-                        Transaksi Produksi sudah diterima dengan detail berikut:
+        // $data = [
+        //     "target" => $get_kontak_kabag->TELEPON,
+        //     "message" => 'PEMBERITAHUAN!
+        //                 Transaksi Produksi sudah diterima dengan detail berikut:
 
-                        Nomor Transaksi : ' . $id_transaksi . '
-                        Departemen : ' . $get_transaksi->NAMA_DEPARTEMEN . '
-                        User Pengajuan : ' . $get_transaksi->NAMA_PENGAJUAN . '
-                        Tanggal Pengajuan : ' . $get_transaksi->TANGGAL_PENGAJUAN . '
-                        User Realisasi : ' . $get_user_penyerahan_hasil_produksi->NAMA_KARYAWAN . '
-                        User Penerima : ' . $get_user_penerima_hasil_produksi->NAMA_KARYAWAN . '
-                        Tanggal Realisasi : ' . $get_transaksi->TANGGAL_PENYERAHAN_BAHAN . '
-                        Total Item : ' . $count . '
-                        Keterangan : ' . $get_transaksi->KETERANGAN . '
+        //                 Nomor Transaksi : ' . $id_transaksi . '
+        //                 Departemen : ' . $get_transaksi->NAMA_DEPARTEMEN . '
+        //                 User Pengajuan : ' . $get_transaksi->NAMA_PENGAJUAN . '
+        //                 Tanggal Pengajuan : ' . $get_transaksi->TANGGAL_PENGAJUAN . '
+        //                 User Realisasi : ' . $get_user_penyerahan_hasil_produksi->NAMA_KARYAWAN . '
+        //                 User Penerima : ' . $get_user_penerima_hasil_produksi->NAMA_KARYAWAN . '
+        //                 Tanggal Realisasi : ' . $get_transaksi->TANGGAL_PENYERAHAN_BAHAN . '
+        //                 Total Item : ' . $count . '
+        //                 Keterangan : ' . $get_transaksi->KETERANGAN . '
 
-                        Terimakasih
+        //                 Terimakasih
 
-                        Salam,
-                        Sejahtera Abadi Group'
-        ];
+        //                 Salam,
+        //                 Sejahtera Abadi Group'
+        // ];
 
-        //send message
-        $this->kirim_wa($data);
+        // //send message
+        // $this->kirim_wa($data);
 
         echo json_encode(['success' => true]);
     }
