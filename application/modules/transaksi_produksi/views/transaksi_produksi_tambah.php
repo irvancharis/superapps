@@ -19,7 +19,7 @@
                                         <div class="row mt-2">
                                             <div class="form-group col-12 col-md-6 col-lg-6">
                                                 <label>PRODUKSI ITEM / PRODUK </label>
-                                                <select required name="PRODUKSI_ITEM" id="PRODUKSI_ITEM" class="form-control select2">
+                                                <select required name="KODE_ITEM_PRODUKSI" id="KODE_ITEM_PRODUKSI" class="form-control select2">
                                                     <option value="" class="text-center" selected disabled>-- Pilih Item / Produk --</option>
                                                     <?php foreach ($get_produk as $row) : ?>
                                                         <option
@@ -140,7 +140,7 @@
                         return $state;
                     }
 
-                    $('#PRODUKSI_ITEM').select2({
+                    $('#KODE_ITEM_PRODUKSI').select2({
                         templateResult: formatOptionWithImage,
                         templateSelection: formatOptionWithImage,
                         escapeMarkup: function(m) {
