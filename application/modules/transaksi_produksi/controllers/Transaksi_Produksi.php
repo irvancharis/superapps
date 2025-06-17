@@ -485,6 +485,7 @@ class Transaksi_produksi extends CI_Controller
         $items = $this->input->post('items');
         $list_maping = $this->input->post('form');
         $lokasiAsal = $this->input->post('lokasiAsal');
+        $get_maping_default_lokasi_asal = $this->M_TRANSAKSI_PRODUKSI->get_maping_default($lokasiAsal['AREA']);
 
         $count = count($items);
 
@@ -496,7 +497,7 @@ class Transaksi_produksi extends CI_Controller
 
 
             // Update stok barang jika barang tidak ada di tabel Produk_Stok maka Insert jika ada maka Update
-            $cek_produk_stok = $this->M_PRODUK_STOK->get_produk_stok_single($item['KODE_ITEM'], $list_maping['AREA'], $list_maping['DEPARTEMEN'], $list_maping['RUANGAN'], $list_maping['LOKASI'])->row();
+            $cek_produk_stok = $this->M_PRODUK_STOK->get_produk_stok_single($item['KODE_ITEM'], $get_maping_default_lokasi_asal->AREA, $get_maping_default_lokasi_asal->DEPARTEMEN, $get_maping_default_lokasi_asal->RUANGAN, $get_maping_default_lokasi_asal->LOKASI)->row();
             // echo json_encode($cek_produk_stok);
             // exit();
 
