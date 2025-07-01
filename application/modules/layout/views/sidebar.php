@@ -197,7 +197,7 @@ if ($this->session->userdata('NAMA_ROLE') == 'IT') {
                         data-feather="settings"></i><span>ABSENSI</span></a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="<?php echo base_url('checkup_cctv'); ?>" class="nav-link"><i
+                        <a href="<?php echo base_url('absensi'); ?>" class="nav-link"><i
                                 data-feather="settings"></i><span>REKAP ABSENSI</span></a>
                     </li>
                     <li>

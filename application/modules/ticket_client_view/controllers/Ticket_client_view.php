@@ -371,9 +371,9 @@ class Ticket_client_view extends CI_Controller
         // Kirim Pesan ke WA Group IT TICKETING
         // $url_group_it = "https://qsch2nssom6w.share.zrok.io/superapps/login";
         $url_group_it = "https://ticketing.sagroup.id/";
+        $url_group_it_local = "http://localhost/superapps/login/";
         $ms_wa_group_it =
             "===== *REQUEST TICKETING* ===== \n\n" .
-
             "===== *INFORMASI PEREQUEST* ===== \n" .
             "   👤 NAMA: `" . strtoupper($requestby) . "` \n" .
             "   📞 NO. WHATSAPP: `" . strtoupper($telp) . "` \n" .
@@ -385,7 +385,8 @@ class Ticket_client_view extends CI_Controller
             "   📝 DESKRIPSI KELUHAN: `" . strtoupper($description_ticket) . "` \n\n" .
 
             "🚨 *HARAP SEGERA PROSES TICKET DENGAN MEMBUKA URL DI BAWAH INI:* \n" .
-            "$url_group_it";
+            "$url_group_it (Jaringan Internet Non-Kantor / Paket Data) \n" .
+            "$url_group_it_local (Jaringan Internet Kantor / Local Network)";
 
         $this->WHATSAPP->send_wa_group_it($ms_wa_group_it);
 

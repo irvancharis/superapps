@@ -588,6 +588,7 @@ class Ticket extends CI_Controller
             $NAMA_TEKNISI = $get_karyawan->NAMA_KARYAWAN;
             // $url_client = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
             $url_client = "https://ticketing.sagroup.id/ticket_client_view/ticket_history/" . urlencode($id_ticket);
+            $url_client_local = "http://localhost/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
             $url_client_confirm = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_confirm/" . urlencode($id_ticket);
             $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
             $ms_wa_client =
@@ -596,7 +597,8 @@ class Ticket extends CI_Controller
                 "👤 TEKNISI: " . strtoupper($NAMA_TEKNISI) . " \n\n" .
 
                 "🚨 *JIKA PROGRESS TICKET SUDAH SELESAI, KONFIRMASI DENGAN KLIK TAUTAN DI BAWAH.:* \n" .
-                $url_client;
+                "$url_client (Jaringan Internet Non-Kantor / Paket Data) \n" .
+                "$url_client_local (Jaringan Internet Kantor / Local Network) \n";
             $this->WHATSAPP->send_wa($telp_client, $ms_wa_client);
         }
 
