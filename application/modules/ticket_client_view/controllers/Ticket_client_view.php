@@ -311,43 +311,45 @@ class Ticket_client_view extends CI_Controller
 
         if ($nama_departemen != "UMUM") {
             $get_kabag = $this->M_KARYAWAN->get_kabag_by_departemen($id_departement);
-            $KABAG = $get_kabag->TELEPON;
+            if ($get_kabag != null) {
+                $KABAG = $get_kabag->TELEPON;
 
-            // Kirim pesan WA ke Tim IT
-            // $message =
-            //     "📢 REQUEST TICKETING \n\n" .
+                // Kirim pesan WA ke Tim IT
+                // $message =
+                //     "📢 REQUEST TICKETING \n\n" .
 
-            //     "📌 Informasi Pengguna: \n\n" .
-            //     "\t👤 Nama: `$requestby` \n" .
-            //     "\t🏢 Departemen: `$nama_departemen` \n\n" .
+                //     "📌 Informasi Pengguna: \n\n" .
+                //     "\t👤 Nama: `$requestby` \n" .
+                //     "\t🏢 Departemen: `$nama_departemen` \n\n" .
 
-            //     "📌 Detail Keluhan: \n\n" .
-            //     "\t📂 Tipe Keluhan: `$type_ticket` \n" .
-            //     "\t📝 Deskripsi: \n" .
-            //     "```$description_ticket``` \n\n\n" .
+                //     "📌 Detail Keluhan: \n\n" .
+                //     "\t📂 Tipe Keluhan: `$type_ticket` \n" .
+                //     "\t📝 Deskripsi: \n" .
+                //     "```$description_ticket``` \n\n\n" .
 
-            //     "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
-            //     "🔗 ($url)";
-            // $this->WHATSAPP->send_wa('081216126123', $message);
+                //     "🚨 Harap segera proses ticket dengan membuka URL di bawah ini:\n" .
+                //     "🔗 ($url)";
+                // $this->WHATSAPP->send_wa('081216126123', $message);
 
-            // Kirim pesan WA ke KABAG bersangkutan
-            $message =
-                "===== *REQUEST TICKETING* ===== \n\n" .
+                // Kirim pesan WA ke KABAG bersangkutan
+                $message =
+                    "===== *REQUEST TICKETING* ===== \n\n" .
 
-                "===== *INFORMASI PEREQUEST* ===== \n" .
-                "   👤 NAMA: `" . strtoupper($requestby) . "` \n" .
-                "   📞 NO. WHATSAPP: `" . strtoupper($telp) . "` \n" .
-                "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
-                "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
+                    "===== *INFORMASI PEREQUEST* ===== \n" .
+                    "   👤 NAMA: `" . strtoupper($requestby) . "` \n" .
+                    "   📞 NO. WHATSAPP: `" . strtoupper($telp) . "` \n" .
+                    "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen) . "` \n" .
+                    "   📍 LOKASI: `" . strtoupper($lokasi_ticket) . "` \n\n" .
 
-                "===== *DETAIL KELUHAN* ===== \n" .
-                "   📂 TIPE KELUHAN: `" . strtoupper($type_ticket) . "` \n" .
-                "   📝 DESKRIPSI KELUHAN: `" . strtoupper($description_ticket) . "` \n\n" .
+                    "===== *DETAIL KELUHAN* ===== \n" .
+                    "   📂 TIPE KELUHAN: `" . strtoupper($type_ticket) . "` \n" .
+                    "   📝 DESKRIPSI KELUHAN: `" . strtoupper($description_ticket) . "` \n\n" .
 
-                "===== *DEPARTEMEN DIREQUEST* ===== \n" .
-                "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen_request) . "`";
+                    "===== *DEPARTEMEN DIREQUEST* ===== \n" .
+                    "   🏢 DEPARTEMEN: `" . strtoupper($nama_departemen_request) . "`";
 
-            $this->WHATSAPP->send_wa($KABAG, $message);
+                $this->WHATSAPP->send_wa($KABAG, $message);
+            }
         }
 
         // Kirim Pesan ke Telegram Tim IT
@@ -747,5 +749,17 @@ class Ticket_client_view extends CI_Controller
         }
 
         return null; // Jika tidak ditemukan
+    }
+
+    // Fetch wa group
+    public function fetch_wa_group()
+    {
+        $this->WHATSAPP->fetch_wa_group_it();
+    }
+
+    // Get wa group
+    public function get_wa_group()
+    {
+        $this->WHATSAPP->get_wa_group_it();
     }
 }

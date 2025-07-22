@@ -437,7 +437,18 @@
             console.log(event.data);
             backToDefault();
             showNotification(event.data);
-        } else {
+        } else if (event.data.type === "error_absensi") {
+            console.log("Data tidak terkirim !!!");
+            backToDefault();
+            showNotification({
+                type: "error",
+                message: "Data tidak terkirim!"
+            });
+        } else if (event.data.type === "verifikasi_absensi") {
+            console.log(event.data);
+            backToDefault();
+            showNotification(event.data);
+        } else if (event.data.type === "error_verifikasi") {
             console.log("Data tidak terkirim !!!");
             backToDefault();
             showNotification({
@@ -479,13 +490,25 @@
             <h3 style="margin:0 0 5px 0;">Registrasi Berhasil!</h3>
             <p style="margin:0;">${data.message || 'Data absensi telah direkam'}</p>
         `;
-        } else if (data.type === 'error') {
+        } else if (data.type === 'error_registrasi') {
             notification.style.backgroundColor = '#F44336';
             notification.innerHTML = `
             <h3 style="margin:0 0 5px 0;">Error!</h3>
             <p style="margin:0;">${data.message || 'Terjadi kesalahan'}</p>
         `;
-        }
+        } else if (data.type === 'verifikasi_absensi') {
+            notification.style.backgroundColor = '#4CAF50';
+            notification.innerHTML = `
+            <h3 style="margin:0 0 5px 0;">Verifikasi Berhasil!</h3>
+            <p style="margin:0;">${data.message || 'Data absensi telah diverifikasi'}</p>
+        `;
+        } else if (data.type === 'error_verifikasi') {
+            notification.style.backgroundColor = '#F44336';
+            notification.innerHTML = `
+            <h3 style="margin:0 0 5px 0;">Error!</h3>
+            <p style="margin:0;">${data.message || 'Terjadi kesalahan'}</p>
+        `;
+        };
 
         // Tambahkan ke body
         document.body.appendChild(notification);
