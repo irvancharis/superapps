@@ -408,7 +408,7 @@ class Ticket extends CI_Controller
             // Ticket History Versi ZROK
             $url_client = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
             // $url_teknisi = "https://qsch2nssom6w.share.zrok.io/superapps/login";
-            $url_teknisi = "https://ticketing.sagroup.id/";
+            $url_teknisi = "http://ticketing.sagroup.id/login";
 
             // Membuat format pesan sesuai permintaan
             // // Kirim Pesan ke WA (Teknisi)
@@ -587,7 +587,7 @@ class Ticket extends CI_Controller
             $get_karyawan = $this->M_KARYAWAN->get_karyawan_by_id($get_teknisi->IDKARYAWAN);
             $NAMA_TEKNISI = $get_karyawan->NAMA_KARYAWAN;
             // $url_client = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
-            $url_client = "https://ticketing.sagroup.id/ticket_client_view/ticket_history/" . urlencode($id_ticket);
+            $url_client = "http://ticketing.sagroup.id/ticket_client_view/ticket_history/" . urlencode($id_ticket);
             $url_client_local = "http://localhost/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
             $url_client_confirm = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_confirm/" . urlencode($id_ticket);
             $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;

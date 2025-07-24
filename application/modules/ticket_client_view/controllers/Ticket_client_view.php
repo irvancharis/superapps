@@ -372,7 +372,7 @@ class Ticket_client_view extends CI_Controller
 
         // Kirim Pesan ke WA Group IT TICKETING
         // $url_group_it = "https://qsch2nssom6w.share.zrok.io/superapps/login";
-        $url_group_it = "https://ticketing.sagroup.id/";
+        $url_group_it = "http://ticketing.sagroup.id/";
         $url_group_it_local = "http://localhost/superapps/login/";
         $ms_wa_group_it =
             "===== *REQUEST TICKETING* ===== \n\n" .

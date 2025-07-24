@@ -23,6 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
+
 // $config['base_url'] = '';
 // BAWAAN SEPTIAN & CHARIS
 // $config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
@@ -30,8 +31,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 // $config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
 
 // MODIFIKASI SEPTIAN ZROK
-$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
-$config['base_url'] = "$protocol://{$_SERVER['HTTP_HOST']}/superapps/";
+// $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
+// $config['base_url'] = "$protocol://{$_SERVER['HTTP_HOST']}/superapps/";
+
+// MODIFIKASI AGAR URL DEFAULT OTOMATIS TIPENYA HTTP
+$config['base_url'] = "http://" . $_SERVER['HTTP_HOST'];
+$config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
 
 /*
 |--------------------------------------------------------------------------
