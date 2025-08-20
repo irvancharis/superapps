@@ -288,7 +288,7 @@
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-center">
-                                <button class="btn btn-secondary" onclick="goBack()"><i class="fa fa-arrow-left"></i> KEMBALI</button>
+                                <button class="btn btn-secondary" onclick="goBack()"><i class="fa fa-arrow-left"></i> Kembali</button>
                             </div>
                         </div>
                         <div class="simple-footer">

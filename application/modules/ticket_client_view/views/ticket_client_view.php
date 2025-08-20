@@ -351,9 +351,20 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-footer text-right">
-                                            <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Kirim</button>
-                                            <button type="reset" class="btn btn-danger"><i class="fas fa-redo"></i> Reset</button>
+                                        <div class="card-footer d-flex flex-wrap justify-content-center justify-content-sm-between text-center">
+                                            <div class="mb-2 mb-sm-0">
+                                                <button class="btn btn-info me-sm-2 mb-2 mb-sm-0" onclick="cekAntrian()">
+                                                    <i class="fas fa-list"></i> Cek Antrian Ticket
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button type="submit" class="btn btn-primary me-2 mb-2 mb-sm-0">
+                                                    <i class="fas fa-paper-plane"></i> Kirim
+                                                </button>
+                                                <button type="reset" class="btn btn-danger mb-2 mb-sm-0">
+                                                    <i class="fas fa-redo"></i> Reset
+                                                </button>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -860,6 +871,11 @@
                 src: "#mobileVideo",
                 type: "inline",
             }, ]);
+        }
+
+        // Fungsi untuk cekAntrian()
+        function cekAntrian() {
+            window.location.href = "<?php echo base_url('ticket_client_view/ticket_queue'); ?>";
         }
     </script>
 </body>
