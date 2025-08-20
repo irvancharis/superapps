@@ -287,6 +287,9 @@
                                     </table>
                                 </div>
                             </div>
+                            <div class="card-footer d-flex justify-content-center">
+                                <button class="btn btn-secondary" onclick="goBack()"><i class="fa fa-arrow-left"></i> KEMBALI</button>
+                            </div>
                         </div>
                         <div class="simple-footer">
                             Copyright &copy; SA GROUP <?php echo date('Y'); ?>
@@ -369,6 +372,11 @@
                 .css("width", progressValue + "%")
                 .attr("aria-valuenow", progressValue)
                 .text(progressValue + "%");
+        }
+
+        // Fungsi Kembali ke halaman Ticket (goBack)
+        function goBack() {
+            window.history.back();
         }
     </script>
 </body>
