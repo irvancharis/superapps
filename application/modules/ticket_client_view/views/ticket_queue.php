@@ -374,9 +374,9 @@
                 .text(progressValue + "%");
         }
 
-        // Fungsi Kembali ke halaman Ticket (goBack)
+        // Fungsi Kembali ke halaman Ticket_client_view (goBack)
         function goBack() {
-            window.history.back();
+            window.location.href = "<?php echo base_url('/'); ?>";
         }
     </script>
 </body>
