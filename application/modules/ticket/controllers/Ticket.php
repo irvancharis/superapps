@@ -588,7 +588,7 @@ class Ticket extends CI_Controller
             $NAMA_TEKNISI = $get_karyawan->NAMA_KARYAWAN;
             // $url_client = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
             $url_client = "https://ticketing.sagroup.id/ticket_client_view/ticket_history/" . urlencode($id_ticket);
-            $url_client_local = "http://192.168.3.222/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
+            $url_client_local = "http://192.168.3.103/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
             $url_client_confirm = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_confirm/" . urlencode($id_ticket);
             $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
             $ms_wa_client =
