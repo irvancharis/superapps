@@ -15,12 +15,12 @@ class Karyawan extends CI_Controller
 
     public function index($page = 'karyawan')
     {
-        $this->load->library('session');
-        $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'LIST');
-        if (!$CEK_ROLE) {
-            redirect('non_akses');
-        }
+        // $this->load->library('session');
+        // $SESSION_ROLE = $this->session->userdata('ROLE');
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'LIST');
+        // if (!$CEK_ROLE) {
+        //     redirect('non_akses');
+        // }
 
         $data['M_KARYAWAN'] = $this->M_KARYAWAN->get_karyawan();
         $this->session->set_userdata('page', $page);
@@ -48,10 +48,10 @@ class Karyawan extends CI_Controller
 
     public function tambah($page = 'karyawan')
     {
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'KARYAWAN','TAMBAH');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        // $this->load->library( 'session' );
+        // $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'KARYAWAN','TAMBAH');
+        // if (!$CEK_ROLE) { redirect('non_akses'); }
 
 
         $this->session->set_userdata('page', $page);
@@ -67,12 +67,12 @@ class Karyawan extends CI_Controller
 
     public function edit($KODE, $page = 'karyawan')
     {
-        $this->load->library('session');
-        $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'EDIT');
-        if (!$CEK_ROLE) {
-            redirect('non_akses');
-        }
+        // $this->load->library('session');
+        // $SESSION_ROLE = $this->session->userdata('ROLE');
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'EDIT');
+        // if (!$CEK_ROLE) {
+        //     redirect('non_akses');
+        // }
 
 
         $this->session->set_userdata('page', $page);
@@ -95,12 +95,12 @@ class Karyawan extends CI_Controller
      */
     public function detail($KODE, $page = 'karyawan')
     {
-        $this->load->library('session');
-        $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'DETAIL');
-        if (!$CEK_ROLE) {
-            redirect('non_akses');
-        }
+        // $this->load->library('session');
+        // $SESSION_ROLE = $this->session->userdata('ROLE');
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'DETAIL');
+        // if (!$CEK_ROLE) {
+        //     redirect('non_akses');
+        // }
 
 
         $this->session->set_userdata('page', $page);
@@ -119,10 +119,10 @@ class Karyawan extends CI_Controller
     public function insert()
     {
 
-        $this->load->library( 'session' );
-        $SESSION_ROLE = $this->session->userdata( 'ROLE' );
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'KARYAWAN','TAMBAH');
-        if (!$CEK_ROLE) { redirect('non_akses'); }
+        // $this->load->library( 'session' );
+        // $SESSION_ROLE = $this->session->userdata( 'ROLE' );
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE,'KARYAWAN','TAMBAH');
+        // if (!$CEK_ROLE) { redirect('non_akses'); }
 
         $KODE = $this->uuid->v4();
 
@@ -158,12 +158,12 @@ class Karyawan extends CI_Controller
     public function update()
     {
 
-        $this->load->library('session');
-        $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'EDIT');
-        if (!$CEK_ROLE) {
-            redirect('non_akses');
-        }
+        // $this->load->library('session');
+        // $SESSION_ROLE = $this->session->userdata('ROLE');
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'EDIT');
+        // if (!$CEK_ROLE) {
+        //     redirect('non_akses');
+        // }
 
 
         $KODE_ITEM = $this->input->post('NIK');
@@ -185,12 +185,12 @@ class Karyawan extends CI_Controller
 
     public function hapus($KODE_ITEM)
     {
-        $this->load->library('session');
-        $SESSION_ROLE = $this->session->userdata('ROLE');
-        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'HAPUS');
-        if (!$CEK_ROLE) {
-            redirect('non_akses');
-        }
+        // $this->load->library('session');
+        // $SESSION_ROLE = $this->session->userdata('ROLE');
+        // $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'KARYAWAN', 'HAPUS');
+        // if (!$CEK_ROLE) {
+        //     redirect('non_akses');
+        // }
 
 
         // Proses hapus data
