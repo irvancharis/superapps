@@ -526,7 +526,7 @@ class Ticket extends CI_Controller
         // Konfigurasi upload Gambar
         $config['upload_path'] = APPPATH . '../assets/uploads/ticket/';
         $config['allowed_types'] = 'jpg|jpeg|png';
-        $config['max_size'] = 2048; // 2MB
+        $config['max_size'] = 5048; // 2MB
         $config['file_name'] = $IDTICKET_DETAIL;
 
         // Data yang akan diupdate
