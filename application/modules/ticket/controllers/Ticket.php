@@ -408,9 +408,9 @@ class Ticket extends CI_Controller
             // Ticket History Versi ZROK
             $url_client = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
             // $url_teknisi = "https://qsch2nssom6w.share.zrok.io/superapps/login";
-            $url_teknisi_local = "http://192.168.3.103/login";
+            $url_teknisi_local = "https://bit.ly/ticketinglokal/login";
             $url_teknisi_public = "https://ticketing.sagroup.id/login";
-            $url_teknisi_alter = "http://182.253.41.206/login";
+            $url_teknisi_alter = "https://bit.ly/ticketingpublik/login";
 
             // Membuat format pesan sesuai permintaan
             // // Kirim Pesan ke WA (Teknisi)
@@ -427,8 +427,8 @@ class Ticket extends CI_Controller
                 "📝 DESKRIPSI KELUHAN: " . strtoupper($get_ticket->DESCRIPTION_TICKET) . "\n\n" .
 
                 "🚨 *HARAP SEGERA PROSES TICKET DENGAN MEMBUKA URL DI BAWAH INI:* \n" .
-                "$url_teknisi_public (Jaringan Internet Non-Kantor / Paket Data) \n" .
-                "$url_teknisi_local (Jaringan Internet Kantor / Local Network) \n" .
+                "$url_teknisi_public (Jaringan Internet Non-Kantor / Paket Data) \n\n" .
+                "$url_teknisi_local (Jaringan Internet Kantor / Local Network) \n\n" .
                 "$url_teknisi_alter (Alamat URL Alternatif)";
             $this->WHATSAPP->send_wa($TELP_TEKNISI, $message);
 
@@ -602,8 +602,8 @@ class Ticket extends CI_Controller
                 "👤 TEKNISI: " . strtoupper($NAMA_TEKNISI) . " \n\n" .
 
                 "🚨 *JIKA PROGRESS TICKET SUDAH SELESAI, KONFIRMASI DENGAN KLIK TAUTAN DI BAWAH.:* \n" .
-                "$url_client (Jaringan Internet Non-Kantor / Paket Data) \n" .
-                "$url_client_local (Jaringan Internet Kantor / Local Network) \n" .
+                "$url_client (Jaringan Internet Non-Kantor / Paket Data) \n\n" .
+                "$url_client_local (Jaringan Internet Kantor / Local Network) \n\n" .
                 "$url_client_alter (Alamat URL Alternatif)";
             $this->WHATSAPP->send_wa($telp_client, $ms_wa_client);
         }

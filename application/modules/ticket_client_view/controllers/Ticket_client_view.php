@@ -373,8 +373,8 @@ class Ticket_client_view extends CI_Controller
         // Kirim Pesan ke WA Group IT TICKETING
         // $url_group_it = "https://qsch2nssom6w.share.zrok.io/superapps/login";
         $url_group_it = "https://ticketing.sagroup.id/login";
-        $url_group_it_local = "http://192.168.3.103/superapps/login/";
-        $url_group_it_alter = "http://182.253.41.206/login/";
+        $url_group_it_local = "https://bit.ly/ticketinglokal/login";
+        $url_group_it_alter = "https://bit.ly/ticketingpublik/login";
         $ms_wa_group_it =
             "===== *REQUEST TICKETING* ===== \n\n" .
             "===== *INFORMASI PEREQUEST* ===== \n" .
@@ -388,8 +388,8 @@ class Ticket_client_view extends CI_Controller
             "   📝 DESKRIPSI KELUHAN: `" . strtoupper($description_ticket) . "` \n\n" .
 
             "🚨 *HARAP SEGERA PROSES TICKET DENGAN MEMBUKA URL DI BAWAH INI:* \n" .
-            "$url_group_it (Jaringan Internet Non-Kantor / Paket Data) \n" .
-            "$url_group_it_local (Jaringan Internet Kantor / Local Network) \n" .
+            "$url_group_it (Jaringan Internet Non-Kantor / Paket Data) \n\n" .
+            "$url_group_it_local (Jaringan Internet Kantor / Local Network) \n\n" .
             "$url_group_it_alter (Alamat URL Alternatif)";
 
         $this->WHATSAPP->send_wa_group_it($ms_wa_group_it);
