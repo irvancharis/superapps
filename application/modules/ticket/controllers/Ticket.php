@@ -344,6 +344,47 @@ class Ticket extends CI_Controller
             $this->load->view('ticket_edit', $data);
     }
 
+    // Fungsi untuk menampilkan halaman ticket_edit_view
+    public function view_ticket($id)
+    {
+        // Cek apakah user memiliki hak akses
+        $SESSION_ROLE = $this->session->userdata('ROLE');
+        $CEK_ROLE = $this->M_ROLE->get_role_session($SESSION_ROLE, 'TICKET', 'PROSES TICKET');
+        if (!$CEK_ROLE) {
+            redirect('non_akses');
+        }
+
+        $this->load->library('session');
+        $this->session->set_userdata('page', 'ticket');
+        $data['page'] = $this->session->userdata('page');
+        $data['get_technician'] = $this->M_TICKET->get_technician();
+        $data['get_departement'] = $this->M_TICKET->get_departement();
+        $ticket = $this->M_TICKET->get_ticket($id);
+
+        // Pastikan TYPE_TICKET menjadi array, meskipun hanya 1 value
+        $data['type_ticket'] = isset($ticket->TYPE_TICKET)
+            ? (strpos($ticket->TYPE_TICKET, ',') !== false
+                ? explode(',', $ticket->TYPE_TICKET)
+                : [$ticket->TYPE_TICKET])
+            : [];
+
+        $data['approval_ticket'] = $ticket->APPROVAL_TICKET;
+        $data['status_ticket'] = $ticket->STATUS_TICKET;
+
+        $data['get_ticket'] = $ticket;
+        $data['id_ticket'] = $id;
+
+        // Pastikan DATE_TICKET dalam format YYYY-MM-DD
+        if (isset($data['get_ticket']->DATE_TICKET)) {
+            $data['get_ticket']->DATE_TICKET = date('Y-m-d', strtotime($data['get_ticket']->DATE_TICKET));
+        }
+
+        $this->load->view('layout/navbar') .
+            $this->load->view('layout/sidebar', $data) .
+            $this->load->view('ticket_edit_view', $data);
+    }
+    // End Fungsi menampilkan halaman ticket_edit_view
+
     public function update()
     {
         // Ambil data dari POST

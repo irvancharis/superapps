@@ -125,7 +125,11 @@
                                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                                 <div class="dropdown-menu">
                                                                                     <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
-                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/view_ticket/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="fas fa-file-alt"></i> Cek Ticket</a>
+                                                                                    <?php endif; ?>
                                                                                     <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
                                                                                     <a href="javascript:void(0)" class="dropdown-item has-icon btnHapus" data-id="<?php echo $d->IDTICKET; ?>"> <i class="fas fa-trash-alt"></i> Hapus</a>
                                                                                     <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
@@ -231,7 +235,11 @@
                                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                                 <div class="dropdown-menu">
                                                                                     <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
-                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/view_ticket/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="fas fa-file-alt"></i> Cek Ticket</a>
+                                                                                    <?php endif; ?>
                                                                                     <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
                                                                                     <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
                                                                                     <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
@@ -336,7 +344,11 @@
                                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                                 <div class="dropdown-menu">
                                                                                     <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
-                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/view_ticket/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="fas fa-file-alt"></i> Cek Ticket</a>
+                                                                                    <?php endif; ?>
                                                                                     <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
                                                                                     <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
                                                                                     <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
@@ -445,7 +457,11 @@
                                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                                 <div class="dropdown-menu">
                                                                                     <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
-                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/view_ticket/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="fas fa-file-alt"></i> Cek Ticket</a>
+                                                                                    <?php endif; ?>
                                                                                     <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
                                                                                     <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
                                                                                     <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
@@ -550,7 +566,11 @@
                                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                                 <div class="dropdown-menu">
                                                                                     <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
-                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/view_ticket/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="fas fa-file-alt"></i> Cek Ticket</a>
+                                                                                    <?php endif; ?>
                                                                                     <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
                                                                                     <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
                                                                                     <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
@@ -655,7 +675,11 @@
                                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                                 <div class="dropdown-menu">
                                                                                     <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
-                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/view_ticket/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="fas fa-file-alt"></i> Cek Ticket</a>
+                                                                                    <?php endif; ?>
                                                                                     <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
                                                                                     <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
                                                                                     <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
@@ -760,7 +784,11 @@
                                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                                 <div class="dropdown-menu">
                                                                                     <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
-                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/view_ticket/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="fas fa-file-alt"></i> Cek Ticket</a>
+                                                                                    <?php endif; ?>
                                                                                     <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
                                                                                     <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
                                                                                     <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
@@ -892,7 +920,11 @@
                                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                                 <div class="dropdown-menu">
                                                                                     <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
-                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/view_ticket/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="fas fa-file-alt"></i> Cek Ticket</a>
+                                                                                    <?php endif; ?>
                                                                                     <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
                                                                                     <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
                                                                                     <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
@@ -997,7 +1029,11 @@
                                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                                 <div class="dropdown-menu">
                                                                                     <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
-                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/view_ticket/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="fas fa-file-alt"></i> Cek Ticket</a>
+                                                                                    <?php endif; ?>
                                                                                     <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
                                                                                     <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
                                                                                     <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
@@ -1102,7 +1138,11 @@
                                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                                 <div class="dropdown-menu">
                                                                                     <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
-                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/view_ticket/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="fas fa-file-alt"></i> Cek Ticket</a>
+                                                                                    <?php endif; ?>
                                                                                     <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
                                                                                     <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
                                                                                     <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
@@ -1207,7 +1247,11 @@
                                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                                 <div class="dropdown-menu">
                                                                                     <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
-                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/view_ticket/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="fas fa-file-alt"></i> Cek Ticket</a>
+                                                                                    <?php endif; ?>
                                                                                     <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
                                                                                     <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
                                                                                     <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
@@ -1312,7 +1356,11 @@
                                                                                 <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Detail</a>
                                                                                 <div class="dropdown-menu">
                                                                                     <!-- <a href="<?php echo base_url() . 'ticket/ticket_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon view-btn"><i class="fas fa-eye"></i> View</a> -->
-                                                                                    <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php if ($d->APPROVAL_TICKET == 0) : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/edit_view/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="far fa-edit"></i> Cek Approval</a>
+                                                                                    <?php else : ?>
+                                                                                        <a href="<?php echo base_url() . 'ticket/view_ticket/' . $d->IDTICKET ?>" class="dropdown-item has-icon edit-btn"><i class="fas fa-file-alt"></i> Cek Ticket</a>
+                                                                                    <?php endif; ?>
                                                                                     <a href="<?php echo base_url() . 'ticket/ticket_admin/' . $d->IDTICKET ?>" class="dropdown-item has-icon"> <i class="fas fa-hourglass-half"></i> Lihat Progress</a>
                                                                                     <!-- <a href="#" class="dropdown-item has-icon update-approval" data-id="<?php echo $d->IDTICKET; ?>" data-approval="<?php echo $d->APPROVAL_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Update Approval</a> -->
                                                                                     <!-- <a href="javascript:void(0)" class="dropdown-item has-icon update-status <?php echo ($d->APPROVAL_TICKET == 0) ? 'd-none' : 'd-block'; ?>" data-id="<?php echo $d->IDTICKET; ?>" data-status="<?php echo $d->STATUS_TICKET; ?>"><i class="fas fa-hourglass-half"></i> Proses Ticket</a>
