@@ -185,28 +185,8 @@ class Ticket_client_view extends CI_Controller
         // Konfigurasi upload Gambar
         $config['upload_path'] = APPPATH . '../assets/uploads/ticket/';
         $config['allowed_types'] = 'jpg|jpeg|png|pdf|doc|docx|xls|xlsx';
-        $config['max_size'] = 2048; // 4MB
+        $config['max_size'] = 2048; // 2MB
         $config['file_name'] = $id_ticket . '_' . $requestby;
-
-        // Fungsi untuk kompres gambar
-        function compress_image($source_path, $destination_path, $quality = 75)
-        {
-            $info = getimagesize($source_path);
-
-            if ($info['mime'] == 'image/jpeg') {
-                $image = imagecreatefromjpeg($source_path);
-                imagejpeg($image, $destination_path, $quality);
-            } elseif ($info['mime'] == 'image/png') {
-                $image = imagecreatefrompng($source_path);
-                imagepng($image, $destination_path, round(9 * $quality / 100)); // PNG quality is 0-9
-            }
-
-            if (isset($image)) {
-                imagedestroy($image);
-                return true;
-            }
-            return false;
-        }
 
         // Cek Apakah ada gambar yang diupload
         if (!empty($_FILES['image']['name'])) {
@@ -220,16 +200,27 @@ class Ticket_client_view extends CI_Controller
             $extension = $data_gambar['file_ext'];
             $foto = $id_ticket . '_' . $requestby . $extension;
 
-            // Kompres gambar jika file adalah gambar (jpg/jpeg/png)
+            // Resize gambar jika file adalah gambar (jpg/jpeg/png)
             if (in_array(strtolower($data_gambar['file_ext']), ['.jpg', '.jpeg', '.png'])) {
-                $source_path = $data_gambar['full_path'];
-                $compressed_path = $source_path . '_compressed';
+                // Konfigurasi Image Manipulation
+                $config_resize['image_library'] = 'gd2';
+                $config_resize['source_image'] = $data_gambar['full_path'];
+                $config_resize['create_thumb'] = FALSE;
+                $config_resize['maintain_ratio'] = TRUE;
+                $config_resize['width'] = 800; // Sesuaikan dengan lebar maksimal yang diinginkan
+                $config_resize['height'] = 0; // Sesuaikan dengan tinggi maksimal yang diinginkan
+                $config_resize['quality'] = '70%'; // Kualitas gambar
 
-                if (compress_image($source_path, $compressed_path)) {
-                    // Hapus file asli dan ganti dengan yang sudah dikompres
-                    unlink($source_path);
-                    rename($compressed_path, $source_path);
+                $this->load->library('image_lib', $config_resize);
+
+                // Resize gambar
+                if (!$this->image_lib->resize()) {
+                    // Jika resize gagal, log error tetapi lanjutkan proses
+                    error_log('Resize image failed: ' . $this->image_lib->display_errors());
                 }
+
+                // Clear konfigurasi image_lib untuk penggunaan berikutnya
+                $this->image_lib->clear();
             }
 
             // Jika validasi lolos, lanjutkan proses penyimpanan

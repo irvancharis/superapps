@@ -601,6 +601,29 @@ class Ticket extends CI_Controller
                 $extension = $data['file_ext'];
                 $foto = $IDTICKET_DETAIL . $extension;
 
+                // Resize gambar jika file adalah gambar (jpg/jpeg/png)
+                if (in_array(strtolower($data['file_ext']), ['.jpg', '.jpeg', '.png'])) {
+                    // Konfigurasi Image Manipulation
+                    $config_resize['image_library'] = 'gd2';
+                    $config_resize['source_image'] = $data['full_path'];
+                    $config_resize['create_thumb'] = FALSE;
+                    $config_resize['maintain_ratio'] = TRUE;
+                    $config_resize['width'] = 800; // Sesuaikan dengan lebar maksimal yang diinginkan
+                    $config_resize['height'] = 0; // Sesuaikan dengan tinggi maksimal yang diinginkan
+                    $config_resize['quality'] = '70%'; // Kualitas gambar
+
+                    $this->load->library('image_lib', $config_resize);
+
+                    // Resize gambar
+                    if (!$this->image_lib->resize()) {
+                        // Jika resize gagal, log error tetapi lanjutkan proses
+                        error_log('Resize image failed: ' . $this->image_lib->display_errors());
+                    }
+
+                    // Clear konfigurasi image_lib untuk penggunaan berikutnya
+                    $this->image_lib->clear();
+                }
+
                 $data_detail = [
                     'IDTICKET_DETAIL' => $IDTICKET_DETAIL,
                     'IDTICKET' => $id_ticket,
