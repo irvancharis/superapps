@@ -449,23 +449,23 @@ class Ticket extends CI_Controller
             // Ticket History Versi ZROK
             $url_client = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
             // $url_teknisi = "https://qsch2nssom6w.share.zrok.io/superapps/login";
-            $url_teknisi_local = "https://bit.ly/ticketinglokal/login";
+            $url_teknisi_local = "http://192.168.3.103/login";
             $url_teknisi_public = "https://ticketing.sagroup.id/login";
-            $url_teknisi_alter = "https://bit.ly/ticketingpublik/login";
+            $url_teknisi_alter = "http://182.253.41.206/login";
 
             // Membuat format pesan sesuai permintaan
             // // Kirim Pesan ke WA (Teknisi)
             $message =
-                "===== *REQUEST TICKETING* =====\n\n" .
+                "*REQUEST TICKETING* \n\n" .
 
-                "===== *INFORMASI PEREQUEST* =====\n" .
-                "👤 NAMA: " . strtoupper($get_ticket->REQUESTBY) . "\n" .
-                "🏢 DEPARTEMEN: " . strtoupper($get_departemen->NAMA_DEPARTEMEN) . "\n" .
-                "📍 LOKASI: " . strtoupper($lokasi_ticket) . "\n\n" .
+                "INFORMASI TICKET: \n" .
+                "👤 NAMA: _" . strtoupper($get_ticket->REQUESTBY) . "_ \n" .
+                "🏢 DEPARTEMEN: _" . strtoupper($get_departemen->NAMA_DEPARTEMEN) . "_ \n" .
+                "📍 LOKASI: _" . strtoupper($lokasi_ticket) . "_ \n\n" .
 
-                "===== *DETAIL KELUHAN* =====\n" .
-                "📂 TIPE KELUHAN: " . strtoupper($get_ticket->TYPE_TICKET) . "\n" .
-                "📝 DESKRIPSI KELUHAN: " . strtoupper($get_ticket->DESCRIPTION_TICKET) . "\n\n" .
+                "DETAIL KELUHAN: \n" .
+                "📂 TIPE KELUHAN: _" . strtoupper($get_ticket->TYPE_TICKET) . "_ \n" .
+                "📝 DESKRIPSI KELUHAN: _" . strtoupper($get_ticket->DESCRIPTION_TICKET) . "_ \n\n" .
 
                 "🚨 *HARAP SEGERA PROSES TICKET DENGAN MEMBUKA URL DI BAWAH INI:* \n" .
                 "$url_teknisi_public (Jaringan Internet Non-Kantor / Paket Data) \n\n" .
@@ -503,9 +503,9 @@ class Ticket extends CI_Controller
             // // Kirim Pesan ke WA (Client)
             $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
             $ms_wa_client =
-                "===== *TICKET SUDAH DI APPROVE* ===== \n\n" .
-                "📌 ID TICKET: " . strtoupper($get_ticket->IDTICKET) . " \n" .
-                "👤 TEKNISI: " . strtoupper($NAMA_TEKNISI) . " \n\n" .
+                "*TICKET DISETUJUI* \n\n" .
+                "📌 ID TICKET: _" . strtoupper($get_ticket->IDTICKET) . "_ \n" .
+                "👤 TEKNISI: _" . strtoupper($NAMA_TEKNISI) . "_ \n\n" .
                 " *TUNGGU KONFIRMASI LEBIH LANJUT.* ";
             $this->WHATSAPP->send_wa($telp_client, $ms_wa_client);
 
@@ -531,12 +531,11 @@ class Ticket extends CI_Controller
             $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
             $url_client = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_history/" . urlencode($id_ticket);
             $ms_wa_client =
-                "===== *TICKET PROGRESS* ===== \n\n" .
-                "===== *INFORMASI TICKET* ===== \n\n" .
-                "📌 *MOHON MAAF TICKET ANDA KAMI TOLAK*  \n" .
-                "👤 ALASAN: " . strtoupper($alasan_ditolak) . " \n\n" .
+                "*TICKET DITOLAK* \n\n" .
+                "📌 MOHON MAAF TICKET ANDA KAMI TOLAK  \n" .
+                "👤 ALASAN: _" . strtoupper($alasan_ditolak) . "_ \n\n" .
 
-                "🚨 *JIKA ADA KENDALA MOHON KONFIRMASI LEBIH LANJUT* ";
+                "🚨 JIKA ADA KENDALA MOHON KONFIRMASI LEBIH LANJUT ";
             $this->WHATSAPP->send_wa($telp_client, $ms_wa_client);
 
             if ($result) {
@@ -661,14 +660,17 @@ class Ticket extends CI_Controller
             $url_client_confirm = "https://qsch2nssom6w.share.zrok.io/superapps/ticket_client_view/ticket_confirm/" . urlencode($id_ticket);
             $telp_client = $this->M_TICKET->get_selected_tickets($id_ticket)->TELP;
             $ms_wa_client =
-                "===== *TICKET PROGRESS* ===== \n\n" .
-                "📌 *PROGRESS: " . strtoupper($get_ticket_detail->KETERANGAN) . "* \n" .
-                "👤 TEKNISI: " . strtoupper($NAMA_TEKNISI) . " \n\n" .
+                "*TICKET PROGRESS* \n\n" .
+                "📌 PROGRESS: _" . strtoupper($get_ticket_detail->KETERANGAN) . "_ \n" .
+                "👤 TEKNISI: _" . strtoupper($NAMA_TEKNISI) . "_ \n\n" .
 
-                "🚨 *JIKA PROGRESS TICKET SUDAH SELESAI, KONFIRMASI DENGAN KLIK TAUTAN DI BAWAH.:* \n" .
-                "$url_client (Jaringan Internet Non-Kantor / Paket Data) \n\n" .
-                "$url_client_local (Jaringan Internet Kantor / Local Network) \n\n" .
-                "$url_client_alter (Alamat URL Alternatif)";
+                "🚨 *JIKA PROGRESS TICKET SUDAH SELESAI, KONFIRMASI DENGAN KLIK TAUTAN DI BAWAH.:* \n\n" .
+                "Jaringan Internet Non-Kantor / Paket Data: \n" .
+                "$url_client \n\n" .
+                "Jaringan Internet Kantor / Local Network: \n" .
+                "$url_client_local \n\n" .
+                "Alamat URL Alternatif: \n" .
+                "$url_client_alter";
             $this->WHATSAPP->send_wa($telp_client, $ms_wa_client);
         }
 
