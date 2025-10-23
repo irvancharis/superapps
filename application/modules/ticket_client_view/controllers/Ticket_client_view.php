@@ -375,13 +375,16 @@ class Ticket_client_view extends CI_Controller
             "   📍 LOKASI: _" . strtoupper($lokasi_ticket) . "_ \n\n" .
 
             "DETAIL KELUHAN: \n" .
-            "   📂 TIPE KELUHAN: " . strtoupper($type_ticket) . " \n" .
-            "   📝 DESKRIPSI KELUHAN: " . strtoupper($description_ticket) . " \n\n" .
+            "   📂 TIPE KELUHAN: _" . strtoupper($type_ticket) . "_ \n" .
+            "   📝 DESKRIPSI KELUHAN: _" . strtoupper($description_ticket) . "_ \n\n" .
 
             "🚨 *HARAP SEGERA PROSES TICKET DENGAN MEMBUKA URL DI BAWAH INI:* \n" .
-            "$url_group_it (Jaringan Internet Non-Kantor / Paket Data) \n\n" .
-            "$url_group_it_local (Jaringan Internet Kantor / Local Network) \n\n" .
-            "$url_group_it_alter (Alamat URL Alternatif)";
+            "Jaringan Internet Non-Kantor / Paket Data: \n" .
+            "$url_group_it \n\n" .
+            "Jaringan Internet Kantor / Local Network: \n" .
+            "$url_group_it_local \n\n" .
+            "Alamat URL Alternatif: \n" .
+            "$url_group_it_alter";
 
         $this->WHATSAPP->send_wa_group_it($ms_wa_group_it);
 

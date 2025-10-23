@@ -468,9 +468,12 @@ class Ticket extends CI_Controller
                 "📝 DESKRIPSI KELUHAN: _" . strtoupper($get_ticket->DESCRIPTION_TICKET) . "_ \n\n" .
 
                 "🚨 *HARAP SEGERA PROSES TICKET DENGAN MEMBUKA URL DI BAWAH INI:* \n" .
-                "$url_teknisi_public (Jaringan Internet Non-Kantor / Paket Data) \n\n" .
-                "$url_teknisi_local (Jaringan Internet Kantor / Local Network) \n\n" .
-                "$url_teknisi_alter (Alamat URL Alternatif)";
+                "Jaringan Internet Non-Kantor / Paket Data: \n" .
+                "$url_teknisi_public \n\n" .
+                "Jaringan Internet Kantor / Local Network: \n" .
+                "$url_teknisi_local \n\n" .
+                "Alamat URL Alternatif: \n" .
+                "$url_teknisi_alter";
             $this->WHATSAPP->send_wa($TELP_TEKNISI, $message);
 
             // // Kirim Pesan ke Telegram (Teknisi)
