@@ -45,6 +45,7 @@ class M_TICKET extends CI_Model
             $this->db->select('COUNT(IDTICKET) AS JUMLAH_TICKET');
             $this->db->from('TICKET');
             $this->db->where('APPROVAL_TICKET', $kode_approval);
+            $this->db->where('TICKET.STATUS_TICKET !=', '100');
             $query = $this->db->get();
             return $query->row_object();
         } else {
@@ -113,6 +114,7 @@ class M_TICKET extends CI_Model
         $this->db->join('MAPING_AREA', 'TICKET.SITE_TICKET = MAPING_AREA.KODE_AREA', 'left');
         $this->db->order_by('DATE_TICKET', 'ASC');
         $this->db->where('TICKET.APPROVAL_TICKET', $kode_approval);
+        $this->db->where('TICKET.STATUS_TICKET !=', '100');
         $query = $this->db->get();
         return $query->result_object();
     }
