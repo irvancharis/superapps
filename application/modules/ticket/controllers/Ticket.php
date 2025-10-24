@@ -26,6 +26,11 @@ class Ticket extends CI_Controller
     {
         $this->load->library('session');
 
+        // Cek apakah session ada
+        if (!$this->session->userdata('isLoggedIn')) {
+            redirect('login');
+        }
+
         if ($this->session->userdata('NAMA_ROLE') == 'IT' || $this->session->userdata('NAMA_ROLE') == 'IT KABAG') {
             $data['M_TICKET_DALAM_ANTRIAN'] = $this->M_TICKET->get_ticket_by_approval(0);
             $data['JML_DALAM_ANTRIAN'] = $this->M_TICKET->count_ticket_by_approval(0);
