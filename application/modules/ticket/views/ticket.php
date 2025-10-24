@@ -86,8 +86,10 @@
                                                                             echo '<span class="badge badge-warning">Dalam Antrian</span>';
                                                                         } elseif ($d->APPROVAL_TICKET == 1) {
                                                                             echo '<span class="badge badge-success">Disetujui</span>';
+                                                                            echo '<span class="badge badge-info ml-1">' . $d->APPROVED_BY . '</span>';
                                                                         } else {
                                                                             echo '<span class="badge badge-danger">Ditolak</span>';
+                                                                            echo '<span class="badge badge-info ml-1">' . $d->APPROVED_BY . '</span>';
                                                                         }
                                                                         ?>
                                                                     </td>
@@ -309,8 +311,10 @@
                                                                             echo '<span class="badge badge-warning">Dalam Antrian</span>';
                                                                         } elseif ($d->APPROVAL_TICKET == 1) {
                                                                             echo '<span class="badge badge-success">Disetujui</span>';
+                                                                            echo '<span class="badge badge-info ml-1">' . $d->APPROVED_BY . '</span>';
                                                                         } else {
                                                                             echo '<span class="badge badge-danger">Ditolak</span>';
+                                                                            echo '<span class="badge badge-info ml-1">' . $d->APPROVED_BY . '</span>';
                                                                         }
                                                                         ?>
                                                                     </td>
@@ -418,8 +422,10 @@
                                                                             echo '<span class="badge badge-warning">Dalam Antrian</span>';
                                                                         } elseif ($d->APPROVAL_TICKET == 1) {
                                                                             echo '<span class="badge badge-success">Disetujui</span>';
+                                                                            echo '<span class="badge badge-info ml-1">' . $d->APPROVED_BY . '</span>';
                                                                         } else {
                                                                             echo '<span class="badge badge-danger">Ditolak</span>';
+                                                                            echo '<span class="badge badge-info ml-1">' . $d->APPROVED_BY . '</span>';
                                                                         }
                                                                         ?>
                                                                     </td>
@@ -531,8 +537,10 @@
                                                                             echo '<span class="badge badge-warning">Dalam Antrian</span>';
                                                                         } elseif ($d->APPROVAL_TICKET == 1) {
                                                                             echo '<span class="badge badge-success">Disetujui</span>';
+                                                                            echo '<span class="badge badge-info ml-1">' . $d->APPROVED_BY . '</span>';
                                                                         } else {
                                                                             echo '<span class="badge badge-danger">Ditolak</span>';
+                                                                            echo '<span class="badge badge-info ml-1">' . $d->APPROVED_BY . '</span>';
                                                                         }
                                                                         ?>
                                                                     </td>
@@ -640,8 +648,10 @@
                                                                             echo '<span class="badge badge-warning">Dalam Antrian</span>';
                                                                         } elseif ($d->APPROVAL_TICKET == 1) {
                                                                             echo '<span class="badge badge-success">Disetujui</span>';
+                                                                            echo '<span class="badge badge-info ml-1">' . $d->APPROVED_BY . '</span>';
                                                                         } else {
                                                                             echo '<span class="badge badge-danger">Ditolak</span>';
+                                                                            echo '<span class="badge badge-info ml-1">' . $d->APPROVED_BY . '</span>';
                                                                         }
                                                                         ?>
                                                                     </td>
@@ -749,8 +759,10 @@
                                                                             echo '<span class="badge badge-warning">Dalam Antrian</span>';
                                                                         } elseif ($d->APPROVAL_TICKET == 1) {
                                                                             echo '<span class="badge badge-success">Disetujui</span>';
+                                                                            echo '<span class="badge badge-info ml-1">' . $d->APPROVED_BY . '</span>';
                                                                         } else {
                                                                             echo '<span class="badge badge-danger">Ditolak</span>';
+                                                                            echo '<span class="badge badge-info ml-1">' . $d->APPROVED_BY . '</span>';
                                                                         }
                                                                         ?>
                                                                     </td>

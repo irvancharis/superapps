@@ -525,6 +525,7 @@ class Ticket extends CI_Controller
                 'TECHNICIAN' => $id_technician,
                 'STATUS_TICKET' => 200,
                 'APPROVAL_TICKET' => $approval_ticket,
+                'APPROVED_BY' => $this->session->userdata('NAMA_KARYAWAN'),
                 'PROSENTASE' => 0,
                 'ALASAN_DITOLAK' => $alasan_ditolak
             ];
